@@ -3,14 +3,15 @@ HEADER = ./inc/minishell.h
 SRC_DIR = ./src/
 
 SRCS_NAME =	main.c\
-		
+			lsttok.c\
+
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
 OBJS =	${SRCS:.c=.o}
 
-NAME =	minishell	
+NAME =	minishell
 
-LIBFT = ./libft/libft.a 
+LIBFT = ./libft/libft.a
 
 CC =	cc
 
@@ -20,9 +21,9 @@ CFLAGS =	-Wall -Wextra -Werror
 
 LDFLAGS =	-L./libft -lft -lreadline
 
-.c.o:	
+.c.o:
 		@echo "\033[32m\c"
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+		${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
 		@echo "\033[0m\c"
 
 all:	${NAME}
