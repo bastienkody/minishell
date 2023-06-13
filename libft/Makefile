@@ -21,6 +21,7 @@ SRC =	ft_isalnum.c \
 		ft_putstr_fd.c \
 		ft_strjoin.c \
 		ft_strncmp.c \
+		ft_strcmp.c \
 		ft_substr.c \
 		ft_calloc.c \
 		ft_isdigit.c \
