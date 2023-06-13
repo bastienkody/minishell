@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		line = readline("minishell prompt % ");
+		add_history(line);
 		printf("--> %s\n", line);
 		token_list = lsttok(line, DELIM);
 		if (token_list == NULL)
