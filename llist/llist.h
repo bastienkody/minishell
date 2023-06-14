@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 10:31:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 14:32:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_llist
 
 t_llist	*llstnew(void *content);
 size_t	llstsize(t_llist *llst);
+t_llist	*llstfirst(t_llist *llst);
 t_llist	*llstlast(t_llist *llst);
 int		llstempty(t_llist *llst);
 void	llstadd_back(t_llist **llst, t_llist *new);
@@ -42,5 +43,13 @@ t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstrange_map(t_llist *begin, t_llist *end, void *(*f)(void *),
 			void (*del)(void *));
 void	llstrange_remove(t_llist *begin, t_llist *end, void (*del)(void *));
+int		llstall_of(t_llist *llst, int (*p)(void *));
+int		llstany_of(t_llist *llst, int (*p)(void *));
+int		llstnone_of(t_llist *llst, int (*p)(void *));
+void	*llstmax(t_llist *llst, int (*comp)(void *, void *));
+void	*llstmin(t_llist *llst, int (*comp)(void *, void *));
+void	*llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
+void	*llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
+			int (*comp)(void *, void *));
 
 #endif
