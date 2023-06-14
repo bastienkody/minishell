@@ -13,11 +13,7 @@ NAME =	minishell
 
 LIBFT = ./libft/libft.a
 
-<<<<<<< HEAD
-LLIST = ./llist/libllist.a
-=======
 LLST = ./llist/llst.a
->>>>>>> main
 
 CC =	cc
 
@@ -25,11 +21,7 @@ CFLAGSDEV =	-Wall -Wextra -Werror -g3
 
 CFLAGS =	-Wall -Wextra -Werror
 
-<<<<<<< HEAD
-LDFLAGS =	-L./libft -lft -L./llist -lllist -lreadline
-=======
 LDFLAGS =	-L./libft -lft -L./llist -lllst -lreadline
->>>>>>> main
 
 .c.o:
 		@echo "\033[32m\c"
@@ -38,11 +30,7 @@ LDFLAGS =	-L./libft -lft -L./llist -lllst -lreadline
 
 all:	${NAME}
 
-<<<<<<< HEAD
-${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLIST}
-=======
 ${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST}
->>>>>>> main
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"
@@ -52,15 +40,10 @@ ${LIBFT}:
 			@make --no-print-directory -C libft/
 			@echo "\033[33mlibft compiled\033[0m"
 
-<<<<<<< HEAD
-${LLIST}:
-		make --no-print-directory -C llist
-=======
 ${LLST}:
 			@echo "\033[33mllst compilation ...\033[0m"
 			@make --no-print-directory -C llist/
 			@echo "\033[33mllst.a compiled\033[0m"
->>>>>>> main
 
 clean:
 		@rm -rf ${OBJS}
