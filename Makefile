@@ -59,4 +59,6 @@ fclean:		clean
 
 re:		fclean all
 
-.PHONY:	all clean re
+noob: ${NAME} clean
+
+.PHONY:	all clean re noob
