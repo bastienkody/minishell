@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:58:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 14:53:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:34:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "../inc/minishell.h"
 
 static size_t	_substr_len(const char *str, const char *delim)
 {
@@ -44,10 +44,10 @@ static char	*_get_next_token(const char **str, const char *delim)
 	return (token);
 }
 
-t_list	*lsttok(const char *str, const char *delim)
+t_llist	*lsttok(const char *str, const char *delim)
 {
-	t_list	*list;
-	t_list	*new;
+	t_llist	*list;
+	t_llist	*new;
 	char	*token;
 
 	list = NULL;
@@ -57,11 +57,11 @@ t_list	*lsttok(const char *str, const char *delim)
 	{
 		token = _get_next_token(&str, delim);
 		if (token == NULL)
-			return (ft_lstclear(&list, free), NULL);
-		new = ft_lstnew(token);
+			return (llstclear(&list, free), NULL);
+		new = llstnew(token);
 		if (new == NULL)
-			return (ft_lstclear(&list, free), NULL);
-		ft_lstadd_back(&list, new);
+			return (llstclear(&list, free), NULL);
+		llstadd_back(&list, new);
 	}
 	return (list);
 }

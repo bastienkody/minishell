@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/14 15:19:03 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/14 15:38:15 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC_TEST =	main_test.c
 
 OBJ =	$(SRC:.c=.o)
 
-NAME =	llst.a
+NAME =	libllist.a
 
 CC =	cc
 

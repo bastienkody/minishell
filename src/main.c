@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/13 15:12:23 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:36:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void print_item(void *item)
 int	main(int argc, char **argv, char **envp)
 {
 	char *line;
-	t_list *token_list;
+	t_llist *token_list;
 
 	(void)argv;
 	if (!argc || !envp)
@@ -33,8 +33,8 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lsttok(line, DELIM);
 		if (token_list == NULL)
 			break ;
-		ft_lstiter(token_list, print_item);
+		llstiter(token_list, print_item);
 		free(line);
 	}
-	ft_lstclear(&token_list, free);
+	llstclear(&token_list, free);
 }

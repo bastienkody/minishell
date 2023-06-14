@@ -4,14 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../libft/libft.h"
+#include "../llist/llist.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 /* compilation with -lreadline */
 
 #define TRUE 1
-#define DELIM " |&\'\"()"
+#define DELIM " |&\'\"()=$"
 
 
-t_list	*lsttok(const char *str, const char *delim);
+t_llist	*lsttok(const char *str, const char *delim);
 
 #endif

@@ -13,22 +13,24 @@ NAME =	minishell
 
 LIBFT = ./libft/libft.a
 
+LLIST = ./llist/libllist.a
+
 CC =	cc
 
 CFLAGSDEV =	-Wall -Wextra -Werror -g3
 
 CFLAGS =	-Wall -Wextra -Werror
 
-LDFLAGS =	-L./libft -lft -lreadline
+LDFLAGS =	-L./libft -lft -L./llist -lllist -lreadline
 
 .c.o:
 		@echo "\033[32m\c"
-		${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 		@echo "\033[0m\c"
 
 all:	${NAME}
 
-${NAME}:	${OBJS} ${HEADER} ${LIBFT}
+${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLIST}
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"
@@ -37,6 +39,9 @@ ${LIBFT}:
 			@echo "\033[33mlibft compilation ...\033[0m"
 			@make --no-print-directory -C libft/
 			@echo "\033[33mlibft compiled\033[0m"
+
+${LLIST}:
+		make --no-print-directory -C llist
 
 clean:
 		@rm -rf ${OBJS}
