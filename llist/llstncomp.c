@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:27:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 14:33:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:00:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	*llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
+int	llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 	int (*comp)(void *, void *))
 {
 	t_llist	*current1;

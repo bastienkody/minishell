@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:08:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 23:49:40 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:01:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	ft_lstiter(t_llist *llst, void (*f)(void *))
+void	llstiter(t_llist *llst, void (*f)(void *))
 {
 	while (llst != NULL)
 	{
