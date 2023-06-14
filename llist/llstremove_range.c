@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstremoveone.c                                    :+:      :+:    :+:   */
+/*   llstremove_range.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 19:18:48 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 23:59:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 21:41:11 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 23:59:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstremoveone(t_llist **llst, void (*del)(void *))
+void	llstremove_range(t_llist **begin, t_llist *end, void (*del)(void *))
 {
+	t_llist	*current;
 	t_llist	*prev;
 	t_llist	*next;
 
-	prev = (*llst)->prev;
-	next = (*llst)->next;
-	if (prev != NULL)
-		prev->next = next;
-	if (next != NULL)
-		next->prev = prev;
-	llstdelone(*llst, del);
+	(void)prev;
+	(void)del;
+	current = *begin;
+	while (current != NULL && current != end)
+	{
+		prev = current->prev;
+		next = current->next;
+		current = next;
+	}
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:01:09 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 00:05:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	llstiter(t_llist *llst, void (*f)(void *));
 t_llist	*llstmap(t_llist *llst, void *(*f)(void *), void (*del)(void *));
 void	llstremoveone(t_llist **llst, void (*del)(void *));
 t_llist	*llstfind(t_llist *llst, void *value, int comp(void *, void *));
+t_llist	*llstfind_if(t_llist *llst, int (*p)(void *));
 t_llist	*llstnext(t_llist *llst, size_t n);
 t_llist	*llstprev(t_llist *llst, size_t n);
-t_llist	*llstrange_map(t_llist *begin, t_llist *end, void *(*f)(void *),
+t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),
 			void (*del)(void *));
-void	llstrange_remove(t_llist *begin, t_llist *end, void (*del)(void *));
+void	llstremove_range(t_llist **begin, t_llist *end, void (*del)(void *));
 int		llstall_of(t_llist *llst, int (*p)(void *));
 int		llstany_of(t_llist *llst, int (*p)(void *));
 int		llstnone_of(t_llist *llst, int (*p)(void *));
@@ -51,5 +52,7 @@ void	*llstmin(t_llist *llst, int (*comp)(void *, void *));
 int		llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
 int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 			int (*comp)(void *, void *));
+void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *), void del(void *));
+t_llist	*llstextract(t_llist **llst);
 
 #endif

@@ -4,6 +4,7 @@ SRC_DIR = ./src/
 
 SRCS_NAME =	main.c\
 			lsttok.c\
+			lstreduce.c\
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
@@ -25,7 +26,7 @@ LDFLAGS =	-L./libft -lft -L./llist -lllst -lreadline
 
 .c.o:
 		@echo "\033[32m\c"
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+		${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
 		@echo "\033[0m\c"
 
 all:	${NAME}
@@ -49,11 +50,13 @@ clean:
 		@rm -rf ${OBJS}
 		@echo "\033[32m${NAME} obj cleaned"
 		@make --no-print-directory clean -C libft/
+		@make --no-print-directory clean -C llist/
 
 fclean:		clean
 		@rm -rf ${NAME}
 		@echo "\033[32m${NAME} fcleaned"
 		@make --no-print-directory fclean -C libft/
+		@make --no-print-directory fclean -C llist/
 
 re:		fclean all
 

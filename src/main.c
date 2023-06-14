@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/14 15:36:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 23:27:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		printf("--> %s\n", line);
 		token_list = lsttok(line, DELIM);
+		lstreduce(&token_list);
 		if (token_list == NULL)
 			break ;
 		llstiter(token_list, print_item);

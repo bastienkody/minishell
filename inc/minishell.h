@@ -15,5 +15,6 @@
 
 
 t_llist	*lsttok(const char *str, const char *delim);
+void	lstreduce(t_llist	**llst);
 
 #endif

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstrange_map.c                                    :+:      :+:    :+:   */
+/*   llstmap_range.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 00:11:47 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 10:31:28 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 21:41:00 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 21:41:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-t_llist	*llstrange_map(t_llist *begin, t_llist *end, void *(*f)(void *),
+t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),
 	void (*del)(void *))
 {
 	t_llist	*new_llst;

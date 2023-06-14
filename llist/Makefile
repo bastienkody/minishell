@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/14 16:08:20 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/14 23:58:37 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,14 @@ SRC =	llstadd_after.c \
 		llstcomp.c \
 		llstdelone.c \
 		llstempty.c \
+		llstextract.c\
+		llstfind_if.c \
 		llstfind.c \
 		llstfirst.c \
+		llstfold.c \
 		llstiter.c \
 		llstlast.c \
+		llstmap_range.c \
 		llstmap.c \
 		llstmax.c \
 		llstmin.c \
@@ -32,8 +36,7 @@ SRC =	llstadd_after.c \
 		llstnext.c \
 		llstnone_of.c \
 		llstprev.c \
-		llstrange_map.c \
-		llstrange_remove.c \
+		llstremove_range.c \
 		llstremoveone.c \
 		llstsize.c \
 
@@ -47,8 +50,10 @@ CC =	cc
 
 CFLAGS =	-Wall -Wextra -Werror
 
+CFLAGSDEV = -Wall -Wextra -Werror -g3
+
 .c.o:
-	@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	@$(CC) $(CFLAGSDEV) -c $< -o $(<:.c=.o)
 
 $(NAME):	$(OBJ)
 		@ar rcs $(NAME) $(OBJ)

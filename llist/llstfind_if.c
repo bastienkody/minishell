@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstremoveone.c                                    :+:      :+:    :+:   */
+/*   llstfind_if.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 19:18:48 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 23:59:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 19:27:05 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstremoveone(t_llist **llst, void (*del)(void *))
+t_llist	*llstfind_if(t_llist *llst, int (*p)(void *))
 {
-	t_llist	*prev;
-	t_llist	*next;
-
-	prev = (*llst)->prev;
-	next = (*llst)->next;
-	if (prev != NULL)
-		prev->next = next;
-	if (next != NULL)
-		next->prev = prev;
-	llstdelone(*llst, del);
+	while (llst != NULL)
+	{
+		if (p(llst->content))
+			return (llst);
+		llst = llst->next;
+	}
+	return (NULL);
 }
-
 
