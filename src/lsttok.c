@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
+#include "../llist/llist.h"
 
 static size_t	_substr_len(const char *str, const char *delim)
 {
@@ -44,24 +45,24 @@ static char	*_get_next_token(const char **str, const char *delim)
 	return (token);
 }
 
-t_list	*lsttok(const char *str, const char *delim)
+t_llist	*lsttok(const char *str, const char *delim)
 {
-	t_list	*list;
-	t_list	*new;
+	t_llist	*llist;
+	t_llist	*new;
 	char	*token;
 
-	list = NULL;
+	llist = NULL;
 	if (str == NULL)
 		return (NULL);
 	while (*str)
 	{
 		token = _get_next_token(&str, delim);
 		if (token == NULL)
-			return (ft_lstclear(&list, free), NULL);
-		new = ft_lstnew(token);
+			return (llstclear(&llist, free), NULL);
+		new = llstnew(token);
 		if (new == NULL)
-			return (ft_lstclear(&list, free), NULL);
-		ft_lstadd_back(&list, new);
+			return (llstclear(&llist, free), NULL);
+		llstadd_back(&llist, new);
 	}
-	return (list);
+	return (llist);
 }

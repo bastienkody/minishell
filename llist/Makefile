@@ -41,26 +41,26 @@ SRC_TEST =	main_test.c
 
 OBJ =	$(SRC:.c=.o)
 
-NAME =	llst.a
+NAME =	libllst.a
 
 CC =	cc
 
 CFLAGS =	-Wall -Wextra -Werror
 
 .c.o:
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAME):	$(OBJ)
-		ar rcs $(NAME) $(OBJ)
+		@ar rcs $(NAME) $(OBJ)
 
 all:	$(NAME)
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean:
-	rm -rf $(OBJ)
-	rm -rf $(NAME)
+	@rm -rf $(OBJ)
+	@rm -rf $(NAME)
 
 re:	fclean all
 

@@ -20,7 +20,7 @@ void print_item(void *item)
 int	main(int argc, char **argv, char **envp)
 {
 	char *line;
-	t_list *token_list;
+	t_llist *token_list;
 
 	(void)argv;
 	if (!argc || !envp)
@@ -33,8 +33,9 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lsttok(line, DELIM);
 		if (token_list == NULL)
 			break ;
-		ft_lstiter(token_list, print_item);
+		llstiter(token_list, print_item);
 		free(line);
+		//token_list = lexing()
 	}
-	ft_lstclear(&token_list, free);
+	llstclear(&token_list, free);
 }

@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "llist.h"
+#include "../llist/llist.h"
 #include "../libft/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -13,6 +13,6 @@
 #define DELIM " |&\'\"()"
 
 
-t_list	*lsttok(const char *str, const char *delim);
+t_llist	*lsttok(const char *str, const char *delim);
 
 #endif
