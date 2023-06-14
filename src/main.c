@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		llstiter(token_list, print_item);
 		free(line);
+		//token_list = lexing()
 	}
 	llstclear(&token_list, free);
 }
