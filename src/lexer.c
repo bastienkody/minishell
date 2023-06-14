@@ -46,15 +46,9 @@ void	*analyze_lexem(t_llist **llst)
 
 	lexem = (char *)(*llst)->content;
 	lexem_next = (char *)(*llst)->next->content;
-	if (!ft_strcmp(lexem, "\""))
+	if (!ft_strcmp(lexem, "\"") || !ft_strcmp(lexem, "\'"))
 	{
-		if (!retrieve_quote(llst, "\""))
-			return (NULL);
-		return (*llst);
-	}
-	else if (!ft_strcmp(lexem, "\'"))
-	{
-		if (!retrieve_quote(llst, "\'"))
+		if (!retrieve_quote(llst, lexem))
 			return (NULL);
 		return (*llst);
 	}
