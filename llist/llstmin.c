@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:06:48 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 14:33:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:18:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*llstmin(t_llist *llst, int (*comp)(void *, void *))
 
 	if (llst == NULL)
 		return (NULL);
-	min = current->content;
-	current = llst;
+	min = llst->content;
+	current = llst->next;
 	while (current != NULL)
 	{
 		if (comp(current->content, min) < 0)

@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/14 15:15:56 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/14 15:19:03 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC =	llstadd_after.c \
 		llstnext.c \
 		llstnone_of.c \
 		llstprev.c \
-		lllstrange_map.c \
+		llstrange_map.c \
 		llstrange_remove.c \
 		llstremoveone.c \
 		llstsize.c \

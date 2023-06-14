@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:27:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:00:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:17:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 	int		diff;
 	size_t	i;
 
+	current1 = llst1;
+	current2 = llst2;
 	i = 0;
 	while (current1 != NULL && current2 != NULL && i < n)
 	{
