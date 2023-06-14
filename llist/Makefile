@@ -57,10 +57,12 @@ all:	$(NAME)
 
 clean:
 	@rm -rf $(OBJ)
+	@echo "\033[33mllst obj cleaned\033[0m"
 
 fclean:
 	@rm -rf $(OBJ)
 	@rm -rf $(NAME)
+	@echo "\033[33mllst.a fcleaned\033[0m"
 
 re:	fclean all
 
