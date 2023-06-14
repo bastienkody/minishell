@@ -43,6 +43,7 @@ t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstrange_map(t_llist *begin, t_llist *end, void *(*f)(void *),
 			void (*del)(void *));
 void	llstrange_remove(t_llist *begin, t_llist *end, void (*del)(void *));
+void	llstrange_remove_2(t_llist **begin, t_llist *end, void (*del)(void *));
 int		llstall_of(t_llist *llst, int (*p)(void *));
 int		llstany_of(t_llist *llst, int (*p)(void *));
 int		llstnone_of(t_llist *llst, int (*p)(void *));

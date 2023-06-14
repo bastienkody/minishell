@@ -31,11 +31,14 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		printf("--> %s\n", line);
 		token_list = lsttok(line, DELIM);
+		free(line);
 		if (token_list == NULL)
 			break ;
 		llstiter(token_list, print_item);
-		free(line);
-		//token_list = lexing()
+		/*token_list = lexem_join(&token_list);
+		if (token_list == NULL)
+			break ;
+		llstiter(token_list, print_item);*/
 	}
 	llstclear(&token_list, free);
 }
