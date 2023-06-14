@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstadd_after.c                                    :+:      :+:    :+:   */
+/*   llstprev.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:24:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 23:49:14 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 10:07:59 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 10:09:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstadd_after(t_llist **llst, t_llist *new)
+t_llist	*llstprev(t_llist *llst, size_t n)
 {
-	t_llist	*next;
+	size_t	i;
 
-	if (*llst == NULL)
-		*llst = new;
-	else
+	i = 0;
+	while (llst != NULL && i < n)
 	{
-		next = (*llst)->next;
-		if (next != NULL)
-			next->prev = new;
-		new->prev = *llst;
-		new->next = next;
-		(*llst)->next = new;
+		llst = llst->prev;
+		i++;
 	}
+	return (llst);
 }

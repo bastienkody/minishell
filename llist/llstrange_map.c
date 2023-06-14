@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstadd_after.c                                    :+:      :+:    :+:   */
+/*   llstrange_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:24:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 23:49:14 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 00:11:47 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 10:31:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstadd_after(t_llist **llst, t_llist *new)
+t_llist	*llstrange_map(t_llist *begin, t_llist *end, void *(*f)(void *),
+	void (*del)(void *))
 {
-	t_llist	*next;
+	t_llist	*new_llst;
+	t_llist	*new_node;
+	t_llist	*current;
 
-	if (*llst == NULL)
-		*llst = new;
-	else
+	new_llst = NULL;
+	current = begin;
+	while (current != end)
 	{
-		next = (*llst)->next;
-		if (next != NULL)
-			next->prev = new;
-		new->prev = *llst;
-		new->next = next;
-		(*llst)->next = new;
+		new_node = llstnew(f(current->content));
+		if (new_node == NULL)
+			return (llstclear(&new_llst, del), NULL);
+		llstadd_back(&new_llst, new_node);
+		current = current->next;
 	}
+	return (new_llst);
 }

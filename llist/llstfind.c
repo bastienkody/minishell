@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstadd_after.c                                    :+:      :+:    :+:   */
+/*   llstfind.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:24:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 23:49:14 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/13 23:51:55 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 00:06:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstadd_after(t_llist **llst, t_llist *new)
+t_llist	*llstfind(t_llist *llst, void *value, int (*comp)(void *, void *))
 {
-	t_llist	*next;
+	t_llist	*current;
 
-	if (*llst == NULL)
-		*llst = new;
-	else
-	{
-		next = (*llst)->next;
-		if (next != NULL)
-			next->prev = new;
-		new->prev = *llst;
-		new->next = next;
-		(*llst)->next = new;
-	}
+	current = llst;
+	while (current != NULL)
+		if (comp(current->content, value) == 0)
+			return (value);
+	return (NULL);
 }
