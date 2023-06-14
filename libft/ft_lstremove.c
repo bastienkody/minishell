@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstdadd_front.c                                   :+:      :+:    :+:   */
+/*   ft_lstremove.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 17:30:54 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 23:49:30 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/13 16:47:41 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/13 16:48:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "libft.h"
 
-void	llstadd_front(t_llist **llst, t_llist *new)
+void	ft_lstremove(t_list **list, t_list *prev, void (*del)(void *))
 {
-	if (*llst != NULL)
-		(*llst)->prev = new;
-	new->next = *llst;
-	*llst = new;
+	t_list	*current;
+	t_list	*tmp;
+
+	current = *list;
+	tmp = current->next;
+	ft_lstdelone(current, del);
+	if (prev == NULL)
+		*list = tmp;
+	else
+		prev->next = tmp;
 }
