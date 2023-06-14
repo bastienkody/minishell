@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:33:58 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 10:27:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/14 13:55:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ int main(void)
 		printf("%s\n", (char *)current->content);
 	}
 
-	llstremoveone(&(llist), free);
+	llstremoveone(&(llist->next->next->next), free);
 	for (t_llist *current = llist; current != NULL; current = current->next)
 	{
 		printf("%s\n", (char *)current->content);
 	}
-	llstclear(&llist, free);
+	// llstclear(&llist, free);
+	llstrange_remove(llist, llist, free);
 	llstclear(&llist2, free);
 }

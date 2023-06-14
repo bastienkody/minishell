@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstiter.c                                         :+:      :+:    :+:   */
+/*   llstnone_of.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:08:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:01:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 13:59:24 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 14:33:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstiter(t_llist *llst, void (*f)(void *))
+int	llstnone_of(t_llist *llst, int (*p)(void *))
 {
-	while (llst != NULL)
-	{
-		f(llst->content);
-		llst = llst->next;
-	}
+	return (!llstall_of(llst, p));
 }

@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstiter.c                                         :+:      :+:    :+:   */
+/*   llstadd_front.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:08:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:01:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 14:24:41 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 14:24:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstiter(t_llist *llst, void (*f)(void *))
+void	llstadd_front(t_llist **llst, t_llist *new)
 {
-	while (llst != NULL)
-	{
-		f(llst->content);
-		llst = llst->next;
-	}
+	if (*llst != NULL)
+		(*llst)->prev = new;
+	new->next = *llst;
+	*llst = new;
 }

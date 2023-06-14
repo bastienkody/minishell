@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstiter.c                                         :+:      :+:    :+:   */
+/*   llstany_of.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:08:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:01:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 13:59:05 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/14 14:33:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstiter(t_llist *llst, void (*f)(void *))
+int	llstany_of(t_llist *llst, int (*p)(void *))
 {
-	while (llst != NULL)
+	t_llist	*current;
+
+	current = llst;
+	while (current != llst)
 	{
-		f(llst->content);
-		llst = llst->next;
+		if (!p(current->content))
+			return (1);
+		current = current->next;
 	}
+	return (0);
 }
