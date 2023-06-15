@@ -59,8 +59,10 @@ CC =		cc
 
 CFLAGS =	-Wall -Wextra -Werror
 
+CFLAGSDEV = -Wall -Wextra -Werror -g3
+
 .c.o:
-		@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+		@${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJ}
 		@ar rcs ${NAME} ${OBJ}
