@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:33:58 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 00:04:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 16:25:38 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ void	*item_cpy(void *item)
 
 void *join(void *value1, void *value2)
 {
-	return ((void *)ft_strjoin((const char *)value1, (const char *)value2));
+	char *temp;
+
+
+	temp = ft_strjoin((const char *)value1, (const char *)value2);
+	free(value1);
+	return (temp);
+
 }
 
 void print(const char *str)
@@ -40,8 +46,11 @@ int main(void)
 
 	llstadd_before(&(llist->next), llstnew(strdup("deux")));
 	llstiter(llist, (void(*)(void *))print);
-	char *str = llstfold(llist, ft_strdup(""), join, free);
+	char *str = llstfold(llist, ft_strdup(""), (void *(*)(void *, void *))join, free);
 	printf("%s\n", str);
-	llstextract(llist);
-	llstclear(&llist, free);
+	llstremove_range(&(llist), NULL, free);
+	puts("");
+	// llstiter(llist, (void(*)(void *))print);
+	free(str);
+	// llstclear(&llist, free);
 }
