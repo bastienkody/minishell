@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 19:27:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 12:56:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,3 @@ t_llist	*llstfind_if(t_llist *llst, int (*p)(void *))
 	}
 	return (NULL);
 }
-
