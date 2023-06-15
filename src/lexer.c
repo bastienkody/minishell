@@ -30,9 +30,6 @@ void	*retrieve_ctrl_operator(t_llist **llst)
 		return (*llst);
 }
 
-/*	iter on llst until content == matching quote
-	make one string with all the node's content, including matching quote
-	clear the nodes except first one ; its content is the one string	*/
 void	*retrieve_quote(t_llist **llst, char *q_type)
 {
 	char	*q_to_q;
@@ -55,9 +52,6 @@ void	*retrieve_quote(t_llist **llst, char *q_type)
 	return (NULL);
 }
 
-/*	look for any of "'&| # and call according fct
-	return NULL if pb in according fct
-	receive and treat lexem one by one	*/
 void	*analyze_lexem(t_llist **llst)
 {
 	char	*lexem;
@@ -80,7 +74,7 @@ void	*analyze_lexem(t_llist **llst)
 	else if (!ft_strcmp(lexem, "&") || !ft_strcmp(lexem, "|"))
 		return (retrieve_ctrl_operator(llst));
 	else if (!ft_strcmp(lexem, " "))
-		return (llstremove_range(llst, (*llst)->next, &free), (void *) 1);
+		return (llstremoveone(*llst, &free), (void *) 1);
 	return (ft_fprintf(2, "No treatment applied on lexem %s\n", lexem), *llst); // debug
 }
 
