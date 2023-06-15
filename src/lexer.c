@@ -12,87 +12,44 @@
 
 #include "../inc/minishell.h"
 
-int	retrieve_ctrl_operator(t_llist *llst)
+t_llist	*get_next_node(t_llist *llst)
 {
-	t_llist	*tmp;
-
-	tmp = llst;
-	if (tmp->next && !ft_strcmp(tmp->content, tmp->next->content))
+	if (is_str_space(llst->content))
+		while (llst && is_str_space(llst->content))
+			llst = llst->next;
+	else if (is_str_operator(llst->content))
+		while (llst && is_str_operator(llst->content))
+			llst = llst->next;
+	else if (is_str_quote(llst->content))
 	{
-		tmp->content = ft_strjoin(tmp->content, tmp->next->content);
-		if (!tmp->content)
-			return (0);
-		return (llstremoveone(tmp->next, &free), 2);
+		llst = llstfind_if(llst->next, &is_str_quote);
+		if (llst->next)
+			llst = llst->next;
 	}
-	else if (!ft_strcmp(tmp->content, "&"))
-		return (ft_fprintf(2, "%s%s\n", ERR_SYNTAX, tmp->content), 0);
-	else // single |
-		return (1);
 }
 
-int	retrieve_quote(t_llist *llst, char *q_type)
+t_llist	*lexing(t_llist *llst)
 {
-	int		i;
-	t_llist	*tmp;
-	char	*q_to_q;
+	t_llist	*start;
+	t_llist *new;
+	t_llist	*following;
 
-	i = 1;
-	tmp = llst->next;
-	q_to_q = llst->content;
-	while (tmp)
+	start = NULL;
+	while (llst)
 	{
-		i += 1;
-		q_to_q = ft_strjoin(q_to_q, llst->content);
-		//ft_fprintf(2, "%s\n", q_to_q);
-		if (!q_to_q)
-			return (ft_fprintf(2, "Error malloc strj q_to_q in lexem join\n"), 0);
-		if (!ft_strcmp(llst->content, q_type))
-			return (llst->content = q_to_q, llstremove_range((&(llst->next)), tmp->next, &free), i);
-		tmp = tmp->next;
-	}
-	ft_fprintf(2, "bad number of quotes %s\n", q_type);
-	return (0);
-}
-
-int	analyze_lexem(t_llist *llst)
-{
-	char	*lexem;
-	char	*lexem_next;
-
-	lexem = (char *)llst->content;
-	if (llst->next)
-		lexem_next = (char *)llst->next->content;
-	if (!ft_strcmp(lexem, "\"") || !ft_strcmp(lexem, "\'"))
-		return (retrieve_quote(llst, lexem));
-	else if (!ft_strcmp(lexem, " ") && !ft_strcmp(lexem_next, "#"))
-	{
-		llstprev(llst, 1)->next = NULL;
-		return (llstclear(&llst, &free), 1);
-	}
-	else if (!ft_strcmp(lexem, "&") || !ft_strcmp(lexem, "|"))
-		return (retrieve_ctrl_operator(llst));
-	else if (!ft_strcmp(lexem, " "))
-	{
-		return (llstremoveone((llst)->prev, &free), 1);
-	}
-	return (ft_fprintf(2, "No treatment applied on lexem %s\n", lexem), 1); // debug
-}
-
-t_llist	*lexem_join(t_llist **llst)
-{
-	t_llist	*tmp;
-	int	ret;
-
-	if (!llst || !*llst)
-		return (NULL);
-	tmp = *llst;
-	while (tmp)
-	{
-		ret = analyze_lexem(tmp);
-		if (!ret)
+		if (is_str_space(llst->content) && llst->next && !ft_strcmp(llst->next->content, "#"))
+			break ;
+		following = get_next_node(llst);
+		if (is_str_space(llst->content))
+			continue ; 
+		if (is_str_operator(llst->content) || is_str_quote(llst->content))
+			new = llstreduce_range(llst, following);
+		else
+			new = llstnew(llst->content);
+		if (!new)
 			return (NULL);
-		while (ret-- && tmp)
-			tmp = tmp->next;
+		llstadd_back(&start, new);
+		llst = following;
 	}
-	return (*llst);
+	return (start);
 }
