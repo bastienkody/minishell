@@ -4,6 +4,7 @@ SRC_DIR = ./src/
 
 SRCS_NAME =	main.c\
 			lsttok.c\
+			lexer.c\
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
@@ -25,7 +26,7 @@ LDFLAGS =	-L./libft -lft -L./llist -lllst -lreadline
 
 .c.o:
 		@echo "\033[32m\c"
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+		${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
 		@echo "\033[0m\c"
 
 all:	${NAME}

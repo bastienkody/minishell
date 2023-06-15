@@ -35,10 +35,10 @@ int	main(int argc, char **argv, char **envp)
 		if (token_list == NULL)
 			break ;
 		llstiter(token_list, print_item);
-		/*token_list = lexem_join(&token_list);
+		token_list = lexem_join(&token_list);
 		if (token_list == NULL)
 			break ;
-		llstiter(token_list, print_item);*/
+		llstiter(token_list, print_item);
 	}
 	llstclear(&token_list, free);
 }

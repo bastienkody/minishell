@@ -8,10 +8,13 @@
 #include "../llist/llist.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-/* compilation with -lreadline */
 
 #define TRUE 1
-#define DELIM " |&\'\"()=$#" // bastien a antonin : ajout du #  ; aussi peut on supprimer le = ?
+#define DELIM " \t|&\'\"()=$#" // ajout du #  ; aussi peut on supprimer le = ?
+
+/*	error msg	*/
+#define ERR_SYNTAX "minishell: syntax error near unexpected token "
+
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str, const char *delim);

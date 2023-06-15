@@ -12,10 +12,27 @@
 
 #include "../inc/minishell.h"
 
+void	*retrieve_ctrl_operator(t_llist **llst)
+{
+	t_llist	*tmp;
+
+	tmp = *llst;
+	if (!ft_strcmp(tmp->content, tmp->next->content))
+	{
+		tmp->content = ft_strjoin(tmp->content, tmp->next->content);
+		if (!tmp->content)
+			return (NULL);
+		return (llstremoveone(&tmp->next, &free), *llst);
+	}
+	else if (!ft_strcmp(tmp->content, "&"))
+		return (ft_fprintf(2, "%s%s\n", ERR_SYNTAX, tmp->content), NULL);
+	else // single |
+		return (*llst);
+}
+
 /*	iter on llst until content == matching quote
 	make one string with all the node's content, including matching quote
-	clear the nodes except first one ; its content is the one string	
-	if no matching quote -> eroror msg via printf + return NULL ?	*/
+	clear the nodes except first one ; its content is the one string	*/
 void	*retrieve_quote(t_llist **llst, char *q_type)
 {
 	t_llist	*tmp;
@@ -27,7 +44,7 @@ void	*retrieve_quote(t_llist **llst, char *q_type)
 	{
 		q_to_q = strj(q_to_q, tmp->content);
 		if (!q_to_q)
-			return (ft_fprintf(2, "Error malloc strj q_to_q in lexem join ; must do smthg\n"));
+			return (ft_fprintf(2, "Error malloc strj q_to_q in lexem join\n"), NULL);
 		if (!ft_strcmp((char *)tmp->content, q_type))
 			return (llstremoveone(&tmp, &free), (*llst)->content = q_to_q, *llst);
 		tmp = tmp->next;
@@ -45,7 +62,8 @@ void	*analyze_lexem(t_llist **llst)
 	char	*lexem_next;
 
 	lexem = (char *)(*llst)->content;
-	lexem_next = (char *)(*llst)->next->content;
+	if ((*llst)->next)
+		lexem_next = (char *)(*llst)->next->content;
 	if (!ft_strcmp(lexem, "\"") || !ft_strcmp(lexem, "\'"))
 	{
 		if (!retrieve_quote(llst, lexem))
@@ -53,11 +71,15 @@ void	*analyze_lexem(t_llist **llst)
 		return (*llst);
 	}
 	else if (!ft_strcmp(lexem, " ") && !ft_strcmp(lexem_next, "#"))
-		llstclear(llst, &free); // +
+	{
+		llstprev(*llst, 1)->next = NULL;
+		return (llstclear(llst, &free), *llst);
+	}
 	else if (!ft_strcmp(lexem, "&") || !ft_strcmp(lexem, "|"))
-		retrieve_ctrl_operator(llst);
+		return (retrieve_ctrl_operator(llst));
 	else if (!ft_strcmp(lexem, " "))
-		llstrange_remove_2(llst, (*llst)->next, &free);
+		return (llstrange_remove_2(llst, (*llst)->next, &free), (void *) 1);
+	return (ft_fprintf(2, "No treatment applied on lexem %s\n", lexem), *llst); // debug
 }
 
 t_llist	*lexem_join(t_llist **llst)
@@ -69,9 +91,10 @@ t_llist	*lexem_join(t_llist **llst)
 	tmp = *llst;
 	while (tmp)
 	{
-		if (!analyze_lexem(&tmp));
+		if (!analyze_lexem(&tmp))
 			return (NULL);
-		tmp = tmp->next;
+		if (tmp)
+			tmp = tmp->next;
 	}
 	return (*llst);
 }

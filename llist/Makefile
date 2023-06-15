@@ -34,6 +34,7 @@ SRC =	llstadd_after.c \
 		llstprev.c \
 		llstrange_map.c \
 		llstrange_remove.c \
+		llstrange_remove_2.c \
 		llstremoveone.c \
 		llstsize.c \
 
