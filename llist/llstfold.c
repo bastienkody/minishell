@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstadd_after.c                                    :+:      :+:    :+:   */
+/*   llstfold.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:24:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 15:01:52 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 21:15:26 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/15 12:56:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstadd_after(t_llist **llst, t_llist *new)
+void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
+	void del(void *))
 {
-	t_llist	*next;
-
-	if (*llst == NULL)
-		*llst = new;
-	else
+	while (llst != NULL)
 	{
-		next = (*llst)->next;
-		if (next != NULL)
-			next->prev = new;
-		new->prev = *llst;
-		new->next = next;
-		(*llst)->next = new;
+		acc = f(acc, llst->content);
+		if (acc == NULL)
+			return (del(acc), NULL);
+		llst = llst->next;
 	}
+	return (acc);
 }

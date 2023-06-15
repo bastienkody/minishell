@@ -6,17 +6,28 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:33:58 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 13:55:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 00:04:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
+#include "../libft/libft.h"
 #include <string.h>
 #include <stdio.h>
 
 void	*item_cpy(void *item)
 {
 	return (strdup((char *)item));
+}
+
+void *join(void *value1, void *value2)
+{
+	return ((void *)ft_strjoin((const char *)value1, (const char *)value2));
+}
+
+void print(const char *str)
+{
+	puts(str);
 }
 
 int main(void)
@@ -28,28 +39,9 @@ int main(void)
 	llstadd_back(&llist, llstnew(strdup("quatre")));
 
 	llstadd_before(&(llist->next), llstnew(strdup("deux")));
-	for (t_llist *current = llist; current != NULL; current = current->next)
-	{
-		printf("%s\n", (char *)current->content);
-	}
-	// for (t_llist *current = llstlast(llist); current != NULL; current = current->prev)
-	// {
-	// 	printf("%s\n", (char *)current->content);
-	// }
-
-	t_llist *llist2 = llstrange_map(llist->next, llstlast(llist), item_cpy, free);
-
-	for (t_llist *current = llist2; current != NULL; current = current->next)
-	{
-		printf("%s\n", (char *)current->content);
-	}
-
-	llstremoveone(&(llist->next->next->next), free);
-	for (t_llist *current = llist; current != NULL; current = current->next)
-	{
-		printf("%s\n", (char *)current->content);
-	}
-	// llstclear(&llist, free);
-	llstrange_remove(llist, llist, free);
-	llstclear(&llist2, free);
+	llstiter(llist, (void(*)(void *))print);
+	char *str = llstfold(llist, ft_strdup(""), join, free);
+	printf("%s\n", str);
+	llstextract(llist);
+	llstclear(&llist, free);
 }

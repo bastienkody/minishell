@@ -18,6 +18,7 @@
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str, const char *delim);
+void	lstreduce(t_llist	**llst);
 t_llist	*lexem_join(t_llist **llst);
 
 #endif
