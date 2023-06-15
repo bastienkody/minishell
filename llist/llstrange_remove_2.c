@@ -22,8 +22,10 @@ void	llstrange_remove_2(t_llist **begin, t_llist *end, void (*del)(void *))
 	t_llist	*current;
 	t_llist	*next;
 
-	llstprev(*begin, 1)->next = end;
-	end->prev = llstprev(*begin, 1);
+	if ((*begin)->prev)
+		llstprev(*begin, 1)->next = end;
+	if (end)
+		end->prev = (*begin);
 	current = *begin;
 	while (current != NULL && current != end)
 	{

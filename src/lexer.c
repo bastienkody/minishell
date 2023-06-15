@@ -17,7 +17,7 @@ void	*retrieve_ctrl_operator(t_llist **llst)
 	t_llist	*tmp;
 
 	tmp = *llst;
-	if (!ft_strcmp(tmp->content, tmp->next->content))
+	if (tmp->next && !ft_strcmp(tmp->content, tmp->next->content))
 	{
 		tmp->content = ft_strjoin(tmp->content, tmp->next->content);
 		if (!tmp->content)
@@ -35,19 +35,21 @@ void	*retrieve_ctrl_operator(t_llist **llst)
 	clear the nodes except first one ; its content is the one string	*/
 void	*retrieve_quote(t_llist **llst, char *q_type)
 {
-	t_llist	*tmp;
 	char	*q_to_q;
+	t_llist	**og;
 
+	og = llst;
 	q_to_q = (*llst)->content;
-	tmp = (*llst)->next;
-	while (tmp)
+	*llst = (*llst)->next;
+	while (*llst)
 	{
-		q_to_q = strj(q_to_q, tmp->content);
+		q_to_q = ft_strjoin(q_to_q, (*llst)->content);
+		ft_fprintf(2, "%s\n", q_to_q);
 		if (!q_to_q)
 			return (ft_fprintf(2, "Error malloc strj q_to_q in lexem join\n"), NULL);
-		if (!ft_strcmp((char *)tmp->content, q_type))
-			return (llstremoveone(&tmp, &free), (*llst)->content = q_to_q, *llst);
-		tmp = tmp->next;
+		if (!ft_strcmp((*llst)->content, q_type))
+			return ((*og)->content = q_to_q, llstrange_remove_2(&(*og)->next, (*llst)->next, &free), *llst);
+		(*llst) = (*llst)->next;
 	}
 	ft_fprintf(2, "bad number of quotes %s\n", q_type);
 	return (NULL);

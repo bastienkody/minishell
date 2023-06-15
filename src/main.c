@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lexem_join(&token_list);
 		if (token_list == NULL)
 			break ;
+		ft_fprintf(1, "post lexing :\n");
 		llstiter(token_list, print_item);
 	}
 	llstclear(&token_list, free);
