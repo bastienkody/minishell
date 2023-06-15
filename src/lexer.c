@@ -22,7 +22,7 @@ void	*retrieve_ctrl_operator(t_llist **llst)
 		tmp->content = ft_strjoin(tmp->content, tmp->next->content);
 		if (!tmp->content)
 			return (NULL);
-		return (llstremoveone(&tmp->next, &free), *llst);
+		return (llstremoveone(tmp->next, &free), *llst);
 	}
 	else if (!ft_strcmp(tmp->content, "&"))
 		return (ft_fprintf(2, "%s%s\n", ERR_SYNTAX, tmp->content), NULL);
@@ -48,7 +48,7 @@ void	*retrieve_quote(t_llist **llst, char *q_type)
 		if (!q_to_q)
 			return (ft_fprintf(2, "Error malloc strj q_to_q in lexem join\n"), NULL);
 		if (!ft_strcmp((*llst)->content, q_type))
-			return ((*og)->content = q_to_q, llstrange_remove_2(&(*og)->next, (*llst)->next, &free), *llst);
+			return ((*og)->content = q_to_q, llstremove_range(&(*og)->next, (*llst)->next, &free), *llst);
 		(*llst) = (*llst)->next;
 	}
 	ft_fprintf(2, "bad number of quotes %s\n", q_type);
@@ -80,7 +80,7 @@ void	*analyze_lexem(t_llist **llst)
 	else if (!ft_strcmp(lexem, "&") || !ft_strcmp(lexem, "|"))
 		return (retrieve_ctrl_operator(llst));
 	else if (!ft_strcmp(lexem, " "))
-		return (llstrange_remove_2(llst, (*llst)->next, &free), (void *) 1);
+		return (llstremove_range(llst, (*llst)->next, &free), (void *) 1);
 	return (ft_fprintf(2, "No treatment applied on lexem %s\n", lexem), *llst); // debug
 }
 

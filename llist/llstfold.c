@@ -24,3 +24,4 @@ void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
 	}
 	return (acc);
 }
+
