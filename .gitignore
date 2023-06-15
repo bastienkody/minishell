@@ -2,6 +2,7 @@
 .vs*
 .VS*
 .DS_Store
+minishell
 
 # Prerequisites
 *.d
