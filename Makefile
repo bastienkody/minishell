@@ -4,7 +4,8 @@ SRC_DIR = ./src/
 
 SRCS_NAME =	main.c\
 			lsttok.c\
-			lexer.c\
+			tokenization.c\
+			utils/token_utils.c\
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
