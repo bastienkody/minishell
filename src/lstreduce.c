@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:02:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 12:44:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 15:22:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@ void *ft_strjoin_g(void *s1, void *s2)
 	return ((void *)ft_strjoin((const char *)s1, (const char *)s2));
 }
 
-char	*llst_to_string(t_llist *llst)
-{
-	char	*str;
-
-	str = ft_strdup("");
-	if (str == NULL)
-		return (NULL);
-	str = llstfold(llst, str, ft_strjoin_g, free);
-	return (str);
-}
-
 int	reduce_word(t_llist	*begin)
 {
 	t_llist	*end;
@@ -54,14 +43,16 @@ int	reduce_word(t_llist	*begin)
 	if (end == NULL)
 		return (0);
 	end = end->next;
-	temp = llstextract_range(begin, end);
-	str = llst_to_string(temp);
+	temp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
+	if (temp == NULL)
+		return (-1);
+	str = llstfold(temp, ft_strdup(""), (void *(*)(void *, void *))ft_strjoin, free);
 	new = llstnew(str);
 	if (new == NULL)
 		return (-1);
-	llstremove_range(&begin, end, free);
-	llstadd_after(&begin, new);
+	llstadd_before(&begin, new);
 	llstclear(&temp, free);
+	llstremove_range(&(begin->next), end, free);
 	return (1);
 }
 
