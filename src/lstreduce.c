@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:02:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 23:42:34 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 12:44:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int	reduce_word(t_llist	*begin)
 	if (end == NULL)
 		return (0);
 	end = end->next;
-	temp = llstmap_range(begin, end, ft_strdup_g, free);
-	if (temp == NULL)
-		return (-1);
+	temp = llstextract_range(begin, end);
 	str = llst_to_string(temp);
 	new = llstnew(str);
 	if (new == NULL)
