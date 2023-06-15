@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstrange_map.c                                    :+:      :+:    :+:   */
+/*   llstextract.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 00:11:47 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 10:31:28 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 23:55:16 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/15 12:31:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-t_llist	*llstrange_map(t_llist *begin, t_llist *end, void *(*f)(void *),
-	void (*del)(void *))
+t_llist	*llstextract(t_llist *llst)
 {
-	t_llist	*new_llst;
-	t_llist	*new_node;
-	t_llist	*current;
+	t_llist	*prev;
+	t_llist	*next;
 
-	new_llst = NULL;
-	current = begin;
-	while (current != end)
-	{
-		new_node = llstnew(f(current->content));
-		if (new_node == NULL)
-			return (llstclear(&new_llst, del), NULL);
-		llstadd_back(&new_llst, new_node);
-		current = current->next;
-	}
-	return (new_llst);
+	prev = llst->prev;
+	next = llst->next;
+	if (prev != NULL)
+		prev->next = next;
+	if (next != NULL)
+		next->prev = prev;
+	*llst = (t_llist){llst->content, NULL, NULL};
+	return (llst);
 }

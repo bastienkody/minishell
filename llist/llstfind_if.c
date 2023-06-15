@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstremoveone.c                                    :+:      :+:    :+:   */
+/*   llstfind_if.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 19:18:48 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 12:55:36 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/15 12:56:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-void	llstremoveone(t_llist *llst, void (*del)(void *))
+t_llist	*llstfind_if(t_llist *llst, int (*p)(void *))
 {
-	t_llist	*temp;
-
-	temp = llstextract(llst);
-	llstclear(&temp, del);
+	while (llst != NULL)
+	{
+		if (p(llst->content))
+			return (llst);
+		llst = llst->next;
+	}
+	return (NULL);
 }
