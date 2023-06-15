@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:31:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 12:56:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 13:37:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ t_llist	*llstextract_range(t_llist *begin, t_llist *end)
 		prev->next = next;
 	if (next != NULL)
 		next->prev = prev;
-	begin->prev = NULL;
-	end->next = NULL;
+	if (begin != NULL)
+		begin->prev = NULL;
+	if (end != NULL)
+		end->next = NULL;
 	return (begin);
 }
