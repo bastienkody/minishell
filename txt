@@ -1,0 +1,5 @@
+TOKENIZATION : 
+- les dilimiteurs :  " \t<>&|"
+- coupe l'input seulement si pas quote et pas sous prenthsese
+- ne pas supp le delimiteur
+-

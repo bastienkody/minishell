@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "llist.h"
+#include <stdio.h>
 
 // t_llist	*llstextract_range(t_llist *begin, t_llist *end)
 // {

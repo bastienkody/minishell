@@ -4,7 +4,8 @@ SRC_DIR = ./src/
 
 SRCS_NAME =	main.c\
 			lsttok.c\
-			lstreduce.c\
+			tokenization.c\
+			utils/token_utils.c\
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
@@ -60,4 +61,6 @@ fclean:		clean
 
 re:		fclean all
 
-.PHONY:	all clean re
+noob: ${NAME} clean
+
+.PHONY:	all clean re noob
