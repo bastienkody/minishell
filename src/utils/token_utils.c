@@ -27,4 +27,13 @@ int is_str_space(const char *str)
 	return (strcmp(str, " ") == 0 || strcmp(str, "\t") == 0);
 }
 
+int is_str_open_parenth(const char *str)
+{
+	return (strcmp(str, "(") == 0);
+}
+
+int is_str_close_parenth(const char *str)
+{
+	return (strcmp(str, ")") == 0);
+}
 

@@ -20,9 +20,10 @@ SRC =	llstadd_after.c \
 		llstcomp.c \
 		llstdelone.c \
 		llstempty.c \
-		llstextract.c\
-		llstextract_range.c\
+		llstextract.c \
+		llstextract_range.c \
 		llstfind_if.c \
+		llstfind_if_reverse.c \
 		llstfind.c \
 		llstfirst.c \
 		llstfold.c \

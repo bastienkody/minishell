@@ -39,6 +39,7 @@ t_llist	*llstmap(t_llist *llst, void *(*f)(void *), void (*del)(void *));
 void	llstremoveone(t_llist *llst, void (*del)(void *));
 t_llist	*llstfind(t_llist *llst, void *value, int comp(void *, void *));
 t_llist	*llstfind_if(t_llist *llst, int (*p)(void *));
+t_llist	*llstfind_if_reverse(t_llist *llst, int (*p)(void *));
 t_llist	*llstnext(t_llist *llst, size_t n);
 t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),
