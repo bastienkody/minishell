@@ -1,20 +1,20 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "../llist/llist.h"
-#include "../libft/libft.h"
-#include "../llist/llist.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include "../llist/llist.h"
+# include "../libft/libft.h"
+# include "../llist/llist.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
-#define TRUE 1
-#define DELIM " \t<>&|()"
+# define TRUE 1
+# define DELIM " \t<>&|()"
 
 /*	error msg	*/
-#define ERR_SYNTAX "minishell: syntax error near unexpected token "
-#define ERR_QUOTE "bad number of quotes "
+# define ERR_SYNTAX "minishell: syntax error near unexpected token "
+# define ERR_QUOTE "bad number of quotes "
 
 /*	parsing - token */
 t_llist	*lsttok(const char *str, const char *delim);
