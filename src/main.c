@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/16 14:10:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/16 15:40:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ int	main(int argc, char **argv, char **envp)
 		// if (token_list == NULL)
 		// 	break ;
 		llstiter(token_list, print_item);
-		free(line);
-		//token_list = lexing()
+		/*token_list = tokenization(token_list);
+		if (token_list == NULL)
+			break ;
+		ft_fprintf(1, "post lexing :\n");
+		llstiter(token_list, print_item);*/
 	}
 	llstclear(&token_list, free);
 }
