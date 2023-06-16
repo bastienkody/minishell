@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:08:11 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/16 14:22:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/16 15:35:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static size_t	_substr_len(const char *str)
 	if (ft_strchr("()", *str) != NULL)
 		len = 1;
 	else if (ft_strchr(DELIM, *str))
-		len = _strfind_not(str, *str) - str;
+		len = strfind_not(str, *str) - str;
 	else if (*str == '\'')
-		len = _strfind(str + 1, '\'') - str + 1;
+		len = strfind(str + 1, '\'') - str + 1;
 	else if (*str == '\"')
-		len = _strfind(str + 1, '\"') - str + 1;
+		len = strfind(str + 1, '\"') - str + 1;
 	else
-		len = _strfind_if(str, isdelim) - str;
+		len = strfind_if(str, isdelim) - str;
 	return (len);
 }
 

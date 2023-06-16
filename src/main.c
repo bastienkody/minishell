@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/14 23:27:13 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/16 15:40:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void print_item(void *item)
 {
-	ft_putendl_fd((char *)item ,1);
+	ft_putchar_fd('~', 1);
+	ft_putstr_fd((char *)item ,1);
+	ft_putchar_fd('~', 1);
+	ft_putchar_fd('\n', 1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -30,10 +33,10 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell prompt % ");
 		add_history(line);
 		printf("--> %s\n", line);
-		token_list = lsttok(line, DELIM);
-		free(line);
-		if (token_list == NULL)
-			break ;
+		token_list = lsttok(line);
+		// lstreduce(&token_list);
+		// if (token_list == NULL)
+		// 	break ;
 		llstiter(token_list, print_item);
 		/*token_list = tokenization(token_list);
 		if (token_list == NULL)
