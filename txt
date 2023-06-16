@@ -1,10 +1,5 @@
-une fonction lexing principale qui parcout chaque lexem
-elle appelle a chaque lexem la fonction concordante parmi celles du dessous
-
-
-
-Si espace # : on quitte cest termine
-Si space/tab : pas de maillon cree, on skip on va au suivant
-Si quote : on trouve la matching quote avec findif. on fait un chaine temporaire avec extract qui va la premiere quote a la derniere. on envoit cette liste temporaire a fold, le strjoin qui free a moitie. on met cette string dans le content de lstnew, puis ont lst addback. Si pas de matching quote on return tout jusqua la fin de la liste.
-Si &| : fait un seul maillon tant que les lexem suivants sont & ou |. 
-Sinon, on ajoute le lexem tel quel dans un novueau maillon. 
+TOKENIZATION : 
+- les dilimiteurs :  " \t<>&|"
+- coupe l'input seulement si pas quote et pas sous prenthsese
+- ne pas supp le delimiteur
+-

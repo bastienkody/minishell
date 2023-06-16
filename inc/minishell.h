@@ -10,11 +10,10 @@
 #include <readline/history.h>
 
 #define TRUE 1
-#define DELIM "|&\'\"()$"
+#define DELIM " \t<>&|"
 
 /*	error msg	*/
 #define ERR_SYNTAX "minishell: syntax error near unexpected token "
-
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str, const char *delim);

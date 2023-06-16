@@ -35,11 +35,11 @@ int	main(int argc, char **argv, char **envp)
 		if (token_list == NULL)
 			break ;
 		llstiter(token_list, print_item);
-		token_list = tokenization(token_list);
+		/*token_list = tokenization(token_list);
 		if (token_list == NULL)
 			break ;
 		ft_fprintf(1, "post lexing :\n");
-		llstiter(token_list, print_item);
+		llstiter(token_list, print_item);*/
 	}
 	llstclear(&token_list, free);
 }
