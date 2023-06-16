@@ -22,18 +22,17 @@ int	is_str_operator(const char *str)
 	return (strcmp(str, "&") == 0 || strcmp(str, "|") == 0);
 }
 
-int is_str_space(const char *str)
+int	is_str_space(const char *str)
 {
 	return (strcmp(str, " ") == 0 || strcmp(str, "\t") == 0);
 }
 
-int is_str_op_p(const char *str)
+int	is_str_op_p(const char *str)
 {
 	return (strcmp(str, "(") == 0);
 }
 
-int is_str_cl_p(const char *str)
+int	is_str_cl_p(const char *str)
 {
 	return (strcmp(str, ")") == 0);
 }
-

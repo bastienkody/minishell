@@ -15,23 +15,23 @@
 /*	return str that join content from begin to end	*/
 t_llist	*join_token(t_llist *begin, t_llist *end)
 {
-	t_llist	*temp;
-	char	*str;
+	t_llist	*tmp;
+	char	*s;
 
-	temp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
-	if (temp == NULL)
+	tmp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
+	if (tmp == NULL)
 		return (NULL);
-	str = llstfold(temp, ft_strdup(""), (void *(*)(void *, void *))strjoin, free);
-	if (str == NULL)
-		return (llstclear(&temp, free), NULL);
-	return (llstclear(&temp, free), llstnew(str));
+	s = llstfold(tmp, ft_strdup(""), (void *(*)(void *, void *))strjoin, free);
+	if (s == NULL)
+		return (llstclear(&tmp, free), NULL);
+	return (llstclear(&tmp, free), llstnew(s));
 }
 
 /*	set begin + end for matching parenthese	*/
 t_llist	*handle_parenthese(t_llist *start)
 {
 	t_llist	*end;
-	int	n;
+	int		n;
 
 	n = 1;
 	end = start->next;
@@ -50,7 +50,7 @@ t_llist	*handle_parenthese(t_llist *start)
 static t_llist	*get_next_node(t_llist *start)
 {
 	t_llist	*end;
-	int	n;
+	int		n;
 
 	n = 1;
 	end = start->next;
@@ -90,5 +90,3 @@ t_llist	*new_llst_with_compound(t_llist *start)
 	}
 	return (new_lst);
 }
-
-
