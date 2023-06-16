@@ -24,6 +24,7 @@ SRC =	llstadd_after.c \
 		llstextract_range.c\
 		llstfind_if_not.c\
 		llstfind_if.c \
+		llstfind_if_reverse.c \
 		llstfind.c \
 		llstfirst.c \
 		llstfold.c \

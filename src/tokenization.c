@@ -38,7 +38,7 @@ t_llist	*join_token(t_llist *begin, t_llist *end)
 	temp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
 	if (temp == NULL)
 		return (NULL);
-	str = llstfold(temp, ft_strdup(""), (void *(*)(void *, void *))ft_strjoin, free);
+	str = llstfold(temp, ft_strdup(""), (void *(*)(void *, void *))strjoin, free);
 	if (str == NULL)
 		return (llstclear(&temp, free), NULL);
 	return (llstclear(&temp, free), llstnew(str));
