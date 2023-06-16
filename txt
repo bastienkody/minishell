@@ -10,10 +10,18 @@ On obtient les token suivants :
 -> space/tab : token non types a supprimer bien plus tard
 On cree une llist avec un token par chainon
 
-ETAPE 2 - Rassembler les compound commands
+ETAPE 2 - Rassembler les compound commands // nvle llsist
 - seul compound de minishell : les cmds groupees par des parentheses
-- des qu'on rencontre un token qui contient UNE SEULE PARENTHESE OUVRANTE, on va chercher le dernier token avec UNE SEULE PARENTHESE FERMANTE (!= logique des quotes)
-- on regroupe tous les tokens intermediaires avec les 2 matching parentheses ensemble
+- creation d'un compteur n=0
+- on parcourt la liste return par le delimiteur
+	- si pas une parenthese OUVRANTE, on llst_new du maillon
+	- si parenthese OUVRANTE : n+=1
+	- si parenthese fermante :
+		- si n = 1 : join_token de la premiere parenthese ouvrante jusqu'a
+		- sinon : n -=1
+	- si on atteint NULL et que n > 0 : join_token de parenthese ouvrante a dernier maillon
+	- sinon : llst_new du chainon tel quel
+
 - on ne peut pas trouver de parenthses ouvrante quotees : elle ne serait pas sur un seul token 
 - si dernier token atteint sans avoir trouver une matching parentheses : on regroupe quand meme
 Nouvelle llist cree avec un token ou une compound cmd par chainon.

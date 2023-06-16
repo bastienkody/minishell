@@ -4,7 +4,7 @@ SRC_DIR = ./src/
 
 SRCS_NAME =	main.c\
 			lsttok.c\
-			tokenization.c\
+			compound_cmd.c\
 			utils/token_utils.c\
 			utils/strjoin.c\
 

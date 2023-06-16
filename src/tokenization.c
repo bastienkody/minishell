@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-t_llist	*get_next_node(t_llist *llst)
+/*t_llist	*get_next_node(t_llist *llst)
 {
 	if (is_str_space(llst->content))
 		llst = llst->next;
@@ -28,23 +28,11 @@ t_llist	*get_next_node(t_llist *llst)
 	else
 		llst = llst->next;
 	return (llst);
-}
+}*/
 
-t_llist	*join_token(t_llist *begin, t_llist *end)
-{
-	t_llist	*temp;
-	char	*str;
 
-	temp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
-	if (temp == NULL)
-		return (NULL);
-	str = llstfold(temp, ft_strdup(""), (void *(*)(void *, void *))strjoin, free);
-	if (str == NULL)
-		return (llstclear(&temp, free), NULL);
-	return (llstclear(&temp, free), llstnew(str));
-}
 
-t_llist	*tokenization(t_llist *llst)
+/*t_llist	*tokenization(t_llist *llst)
 {
 	t_llist	*start;
 	t_llist *new;
@@ -71,4 +59,4 @@ t_llist	*tokenization(t_llist *llst)
 		llst = following;
 	}
 	return (start);
-}
+}*/
