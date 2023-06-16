@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:33:58 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 16:25:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:14:53 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ int main(void)
 	llstiter(llist, (void(*)(void *))print);
 	char *str = llstfold(llist, ft_strdup(""), (void *(*)(void *, void *))join, free);
 	printf("%s\n", str);
-	llstremove_range(&(llist), NULL, free);
+	t_llist	*sublist = llstextract_range(llist->next, llstlast(llist));
 	puts("");
-	// llstiter(llist, (void(*)(void *))print);
+	llstiter(sublist, (void(*)(void *))print);
+	puts("");
+	llstiter(llist, (void(*)(void *))print);
 	free(str);
 	// llstclear(&llist, free);
 }
