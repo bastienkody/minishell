@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:20:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/16 14:21:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/16 14:26:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 /* compilation with -lreadline */
 
 # define TRUE 1
-# define DELIM " \t|&()"
+# define DELIM " \t<>&()"
 
 t_llist	*lsttok(const char *str);
 void	lstreduce(t_llist	**llst);
