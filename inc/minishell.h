@@ -28,8 +28,9 @@
 # define ERR_SYNTAX "minishell: syntax error near unexpected token "
 # define ERR_QUOTE "bad number of quotes "
 
-/*	parsing - token */
-t_llist	*lsttok(const char *str, const char *delim);
+/*	parsing - lexing */
+t_llist	*lsttok(const char *str);
+
 void	lstreduce(t_llist	**llst);
 t_llist	*tokenization(t_llist *llst);
 
@@ -44,5 +45,11 @@ int		is_str_space(const char *str);
 
 /*	utils	*/
 char	*strjoin(const char *s1, const char *s2);
+
+//lsttok_utils
+char	*strfind_if(const char *str, int (*f)(int));
+char	*strfind(const char *str, int c);
+char	*strfind_not(const char *str, int c);
+int		isdelim(int c);
 
 #endif

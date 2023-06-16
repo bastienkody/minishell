@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/15 12:56:50 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/15 18:24:44 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ SRC =	llstadd_after.c \
 		llstcomp.c \
 		llstdelone.c \
 		llstempty.c \
-		llstextract.c \
-		llstextract_range.c \
+		llstextract.c\
+		llstextract_range.c\
+		llstfind_if_not.c\
 		llstfind_if.c \
 		llstfind_if_reverse.c \
 		llstfind.c \
