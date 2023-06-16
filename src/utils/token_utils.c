@@ -10,33 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	isstrquote(const char *str)
+int	is_str_quote(const char *str)
 {
 	return (strcmp(str, "\"") == 0 || strcmp(str, "\'") == 0);
 }
 
-int	isstroperator(const char *str)
+int	is_str_operator(const char *str)
 {
 	return (strcmp(str, "&") == 0 || strcmp(str, "|") == 0);
 }
 
-int isstrspace(const char *str)
+int is_str_space(const char *str)
 {
 	return (strcmp(str, " ") == 0 || strcmp(str, "\t") == 0);
 }
 
-t_llist	*llstreduce_range(t_llist *begin, t_llist *end)
-{
-	t_llist	*temp;
-	char	*str;
 
-	temp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
-	if (temp == NULL)
-		return (NULL);
-	str = llstfold(temp, ft_strdup(""), (void *(*)(void *, void *))ft_strjoin, free);
-	if (str == NULL)
-		return (llstclear(&temp, free), NULL);
-	return (llstclear(&temp, free), llstnew(str));
-}

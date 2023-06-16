@@ -1,0 +1,26 @@
+ETAPE 1 - TOKENIZATION : 
+- les delimiteurs : " \t<>&|()"
+- coupent l'input seulement si pas quote
+- tant que le meme delimiteur se suit : former un seul token SAUF PARENTHESES
+- ne pas supp les delimiteurs
+- cas particulier quote non fermees : on prend tout jusqua \0
+On obtient les token suivants : 
+-> WORD : suite de lettres sans delimiteur, tout entre quote
+-> OPERATOR : & ou | ou < ou > ou ( ou )
+-> space/tab : token non types a supprimer bien plus tard
+On cree une llist avec un token par chainon
+
+ETAPE 2 - Rassembler les compound commands
+- seul compound de minishell : les cmds groupees par des parentheses
+- des qu'on rencontre un token qui contient UNE SEULE PARENTHESE OUVRANTE, on va chercher le dernier token avec UNE SEULE PARENTHESE FERMANTE (!= logique des quotes)
+- on regroupe tous les tokens intermediaires avec les 2 matching parentheses ensemble
+- on ne peut pas trouver de parenthses ouvrante quotees : elle ne serait pas sur un seul token 
+- si dernier token atteint sans avoir trouver une matching parentheses : on regroupe quand meme
+Nouvelle llist cree avec un token ou une compound cmd par chainon.
+
+ETAPE 3 - Rappeler TOKENIZATION sur les compounds commands
+- cela cree une nouvelle llist a mettre en element du chainon de la compound
+- appel recursifs pour traiter de potentiels compounds imbriques "((ls) | date) "
+- les compounds commands ne peuvent pas etres pris en argument de commandes 
+- ils sont seuls ou alors forcement lies aux autres commands par un | ou &
+
