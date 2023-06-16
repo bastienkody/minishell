@@ -27,6 +27,8 @@
 /*	error msg	*/
 # define ERR_SYNTAX "minishell: syntax error near unexpected token "
 # define ERR_QUOTE "bad number of quotes "
+# define ERR_PARENTHESE "unexpected EOF while looking for matching `)'"
+
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);

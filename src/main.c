@@ -14,10 +14,8 @@
 
 void print_item(void *item)
 {
-	ft_putchar_fd('~', 1);
 	ft_putstr_fd((char *)item ,1);
-	ft_putchar_fd('~', 1);
-	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("\n", 1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -32,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell prompt % ");
 		add_history(line);
-		token_list = lsttok(line, DELIM);
+		token_list = lsttok(line);
 		free(line);
 		if (token_list == NULL)
 			break ;
