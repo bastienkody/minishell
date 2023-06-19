@@ -8,6 +8,7 @@ SRCS_NAME =	main.c\
 			utils/token_utils.c\
 			utils/strjoin.c\
 			utils/lsttok_utils.c\
+			remove_blank.c\
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compound_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:52:53 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/16 13:52:58 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/06/17 14:48:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,26 @@ t_llist	*new_llst_with_compound(t_llist *start)
 {
 	t_llist	*new_lst;
 	t_llist	*new;
+	t_llist	*current;
 
 	new_lst = NULL;
-	while (start)
+	current = start;
+	while (current)
 	{
-		if (!is_str_op_p(start->content))
+		if (!is_str_op_p(current->content))
 		{
-			new = llstnew(start->content);
-			start = start->next;
+			new = llstnew(current->content);
+			current = current->next;
 		}
 		else
 		{
-			new = handle_parenthese(start);
-			start = get_next_node(start);
+			new = handle_parenthese(current);
+			current = get_next_node(current);
 		}
 		if (!new)
 			return (llstclear(&new_lst, &free), NULL);
 		llstadd_back(&new_lst, new);
 	}
+	// llstclear(&start, free);
 	return (new_lst);
 }

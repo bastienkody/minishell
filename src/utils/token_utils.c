@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lstreduce.c                                        :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:02:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 19:55:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/17 14:18:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_str_operator(const char *str)
 	return (strcmp(str, "&") == 0 || strcmp(str, "|") == 0);
 }
 
-int	is_str_space(const char *str)
+int	is_str_blank(const char *str)
 {
 	return (strcmp(str, " ") == 0 || strcmp(str, "\t") == 0);
 }
