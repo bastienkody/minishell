@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/19 15:15:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/20 19:19:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "post compound cmds:\n");
 	llstiter(token_list, print_item);
 	ft_fprintf(1, "_________________________\n");
-	token_list = remove_blank(token_list);
+	llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
 	llstiter(token_list, print_item);
 // }
 	llstclear(&token_list, free);
