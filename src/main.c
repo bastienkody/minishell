@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/17 14:35:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:15:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,21 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	// while (TRUE)
 	// {
-		line = readline("minishell prompt % ");
-		add_history(line);
-		token_list = lsttok(line);
-		free(line);
-		if (token_list == NULL)
-			// break ;
-		llstiter(token_list, print_item);
-		token_list = new_llst_with_compound(token_list);
-		if (token_list == NULL)
-			// break ;
-		ft_fprintf(1, "post compound cmds:\n");
-		llstiter(token_list, print_item);
-		ft_fprintf(1, "_________________________\n");
-		token_list = remove_blank(token_list);
-		llstiter(token_list, print_item);
-	// }
+	line = readline("minishell prompt % ");
+	add_history(line);
+	token_list = lsttok(line);
+	free(line);
+	// if (token_list == NULL)
+		// break ;
+	llstiter(token_list, print_item);
+	token_list = new_llst_with_compound(token_list);
+	// if (token_list == NULL)
+		// break ;
+	ft_fprintf(1, "post compound cmds:\n");
+	llstiter(token_list, print_item);
+	ft_fprintf(1, "_________________________\n");
+	token_list = remove_blank(token_list);
+	llstiter(token_list, print_item);
+// }
 	llstclear(&token_list, free);
 }

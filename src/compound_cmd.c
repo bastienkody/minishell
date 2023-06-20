@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:52:53 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/17 14:48:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:32:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_llist	*new_llst_with_compound(t_llist *start)
 	t_llist	*new_lst;
 	t_llist	*new;
 	t_llist	*current;
+	char	*str;
 
 	new_lst = NULL;
 	current = start;
@@ -78,8 +79,14 @@ t_llist	*new_llst_with_compound(t_llist *start)
 	{
 		if (!is_str_op_p(current->content))
 		{
-			new = llstnew(current->content);
-			current = current->next;
+			str = ft_strdup(current->content);
+			if (str == NULL)
+				new = NULL;
+			else
+			{
+				new = llstnew(str);
+				current = current->next;
+			}
 		}
 		else
 		{
@@ -90,6 +97,5 @@ t_llist	*new_llst_with_compound(t_llist *start)
 			return (llstclear(&new_lst, &free), NULL);
 		llstadd_back(&new_lst, new);
 	}
-	// llstclear(&start, free);
-	return (new_lst);
+	return (llstclear(&start, free), new_lst);
 }
