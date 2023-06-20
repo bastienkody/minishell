@@ -5,6 +5,7 @@ SRC_DIR = ./src/
 SRCS_NAME =	main.c\
 			lsttok.c\
 			compound_cmd.c\
+			printers.c\
 			utils/token_utils.c\
 			utils/strjoin.c\
 			utils/lsttok_utils.c\

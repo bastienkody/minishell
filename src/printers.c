@@ -12,23 +12,15 @@
 
 #include "../inc/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void print_item(void *item)
 {
-	char *line;
-	t_llist *token_list;
+	ft_putstr_fd((char *)item ,1);
+	ft_putstr_fd("\n", 1);
+}
 
-	(void)argv;
-	if (!argc || !envp)
-		return (1);
-	while (TRUE)
-	{
-		line = readline("minishell prompt % ");
-		add_history(line);
-		token_list = new_llst_with_compound(lsttok(line));
-		free(line);
-		if (token_list == NULL)
-			break ;
-		print_llist(token_list, &print_item);
-	}
-	llstclear(&token_list, free);
+void	print_llist(t_llist *start, void f(void *))
+{
+	ft_fprintf(1, "------------------\n");
+	llstiter(start, f);
+	ft_fprintf(1, "------------------\n");
 }
