@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/17 14:31:57 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/21 13:24:47 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include "../llist/llist.h"
 # include "../libft/libft.h"
-# include "../llist/llist.h"
+# include "../btree/btree.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -36,7 +36,7 @@ t_llist	*lsttok(const char *str);
 void	lstreduce(t_llist	**llst);
 t_llist	*tokenization(t_llist *llst);
 
-t_llist	*remove_blank(t_llist *llist);
+t_btree	*create_tree(t_llist *token_list);
 
 /*	utils token	*/
 //t_llist	*join_token(t_llist *begin, t_llist *end);

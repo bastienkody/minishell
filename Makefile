@@ -8,7 +8,7 @@ SRCS_NAME =	main.c\
 			utils/token_utils.c\
 			utils/strjoin.c\
 			utils/lsttok_utils.c\
-			remove_blank.c\
+			parsing_test.c
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
@@ -18,7 +18,9 @@ NAME =	minishell
 
 LIBFT = ./libft/libft.a
 
-LLST = ./llist/llst.a
+LLST = ./llist/libllst.a
+
+BTREE = ./btree/libbtree.a
 
 CC =	cc
 
@@ -26,7 +28,7 @@ CFLAGSDEV =	-Wall -Wextra -Werror -g3
 
 CFLAGS =	-Wall -Wextra -Werror
 
-LDFLAGS =	-L./libft -lft -L./llist -lllst -lreadline
+LDFLAGS =	-L./libft -lft -L./llist -lllst -L./btree -lbtree -lreadline
 
 .c.o:
 		@echo "\033[32m\c"
@@ -35,7 +37,7 @@ LDFLAGS =	-L./libft -lft -L./llist -lllst -lreadline
 
 all:	${NAME}
 
-${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST}
+${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${BTREE}
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"

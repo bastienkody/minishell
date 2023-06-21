@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_replace.c                                       :+:      :+:    :+:   */
+/*   btree_apply_suffix.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 15:54:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/19 15:57:06 by aguyon           ###   ########.fr       */
+/*   Created: 2023/03/15 19:16:17 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/21 13:30:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "btree.h"
 
-void	*ft_replace(void *old, void *new, void (*del)(void *))
+void	btree_apply_suffix(t_btree *root, void (*applyf)(void *))
 {
-	return (del(old), new);
+	if (root == NULL)
+		return ;
+	btree_apply_suffix(root->left, applyf);
+	btree_apply_suffix(root->right, applyf);
+	applyf(root->item);
 }
