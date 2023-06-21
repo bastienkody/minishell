@@ -23,23 +23,16 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (TRUE)
 	{
-	  line = readline("minishell prompt % ");
-	  add_history(line);
-	  token_list = lsttok(line);
-	  free(line);
-	  if (token_list == NULL)
-	    break ;
-	  llstiter(token_list, print_item);
-	  token_list = new_llst_with_compound(token_list);
-	  if (token_list == NULL)
-		  break ;
-	  ft_fprintf(1, "post compound cmds:\n");
-	  llstiter(token_list, print_item);
-	  ft_fprintf(1, "_________________________\n");
-	  llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
-	  llstiter(token_list, print_item);
-	  ast = create_tree(token_list);
-	  (void)ast;
-  }
+		line = readline("minishell prompt % ");
+		add_history(line);
+		token_list = new_llst_with_compound(lsttok(line));
+		free(line);
+		if (token_list == NULL)
+			break ;
+		llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
+		ast = create_tree(token_list);
+		btree_apply_infix(ast, (void (*)(void*))print_llist);
+		(void)ast;
+	}
 	llstclear(&token_list, free);
 }

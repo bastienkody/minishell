@@ -12,26 +12,19 @@
 
 #include "../inc/minishell.h"
 
-typedef struct s_tree
-{
-	void 			*content;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}	t_tree;
-
-void	print_level(t_tree *node)
+void	print_level(t_btree *node)
 {
 	if (!node)
 		return ;
-	ft_putendl_fd(node->content, 1);
+	ft_putendl_fd(node->item, 1);
 	while (node->right)
 	{
 		node = node->right;
-		ft_putendl_fd(node->content, 1);
+		ft_putendl_fd(node->item, 1);
 	}
 }
 
-void	print_tree_as_cmd_line(t_tree *start)
+void	print_tree_as_cmd_line(t_btree *start)
 {
 	if (!start)
 		return ;

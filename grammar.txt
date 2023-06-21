@@ -24,3 +24,9 @@ REDIRECT_FILE		= WORD that follows a REDIRECT_OPERATOR
 
 CONTROL_OPERATORS	= &&, ||
 PIPES				= |
+
+
+TYPES : 
+	- OPERATOR : && ou ||
+	- SIMPLE_CMD : 
+	- PIPELINES : 

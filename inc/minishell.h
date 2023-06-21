@@ -57,5 +57,6 @@ int		isdelim(int c);
 
 /*	printers	*/
 void	print_item(void *item);
-void	print_llist(t_llist *start, void f(void *));
+void	print_llist(t_llist *start);
+
 #endif

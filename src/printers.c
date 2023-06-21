@@ -14,13 +14,17 @@
 
 void print_item(void *item)
 {
+	if (!item)
+		return ;
 	ft_putstr_fd((char *)item ,1);
 	ft_putstr_fd("\n", 1);
 }
 
-void	print_llist(t_llist *start, void f(void *))
+void	print_llist(t_llist *start)
 {
+	if (!start)
+		return ;
 	ft_fprintf(1, "------------------\n");
-	llstiter(start, f);
+	llstiter(start, &print_item);
 	ft_fprintf(1, "------------------\n");
 }

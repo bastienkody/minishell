@@ -6,6 +6,7 @@ SRCS_NAME =	main.c\
 			lsttok.c\
 			compound_cmd.c\
 			printers.c\
+			tree_printers.c\
 			utils/token_utils.c\
 			utils/strjoin.c\
 			utils/lsttok_utils.c\
