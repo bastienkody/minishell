@@ -52,6 +52,11 @@ ${LLST}:
 			@make --no-print-directory -C llist/
 			@echo "\033[33mllst.a compiled\033[0m"
 
+${BTREE}:
+			@echo "\033[33mllst compilation ...\033[0m"
+			@make --no-print-directory -C btree/
+			@echo "\033[33mllst.a compiled\033[0m"
+
 clean:
 		@rm -rf ${OBJS}
 		@echo "\033[32m${NAME} obj cleaned"
