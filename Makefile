@@ -57,12 +57,14 @@ clean:
 		@echo "\033[32m${NAME} obj cleaned"
 		@make --no-print-directory clean -C libft/
 		@make --no-print-directory clean -C llist/
+		@make --no-print-directory clean -C btree/
 
 fclean:		clean
 		@rm -rf ${NAME}
 		@echo "\033[32m${NAME} fcleaned"
 		@make --no-print-directory fclean -C libft/
 		@make --no-print-directory fclean -C llist/
+		@make --no-print-directory fclean -C btree/
 
 re:		fclean all
 
