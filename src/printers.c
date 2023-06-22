@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   printers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/16 15:40:59 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/21 16:59:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static const char *g_type[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless" , "word", "subshell", "error"};
 
 void print_item(void *item)
 {
@@ -27,4 +29,9 @@ void	print_llist(t_llist *start)
 	ft_fprintf(1, "------------------\n");
 	llstiter(start, &print_item);
 	ft_fprintf(1, "------------------\n");
+}
+
+void print_token(t_token *token)
+{
+	ft_fprintf(1, "text : %s, type : %s\n", token->text, g_type[token->type]);
 }

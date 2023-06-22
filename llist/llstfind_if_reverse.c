@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstfind_if.c                                      :+:      :+:    :+:   */
+/*   llstfind_if_reverse.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 12:56:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/21 21:34:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 t_llist	*llstfind_if_reverse(t_llist *llst, int (*p)(void *))
 {
-	while (llst != NULL)
+	t_llist	*last = llstlast(llst);
+
+	while (last != NULL)
 	{
 		if (p(llst->content))
-			return (llst);
-		llst = llst->prev;
+			return (last);
+		last = last->prev;
 	}
 	return (NULL);
 }
