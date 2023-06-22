@@ -6,79 +6,59 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/21 21:46:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/22 14:20:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static const char *g_token_text[] = {"||", "&&", "|", ">", "<", ">>", "<<", NULL};
+static int (*const	g_type_predicate[])(const char *str)
+	= {
+	is_str_or,
+	is_str_and,
+	is_str_pipe,
+	is_str_great,
+	is_str_less,
+	is_str_dgreat,
+	is_str_dless,
+	is_str_compound,
+	is_str_word,
+	NULL,
+};
 
 static void	free_token(t_token *token)
 {
 	free(token->text);
 }
 
-static int check_quote(const char *text)
+static t_type	get_type(const char *text)
 {
-	const char quote = text[0];
-	const size_t len = ft_strlen(text);
+	t_type	type;
 
-	return (len > 1 && text[len - 1] == quote);
-}
-
-static int check_parenthesis(const char *text)
-{
-	int	n;
-
-	n = 0;
-	while (*text && n >= 0)
+	type = 0;
+	while (g_type_predicate[type])
 	{
-		if (*text == '(')
-			n++;
-		else if (*text == ')')
-			n--;
-		text++;
-	}
-	return (n == 0);
-}
-
-static t_type	hash_text(const char *text)
-{
-	int	i;
-
-	i = 0;
-	while (g_token_text[i])
-	{
-		if (ft_strcmp(text, g_token_text[i]) == 0)
+		if (g_type_predicate[type](text))
 			break ;
-		i++;
+		type++;
 	}
-	if (text[0] == '(' || text[0] == ')')
-	{
-		if (check_parenthesis(text))
-			return (subshell);
-		else
-			return (error);
-	}
-	if ((text[0] == '\'' || text[0] == '\"') && !check_quote(text))
-		return (error);
-	return (i);
+	return (type);
 }
 
 static t_token	*new_token(char *text)
 {
-	t_token	*new;
-	const t_type hash = hash_text(text);
+	const t_type	type = get_type(text);
+	t_token			*new;
 
 	new = malloc(sizeof(t_token));
 	if (new == NULL)
 		return (NULL);
-	*new = (t_token){text, hash};
+	*new = (t_token){text, type};
 	return (new);
 }
 
 t_llist	*type_token(t_llist	*token_list)
 {
-	return (llstmap(token_list, (void *(*)(void *))new_token,(void(*)(void *))free_token));
+	return (llstmap(token_list, (void *(*)(void *))new_token,
+		(void (*)(void *))free_token));
 }
