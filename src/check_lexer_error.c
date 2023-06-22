@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstmap.c                                          :+:      :+:    :+:   */
+/*   check_lexer_error.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:09:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/21 16:30:55 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/21 21:49:06 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/21 21:49:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../inc/minishell.h"
 
-t_llist	*llstmap(t_llist *llst, void *(*f)(void *), void (*del)(void *))
+int	check_lexer_error(t_llist *llist)
 {
-	t_llist	*new_llst;
-	t_llist	*new_node;
-
-	new_llst = NULL;
-	while (llst != NULL)
-	{
-		new_node = llstnew(f(llst->content));
-		if (new_node == NULL)
-			return (llstclear(&new_llst, del), NULL);
-		llstadd_back(&new_llst, new_node);
-		llst = llst->next;
-	}
-	return (new_llst);
+	
 }
