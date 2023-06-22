@@ -28,7 +28,7 @@ static char	*get_value(char *line)
 	return (strfind(line, '=') + 1);
 }
 
-static char	*expand_word(char *word, char **envp)
+static char	*expand_wd(char *word, char **envp)
 {
 	char	*tmp_var;
 
@@ -38,17 +38,32 @@ static char	*expand_word(char *word, char **envp)
 			return (get_value(*envp));
 		envp++;
 	}
-	return (word);
+	return ("");
 }
 
-/*	expands a full string (ie. hd data)	*/
-char	*expand_dollar(char *str, char **envp)
+/*	only dollar + quoted stuff are expanded + quotes arent removed
+	do not handle : ${}	*/
+char	*expand_here_doc(char *str, char **envp)
 {
-	int	i;
+	int		i;
+	char	*ret;
+	char	*new_wd;
+	char	*wd_end;
 
 	i = -1;
 	while (str[++i])
 	{
-		if ()
+		if (is_c_dollar(str[i]))
+		{
+			wd_end = strfind_if(str + i, &is_str_blank);
+			new_wd = expand_wd(extract_wd(str+i, wd_end), envp);
+			ret = ft_realloc(ret, sizeof(ft_strlen(ret) + ft_strlen(new_wd)));
+			if (!ret)
+				return (NULL);
+			while (&str[i] != wd_end)
+				i++;
+		}
+		else 
+
 	}	
 }

@@ -15,11 +15,12 @@
 /*	gerer data selon quoting du lim	
 		si quote : pas dexpansion de data
 		si pas cote : expansion du dollar
-	tester aussi en quotant dans le data du here doc
+	quotes in heredoc data : aucun effet!, tout depend du quoting du LIM
+	trouver une commande qui lit sur stdin du glob pour check pas d'expansion du *
 */
 
 /*	stops at lim or eof (modified gnl)	*/
-void	launch_here_doc(int fd, char *lim)
+void	launch_here_doc(int fd, char *lim, char **envp)
 {
 	char	*line;
 	char	*data;
@@ -39,7 +40,10 @@ void	launch_here_doc(int fd, char *lim)
 		if (!data)
 			return ;
 	}
-	// expansion de data si lim non quote
+	if (!is_str_quote_enclosed(lim))
+		data = expand_dollar(data, envp);
+	if (!data)
+		return (NULL);
 	write(fd, data, ft_strlen(data));
 	return (free(line), free(data));
 }

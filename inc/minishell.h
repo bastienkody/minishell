@@ -90,6 +90,7 @@ int		isdelim(int c);
 int	is_c_s_quote(char c);
 int	is_c_d_quote(char c);
 int	is_c_dollar(char c);
+int	is_str_quote_enclosed(char *str);
 
 /*	printers	*/
 void	print_item(void *item);
