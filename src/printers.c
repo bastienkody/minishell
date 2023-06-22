@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/21 16:59:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/22 14:14:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static const char *g_type[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless" , "word", "subshell", "error"};
+static const char *g_type[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless" , "compound", "word", "error"};
 
 void print_item(void *item)
 {
