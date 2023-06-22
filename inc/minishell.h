@@ -68,6 +68,10 @@ t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
 
+/*	utils	*/
+char	*strjoin(const char *s1, const char *s2);
+char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);
 int		is_str_op_p(const char *str);
@@ -76,14 +80,16 @@ int		is_str_quote(const char *str);
 int		is_str_operator(const char *str);
 int		is_str_blank(const char *str);
 
-/*	utils	*/
-char	*strjoin(const char *s1, const char *s2);
-
 /*	lsttok_utils	*/
 char	*strfind_if(const char *str, int (*f)(int));
 char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
 int		isdelim(int c);
+
+/*	utils expansion	*/
+int	is_c_s_quote(char c);
+int	is_c_d_quote(char c);
+int	is_c_dollar(char c);
 
 /*	printers	*/
 void	print_item(void *item);

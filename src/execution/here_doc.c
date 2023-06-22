@@ -15,7 +15,7 @@
 /*	gerer data selon quoting du lim	
 		si quote : pas dexpansion de data
 		si pas cote : expansion du dollar
-
+	tester aussi en quotant dans le data du here doc
 */
 
 /*	stops at lim or eof (modified gnl)	*/
@@ -39,6 +39,7 @@ void	launch_here_doc(int fd, char *lim)
 		if (!data)
 			return ;
 	}
+	// expansion de data si lim non quote
 	write(fd, data, ft_strlen(data));
 	return (free(line), free(data));
 }
