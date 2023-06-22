@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include "../llist/llist.h"
 # include "../libft/libft.h"
 # include "../btree/btree.h"
@@ -28,7 +29,22 @@
 # define ERR_SYNTAX "minishell: syntax error near unexpected token "
 # define ERR_QUOTE "bad number of quotes "
 # define ERR_PARENTHESE "unexpected EOF while looking for matching `)'"
+# define ERR_PERMDEN "Permission denied"
+# define ERR_NSFD "No such file or directory"
 
+typedef enum e_type
+{
+	or,
+	and,
+	ppipe,
+	great,
+	less,
+	dgreat,
+	dless,
+	word,
+	subshell,
+	error,
+}	t_type;
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);

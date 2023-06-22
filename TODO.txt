@@ -1,9 +1,0 @@
-1 - Remove blank : ok dans l'idee; gerer les commentaires juste avant? la fct ne marche pas : pq ne pas juste remove one en vrai?
-
-2 - grammaire a valider 
-
-3 - ou gerer les redirections? 
-	- les pipelines ne doivent pas prendre le dessus
-	- execution doit etre faite apres
-	- il faut respecter ordre lineaire mais aussi here_doc en premier ...
-	- dup_pipex -> heredoc -> redirs lineaires -> execution
