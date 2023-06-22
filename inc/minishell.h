@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <unistd.h>
 # include "../llist/llist.h"
 # include "../libft/libft.h"
 # include "../btree/btree.h"
@@ -24,6 +25,11 @@
 
 # define TRUE 1
 # define DELIM " \t<>&|()"
+
+/*	here_doc	*/
+# define HD_PROMPT "here_doc > "
+#define HD_START "/tmp/.here_doc"
+#define HD_END ".txt"
 
 /*	error msg	*/
 # define ERR_SYNTAX "minishell: syntax error near unexpected token "
@@ -80,6 +86,6 @@ int		isdelim(int c);
 
 /*	printers	*/
 void	print_item(void *item);
-void	print_llist(t_llist *start, void f(void *));
+void	print_llist(t_llist *start);
 void	print_token(t_token *token);
 #endif

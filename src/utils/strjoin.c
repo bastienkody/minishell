@@ -21,3 +21,22 @@ char	*strjoin(const char *s1, const char *s2)
 	free((void *)s1);
 	return (ret);
 }
+
+char	*ft_strjoin3(char const *s1, char const *s2, char const *s3)
+{
+	char	*tmp;
+	char	*ret;
+
+	tmp = ft_strjoin(s1, s2);
+	ret = ft_strjoin(tmp, s3);
+	return (free((void *)tmp), ret);
+}
+
+/*int	main(void)
+{
+	char	*str;
+
+	str = ft_strjoin3_bis("salut ", "a ", "tous!");
+	write(1, str, ft_strlen(str));
+	free(str);
+}*/
