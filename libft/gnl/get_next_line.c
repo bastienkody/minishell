@@ -34,8 +34,11 @@ void	clr_buf(char buf[], int j, char val)
 		buf[i++] = val;
 }
 
+/*	si gestion heredoc eof(ctrl d) via signaux, reprendre finall originel	*/
 char	*finall(char *line, char buf[], int eof)
 {
+	if (eof == 0)
+		return (line);
 	if (eof < 0 || !strle(line))
 	{
 		free(line);

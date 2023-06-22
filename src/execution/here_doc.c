@@ -12,7 +12,13 @@
 
 #include "../../inc/minishell.h"
 
-/*	stops at lim or eof	*/
+/*	gerer data selon quoting du lim	
+		si quote : pas dexpansion de data
+		si pas cote : expansion du dollar
+
+*/
+
+/*	stops at lim or eof (modified gnl)	*/
 void	launch_here_doc(int fd, char *lim)
 {
 	char	*line;
@@ -24,7 +30,7 @@ void	launch_here_doc(int fd, char *lim)
 	while (1)
 	{
 		ft_fprintf(1, "%s", HD_PROMPT);
-		line = get_next_line(0); // attention gnl modifie
+		line = get_next_line(0);
 		if (!line)
 			return (free(data));
 		if (*line == 0 || ft_strcmp(line, lim))
@@ -37,6 +43,7 @@ void	launch_here_doc(int fd, char *lim)
 	return (free(line), free(data));
 }
 
+/*	create+open tmpfile in WR, launch hd to fulfill it. close n reopen in rdonly	*/
 int	open_here_doc(t_token *token, char *lim)
 {
 	int			fd;
