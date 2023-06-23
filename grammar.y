@@ -83,7 +83,7 @@ redirection		:	less	filename
 			|	great	filename
 			|	dgreat	filename
 			;
-here_doc		|	dless	here_end
+here_doc		:	dless	here_end
 			;
 here_end		:	WORD
 			;
