@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/21 16:46:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:05:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ typedef enum e_type
 	less,
 	dgreat,
 	dless,
+	compound,
 	word,
-	subshell,
 	error,
+	command,
+	pipeline,
+	redirection,
 }	t_type;
 
 typedef struct s_token
@@ -48,6 +51,20 @@ typedef struct s_token
 	char	*text;
 	t_type	type;
 }	t_token;
+
+typedef struct s_command
+{
+	int	fd_infile;
+	t_llist	*cmd;
+	int	fd_outfile;
+}	t_command;
+
+typedef struct s_redirection
+{
+	t_token	op;
+	t_token	file;
+	int		fd;
+}	t_redirection;
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -79,4 +96,15 @@ int		isdelim(int c);
 void	print_item(void *item);
 void	print_llist(t_llist *start, void f(void *));
 void	print_token(t_token *token);
+
+/*	token_type_predicate	*/
+int		is_str_or(const char *str);
+int		is_str_and(const char *str);
+int		is_str_pipe(const char *str);
+int		is_str_great(const char *str);
+int		is_str_less(const char *str);
+int		is_str_dgreat(const char *str);
+int		is_str_dless(const char *str);
+int		is_str_compound(const char *str);
+int		is_str_word(const char *str);
 #endif
