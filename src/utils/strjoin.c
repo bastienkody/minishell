@@ -40,7 +40,7 @@ char	*ft_strjoin3(char const *s1, char const *s2, char const *s3)
 
 /*	append a signle char to the end of str
 	str==NULL -> returns "c"
-	str is malloc -> init str is freed
+	str is malloced -> init str is freed
 	str is stacked -> error	*/
 char	*str_one_char_join(char *str, char c)
 {

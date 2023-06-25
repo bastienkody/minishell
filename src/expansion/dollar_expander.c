@@ -12,7 +12,8 @@
 
 #include "../../inc/minishell.h"
 
-/*	append expanded word to ret ; returns word_end	*/
+/*	append expanded word to ret ; returns word_end
+	deref_ret because (&(&tab[i])) not legal ...	*/
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word;
