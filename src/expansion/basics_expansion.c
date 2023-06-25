@@ -12,48 +12,32 @@
 
 #include "../../inc/minishell.h"
 
-/*	append expanded word to ret ; returns word_end	*/
-char	*get_next_word_expanded(char **ret, char *str, char **envp)
+char	*get_key(char *line)
 {
-	char	*word;
-	char	*word_end;
-	char	*deref_ret;
+	char	*end;
 
-	word_end = strfind_if(str, &is_c_blank_or_dollar);
-	word = expand_wd(extract_wd(str, word_end), envp);
-	*ret = ft_realloc(*ret, (ft_strlen(*ret) + ft_strlen(word)) * sizeof(char));
-	if (!*ret)
+	end = strfind(line, '=');
+	if (!end)
 		return (NULL);
-	deref_ret = *ret;
-	ft_memcpy(&deref_ret[ft_strlen(*ret)], word, ft_strlen(word));
-	return (word_end);
+	*end = '\0';
+	return (line);
 }
 
-/*	only dollar + quoted stuff are expanded	*/
-char	*expand_here_doc(char *str, char **envp)
+char	*get_value(char *line)
 {
-	int		i;
-	char	*ret;
-	char	*word_end;
+	return (strfind(line, '=') + 1);
+}
 
-	i = -1;
-	ret = ft_strdup("");
-	if (!ret)
+/*	input word is malloced but returns a stacked str (from envp)	*/
+char	*expand_wd(char *word, char **envp)
+{
+	if (!word)
 		return (NULL);
-	while (str[++i])
+	while (envp && *envp)
 	{
-		if (is_c_dollar(str[i]))
-		{
-			word_end = get_next_word_expanded(&ret, str + i, envp);
-			if (!word_end)
-				return (NULL);
-			while (&str[i] != word_end)
-				i++;
-		}
-		else
-			ret = str_one_char_join(ret, str[i]);
-		if (!ret)
-			return (NULL);
+		if (!ft_strcmp(word, get_key(*envp)))
+			return (free(word), get_value(*envp));
+		envp++;
 	}
-	return (free(str), ret);
+	return (free(word), "");
 }

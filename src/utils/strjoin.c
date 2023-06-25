@@ -19,7 +19,7 @@ char	*strjoin(const char *s1, const char *s2)
 	char	*ret;
 
 	if (!s1 || !s2)
-		return (free((void*)s1), NULL);
+		return (free((void *)s1), NULL);
 	ret = ft_strjoin(s1, s2);
 	free((void *)s1);
 	return (ret);

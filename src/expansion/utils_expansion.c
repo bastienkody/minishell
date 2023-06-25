@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-
 int	is_c_dollar(int c)
 {
 	return (c == '$');
@@ -23,14 +22,12 @@ int	is_c_blank_or_dollar(int c)
 	return (c == ' ' || c == '\t' || c == '$');
 }
 
-
-
 /*	false=0, singlq=1, doubleq=2	*/
 int	is_str_quote_enclosed(char *str)
 {
 	if ((str[0] == '\'') && str[0] == str[ft_strlen(str) - 1])
 		return (1);
- 	if ((str[0] == '\"') && str[0] == str[ft_strlen(str) - 1])
+	if ((str[0] == '\"') && str[0] == str[ft_strlen(str) - 1])
 		return (2);
 	return (0);
 }

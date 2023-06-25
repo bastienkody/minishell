@@ -15,8 +15,9 @@ SRCS_NAME =	main.c\
 			utils/ft_realloc.c\
 			execution/redirector.c\
 			execution/here_doc.c\
-			expansion/dollar_expander.c\
+			expansion/basics_expansion.c\
 			expansion/utils_expansion.c\
+			expansion/dollar_expander.c\
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 

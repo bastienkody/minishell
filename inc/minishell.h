@@ -93,8 +93,13 @@ char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
 int		isdelim(int c);
 
-/*	dollar expansion	*/
+/*	basics expansion	*/
+char	*get_key(char *line);
+char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
+
+/*	dollar expansion	*/
+
 char	*expand_here_doc(char *str, char **envp);
 int		is_str_quote_enclosed(char *str);
 int		is_c_dollar(int c);
