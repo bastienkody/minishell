@@ -23,13 +23,18 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+/*	numeric const	*/
 # define TRUE 1
+# define FALSE 0
+# define BAD_FD -1
+
+/*	alphabetic const	*/
 # define DELIM " \t<>&|()"
 
 /*	here_doc	*/
 # define HD_PROMPT "here_doc > "
-#define HD_START "/tmp/.here_doc"
-#define HD_END ".txt"
+# define HD_START "/tmp/.here_doc"
+# define HD_END ".txt"
 
 /*	error msg	*/
 # define ERR_SYNTAX "minishell: syntax error near unexpected token "
@@ -69,8 +74,10 @@ t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
 
 /*	utils	*/
+void	*ft_realloc(void *ptr, size_t size);
 char	*strjoin(const char *s1, const char *s2);
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+char	*str_one_char_join(char *str, char c);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);
@@ -86,14 +93,17 @@ char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
 int		isdelim(int c);
 
-/*	utils expansion	*/
-int	is_c_s_quote(char c);
-int	is_c_d_quote(char c);
-int	is_c_dollar(char c);
-int	is_str_quote_enclosed(char *str);
+/*	dollar expansion	*/
+char	*expand_wd(char *word, char **envp);
+char	*expand_here_doc(char *str, char **envp);
+int		is_str_quote_enclosed(char *str);
+int		is_c_dollar(int c);
+int		is_c_blank_or_dollar(int c);
+char	*extract_wd(char *start, char *end);
 
 /*	printers	*/
 void	print_item(void *item);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
+
 #endif

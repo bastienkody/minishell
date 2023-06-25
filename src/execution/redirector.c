@@ -22,10 +22,10 @@ int	open_in(t_token *token)
 	int	fd;
 
 	// expansion to do on token->text
-	if (acces(token->text, F_OK))
-		return (err_msg(token, ERR_NSFD), -1);
-	if (acces(token->text, R_OK))
-		return (err_msg(token, ERR_PERMDEN), -1);
+	if (access(token->text, F_OK))
+		return (err_msg(token, ERR_NSFD), BAD_FD);
+	if (access(token->text, R_OK))
+		return (err_msg(token, ERR_PERMDEN), BAD_FD);
 	fd = open(token->text, O_RDONLY);
 	if (!fd)
 		perror("open infile");
@@ -37,18 +37,20 @@ int	open_out(t_type *type_prev, t_token *token)
 	int	fd;
 
 	// expansion to do on token->text
-	if (!acces(token->text, F_OK) && acces(token->text, W_OK))
-		return (err_msg(token, ERR_PERMDEN), -1);
-	if (!ft_strcmp(type_prev, great))
+	if (!access(token->text, F_OK) && access(token->text, W_OK))
+		return (err_msg(token, ERR_PERMDEN), BAD_FD);
+	if (*type_prev == great)
 		fd = open(token->text, O_TRUNC | O_WRONLY | O_CREAT, 00644);
-	else if (!ft_strcmp(type_prev, dgreat))
+	else if (*type_prev == dgreat)
 		fd = open(token->text, O_APPEND | O_WRONLY | O_CREAT, 00644);
 	if (!fd)
 		perror("open outfile");
 	return (fd);
 }
 
-void	manage_redir(t_btree *root)
+void	manage_redir(t_btree *root, char **envp)
 {
-
+	if (!root || envp)
+		return ;
+	return ;
 }

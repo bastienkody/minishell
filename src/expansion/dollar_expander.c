@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-static char	*get_key(char *line)
+char	*get_key(char *line)
 {
 	char	*end;
 
@@ -23,47 +23,52 @@ static char	*get_key(char *line)
 	return (line);
 }
 
-static char	*get_value(char *line)
+char	*get_value(char *line)
 {
 	return (strfind(line, '=') + 1);
 }
 
-static char	*expand_wd(char *word, char **envp)
+/*	input word is malloced but returns a stacked str	*/
+char	*expand_wd(char *word, char **envp)
 {
-	char	*tmp_var;
-
+	if (!word)
+		return (NULL);
 	while (envp && *envp)
 	{
 		if (!ft_strcmp(word, get_key(*envp)))
-			return (get_value(*envp));
+			return (free(word), get_value(*envp));
 		envp++;
 	}
-	return ("");
+	return (free(word), "");
 }
 
-/*	only dollar + quoted stuff are expanded + quotes arent removed
-	do not handle : ${}	*/
+/*	only dollar + quoted stuff are expanded	*/
 char	*expand_here_doc(char *str, char **envp)
 {
 	int		i;
 	char	*ret;
-	char	*new_wd;
-	char	*wd_end;
+	char	*word;
+	char	*word_end;
 
 	i = -1;
+	ret = NULL;
 	while (str[++i])
 	{
 		if (is_c_dollar(str[i]))
 		{
-			wd_end = strfind_if(str + i, &is_str_blank);
-			new_wd = expand_wd(extract_wd(str+i, wd_end), envp);
-			ret = ft_realloc(ret, sizeof(ft_strlen(ret) + ft_strlen(new_wd)));
+			word_end = strfind_if(str + i, &is_c_blank_or_dollar);
+			word = expand_wd(extract_wd(str+i, word_end), envp);
+			ret = ft_realloc(ret, ft_strlen(ret) + ft_strlen(word) * sizeof(char));
 			if (!ret)
 				return (NULL);
-			while (&str[i] != wd_end)
+			ft_memcpy(&ret[ft_strlen(ret)], word, ft_strlen(word));
+			while (&str[i] != word_end)
 				i++;
 		}
-		else 
-
-	}	
+		else
+			ret = str_one_char_join(ret, str[i]);
+		if (!ret)
+			return (NULL);
+	}
+	return (free(str), ret);
 }
