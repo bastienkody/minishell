@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/06/26 10:02:31 by aguyon            #+#    #+#              #
+#    Updated: 2023/06/26 10:03:02 by aguyon           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 HEADER = ./inc/minishell.h
 
 SRC_DIR = ./src/
@@ -13,7 +25,7 @@ SRCS_NAME =	main.c\
 			utils/type_token_utils1.c\
 			utils/type_token_utils2.c\
 			parsing_test.c \
-			create_ast.c
+			token_to_tree.c
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
@@ -62,12 +74,12 @@ ${LLST}:
 ${BTREE}:
 			@echo "\033[33mbtree compilation ...\033[0m"
 			@make --no-print-directory -C btree/
-			@echo "\033[33mbtree.a compiled\033[0m"
+			@echo "\033[33mbtree compiled\033[0m"
 
 ${NTREE}:
 			@echo "\033[33mntree compilation ...\033[0m"
 			@make --no-print-directory -C ntree/
-			@echo "\033[33mntree.a compiled\033[0m"
+			@echo "\033[33mntree compiled\033[0m"
 
 clean:
 		@rm -rf ${OBJS}

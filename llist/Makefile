@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/23 15:32:15 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/26 10:05:19 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC =	llstadd_after.c \
 		llstmap_range.c \
 		llstmap.c \
 		llstmax.c \
+		llstmerge.c \
 		llstmerge.c\
 		llstmin.c \
 		llstncomp.c \

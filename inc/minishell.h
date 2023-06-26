@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/23 14:51:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/26 10:04:05 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,18 @@ typedef struct s_token
 	t_type	type;
 }	t_token;
 
-typedef struct s_redirect
-{
-	int	fd;
-	t_type type;
-}	t_redirect;
-
 union u_data
 {
-	t_token	token;
+	char	*text;
 	int		fd;
+	void	*nothing;
 };
 
-typedef struct u_node
+typedef struct s_node
 {
 	t_type			type;
-	union u_data	data;
+	union	u_data	data;
+
 }	t_node;
 
 /*	parsing - lexing */
@@ -85,6 +81,7 @@ t_llist	*tokenization(t_llist *llst);
 
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
+t_llist	*token_to_tree(t_llist	*token_list);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);

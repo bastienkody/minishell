@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 13:10:15 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/23 13:11:08 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/26 10:05:05 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,10 @@ clean:
 fclean:
 	@rm -rf $(OBJ)
 	@rm -rf $(NAME)
-	@echo "\033[33mntree.a fcleaned\033[0m"
+	@echo "\033[33mntree fcleaned\033[0m"
 
 re:	fclean all
+
+.PHONY:		all clean fclean re
 
 .PHONY:		all clean fclean re
