@@ -13,27 +13,22 @@
 #include "../../inc/minishell.h"
 
 /*	append expanded word to ret ; returns actualized str	
-	wd and wd_end no need to be protected	*/
+	wd, wd_end and ret no need to be protected (cf. notion)	*/
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word;
 	char	*word_end;
 
+	word_end = str + 1; 
 	if (is_c_dollar(*str))
 	{
-		word_end = strfind_if(str + sizeof(char), &is_c_blank_nl_dollar);
+		word_end = strfind_if(str + 1, &is_c_blank_nl_dollar);
 		word = expand_wd(extract_wd(str, word_end), envp);
 		*ret = strjoin(*ret, word);
 		free(word);
-		//while (++str != word_end); no need if return wd_end 
 	}
 	else
-	{
 		*ret = str_one_char_join(*ret, *str);
-		word_end = ++str;
-	}
-	if (!*ret)
-		return (NULL);
 	return (word_end);
 }
 
