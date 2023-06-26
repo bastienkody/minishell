@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 12:31:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/15 17:13:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/23 15:31:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,20 @@
 // 	return (begin);
 // }
 
-t_llist	*llstextract_range(t_llist *begin, t_llist *end)
+t_llist	*llstextract_range(t_llist **begin, t_llist *end)
 {
-	t_llist	*prev;
+	t_llist	*new;
+	t_llist	*current;
 	t_llist	*next;
-	t_llist	*new_end;
 
-	prev = begin->prev;
-	if (end == NULL)
+	new = NULL;
+	current = *begin;
+
+	while (current != end)
 	{
-		if (prev != NULL)
-			prev->next = NULL;
-		(*begin).prev = NULL;
+		next = current->next;
+		llstadd_back(&new, llstextractone(begin, current));
+		current = next;
 	}
-	else
-	{
-		next = end;
-		new_end = next->prev;
-		if (prev != NULL)
-			prev->next = next;
-		next->prev = prev;
-		new_end->next = NULL;
-		(*begin).prev = NULL;
-	}
-	return (begin);
+	return (new);
 }

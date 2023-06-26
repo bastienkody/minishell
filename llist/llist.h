@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/21 21:13:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/23 15:32:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		llstall_of(t_llist *llst, int (*p)(void *));
 int		llstany_of(t_llist *llst, int (*p)(void *));
 int		llstnone_of(t_llist *llst, int (*p)(void *));
 void	*llstmax(t_llist *llst, int (*comp)(void *, void *));
+void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
 void	*llstmin(t_llist *llst, int (*comp)(void *, void *));
 int		llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
 int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
@@ -57,7 +58,8 @@ int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
 			void del(void *));
 // t_llist	*llstextract(t_llist *llst);
-t_llist	*llstextract_range(t_llist *begin, t_llist *end);
+t_llist	*llstextract_range(t_llist **begin, t_llist *end);
+t_llist	*llstextractone(t_llist **begin, t_llist *llst);
 void	llstremove_if(t_llist **llst, int (*p)(void *), void (*del)(void *));
 
 #endif

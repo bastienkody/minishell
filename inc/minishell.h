@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 15:05:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/23 14:51:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "../llist/llist.h"
 # include "../libft/libft.h"
 # include "../btree/btree.h"
+# include "../ntree/ntree.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -41,9 +42,15 @@ typedef enum e_type
 	compound,
 	word,
 	error,
-	command,
-	pipeline,
-	redirection,
+	COMMAND,
+	PIPELINE,
+	REDIRECTION,
+	COMPLETE_COMMAND,
+	OP,
+	FILENAME,
+	COMMAND_NAME,
+	SUFFIX,
+	PREFIX,
 }	t_type;
 
 typedef struct s_token
@@ -52,19 +59,23 @@ typedef struct s_token
 	t_type	type;
 }	t_token;
 
-typedef struct s_command
+typedef struct s_redirect
 {
-	int	fd_infile;
-	t_llist	*cmd;
-	int	fd_outfile;
-}	t_command;
+	int	fd;
+	t_type type;
+}	t_redirect;
 
-typedef struct s_redirection
+union u_data
 {
-	t_token	op;
-	t_token	file;
+	t_token	token;
 	int		fd;
-}	t_redirection;
+};
+
+typedef struct u_node
+{
+	t_type			type;
+	union u_data	data;
+}	t_node;
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -107,4 +118,7 @@ int		is_str_dgreat(const char *str);
 int		is_str_dless(const char *str);
 int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
+
+/*	ast */
+t_llist	*create_ast(t_llist *token_list);
 #endif

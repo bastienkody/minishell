@@ -12,7 +12,8 @@ SRCS_NAME =	main.c\
 			type_token.c\
 			utils/type_token_utils1.c\
 			utils/type_token_utils2.c\
-			parsing_test.c
+			parsing_test.c \
+			create_ast.c
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 
@@ -26,13 +27,15 @@ LLST = ./llist/libllst.a
 
 BTREE = ./btree/libbtree.a
 
+NTREE = ./ntree/libntree.a
+
 CC =	cc
 
 CFLAGSDEV =	-Wall -Wextra -Werror -g3
 
 CFLAGS =	-Wall -Wextra -Werror
 
-LDFLAGS =	-L./libft -lft -L./llist -lllst -L./btree -lbtree -lreadline
+LDFLAGS =	-L./libft -lft -L./llist -lllst -L./btree -lbtree -L./ntree -lntree -lreadline
 
 .c.o:
 		@echo "\033[32m\c"
@@ -41,7 +44,7 @@ LDFLAGS =	-L./libft -lft -L./llist -lllst -L./btree -lbtree -lreadline
 
 all:	${NAME}
 
-${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${BTREE}
+${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${BTREE} ${NTREE}
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"
@@ -57,9 +60,14 @@ ${LLST}:
 			@echo "\033[33mllst.a compiled\033[0m"
 
 ${BTREE}:
-			@echo "\033[33mllst compilation ...\033[0m"
+			@echo "\033[33mbtree compilation ...\033[0m"
 			@make --no-print-directory -C btree/
-			@echo "\033[33mllst.a compiled\033[0m"
+			@echo "\033[33mbtree.a compiled\033[0m"
+
+${NTREE}:
+			@echo "\033[33mntree compilation ...\033[0m"
+			@make --no-print-directory -C ntree/
+			@echo "\033[33mntree.a compiled\033[0m"
 
 clean:
 		@rm -rf ${OBJS}
@@ -67,6 +75,7 @@ clean:
 		@make --no-print-directory clean -C libft/
 		@make --no-print-directory clean -C llist/
 		@make --no-print-directory clean -C btree/
+		@make --no-print-directory clean -C ntree/
 
 fclean:		clean
 		@rm -rf ${NAME}
@@ -74,6 +83,7 @@ fclean:		clean
 		@make --no-print-directory fclean -C libft/
 		@make --no-print-directory fclean -C llist/
 		@make --no-print-directory fclean -C btree/
+		@make --no-print-directory fclean -C ntree/
 
 re:		fclean all
 
