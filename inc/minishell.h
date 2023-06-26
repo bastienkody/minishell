@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/26 10:04:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/26 10:41:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ typedef enum e_type
 	compound,
 	word,
 	error,
-	COMMAND,
-	PIPELINE,
-	REDIRECTION,
 	COMPLETE_COMMAND,
-	OP,
+	LOGICAL_EXPRESSION,
+	PIPELINE,
+	SIMPLE_COMMAND,
+	CMD_NAME,
+	CMD_PREFIX,
+	CMD_SUFFIX,
+	REDIRECTION,
 	FILENAME,
-	COMMAND_NAME,
-	SUFFIX,
-	PREFIX,
 }	t_type;
 
 typedef struct s_token

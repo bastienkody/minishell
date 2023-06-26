@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/26 10:07:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/26 10:11:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	t_llist *token_list;
 	t_llist	*tree_list;
 	t_llist *error;
-	t_llist	*tree_list;
 
 	(void)argv;
 	if (!argc || !envp)
@@ -59,7 +58,6 @@ int	main(int argc, char **argv, char **envp)
 			print_token_error(*(t_token *)error->content);
 		tree_list = token_to_tree(token_list);
 		(void)tree_list;
-
-  }
+	}
 	llstclear(&token_list, free);
 }
