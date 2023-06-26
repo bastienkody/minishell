@@ -2,7 +2,7 @@ HEADER = ./inc/minishell.h
 
 SRC_DIR = ./src/
 
-SRCS_NAME =	main.c\
+SRCS_NAME =	main_hd.c\
 			lsttok.c\
 			compound_cmd.c\
 			printers.c\
@@ -13,8 +13,8 @@ SRCS_NAME =	main.c\
 			utils/strjoin.c\
 			utils/lsttok_utils.c\
 			utils/ft_realloc.c\
-			execution/redirector.c\
-			execution/here_doc.c\
+			redirection/redirector.c\
+			redirection/here_doc.c\
 			expansion/basics_expansion.c\
 			expansion/utils_expansion.c\
 			expansion/dollar_expander.c\

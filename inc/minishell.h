@@ -99,12 +99,14 @@ char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 
 /*	dollar expansion	*/
-
 char	*expand_here_doc(char *str, char **envp);
 int		is_str_quote_enclosed(char *str);
 int		is_c_dollar(int c);
-int		is_c_blank_or_dollar(int c);
+int		is_c_blank_nl_dollar(int c);
 char	*extract_wd(char *start, char *end);
+
+/*	redirections	*/
+int		open_here_doc(char *lim, char **envp);
 
 /*	printers	*/
 void	print_item(void *item);

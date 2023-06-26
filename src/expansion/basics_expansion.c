@@ -28,16 +28,16 @@ char	*get_value(char *line)
 	return (strfind(line, '=') + 1);
 }
 
-/*	input word is malloced but returns a stacked str (from envp)	*/
+/*	word is malloced and word[0] == '$'	*/
 char	*expand_wd(char *word, char **envp)
 {
 	if (!word)
 		return (NULL);
 	while (envp && *envp)
 	{
-		if (!ft_strcmp(word, get_key(*envp)))
-			return (free(word), get_value(*envp));
+		if (!ft_strcmp(word + sizeof(char), get_key(*envp)))
+			return (free(word), ft_strdup(get_value(*envp)));
 		envp++;
 	}
-	return (free(word), "");
+	return (free(word), ft_strdup(""));
 }

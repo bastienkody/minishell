@@ -17,9 +17,9 @@ int	is_c_dollar(int c)
 	return (c == '$');
 }
 
-int	is_c_blank_or_dollar(int c)
+int	is_c_blank_nl_dollar(int c)
 {
-	return (c == ' ' || c == '\t' || c == '$');
+	return (c == ' ' || c == '\t' || c == '$' || c == '\n');
 }
 
 /*	false=0, singlq=1, doubleq=2	*/

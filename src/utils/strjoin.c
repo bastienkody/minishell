@@ -25,16 +25,17 @@ char	*strjoin(const char *s1, const char *s2)
 	return (ret);
 }
 
-/*	join 3 strings, free none	*/
+/*	join 3 strings, free s2 only	*/
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3)
 {
 	char	*tmp;
 	char	*ret;
 
 	if (!s1 || !s2 || !s3)
-		return (NULL);
+		return (free((void *)s2), NULL);
 	tmp = ft_strjoin(s1, s2);
 	ret = ft_strjoin(tmp, s3);
+	free((void *)s2);
 	return (free((void *)tmp), ret);
 }
 

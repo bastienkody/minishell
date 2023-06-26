@@ -32,7 +32,7 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 		line = get_next_line(0);
 		if (!line)
 			return (free(data), 0);
-		if (*line == 0 || ft_strcmp(line, lim))
+		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
 			break ;
 		data = strj(data, line);
 		if (!data)
@@ -57,16 +57,16 @@ int	open_here_doc(char *lim, char **envp)
 	if (!pathname)
 		return (BAD_FD);
 	nb++;
-	fd = open(pathname, O_WRONLY | O_CREAT, 00644);
+	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
-		return (perror("open here_doc in w"), BAD_FD);
+		return (free(pathname), perror("open here_doc in w"), BAD_FD);
 	if (!launch_here_doc(fd, lim, envp))
-		return (close (fd), BAD_FD); // malloc err during launch_hd must stop whole exec ?
+		return (free(pathname), close (fd), BAD_FD); // malloc err during launch_hd must stop whole exec ?
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)
-		return (perror("open here_doc in rd"), BAD_FD);
-	return (fd);
+		return (free(pathname), perror("open here_doc in rd"), BAD_FD);
+	return (free(pathname), fd);
 }
 
 void	remove_heredoc_tmpfile(char *pathname)
