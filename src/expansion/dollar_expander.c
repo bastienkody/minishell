@@ -44,8 +44,7 @@ char	*expand_here_doc(char *str, char **envp)
 			word_end = get_next_word_expanded(&ret, str + i, envp);
 			if (!word_end)
 				return (NULL);
-			while (&str[i] != word_end)
-				i++;
+			while (&str[++i] != word_end);
 		}
 		else
 			ret = str_one_char_join(ret, str[i++]);
@@ -54,3 +53,4 @@ char	*expand_here_doc(char *str, char **envp)
 	}
 	return (free(str), ret);
 }
+

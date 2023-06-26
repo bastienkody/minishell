@@ -32,21 +32,4 @@ int	is_str_quote_enclosed(char *str)
 	return (0);
 }
 
-/*	end excluded	
-	no sizeof in malloc for portability (ptr arithmetic)	*/
-char	*extract_wd(char *start, char *end)
-{
-	char	*word;
-	int		len;
 
-	len = end - start;
-	if (len <= 0)
-		return (NULL);
-	word = malloc(len + 1);
-	if (!word)
-		return (NULL);
-	word[len--] = '\0';
-	while (--end >= start)
-		word[len--] = *end;
-	return (word);
-}

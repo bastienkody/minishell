@@ -12,51 +12,47 @@
 
 #include "../../inc/minishell.h"
 
-char	*get_key(char *line)
-{
-	char	*end;
-
-	end = strfind(line, '=');
-	if (!end)
-		return (NULL);
-	*end = '\0';
-	return (line);
-}
-
-char	*get_value(char *line)
-{
-	return (strfind(line, '=') + 1);
-}
-
-/*	end excluded	
-	no sizeof in malloc for portability (ptr arithmetic)	*/
-char	*extract_wd(char *start, char *end)
+/*	append expanded word to ret ; returns actualized str	
+	wd and wd_end no need to be protected	*/
+char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word;
-	int		len;
+	char	*word_end;
 
-	len = end - start;
-	if (len <= 0)
+	if (is_c_dollar(*str))
+	{
+		word_end = strfind_if(str + sizeof(char), &is_c_blank_nl_dollar);
+		word = expand_wd(extract_wd(str, word_end), envp);
+		*ret = strjoin(*ret, word);
+		free(word);
+		//while (++str != word_end); no need if return wd_end 
+	}
+	else
+	{
+		*ret = str_one_char_join(*ret, *str);
+		word_end = ++str;
+	}
+	if (!*ret)
 		return (NULL);
-	word = malloc(len + 1);
-	if (!word)
-		return (NULL);
-	word[len--] = '\0';
-	while (--end >= start)
-		word[len--] = *end;
-	return (word);
+	return (word_end);
 }
 
-/*	word is malloced and word[0] == '$'	*/
-char	*expand_wd(char *word, char **envp)
+/*	only dollar + quoted stuff are expanded	
+	input str cannot be null (cf. launch hd)	*/
+char	*expand_here_doc(char *str, char **envp)
 {
-	if (!word)
+	char	*tmp;
+	char	*ret;
+
+	tmp = str;
+	ret = ft_strdup("");
+	if (!ret)
 		return (NULL);
-	while (envp && *envp)
+	while (*tmp)
 	{
-		if (!ft_strcmp(word + sizeof(char), get_key(*envp)))
-			return (free(word), ft_strdup(get_value(*envp)));
-		envp++;
+		tmp = get_next_word_expanded(&ret, tmp, envp);
+		if (!tmp || !ret)
+			return (NULL);
 	}
-	return (free(word), ft_strdup(""));
+	return (free(str), ret);
 }
