@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 15:05:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/25 19:40:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "../llist/llist.h"
 # include "../libft/libft.h"
 # include "../btree/btree.h"
+# include "../ntree/ntree.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -52,19 +53,19 @@ typedef struct s_token
 	t_type	type;
 }	t_token;
 
-typedef struct s_command
+union u_data
 {
-	int	fd_infile;
-	t_llist	*cmd;
-	int	fd_outfile;
-}	t_command;
-
-typedef struct s_redirection
-{
-	t_token	op;
-	t_token	file;
+	char	*text;
 	int		fd;
-}	t_redirection;
+	void	*nothing;
+};
+
+typedef struct s_node
+{
+	t_type			type;
+	union	u_data	data;
+
+}	t_node;
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -74,6 +75,7 @@ t_llist	*tokenization(t_llist *llst);
 
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
+t_llist	*token_to_tree(t_llist	*token_list);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);

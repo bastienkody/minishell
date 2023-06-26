@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/21 21:13:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/25 18:10:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
 // t_llist	*llstextract(t_llist *llst);
 t_llist	*llstextract_range(t_llist *begin, t_llist *end);
 void	llstremove_if(t_llist **llst, int (*p)(void *), void (*del)(void *));
+void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
 
 #endif
