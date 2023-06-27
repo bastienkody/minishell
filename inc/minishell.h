@@ -28,7 +28,7 @@
 # define FALSE 0
 # define BAD_FD -1
 
-/*	alphabetic const	*/
+/*	char const	*/
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
@@ -78,6 +78,7 @@ t_btree	*create_tree(t_llist *token_list);
 /*	utils	*/
 void	*ft_realloc(void *ptr, size_t size);
 char	*strjoin(const char *s1, const char *s2);
+char	*strjoin2(const char *s1, const char *s2);
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char	*str_one_char_join(char *str, char c);
 
@@ -103,8 +104,9 @@ char	*extract_wd(char *start, char *end);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
-int		is_c_blank_nl_dollar(int c);
+int		is_c_blank_nl_dollar_s_d_quote(int c);
 int		is_str_quote_enclosed(char *str);
+char	*expand_dollar(char *str, char **envp);
 char	*expand_dollar_here_doc(char *str, char **envp);
 
 /*	redirections	*/
@@ -114,5 +116,6 @@ int		open_here_doc(char *lim, char **envp);
 void	print_item(void *item);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
+void	print_env(char **envp);
 
 #endif

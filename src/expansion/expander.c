@@ -14,6 +14,7 @@
 
 /*	append expanded word to ret ; returns actualized str	
 	wd, wd_end and ret no need to be protected (cf. notion)	*/
+//isblanknldollar -> need to add squote and dquote at least
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word;
@@ -22,7 +23,7 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp)
 	word_end = str + 1; 
 	if (is_c_dollar(*str))
 	{
-		word_end = strfind_if(str + 1, &is_c_blank_nl_dollar);
+		word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 		word = expand_wd(extract_wd(str, word_end), envp);
 		*ret = strjoin(*ret, word);
 		free(word);
@@ -30,6 +31,34 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp)
 	else
 		*ret = str_one_char_join(*ret, *str);
 	return (word_end);
+}
+
+/*	only dollar on not s_quoted stuff	
+	input str can be null 	*/
+char	*expand_dollar(char *str, char **envp)
+{
+	char	*tmp;
+	char	*ret;
+	char	*next_s_quote;
+
+	tmp = str;
+	ret = ft_strdup("");
+	if (!ret || !tmp || !envp)
+		return (free(ret), free(tmp), NULL);
+	while (*tmp)
+	{
+		next_s_quote = ft_strchr(tmp + 1, S_QUOTE);
+		if (*tmp == S_QUOTE && next_s_quote)
+		{
+			ret = strjoin2(ret, extract_wd(tmp, next_s_quote + 1));
+			tmp = next_s_quote + 1;
+		}
+		else
+			tmp = get_next_word_expanded(&ret, tmp, envp);
+		if (!tmp || !ret)
+			return (NULL);
+	}
+	return (free(str), ret);
 }
 
 /*	only dollar + quoted stuff are expanded	
@@ -52,33 +81,8 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 	return (free(str), ret);
 }
 
-/*	only dollar on not s_quoted stuff	
-	input str can be null 	*/
-char	*expand_dollar(char *str, char **envp)
-{
-	char	*tmp;
-	char	*ret;
-
-	tmp = str;
-	ret = ft_strdup("");
-	if (!ret || !tmp || !envp)
-		return (free(ret), free(tmp), NULL);
-	while (*tmp)
-	{
-		if (*tmp == S_QUOTE && ft_strchr(tmp + 1, S_QUOTE))
-		{
-			ret = strjoin(ret, extract_wd(tmp, ft_strchr(tmp + 1, S_QUOTE)));
-			tmp = ft_strchr(tmp + 1, S_QUOTE);
-		}
-		else
-			tmp = get_next_word_expanded(&ret, tmp, envp);
-		if (!tmp || !ret)
-			return (NULL);
-	}
-	return (free(str), ret);
-}
-
-char	*rm_peer_quotes(char *str)
+/*	no quote rm on here_doc data	*/
+char	*rm_peer_s_quotes(char *str)
 {
 	if (!str)
 		return (NULL);

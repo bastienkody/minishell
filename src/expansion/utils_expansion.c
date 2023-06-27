@@ -17,9 +17,11 @@ int	is_c_dollar(int c)
 	return (c == '$');
 }
 
-int	is_c_blank_nl_dollar(int c)
+int	is_c_blank_nl_dollar_s_d_quote(int c)
 {
-	return (c == ' ' || c == '\t' || c == '$' || c == '\n');
+	const char	*envar_delim = " \t\n$\'\"";
+
+	return (ft_strchr(envar_delim, c) != NULL);
 }
 
 /*	false=0, singlq=1, doubleq=2	*/

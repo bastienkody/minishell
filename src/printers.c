@@ -35,3 +35,12 @@ void print_token(t_token *token)
 {
 	ft_fprintf(1, "text : %s, type : %s\n", token->text, g_type[token->type]);
 }
+
+void	print_env(char **envp)
+{
+	while (envp && *envp)
+	{
+		ft_fprintf(1, "%s\n", *envp);
+		envp++;
+	}
+}
