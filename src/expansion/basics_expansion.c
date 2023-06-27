@@ -28,8 +28,7 @@ char	*get_value(char *line)
 	return (strfind(line, '=') + 1);
 }
 
-/*	end excluded	
-	no sizeof in malloc for portability (ptr arithmetic)	*/
+/*	end excluded	*/
 char	*extract_wd(char *start, char *end)
 {
 	char	*word;

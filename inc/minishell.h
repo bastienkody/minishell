@@ -30,6 +30,8 @@
 
 /*	alphabetic const	*/
 # define DELIM " \t<>&|()"
+# define S_QUOTE '\''
+# define D_QUOTE '\"'
 
 /*	here_doc	*/
 # define HD_PROMPT "here_doc > "
@@ -80,30 +82,30 @@ char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char	*str_one_char_join(char *str, char c);
 
 /*	utils token	*/
-t_llist	*new_llst_with_compound(t_llist *start);
 int		is_str_op_p(const char *str);
 int		is_str_cl_p(const char *str);
 int		is_str_quote(const char *str);
 int		is_str_operator(const char *str);
 int		is_str_blank(const char *str);
+t_llist	*new_llst_with_compound(t_llist *start);
 
 /*	lsttok_utils	*/
-char	*strfind_if(const char *str, int (*f)(int));
+int		isdelim(int c);
 char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
-int		isdelim(int c);
+char	*strfind_if(const char *str, int (*f)(int));
 
 /*	basics expansion	*/
 char	*get_key(char *line);
 char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
+char	*extract_wd(char *start, char *end);
 
 /*	dollar expansion	*/
-char	*expand_here_doc(char *str, char **envp);
-int		is_str_quote_enclosed(char *str);
 int		is_c_dollar(int c);
 int		is_c_blank_nl_dollar(int c);
-char	*extract_wd(char *start, char *end);
+int		is_str_quote_enclosed(char *str);
+char	*expand_dollar_here_doc(char *str, char **envp);
 
 /*	redirections	*/
 int		open_here_doc(char *lim, char **envp);

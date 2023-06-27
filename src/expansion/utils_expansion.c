@@ -31,5 +31,3 @@ int	is_str_quote_enclosed(char *str)
 		return (2);
 	return (0);
 }
-
-

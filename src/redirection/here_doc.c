@@ -39,7 +39,7 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 			return (0);
 	}
 	if (!is_str_quote_enclosed(lim))
-		data = expand_here_doc(data, envp);
+		data = expand_dollar_here_doc(data, envp);
 	if (!data)
 		return (0);
 	write(fd, data, ft_strlen(data));

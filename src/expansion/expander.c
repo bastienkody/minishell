@@ -33,16 +33,16 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp)
 }
 
 /*	only dollar + quoted stuff are expanded	
-	input str cannot be null (cf. launch hd)	*/
-char	*expand_here_doc(char *str, char **envp)
+	str cant be null (cf. launch hd)	*/
+char	*expand_dollar_here_doc(char *str, char **envp)
 {
 	char	*tmp;
 	char	*ret;
 
 	tmp = str;
 	ret = ft_strdup("");
-	if (!ret)
-		return (NULL);
+	if (!ret || !envp)
+		return (free(ret), NULL);
 	while (*tmp)
 	{
 		tmp = get_next_word_expanded(&ret, tmp, envp);
@@ -50,4 +50,38 @@ char	*expand_here_doc(char *str, char **envp)
 			return (NULL);
 	}
 	return (free(str), ret);
+}
+
+/*	only dollar on not s_quoted stuff	
+	input str can be null 	*/
+char	*expand_dollar(char *str, char **envp)
+{
+	char	*tmp;
+	char	*ret;
+
+	tmp = str;
+	ret = ft_strdup("");
+	if (!ret || !tmp || !envp)
+		return (free(ret), free(tmp), NULL);
+	while (*tmp)
+	{
+		if (*tmp == S_QUOTE && ft_strchr(tmp + 1, S_QUOTE))
+		{
+			ret = strjoin(ret, extract_wd(tmp, ft_strchr(tmp + 1, S_QUOTE)));
+			tmp = ft_strchr(tmp + 1, S_QUOTE);
+		}
+		else
+			tmp = get_next_word_expanded(&ret, tmp, envp);
+		if (!tmp || !ret)
+			return (NULL);
+	}
+	return (free(str), ret);
+}
+
+char	*rm_peer_quotes(char *str)
+{
+	if (!str)
+		return (NULL);
+	
+	return (str);
 }
