@@ -60,6 +60,15 @@ char	*expand_dollar(char *str, char **envp)
 	return (free(str), ret);
 }
 
+/*	just appeler expand_d en checkant si ya un blank == amb redir?
+	touch truc > yo$USER --> ok
+	touch truc > "ca va" --> ok
+	$A="yo yi" ; $B="\"yo yi\"" 
+	touch truc >  $A --> ko
+	touch truc >  $B --> ko (pas de lexing parsing ni expansion on expanded stuff)
+	ccl :
+	-si expansion = pas de blank (meme si quoted)
+	-sans expansion = blank ok (obvs quoted if not it'd be several tokens)*/
 char	*expand_dollar_redir_file(char *str)
 {
 	if (!str)
