@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/26 10:02:31 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/26 10:03:02 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/27 14:33:16 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,16 @@ SRCS_NAME =	main.c\
 			utils/type_token_utils1.c\
 			utils/type_token_utils2.c\
 			parsing_test.c \
-			token_to_tree.c
+			token_to_leafs.c \
+			new_ast.c \
+			create_child.c \
+			create_complete_command.c \
+			create_logical_expression.c \
+			create_pipeline.c \
+			create_command.c \
+			create_redirection.c \
+			create_prefixes.c \
+			create_suffixes.c
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 

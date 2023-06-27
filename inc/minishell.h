@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/26 10:41:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/27 14:32:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ typedef enum e_type
 	PIPELINE,
 	SIMPLE_COMMAND,
 	CMD_NAME,
+	CMD_ARG,
 	CMD_PREFIX,
 	CMD_SUFFIX,
 	REDIRECTION,
+	OPERATOR,
 	FILENAME,
 }	t_type;
 
@@ -73,6 +75,13 @@ typedef struct s_node
 
 }	t_node;
 
+typedef struct s_ast
+{
+	t_type	type;
+	void	*data;
+	t_llist	*children;
+}	t_ast;
+
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
 
@@ -81,7 +90,7 @@ t_llist	*tokenization(t_llist *llst);
 
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
-t_llist	*token_to_tree(t_llist	*token_list);
+t_llist	*token_to_leaf(t_llist	*token_list);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);
@@ -117,5 +126,13 @@ int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
 
 /*	ast */
-t_llist	*create_ast(t_llist *token_list);
+t_ast	*new_ast(t_type	type, void *data, t_llist *children);
+t_llist	*create_child(t_llist	*leaf, t_ast *(*create)(t_llist *));
+t_ast	*create_complete_command(t_llist	*token_list);
+t_ast	*create_pipeline(t_llist *token_list);
+t_ast	*create_logical_expression(t_llist	*token_list);
+t_ast	*create_command(t_llist	*token_list);
+t_llist	*create_suffixes(t_llist *leaf_list);
+t_llist	*create_prefixes(t_llist *leaf_list);
+t_ast	*create_redirection(t_llist	*leaf_list);
 #endif

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 16:28:22 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/27 23:07:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/27 23:09:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_llist	*get_next_command(t_llist	*leaf_list)
 	command = create_child(llstextract_range(&leaf_list, leaf_list, pipe_pos), create_command);
 	if (command == NULL)
 		return (NULL);
-	llstremoveone(&leaf_list, pipe_pos, free);
+	llstremoveone(&leaf_list, pipe_pos, (void (*)(void *))free_ast);
 	return (command);
 }
 
@@ -44,7 +44,7 @@ t_ast	*create_pipeline(t_llist *leaf_list)
 
 	while (leaf_list == NULL)
 	{
-		child = get_next_commands(leaf_list);
+		child = get_next_command(leaf_list);
 		if (child == NULL)
 			return (NULL);
 		llstadd_back(&children, child);
