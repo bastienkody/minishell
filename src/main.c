@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/26 10:11:00 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/27 16:31:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	char *line;
 	t_llist *token_list;
-	t_llist	*tree_list;
+	t_llist	*leaf_list;
 	t_llist *error;
+	t_ast	*ast;
 
 	(void)argv;
 	if (!argc || !envp)
@@ -56,8 +57,10 @@ int	main(int argc, char **argv, char **envp)
 		error = llstfind_if(token_list, (int(*)(void *))is_token_error);
 		if (error != NULL)
 			print_token_error(*(t_token *)error->content);
-		tree_list = token_to_tree(token_list);
-		(void)tree_list;
+		leaf_list = token_to_leaf(token_list);
+		(void)leaf_list;
+		ast = create_complete_command(leaf_list);
+		printf("%p\n", ast);
 	}
 	llstclear(&token_list, free);
 }

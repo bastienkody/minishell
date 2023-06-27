@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reduce.c                                           :+:      :+:    :+:   */
+/*   token_to_leafs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 19:43:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/25 19:50:07 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/25 17:53:16 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/27 13:55:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	reduce(t_llist	*tree_list, int n, t_node	*node)
+static t_ast	*new_leaf(t_token *token)
 {
-	t_llist	*extract;
-	t_ntree	*replace_tree;
-	t_llist	*replace_node;
+	char	*text;
 
-	extract = llstextract_range(&tree_list, llstnext(tree_list, n));
-	replace_tree = ntree_new(node);
-	if (replace_tree == NULL)
-		return (0);
-	replace_node = llstnew(replace_tree);
-	if (replace_node == NULL)
-		return (0);
-	llstadd_front(&tree_list, replace_node);
-	return (1);
+	text = ft_strdup(token->text);
+	if (text == NULL)
+		return (NULL);
+	return(new_ast(token->type, text, NULL));
+}
+
+t_llist	*token_to_leaf(t_llist	*token_list)
+{
+	return(llstmap(token_list, (void *(*)(void *))new_leaf, free));
 }
