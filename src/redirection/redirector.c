@@ -21,7 +21,7 @@ int	open_in(t_token *token)
 {
 	int	fd;
 
-	// expansion to do on token->text
+	// expansion to do on token->text + amb redir
 	if (access(token->text, F_OK))
 		return (err_msg(token, ERR_NSFD), BAD_FD);
 	if (access(token->text, R_OK))
@@ -36,7 +36,7 @@ int	open_out(t_type *type_prev, t_token *token)
 {
 	int	fd;
 
-	// expansion to do on token->text
+	// expansion to do on token->text + amb redir
 	if (!access(token->text, F_OK) && access(token->text, W_OK))
 		return (err_msg(token, ERR_PERMDEN), BAD_FD);
 	if (*type_prev == great)

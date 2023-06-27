@@ -14,7 +14,6 @@
 
 /*	append expanded word to ret ; returns actualized str	
 	wd, wd_end and ret no need to be protected (cf. notion)	*/
-//isblanknldollar -> need to add squote and dquote at least
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word;
@@ -59,6 +58,13 @@ char	*expand_dollar(char *str, char **envp)
 			return (NULL);
 	}
 	return (free(str), ret);
+}
+
+char	*expand_dollar_redir_file(char *str)
+{
+	if (!str)
+		return (NULL);
+	return (str);
 }
 
 /*	only dollar + quoted stuff are expanded	
