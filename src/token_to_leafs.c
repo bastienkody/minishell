@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstfind_if_reverse.c                              :+:      :+:    :+:   */
+/*   token_to_leafs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 10:45:31 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/25 17:53:16 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:43:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../inc/minishell.h"
 
-t_llist	*llstfind_if_reverse(t_llist *llst, int (*p)(void *))
+static t_ast	*new_leaf(t_token *token)
 {
-	t_llist	*last = llstlast(llst);
+	char	*text;
 
-	while (last != NULL)
-	{
-		if (p(last->content))
-			return (last);
-		last = last->prev;
-	}
-	return (NULL);
+	text = ft_strdup(token->text);
+	if (text == NULL)
+		return (NULL);
+	return (new_ast(token->type, text, NULL));
+}
+
+t_llist	*token_to_leaf(t_llist	*token_list)
+{
+	return (llstmap(token_list, (void *(*)(void *))new_leaf, free));
 }

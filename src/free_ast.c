@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstfind_if_reverse.c                              :+:      :+:    :+:   */
+/*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 10:45:31 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/28 13:48:48 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:45:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../inc/minishell.h"
 
-t_llist	*llstfind_if_reverse(t_llist *llst, int (*p)(void *))
+void	free_ast(t_ast *ast)
 {
-	t_llist	*last = llstlast(llst);
-
-	while (last != NULL)
-	{
-		if (p(last->content))
-			return (last);
-		last = last->prev;
-	}
-	return (NULL);
+	free(ast->data);
+	llstclear(&(ast->children), (void (*)(void *))free_ast);
 }
