@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:00:21 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/20 19:17:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/28 15:50:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,13 @@ void	llstremove_if(t_llist **llst, int (*p)(void *), void (*del)(void *))
 {
 	t_llist	*current;
 	t_llist	*next;
-	t_llist	*prev;
 
 	current = *llst;
 	while (current != NULL)
 	{
-		prev = current->prev;
 		next = current->next;
 		if (p(current->content))
-		{
-			prev->next = next;
-			next->prev = prev;
-			llstdelone(current, del);
-		}
+			llstremoveone(llst, current, del);
 		current = next;
 	}
 }

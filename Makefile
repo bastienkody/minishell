@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/26 10:02:31 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/27 14:33:16 by aguyon           ###   ########.fr        #
+#    Updated: 2023/06/28 14:02:07 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,10 @@ SRCS_NAME =	main.c\
 			create_command.c \
 			create_redirection.c \
 			create_prefixes.c \
-			create_suffixes.c
+			create_suffixes.c \
+			utils/parsing_utils.c \
+			check_syntax.c \
+			free_ast.c
 
 SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 

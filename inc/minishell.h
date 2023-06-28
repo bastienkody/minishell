@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/27 14:32:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/28 14:01:57 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
+int		check_syntax(t_llist	*token_list);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);
@@ -135,4 +136,10 @@ t_ast	*create_command(t_llist	*token_list);
 t_llist	*create_suffixes(t_llist *leaf_list);
 t_llist	*create_prefixes(t_llist *leaf_list);
 t_ast	*create_redirection(t_llist	*leaf_list);
+void	free_ast(t_ast *ast);
+
+int		is_node_word(t_ast	*node);
+int		is_node_logical_operator(t_ast	*node);
+int		is_node_pipe(t_ast	*node);
+int		is_node_redirection(t_ast	*node);
 #endif

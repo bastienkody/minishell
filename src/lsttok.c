@@ -6,11 +6,56 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:08:11 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/16 15:35:06 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/28 15:44:21 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static size_t	_len_delim(const char *str)
+{
+	size_t		len;
+
+	if (!ft_strchr(" \t", *str) && ft_strchr("<>&|", *str))
+	{
+		len = 1;
+		if (*str == *(str + 1))
+			len++;
+	}
+	else
+		len = strfind_not(str, *str) - str;
+	return (len);
+}
+
+static size_t	_word_len(const char *str)
+{
+	size_t	len;
+	int		is_inside_quote;
+	char	quote;
+
+	len = 0;
+	is_inside_quote = 0;
+	quote = '\0';
+	while (*str != '\0' && ft_strchr(DELIM, *str) == NULL)
+	{
+		if (ft_strchr("\"\'", *str))
+		{
+			if (is_inside_quote && *str == quote)
+			{
+				is_inside_quote = 0;
+				quote = '\0';
+			}
+			else if (!is_inside_quote)
+			{
+				is_inside_quote = 1;
+				quote = *str;
+			}
+		}
+		len++;
+		str++;
+	}
+	return (len);
+}
 
 static size_t	_substr_len(const char *str)
 {
@@ -19,13 +64,9 @@ static size_t	_substr_len(const char *str)
 	if (ft_strchr("()", *str) != NULL)
 		len = 1;
 	else if (ft_strchr(DELIM, *str))
-		len = strfind_not(str, *str) - str;
-	else if (*str == '\'')
-		len = strfind(str + 1, '\'') - str + 1;
-	else if (*str == '\"')
-		len = strfind(str + 1, '\"') - str + 1;
+		len = _len_delim(str);
 	else
-		len = strfind_if(str, isdelim) - str;
+		len = _word_len(str);
 	return (len);
 }
 

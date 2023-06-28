@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_ast.c                                       :+:      :+:    :+:   */
+/*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 11:22:08 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/26 11:24:06 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/28 13:48:48 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:45:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_ntree	*create_ast(t_llist	*token_tree)
+void	free_ast(t_ast *ast)
 {
-	t_llist	*tree_list;
-	t_
+	free(ast->data);
+	llstclear(&(ast->children), (void (*)(void *))free_ast);
 }

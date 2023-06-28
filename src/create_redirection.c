@@ -6,23 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 19:24:08 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/27 14:14:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/28 09:26:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-static int is_redirection_node(t_ast	*ast)
-{
-	const t_type	type = ast->type;
-
-	return (type == less || type == great || type == dless || type == dgreat);
-}
-
-static int is_word_node(t_ast	*ast)
-{
-	return (ast->type == word);
-}
 
 static t_ast	*create_operator(t_llist *leaf)
 {
@@ -41,7 +29,7 @@ t_ast	*create_redirection(t_llist	*leaf_list)
 
 	if (llstsize(leaf_list) != 2)
 		return (NULL);
-	if (!is_redirection_node(leaf_list->content) || !is_word_node(leaf_list->next->content))
+	if (!is_node_redirection(leaf_list->content) || !is_node_word(leaf_list->next->content))
 		return (NULL);
 	children = NULL;
 	child = create_child(llstextractone(&leaf_list, leaf_list), create_operator);
