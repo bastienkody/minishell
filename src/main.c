@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-static const char *g_type_str[] = {"ok", "and", "pipe", "great", "less", "dgreat", "dless", "compound", "word", "error", "COMPLETE_COMMAND", "LOGICAL_EXPRESSION", "PIPELINE", "SIMPLE_COMMAND", "CMD_NAME", "CMD_ARG", "CMD_PREFIX", "CMD_SUFFIX", "REDIRECTION", "OPERATOR", "FILENAME"};
+static const char *g_type_str[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless", "compound", "word", "error", "COMPLETE_COMMAND", "LOGICAL_EXPRESSION", "PIPELINE", "SIMPLE_COMMAND", "CMD_NAME", "CMD_ARG", "CMD_PREFIX", "CMD_SUFFIX", "REDIRECTION", "OPERATOR", "FILENAME"};
 
 int	is_token_error(t_llist *llst)
 {
@@ -36,6 +36,8 @@ void	print_ast(t_ast *ast)
 	if (ast == NULL)
 		return ;
 	printf("%s\n", type_to_string(ast->type));
+	if (ast->type > 0 && ast->type < 9)
+		printf(": %s\n", (char *)ast->data);
 	llstiter(ast->children, (void (*)(void *))print_ast);
 }
 

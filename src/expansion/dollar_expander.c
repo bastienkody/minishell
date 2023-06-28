@@ -92,7 +92,8 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 	touch truc >  "yo $USER" --> ok (single word)
 	ccl :
 	- le redir file doit etre un single WORD apres expansion
-	- si quote : blank acceptables
+	- si quote (en dehors de l'expansion) : blank acceptables
+	- si quote dans lexpansion ($B) : blank dans l'expansion pas ok sauf si quote dans la cmd line
 	- si pas quote : aucun blank (peu importe si expand ou pas)	*/
 char	*expand_dollar_redir_file(char *str, char **envp)
 {
@@ -106,6 +107,7 @@ char	*expand_dollar_redir_file(char *str, char **envp)
 	if (!ret)
 		return (free(str), NULL);
 	if (!is_str_quote_enclosed(ret) && is_there_a_blank(ret))
+// verification des espaces dans l'expansion a faire uniquemnent sur ce qui est expandu (le $B passe ok en l'etat)
 		return (err_msg(str, ERR_AMB_REDIR), free(str), free(ret), NULL);
 	return (free(str), ret);
 }

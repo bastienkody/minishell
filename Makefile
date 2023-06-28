@@ -14,7 +14,7 @@ HEADER = ./inc/minishell.h
 
 SRC_DIR = ./src/
 
-SRCS_NAME =	main_test.c\
+SRCS_NAME =	main.c\
 			lsttok.c\
 			compound_cmd.c\
 			printers.c\
@@ -31,7 +31,7 @@ SRCS_NAME =	main_test.c\
 			utils/type_token_utils1.c\
 			utils/type_token_utils2.c\
 			expansion/utils_expansion.c\
-			expansion/dollar_expander.c\ \
+			expansion/dollar_expander.c\
 			token_to_leafs.c \
 			new_ast.c \
 			create_child.c \

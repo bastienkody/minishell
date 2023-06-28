@@ -107,6 +107,9 @@ t_llist	*tokenization(t_llist *llst);
 
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
+t_llist	*token_to_leaf(t_llist	*token_list);
+int		check_syntax(t_llist *token_list);
+
 
 /*	utils token	*/
 int		is_str_op_p(const char *str);
@@ -121,6 +124,13 @@ int		isdelim(int c);
 char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
 char	*strfind_if(const char *str, int (*f)(int));
+
+/*	utils general	*/
+char	*strjoin(const char *s1, const char *s2);
+char	*strjoin2(const char *s1, const char *s2);
+char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+char	*str_one_char_join(char *str, char c);
+void	*ft_realloc(void *ptr, size_t size);
 
 /*	basics expansion	*/
 char	*get_key(char *line);
@@ -149,6 +159,7 @@ int		open_here_doc(char *lim, char **envp);
 void	print_item(void *item);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
+void	err_msg(char *str, char *err);
 
 /*	token_type_predicate	*/
 int		is_str_or(const char *str);
