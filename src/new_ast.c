@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstfind_if_reverse.c                              :+:      :+:    :+:   */
+/*   new_ast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 10:45:31 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/26 16:39:07 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/26 17:59:21 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../inc/minishell.h"
 
-t_llist	*llstfind_if_reverse(t_llist *llst, int (*p)(void *))
+t_ast	*new_ast(t_type	type, void *data, t_llist *children)
 {
-	t_llist	*last = llstlast(llst);
+	t_ast	*new;
 
-	while (last != NULL)
-	{
-		if (p(last->content))
-			return (last);
-		last = last->prev;
-	}
-	return (NULL);
+	new = malloc(sizeof(t_ast));
+	if (new == NULL)
+		return (NULL);
+	*new = (t_ast){type, data, children};
+	return (new);
 }

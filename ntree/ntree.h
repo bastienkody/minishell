@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstfind_if_reverse.c                              :+:      :+:    :+:   */
+/*   ntree.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 10:45:31 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/23 12:38:22 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/26 16:37:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#ifndef NTREE_H
+# define NTREE_H
 
-t_llist	*llstfind_if_reverse(t_llist *llst, int (*p)(void *))
+# include "../llist/llist.h"
+
+typedef struct s_ntree
 {
-	t_llist	*last = llstlast(llst);
+	void	*item;
+	t_llist	*children;
+}	t_ntree;
 
-	while (last != NULL)
-	{
-		if (p(last->content))
-			return (last);
-		last = last->prev;
-	}
-	return (NULL);
-}
+void	ntree_add_children(t_ntree *ntree, t_llist	*children);
+void	ntree_clear(t_ntree **ntree, void (*del)(void *));
+t_ntree	*ntree_new(void *item);
+
+#endif

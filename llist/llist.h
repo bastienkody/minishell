@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/21 21:13:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/26 18:37:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ t_llist	*llstnext(t_llist *llst, size_t n);
 t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),
 			void (*del)(void *));
-void	llstremove_range(t_llist **begin, t_llist *end, void (*del)(void *));
+void	llstremove_range(t_llist **begin_llst, t_llist *begin, t_llist *end, void (*del)(void *));
+void	llstremoveone(t_llist **begin, t_llist *llst, void (*del)(void *));
 int		llstall_of(t_llist *llst, int (*p)(void *));
 int		llstany_of(t_llist *llst, int (*p)(void *));
 int		llstnone_of(t_llist *llst, int (*p)(void *));
 void	*llstmax(t_llist *llst, int (*comp)(void *, void *));
+void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
 void	*llstmin(t_llist *llst, int (*comp)(void *, void *));
 int		llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
 int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
@@ -57,7 +59,9 @@ int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
 			void del(void *));
 // t_llist	*llstextract(t_llist *llst);
-t_llist	*llstextract_range(t_llist *begin, t_llist *end);
+t_llist	*llstextract_range(t_llist **begin_llst, t_llist *begin, t_llist *end);
+t_llist	*llstextractone(t_llist **begin_llst, t_llist *llst);
 void	llstremove_if(t_llist **llst, int (*p)(void *), void (*del)(void *));
+void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
 
 #endif
