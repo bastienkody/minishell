@@ -17,33 +17,38 @@ void	err_msg(t_token *token, char *err)
 	ft_fprintf(2, "minishell: %s: %s\n", token->text, err);
 }
 
-int	open_in(t_token *token)
+int	open_in(t_token *token, char **envp)
 {
 	int	fd;
 
-	// expansion to do on token->text + amb redir
+	token->text = expand_dollar_redir_file(token->text, envp);
+	if (!token->text)
+		return (-1);
 	if (access(token->text, F_OK))
 		return (err_msg(token, ERR_NSFD), BAD_FD);
 	if (access(token->text, R_OK))
 		return (err_msg(token, ERR_PERMDEN), BAD_FD);
 	fd = open(token->text, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		perror("open infile");
 	return (fd);
 }
 
-int	open_out(t_type *type_prev, t_token *token)
+int	open_out(t_type *type_prev, t_token *token, char **envp)
 {
 	int	fd;
 
-	// expansion to do on token->text + amb redir
+	token->text = expand_dollar_redir_file(token->text, envp);
+	if (!token->text)
+		return (-1);
 	if (!access(token->text, F_OK) && access(token->text, W_OK))
 		return (err_msg(token, ERR_PERMDEN), BAD_FD);
+	fd = -1;
 	if (*type_prev == great)
 		fd = open(token->text, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	else if (*type_prev == dgreat)
 		fd = open(token->text, O_APPEND | O_WRONLY | O_CREAT, 00644);
-	if (!fd)
+	if (fd < 0)
 		perror("open outfile");
 	return (fd);
 }

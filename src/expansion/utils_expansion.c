@@ -24,6 +24,19 @@ int	is_c_blank_nl_dollar_s_d_quote(int c)
 	return (ft_strchr(envar_delim, c) != NULL);
 }
 
+int	is_there_a_blank(char *str)
+{
+	const char	*blank_char = " \t";
+
+	while (str && *str)
+	{
+		if (ft_strchr(blank_char, *str))
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 /*	false=0, singlq=1, doubleq=2	*/
 int	is_str_quote_enclosed(char *str)
 {

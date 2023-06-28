@@ -12,8 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-/*	append expanded word to ret ; returns actualized str	
-	wd, wd_end and ret no need to be protected (cf. notion)	*/
+/*	wd, wd_end and ret no need to be protected (cf. notion)	*/
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word;
@@ -32,8 +31,6 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp)
 	return (word_end);
 }
 
-/*	only dollar on not s_quoted stuff	
-	input str can be null 	*/
 char	*expand_dollar(char *str, char **envp)
 {
 	char	*tmp;
@@ -69,10 +66,15 @@ char	*expand_dollar(char *str, char **envp)
 	ccl :
 	-si expansion = pas de blank (meme si quoted)
 	-sans expansion = blank ok (obvs quoted if not it'd be several tokens)*/
-char	*expand_dollar_redir_file(char *str)
+char	*expand_dollar_redir_file(char *str, char **envp)
 {
+	char	*ret;
+
 	if (!str)
 		return (NULL);
+	ret = expand_dollar(str, envp);
+	if (!ret || is_there_a_blank())
+		ret++;
 	return (str);
 }
 
