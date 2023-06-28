@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ntree_new.c                                        :+:      :+:    :+:   */
+/*   token_to_leafs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:41:30 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/23 13:12:47 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/25 17:53:16 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:43:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ntree.h"
+#include "../inc/minishell.h"
 
-t_ntree	*ntree_new(void *item)
+static t_ast	*new_leaf(t_token *token)
 {
-	t_ntree	*new;
+	char	*text;
 
-	new = malloc(sizeof(t_ntree));
-	if (new == NULL)
+	text = ft_strdup(token->text);
+	if (text == NULL)
 		return (NULL);
-	*new = (t_ntree){item, NULL};
-	return (new);
+	return (new_ast(token->type, text, NULL));
+}
+
+t_llist	*token_to_leaf(t_llist	*token_list)
+{
+	return (llstmap(token_list, (void *(*)(void *))new_leaf, free));
 }

@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ntree_new.c                                        :+:      :+:    :+:   */
+/*   new_ast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:41:30 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/23 13:12:47 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/26 16:39:07 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/26 17:59:21 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ntree.h"
+#include "../inc/minishell.h"
 
-t_ntree	*ntree_new(void *item)
+t_ast	*new_ast(t_type	type, void *data, t_llist *children)
 {
-	t_ntree	*new;
+	t_ast	*new;
 
-	new = malloc(sizeof(t_ntree));
+	new = malloc(sizeof(t_ast));
 	if (new == NULL)
 		return (NULL);
-	*new = (t_ntree){item, NULL};
+	*new = (t_ast){type, data, children};
 	return (new);
 }

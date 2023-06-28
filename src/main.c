@@ -6,11 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/21 21:56:54 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/28 11:30:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static const char *g_type_str[] = {"ok", "and", "pipe", "great", "less", "dgreat", "dless", "compound", "word", "error", "COMPLETE_COMMAND", "LOGICAL_EXPRESSION", "PIPELINE", "SIMPLE_COMMAND", "CMD_NAME", "CMD_ARG", "CMD_PREFIX", "CMD_SUFFIX", "REDIRECTION", "OPERATOR", "FILENAME"};
 
 int	is_token_error(t_llist *llst)
 {
@@ -24,12 +26,26 @@ void	print_token_error(t_token token)
 	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.text);
 }
 
+const char *type_to_string(t_type type)
+{
+	return (g_type_str[type]);
+}
+
+void	print_ast(t_ast *ast)
+{
+	if (ast == NULL)
+		return ;
+	printf("%s\n", type_to_string(ast->type));
+	llstiter(ast->children, (void (*)(void *))print_ast);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char *line;
 	t_llist *token_list;
-	t_btree	*ast;
+	t_llist	*leaf_list;
 	t_llist *error;
+	t_ast	*ast;
 
 	(void)argv;
 	if (!argc || !envp)
@@ -55,9 +71,20 @@ int	main(int argc, char **argv, char **envp)
 		llstiter(token_list, (void(*)(void *))print_token);
 		error = llstfind_if(token_list, (int(*)(void *))is_token_error);
 		if (error != NULL)
+		{
 			print_token_error(*(t_token *)error->content);
-	//   ast = create_tree(token_list);
-	  (void)ast;
-  }
+			break ;
+		}
+		if (!check_syntax(token_list))
+		{
+			printf("Syntax error !\n");
+			break ;
+		}
+		leaf_list = token_to_leaf(token_list);
+		(void)leaf_list;
+		ast = create_complete_command(leaf_list);
+		print_ast(ast);
+
+	}
 	llstclear(&token_list, free);
 }

@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ntree_new.c                                        :+:      :+:    :+:   */
+/*   new_ast_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:41:30 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/23 13:12:47 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/26 22:53:07 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/26 22:56:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ntree.h"
+#include "../inc/minishell.h"
 
-t_ntree	*ntree_new(void *item)
+t_llist	*new_ast_child(t_ast *leaf, t_type type, void *data)
 {
-	t_ntree	*new;
+	t_llist	*new;
 
-	new = malloc(sizeof(t_ntree));
-	if (new == NULL)
-		return (NULL);
-	*new = (t_ntree){item, NULL};
-	return (new);
+	new = llstnew();
 }

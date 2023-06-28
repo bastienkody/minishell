@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ntree_new.c                                        :+:      :+:    :+:   */
+/*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:41:30 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/23 13:12:47 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/28 13:48:48 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:45:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ntree.h"
+#include "../inc/minishell.h"
 
-t_ntree	*ntree_new(void *item)
+void	free_ast(t_ast *ast)
 {
-	t_ntree	*new;
-
-	new = malloc(sizeof(t_ntree));
-	if (new == NULL)
-		return (NULL);
-	*new = (t_ntree){item, NULL};
-	return (new);
+	free(ast->data);
+	llstclear(&(ast->children), (void (*)(void *))free_ast);
 }

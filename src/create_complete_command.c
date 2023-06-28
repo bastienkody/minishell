@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ntree_new.c                                        :+:      :+:    :+:   */
+/*   create_complete_command.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:41:30 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/23 13:12:47 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/26 16:21:12 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 09:25:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ntree.h"
+#include "../inc/minishell.h"
 
-t_ntree	*ntree_new(void *item)
+t_ast	*create_complete_command(t_llist *leaf_list)
 {
-	t_ntree	*new;
+	t_llist	*child;
 
-	new = malloc(sizeof(t_ntree));
-	if (new == NULL)
+	if (llstfind_if(leaf_list, (int (*)(void *))is_node_logical_operator))
+		child = create_child(leaf_list, create_logical_expression);
+	else
+		child = create_child(leaf_list, create_pipeline);
+	if (child == NULL)
 		return (NULL);
-	*new = (t_ntree){item, NULL};
-	return (new);
+	return (new_ast(COMPLETE_COMMAND, NULL, child));
 }

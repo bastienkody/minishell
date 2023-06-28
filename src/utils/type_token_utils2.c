@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:08:19 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/22 14:17:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/06/28 15:45:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,27 @@ int	is_str_compound(const char *str)
 
 int	is_str_word(const char *str)
 {
-	const size_t	len = ft_strlen(str);
+	int		is_inside_quote;
+	char	quote;
 
-	if (str[0] == '\'' || str[0] == '\"')
-		if (len < 2 || str[len - 1] != str[0])
-			return (0);
-	return (1);
+	is_inside_quote = 0;
+	quote = '\0';
+	while (*str != '\0')
+	{
+		if (ft_strchr("\'\"", *str))
+		{
+			if (is_inside_quote && *str == quote)
+			{
+				is_inside_quote = 0;
+				quote = '\0';
+			}
+			else if (!is_inside_quote)
+			{
+				is_inside_quote = 1;
+				quote = *str;
+			}
+		}
+		str++;
+	}
+	return (!is_inside_quote);
 }
