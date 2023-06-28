@@ -104,6 +104,7 @@ char	*extract_wd(char *start, char *end);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
+int		is_c_d_quote(int c);
 int		is_there_a_blank(char *str);
 int		is_str_quote_enclosed(char *str);
 int		is_c_blank_nl_dollar_s_d_quote(int c);
@@ -119,5 +120,6 @@ void	print_item(void *item);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
 void	print_env(char **envp);
+void	err_msg(char *str, char *err);
 
 #endif

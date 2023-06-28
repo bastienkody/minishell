@@ -12,9 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-void	err_msg(t_token *token, char *err)
+void	err_msg(char *str, char *err)
 {
-	ft_fprintf(2, "minishell: %s: %s\n", token->text, err);
+	ft_fprintf(2, "minishell: %s: %s\n", str, err);
 }
 
 int	open_in(t_token *token, char **envp)
@@ -25,9 +25,9 @@ int	open_in(t_token *token, char **envp)
 	if (!token->text)
 		return (-1);
 	if (access(token->text, F_OK))
-		return (err_msg(token, ERR_NSFD), BAD_FD);
+		return (err_msg(token->text, ERR_NSFD), BAD_FD);
 	if (access(token->text, R_OK))
-		return (err_msg(token, ERR_PERMDEN), BAD_FD);
+		return (err_msg(token->text, ERR_PERMDEN), BAD_FD);
 	fd = open(token->text, O_RDONLY);
 	if (fd < 0)
 		perror("open infile");
@@ -42,7 +42,7 @@ int	open_out(t_type *type_prev, t_token *token, char **envp)
 	if (!token->text)
 		return (-1);
 	if (!access(token->text, F_OK) && access(token->text, W_OK))
-		return (err_msg(token, ERR_PERMDEN), BAD_FD);
+		return (err_msg(token->text, ERR_PERMDEN), BAD_FD);
 	fd = -1;
 	if (*type_prev == great)
 		fd = open(token->text, O_TRUNC | O_WRONLY | O_CREAT, 00644);
