@@ -59,3 +59,8 @@ char	*expand_wd(char *word, char **envp)
 	}
 	return (free(word), ft_strdup(""));
 }
+
+int	check_amb_redir(char *str)
+{
+	
+}

@@ -14,7 +14,7 @@ HEADER = ./inc/minishell.h
 
 SRC_DIR = ./src/
 
-SRCS_NAME =	main.c\
+SRCS_NAME =	main_test.c\
 			lsttok.c\
 			compound_cmd.c\
 			printers.c\

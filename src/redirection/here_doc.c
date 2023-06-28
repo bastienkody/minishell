@@ -46,8 +46,7 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 	return (free(line), free(data), 1);
 }
 
-/*	create+open tmpfile in w, launch_hd to it. close n reopen in r	
-	code retour des fd different de -1 si malloc echoue pour pouvoir quitter le programme et pas juste skip la commande*/
+/*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
 int	open_here_doc(char *lim, char **envp)
 {
 	int			fd;
@@ -56,13 +55,13 @@ int	open_here_doc(char *lim, char **envp)
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb), HD_END);
 	if (!pathname)
-		return (BAD_FD);
+		return (MALLOC_FAIL_REDIR);
 	nb++;
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (free(pathname), perror("open here_doc in w"), BAD_FD);
 	if (!launch_here_doc(fd, lim, envp))
-		return (free(pathname), close (fd), BAD_FD); // malloc err during launch_hd must stop whole exec ?
+		return (free(pathname), close (fd), MALLOC_FAIL_REDIR);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)

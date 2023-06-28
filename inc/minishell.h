@@ -28,6 +28,7 @@
 # define TRUE 1
 # define FALSE 0
 # define BAD_FD -1
+# define MALLOC_FAIL_REDIR -2
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
