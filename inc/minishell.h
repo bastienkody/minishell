@@ -101,16 +101,20 @@ char	*get_key(char *line);
 char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
-
-/*	dollar expansion	*/
 int		is_c_dollar(int c);
-int		is_c_d_quote(int c);
+int		is_c_quote(int c);
 int		is_there_a_blank(char *str);
 int		is_str_quote_enclosed(char *str);
 int		is_c_blank_nl_dollar_s_d_quote(int c);
+
+/*	dollar expansion	*/
 char	*expand_dollar(char *str, char **envp);
 char	*expand_dollar_here_doc(char *str, char **envp);
 char	*expand_dollar_redir_file(char *str, char **envp);
+
+/*	general expansion	*/
+char	*rm_peer_quotes(char *str);
+char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_here_doc(char *lim, char **envp);

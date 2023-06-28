@@ -17,11 +17,6 @@ int	is_c_dollar(int c)
 	return (c == '$');
 }
 
-int	is_c_d_quote(int c)
-{
-	return (c == '\"');
-}
-
 int	is_c_blank_nl_dollar_s_d_quote(int c)
 {
 	const char	*envar_delim = " \t\n$\'\"";
@@ -43,6 +38,15 @@ int	is_there_a_blank(char *str)
 }
 
 /*	false=0, singlq=1, doubleq=2	*/
+int	is_c_quote(int c)
+{
+	if (c == '\'')
+		return (1);
+	if (c == '\"')
+		return (2);
+	return (0);
+}
+
 int	is_str_quote_enclosed(char *str)
 {
 	if ((str[0] == '\'') && str[0] == str[ft_strlen(str) - 1])

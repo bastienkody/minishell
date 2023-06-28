@@ -51,7 +51,7 @@ char	*expand_dollar(char *str, char **envp)
 		return (free(ret), free(tmp), NULL);
 	while (*tmp)
 	{
-		if (is_c_d_quote(*tmp))
+		if (is_c_quote(*tmp) == 2)
 			is_under_d_quote *= -1;
 		next_s_quote = ft_strchr(tmp + 1, S_QUOTE);
 		if (is_under_d_quote < 0 && *tmp == S_QUOTE && next_s_quote)
