@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-
 /*pour gerer le amb redirect dans expand_redir_file : 
 	- get_next_word_exp : return 1 ou 0 si ya un espace dans word
 	- modifie toujours ret par reference
@@ -25,7 +24,7 @@
 	--> passer un arg est trop deg et lourd aussi
 	--> j'essaye 1 fct annexe qui reparcourt str et check sur ce qui peut 
 		etre expand si ya des espaces : pas super opti mais plus propre. 
-
+*/
 /*	wd, wd_end and ret no need to be protected (cf. notion)	*/
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {

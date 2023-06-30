@@ -15,7 +15,6 @@
 /*	to apply on all WORD, but not on here_doc data	*/
 char	*rm_peer_quotes(char *str)
 {
-	char	*open_quote;
 	char	*close_quote;
 	char	*ret;
 	
@@ -26,7 +25,6 @@ char	*rm_peer_quotes(char *str)
 	{
 		if (is_c_quote(*str))
 		{
-			open_quote = str;
 			if (is_c_quote(*str) == 1)
 				close_quote = strfind(str + 1, '\'');
 			else

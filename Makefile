@@ -1,79 +1,96 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/26 10:02:31 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/28 14:02:07 by aguyon           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+###		SOURCE FILES	###
 
-HEADER = ./inc/minishell.h
+HEADER		=	./inc/minishell.h
 
-SRC_DIR = ./src/
+EXECU_DIR	=	execution/
+XPAND_DIR	=	expansion/
+REDIR_DIR	=	redirection/
+TOKEN_DIR	=	token/
+TREE_DIR	=	tree/
+UTILS_DIR	=	utils/
+MAIN_DIR	=	./
+SRC_DIR		=	./src/
 
-SRCS_NAME =	main_test.c\
-			lsttok.c\
-			compound_cmd.c\
-			printers.c\
-			tree_printers.c\
-			type_token.c\
-			parsing_test.c\
-			utils/token_utils.c\
-			utils/strjoin.c\
-			utils/lsttok_utils.c\
-			utils/ft_realloc.c\
-			redirection/redirector.c\
-			redirection/here_doc.c\
-			expansion/basics_expansion.c\
-			utils/type_token_utils1.c\
-			utils/type_token_utils2.c\
-			expansion/utils_expansion.c\
-			expansion/dollar_expander.c\
-			token_to_leafs.c \
-			new_ast.c \
-			create_child.c \
-			create_complete_command.c \
-			create_logical_expression.c \
-			create_pipeline.c \
-			create_command.c \
-			create_redirection.c \
-			create_prefixes.c \
-			create_suffixes.c \
-			utils/parsing_utils.c \
-			check_syntax.c \
-			free_ast.c
+EXECU_NAME	=	
 
-SRCS = 	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
+XPAND_NAME	=	utils_expansion.c\
+				basics_expansion.c\
+				dollar_expander.c\
+				quote_removal.c
 
-OBJS =	${SRCS:.c=.o}
+REDIR_NAME	=	redirector.c\
+				here_doc.c
 
-NAME =	minishell
+TOKEN_NAME	=	type_token.c\
+				lsttok.c\
+				parsing_test.c\
+				compound_cmd.c\
+				check_syntax.c
 
-LIBFT = ./libft/libft.a
+TREE_NAME	=	new_ast.c\
+				new_ast_child.c\
+				free_ast.c\
+				token_to_leafs.c\
+				tree_printers.c\
+				create_complete_command.c\
+				create_logical_expression.c\
+				create_pipeline.c\
+				create_command.c\
+				create_prefixes.c\
+				create_suffixes.c\
+				create_redirection.c\
+				create_child.c
 
-LLST = ./llist/libllst.a
+UTILS_NAME	=	ft_realloc.c\
+				strjoin.c\
+				printers.c\
+				lsttok_utils.c\
+				parsing_utils.c\
+				token_utils.c\
+				type_token_utils1.c\
+				type_token_utils2.c
 
-BTREE = ./btree/libbtree.a
+MAIN_NAME	=	main.c
 
-NTREE = ./ntree/libntree.a
+EXECU_SRC	=	$(addprefix ${EXEC_DIR}, ${EXEC_NAME})
+XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
+REDIR_SRC	=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
+TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
+TREE_SRC	=	$(addprefix ${TREE_DIR}, ${TREE_NAME})
+UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
+MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 
-CC =	cc
+SRCS_NAME	=	${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
+				${TREE_SRC} ${UTILS_SRC} ${MAIN_SRC}
 
-CFLAGSDEV =	-Wall -Wextra -Werror -g3
+SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
+OBJS		=	${SRCS:.c=.o}
 
-CFLAGS =	-Wall -Wextra -Werror
 
-LDFLAGS =	-L./libft -lft -L./llist -lllst -L./btree -lbtree -L./ntree -lntree -lreadline
+###		DEFINITIONS		###
+NAME		=	minishell
 
+LIBFT		=	./libft/libft.a
+LLST		=	./llist/libllst.a
+BTREE		=	./btree/libbtree.a
+NTREE		=	./ntree/libntree.a
+
+CC			=	cc
+
+CFLAGS		=	-Wall -Wextra -Werror
+CFLAGSDEV	=	-Wall -Wextra -Werror -g3
+
+LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./btree -lbtree\
+				-L./ntree -lntree -lreadline
+
+
+###		RULES		###
 .c.o:
-		@echo "\033[32m\c"
-		${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
-		@echo "\033[0m\c"
+			@echo "\033[32m\c"
+			${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
+			@echo "\033[0m\c"
 
-all:	${NAME}
+all:		${NAME}
 
 ${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${BTREE} ${NTREE}
 			@echo "\033[32m\c"
@@ -101,23 +118,23 @@ ${NTREE}:
 			@echo "\033[33mntree compiled\033[0m"
 
 clean:
-		@rm -rf ${OBJS}
-		@echo "\033[32m${NAME} obj cleaned"
-		@make --no-print-directory clean -C libft/
-		@make --no-print-directory clean -C llist/
-		@make --no-print-directory clean -C btree/
-		@make --no-print-directory clean -C ntree/
+			@rm -rf ${OBJS}
+			@echo "\033[32m${NAME} obj cleaned"
+			@make --no-print-directory clean -C libft/
+			@make --no-print-directory clean -C llist/
+			@make --no-print-directory clean -C btree/
+			@make --no-print-directory clean -C ntree/
 
 fclean:		clean
-		@rm -rf ${NAME}
-		@echo "\033[32m${NAME} fcleaned"
-		@make --no-print-directory fclean -C libft/
-		@make --no-print-directory fclean -C llist/
-		@make --no-print-directory fclean -C btree/
-		@make --no-print-directory fclean -C ntree/
+			@rm -rf ${NAME}
+			@echo "\033[32m${NAME} fcleaned"
+			@make --no-print-directory fclean -C libft/
+			@make --no-print-directory fclean -C llist/
+			@make --no-print-directory fclean -C btree/
+			@make --no-print-directory fclean -C ntree/
 
-re:		fclean all
+re:			fclean all
 
-noob: ${NAME} clean
+noob: 		${NAME} clean
 
-.PHONY:	all clean re noob
+.PHONY:		all clean re noob

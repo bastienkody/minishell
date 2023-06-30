@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /*	return str that join content from begin to end	*/
 t_llist	*join_token(t_llist *begin, t_llist *end)
