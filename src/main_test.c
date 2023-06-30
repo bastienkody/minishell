@@ -19,16 +19,22 @@
 //redire file expansion
 int	main(int argc, char **argv, char **envp)
 {
-	char	*str = ft_strdup("salut $USER etre $RTRTRTRT $truc");
+	char	*str = ft_strdup("\'\"$truc\"\'");
+	char	*ret;
 
 	if (argc > 1)
 	{
 		free(str);
 		str = ft_strdup(argv[1]);
 	}
-	ft_fprintf(1, "%i\n", check_amb_redir(str, envp));
-	//ft_fprintf(1, "%s\n", str);
-	free(str);
+	if (check_amb_redir(str, envp))
+
+		ft_fprintf(1, "ok :");
+	else
+		ft_fprintf(1, "KO :");
+	ret = expand_dollar(str, envp);
+	ft_fprintf(1, "%s\n", ret);
+	free(ret);
 }
 
 // normal dollar expansion

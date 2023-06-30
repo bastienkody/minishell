@@ -12,6 +12,8 @@
 
 #include "../../inc/minishell.h"
 
+// gerer sans erreur les cas ou envp est null (env -i ./minishell)
+
 /*	wd, wd_end and ret no need to be protected (cf. notion)	*/
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
@@ -42,7 +44,7 @@ char	*expand_dollar(char *str, char **envp)
 	is_under_d_quote = -1;
 	tmp = str;
 	ret = ft_strdup("");
-	if (!ret || !tmp || !envp)
+	if (!ret || !tmp)
 		return (free(ret), free(tmp), NULL);
 	while (*tmp)
 	{
@@ -54,7 +56,8 @@ char	*expand_dollar(char *str, char **envp)
 		else
 			tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (NULL);
+			return (free(tmp), free(ret), NULL); 
+		// double free possible on tmp (str) when freeing the tree?
 	}
 	return (free(str), ret);
 }
@@ -67,13 +70,13 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 
 	tmp = str;
 	ret = ft_strdup("");
-	if (!ret || !envp)
+	if (!ret)
 		return (free(ret), NULL);
 	while (*tmp)
 	{
 		tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (NULL);
+			return (free(tmp), free(ret), NULL);
 	}
 	return (free(str), ret);
 }
@@ -82,17 +85,15 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 int	check_amb_redir(char *str, char **envp)
 {
 	char	*word;
-	char	*next_s_quote;
-	int		is_under_d_quote;
+	int		under_d_quote;
 
-	is_under_d_quote = -1;
+	under_d_quote = -1;
 	while (str && *str)
 	{
 		if (*str == D_QUOTE)
-			is_under_d_quote *= -1;
-		next_s_quote = ft_strchr(str + 1, S_QUOTE);
-		if (is_under_d_quote < 0 && *str == S_QUOTE && next_s_quote)
-			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+			under_d_quote *= -1;
+		if (under_d_quote < 0 && *str == S_QUOTE && ft_strchr(str + 1, S_QUOTE))
+			str = ft_strchr(str + 1, S_QUOTE) + 1;
 		else if (*str == '$')
 		{
 			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
@@ -102,8 +103,10 @@ int	check_amb_redir(char *str, char **envp)
 			if (is_there_a_blank(word) || !ft_strlen(word))
 				return (free(word), FALSE);
 			free(word);
+			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 		}
-		str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+		else
+			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 	}
-	return (free(word), TRUE);
+	return (TRUE);
 }
