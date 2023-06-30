@@ -111,7 +111,6 @@ t_btree	*create_tree(t_llist *token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
 
-
 /*	utils token	*/
 int		is_str_op_p(const char *str);
 int		is_str_cl_p(const char *str);
@@ -133,18 +132,17 @@ char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char	*str_one_char_join(char *str, char c);
 void	*ft_realloc(void *ptr, size_t size);
 
-/*	basics expansion	*/
-char	*get_key(char *line);
-char	*get_value(char *line);
-char	*expand_wd(char *word, char **envp);
-char	*extract_wd(char *start, char *end);
+/*	dollar expansion	*/
 int		is_c_dollar(int c);
 int		is_c_quote(int c);
 int		is_there_a_blank(char *str);
 int		is_str_quote_enclosed(char *str);
 int		is_c_blank_nl_dollar_s_d_quote(int c);
-
-/*	dollar expansion	*/
+int		check_amb_redir(char *str, char **envp);
+char	*get_key(char *line);
+char	*get_value(char *line);
+char	*expand_wd(char *word, char **envp);
+char	*extract_wd(char *start, char *end);
 char	*expand_dollar(char *str, char **envp);
 char	*expand_dollar_here_doc(char *str, char **envp);
 char	*expand_dollar_redir_file(char *str, char **envp);
@@ -189,4 +187,5 @@ int		is_node_word(t_ast	*node);
 int		is_node_logical_operator(t_ast	*node);
 int		is_node_pipe(t_ast	*node);
 int		is_node_redirection(t_ast	*node);
+
 #endif

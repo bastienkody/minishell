@@ -34,6 +34,8 @@ char	*extract_wd(char *start, char *end)
 	char	*word;
 	int		len;
 
+	if (!end || !start)
+		return (NULL);
 	len = end - start;
 	if (len <= 0)
 		return (NULL);
@@ -59,12 +61,3 @@ char	*expand_wd(char *word, char **envp)
 	}
 	return (free(word), ft_strdup(""));
 }
-
-/*int	check_amb_redir(char *str)
-{
-	if (not under_d_quote)
-		if (not under_s_quote)
-			if (*str == '$')
-				if (is_there_a_blank(expand_wd(extract_wd(*str, strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);))))
-}
-*/

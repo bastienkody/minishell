@@ -12,11 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-int	is_c_dollar(int c)
-{
-	return (c == '$');
-}
-
 int	is_c_blank_nl_dollar_s_d_quote(int c)
 {
 	const char	*envar_delim = " \t\n$\'\"";

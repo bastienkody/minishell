@@ -17,22 +17,23 @@ char	*rm_peer_quotes(char *str)
 {
 	char	*close_quote;
 	char	*ret;
-	
+
 	ret = ft_strdup("");
 	if (!str || !ret)
 		return (free(str), free(ret), NULL);
 	while (*str)
 	{
-		if (is_c_quote(*str))
+		if (*str == '\'' || *str == '\"')
 		{
-			if (is_c_quote(*str) == 1)
+			if (*str == '\'')
 				close_quote = strfind(str + 1, '\'');
 			else
 				close_quote = strfind(str + 1, '\"');
 			str = get_next_word_not_expanded(&ret, str + 1, close_quote) + 1;
 		}
 		else
-			str = get_next_word_not_expanded(&ret, str, strfind_if(str + 1, is_c_quote));
+			str = get_next_word_not_expanded(&ret, str, strfind_if(str + 1, \
+				is_c_quote));
 		if (!str || !ret)
 			return (NULL);
 	}

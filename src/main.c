@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lsttok(line);
 		free(line);
 		if (token_list == NULL)
-		break ;
+			break ;
 		llstiter(token_list, print_item);
 		token_list = new_llst_with_compound(token_list);
 		if (token_list == NULL)

@@ -21,7 +21,9 @@ int	open_in(t_token *token, char **envp)
 {
 	int	fd;
 
-	token->text = expand_dollar_redir_file(token->text, envp);
+	if (!check_amb_redir(token->text, envp))
+		return (err_msg(token->text, ERR_AMB_REDIR), BAD_FD);
+	token->text = expand_dollar(token->text, envp);
 	if (!token->text)
 		return (MALLOC_FAIL_REDIR);
 	if (access(token->text, F_OK))
@@ -38,7 +40,9 @@ int	open_out(t_type *type_prev, t_token *token, char **envp)
 {
 	int	fd;
 
-	token->text = expand_dollar_redir_file(token->text, envp);
+	if (!check_amb_redir(token->text, envp))
+		return (err_msg(token->text, ERR_AMB_REDIR), BAD_FD);
+	token->text = expand_dollar(token->text, envp);
 	if (!token->text)
 		return (MALLOC_FAIL_REDIR);
 	if (!access(token->text, F_OK) && access(token->text, W_OK))

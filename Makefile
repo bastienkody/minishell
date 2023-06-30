@@ -50,7 +50,7 @@ UTILS_NAME	=	ft_realloc.c\
 				type_token_utils1.c\
 				type_token_utils2.c
 
-MAIN_NAME	=	main.c
+MAIN_NAME	=	main_test.c
 
 EXECU_SRC	=	$(addprefix ${EXEC_DIR}, ${EXEC_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})

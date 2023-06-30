@@ -25,26 +25,26 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 
 	data = ft_strdup("");
 	if (!data)
-		return (0);
+		return (FALSE);
 	while (1)
 	{
 		ft_fprintf(1, "%s", HD_PROMPT);
 		line = get_next_line(0);
 		if (!line)
-			return (free(data), 0);
+			return (free(data), FALSE);
 		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
 			if (*line == 0 || ft_strlen(line) - 1 == ft_strlen(lim))
 				break ;
 		data = strj(data, line);
 		if (!data)
-			return (0);
+			return (FALSE);
 	}
 	if (!is_str_quote_enclosed(lim))
 		data = expand_dollar_here_doc(data, envp);
 	if (!data)
-		return (0);
+		return (FALSE);
 	write(fd, data, ft_strlen(data));
-	return (free(line), free(data), 1);
+	return (free(line), free(data), TRUE);
 }
 
 /*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
