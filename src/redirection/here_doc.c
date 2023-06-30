@@ -33,7 +33,8 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 		if (!line)
 			return (free(data), 0);
 		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
-			break ;
+			if (*line == 0 || ft_strlen(line) - 1 == ft_strlen(lim))
+				break ;
 		data = strj(data, line);
 		if (!data)
 			return (0);
