@@ -12,8 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-/*	quotes in heredoc data : aucun effet!
-	tout depend de LIM : si quote pas d'expansion
+/*	quotes in heredoc data : aucun effet! tout depend de LIM
 	trouver une commande qui lit sur stdin du glob pour check no * expansion
 */
 

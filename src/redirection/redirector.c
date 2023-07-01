@@ -17,44 +17,44 @@ void	err_msg(char *str, char *err)
 	ft_fprintf(2, "minishell: %s: %s\n", str, err);
 }
 
-int	open_in(t_token *token, char **envp)
+int	open_in(char *filename, char **envp)
 {
 	int	fd;
 
-	if (!check_amb_redir(token->text, envp))
-		return (err_msg(token->text, ERR_AMB_REDIR), BAD_FD);
-	token->text = expand_dollar(token->text, envp);
-	if (!token->text)
+	if (!check_amb_redir(filename, envp))
+		return (err_msg(filename, ERR_AMB_REDIR), BAD_FD);
+	filename = expand_dollar(filename, envp);
+	if (!filename)
 		return (MALLOC_FAIL_REDIR);
-	if (access(token->text, F_OK))
-		return (err_msg(token->text, ERR_NSFD), BAD_FD);
-	if (access(token->text, R_OK))
-		return (err_msg(token->text, ERR_PERMDEN), BAD_FD);
-	fd = open(token->text, O_RDONLY);
+	if (access(filename, F_OK))
+		return (err_msg(filename, ERR_NSFD), BAD_FD);
+	if (access(filename, R_OK))
+		return (err_msg(filename, ERR_PERMDEN), BAD_FD);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		perror("open infile");
-	return (fd);
+	return (free(filename), fd);
 }
 
-int	open_out(t_type *type_prev, t_token *token, char **envp)
+int	open_out(int type, char *filename, char **envp)
 {
 	int	fd;
 
-	if (!check_amb_redir(token->text, envp))
-		return (err_msg(token->text, ERR_AMB_REDIR), BAD_FD);
-	token->text = expand_dollar(token->text, envp);
-	if (!token->text)
+	if (!check_amb_redir(filename, envp))
+		return (err_msg(filename, ERR_AMB_REDIR), BAD_FD);
+	filename = expand_dollar(filename, envp);
+	if (!filename)
 		return (MALLOC_FAIL_REDIR);
-	if (!access(token->text, F_OK) && access(token->text, W_OK))
-		return (err_msg(token->text, ERR_PERMDEN), BAD_FD);
+	if (!access(filename, F_OK) && access(filename, W_OK))
+		return (err_msg(filename, ERR_PERMDEN), BAD_FD);
 	fd = BAD_FD;
-	if (*type_prev == great)
-		fd = open(token->text, O_TRUNC | O_WRONLY | O_CREAT, 00644);
-	else if (*type_prev == dgreat)
-		fd = open(token->text, O_APPEND | O_WRONLY | O_CREAT, 00644);
+	if (type == great)
+		fd = open(filename, O_TRUNC | O_WRONLY | O_CREAT, 00644);
+	else if (type == dgreat)
+		fd = open(filename, O_APPEND | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		perror("open outfile");
-	return (fd);
+	return (free(filename), fd);
 }
 
 void	manage_redir(t_btree *root, char **envp)

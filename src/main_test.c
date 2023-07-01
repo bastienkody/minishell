@@ -1,23 +1,51 @@
 #include "../inc/minishell.h"
 
 
-//quote rm
+
+
+//	OPENING FILES
 /*int	main(int argc, char **argv, char **envp)
+{
+	int		in_fd = -7;
+	char	*infile;
+	int		out_fd = -7;
+	char	*outfile;
+	char	*str;
+
+	infile = ft_strdup("Makefile");
+	outfile = ft_strdup("$truc");
+ 
+	in_fd = open_in(infile, envp);
+	out_fd = open_out(5, outfile, envp);
+	ft_fprintf(1, "in_fd = %i\n", in_fd);
+	ft_fprintf(1, "out_fd = %i\n", out_fd);
+	while (in_fd > 0 && out_fd > 0)
+	{
+		str = get_next_line(in_fd);
+		if (!str || !*str)
+		{
+			free(str);
+			break ;
+		}
+		write(out_fd, str, ft_strlen(str));
+		free(str);
+	}
+	close(in_fd);
+	close(out_fd);
+}*/
+
+//	QUOTE REMOVAL
+int	main(void)
 {
 	char	*str = ft_strdup("\'salut\'");
 
-	if (argc > 1)
-	{
-		free(str);
-		str = ft_strdup(argv[1]);
-	}
 	str = rm_peer_quotes(str);
 	ft_fprintf(1, "%s\n", str);
 	free(str);
-}*/
+}
 
-//redire file expansion
-int	main(int argc, char **argv, char **envp)
+// REDIR FILE EXPANSION
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("\'\"$truc\"\'");
 	char	*ret;
@@ -35,9 +63,9 @@ int	main(int argc, char **argv, char **envp)
 	ret = expand_dollar(str, envp);
 	ft_fprintf(1, "%s\n", ret);
 	free(ret);
-}
+}*/
 
-// normal dollar expansion
+//	DOLLAR EXPANSION
 /*int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("salut \"\'$USER\'\" \'$USER\'");
@@ -53,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 	free(str);
 }*/
 
-// here_doc incl. expansion
+//	HEREDOC N EXPANSION
 /*int	main(int argc, char **argv, char **envp)
 {
 	int		fd;

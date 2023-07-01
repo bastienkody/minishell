@@ -152,7 +152,9 @@ char	*rm_peer_quotes(char *str);
 char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
+int		open_in(char *filename, char **envp);
 int		open_here_doc(char *lim, char **envp);
+int		open_out(int type, char *filename, char **envp);
 
 /*	printers	*/
 void	print_item(void *item);

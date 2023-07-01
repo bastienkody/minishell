@@ -81,18 +81,17 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 	return (free(str), ret);
 }
 
-/*	search forbidden blank in redirfilename during expansion	*/
+/*	search forbidden blank in $var of redirfilename
+	$var can have blank if underquote : "$var" ok ; var="\" \"" ko	*/
 int	check_amb_redir(char *str, char **envp)
 {
 	char	*word;
-	int		under_d_quote;
 
-	under_d_quote = -1;
 	while (str && *str)
 	{
 		if (*str == D_QUOTE)
-			under_d_quote *= -1;
-		if (under_d_quote < 0 && *str == S_QUOTE && ft_strchr(str + 1, S_QUOTE))
+			str = ft_strchr(str + 1, D_QUOTE) + 1;
+		if (*str == S_QUOTE)
 			str = ft_strchr(str + 1, S_QUOTE) + 1;
 		else if (*str == '$')
 		{
