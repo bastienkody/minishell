@@ -17,12 +17,12 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../llist/llist.h"
 # include "../libft/libft.h"
 # include "../btree/btree.h"
 # include "../ntree/ntree.h"
-# include <readline/readline.h>
-# include <readline/history.h>
 
 /*	numeric const	*/
 # define TRUE 1
@@ -146,6 +146,7 @@ char	*extract_wd(char *start, char *end);
 char	*expand_dollar(char *str, char **envp);
 char	*expand_dollar_here_doc(char *str, char **envp);
 char	*expand_dollar_redir_file(char *str, char **envp);
+int		expand_dollar_quotes_on_ast(t_ast *ast, char **envp);
 
 /*	general expansion	*/
 char	*rm_peer_quotes(char *str);
@@ -160,7 +161,10 @@ int		open_out(int type, char *filename, char **envp);
 void	print_item(void *item);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
+void	print_token_error(t_token token);
 void	err_msg(char *str, char *err);
+void	print_ast_full(t_ast *ast);
+void	print_ast_text(t_ast *ast);
 
 /*	token_type_predicate	*/
 int		is_str_or(const char *str);

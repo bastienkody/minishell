@@ -12,52 +12,17 @@
 
 #include "../../inc/minishell.h"
 
-char	*get_key(char *line)
+int	expand_dollar_quotes_on_ast(t_ast *ast, char **envp)
 {
-	char	*end;
-
-	end = strfind(line, '=');
-	if (!end)
-		return (NULL);
-	*end = '\0';
-	return (line);
-}
-
-char	*get_value(char *line)
-{
-	return (strfind(line, '=') + 1);
-}
-
-/*	end excluded	*/
-char	*extract_wd(char *start, char *end)
-{
-	char	*word;
-	int		len;
-
-	//if (!end || !start)
-		//return (NULL);
-	len = end - start;
-	//if (len <= 0)
-		//return (NULL);
-	word = malloc(len + 1);
-	if (!word)
-		return (NULL);
-	word[len--] = '\0';
-	while (--end >= start)
-		word[len--] = *end;
-	return (word);
-}
-
-/*	word is malloced and word[0] == '$'	*/
-char	*expand_wd(char *word, char **envp)
-{
-	if (!word)
-		return (NULL);
-	while (envp && *envp)
+	while (ast->children)
 	{
-		if (!ft_strcmp(word + sizeof(char), get_key(*envp)))
-			return (free(word), ft_strdup(get_value(*envp)));
-		envp++;
+		if (ast->type == 8)
+		{
+			ast->data = expand_dollar((char *)ast->data, envp);
+			if (!ast->data)
+				return (MALLOC_FAIL_REDIR);
+		}
+		ast->children = ast->children->next;
 	}
-	return (free(word), ft_strdup(""));
+	return (1);
 }

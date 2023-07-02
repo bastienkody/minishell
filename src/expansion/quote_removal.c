@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-/* does not work : ptr pb on gnwne */
 /*	to apply on all WORD, but not on here_doc data	*/
 char	*rm_peer_quotes(char *str)
 {

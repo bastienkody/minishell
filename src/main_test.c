@@ -37,7 +37,7 @@
 //	QUOTE REMOVAL
 int	main(void)
 {
-	char	*str = ft_strdup("\'salut\'");
+	char	*str = ft_strdup("salut\"\'yo\"");
 
 	str = rm_peer_quotes(str);
 	ft_fprintf(1, "%s\n", str);

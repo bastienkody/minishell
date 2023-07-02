@@ -48,6 +48,11 @@ void	print_token(t_token *token)
 	ft_fprintf(1, "text : %s, type : %s\n", token->text, g_type[token->type]);
 }
 
+void	print_token_error(t_token token)
+{
+	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.text);
+}
+
 void	print_env(char **envp)
 {
 	while (envp && *envp)

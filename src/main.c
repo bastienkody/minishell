@@ -12,33 +12,11 @@
 
 #include "../inc/minishell.h"
 
-static const char *g_type_str[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless", "compound", "word", "error", "COMPLETE_COMMAND", "LOGICAL_EXPRESSION", "PIPELINE", "SIMPLE_COMMAND", "CMD_NAME", "CMD_ARG", "CMD_PREFIX", "CMD_SUFFIX", "REDIRECTION", "OPERATOR", "FILENAME"};
-
 int	is_token_error(t_llist *llst)
 {
 	t_token	token = *(t_token *)llst;
 
 	return (token.type == error);
-}
-
-void	print_token_error(t_token token)
-{
-	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.text);
-}
-
-const char *type_to_string(t_type type)
-{
-	return (g_type_str[type]);
-}
-
-void	print_ast(t_ast *ast)
-{
-	if (ast == NULL)
-		return ;
-	printf("%s\n", type_to_string(ast->type));
-	if (ast->type > 0 && ast->type < 9)
-		printf(": %s\n", (char *)ast->data);
-	llstiter(ast->children, (void (*)(void *))print_ast);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -60,16 +38,16 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		if (token_list == NULL)
 			break ;
-		llstiter(token_list, print_item);
 		token_list = new_llst_with_compound(token_list);
 		if (token_list == NULL)
 			break ;
-		ft_fprintf(1, "post compound cmds:\n");
-		llstiter(token_list, print_item);
-		ft_fprintf(1, "_________________________\n");
 		llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "token_list (post compound n blank):\n");
 		llstiter(token_list, print_item);
 		token_list = type_token(token_list);
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "token_list (post typing): \n");
 		llstiter(token_list, (void(*)(void *))print_token);
 		error = llstfind_if(token_list, (int(*)(void *))is_token_error);
 		if (error != NULL)
@@ -85,8 +63,13 @@ int	main(int argc, char **argv, char **envp)
 		leaf_list = token_to_leaf(token_list);
 		(void)leaf_list;
 		ast = create_complete_command(leaf_list);
-		print_ast(ast);
-
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "astree :\n");
+		print_ast_text(ast);
+		expand_dollar_quotes_on_ast(ast, envp);
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "astree (post expansion) :\n");
+		print_ast_text(ast);
 	}
 	llstclear(&token_list, free);
 }

@@ -12,25 +12,28 @@
 
 #include "../../inc/minishell.h"
 
-void	print_level(t_btree *node)
+static const char *g_type_str[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless", "compound", "word", "error", "COMPLETE_COMMAND", "LOGICAL_EXPRESSION", "PIPELINE", "SIMPLE_COMMAND", "CMD_NAME", "CMD_ARG", "CMD_PREFIX", "CMD_SUFFIX", "REDIRECTION", "OPERATOR", "FILENAME"};
+
+const char *type_to_string(t_type type)
 {
-	if (!node)
-		return ;
-	ft_putendl_fd(node->item, 1);
-	while (node->right)
-	{
-		node = node->right;
-		ft_putendl_fd(node->item, 1);
-	}
+	return (g_type_str[type]);
 }
 
-void	print_tree_as_cmd_line(t_btree *start)
+void	print_ast_full(t_ast *ast)
 {
-	if (!start)
+	if (ast == NULL)
 		return ;
-	while (start->left)
-	{
-		print_tree_as_cmd_line(start->left);
-		print_level(start);
-	}
+	ft_fprintf(1, "%s\n", type_to_string(ast->type));
+	if (ast->type > 0 && ast->type < 9)
+		ft_fprintf(1, "%s\n", (char *)ast->data);
+	llstiter(ast->children, (void (*)(void *))print_ast_full);
+}
+
+void	print_ast_text(t_ast *ast)
+{
+	if (ast == NULL)
+		return ();
+	if (ast->type > 0 && ast->type < 9)
+		ft_fprintf(1, "%s\n", (char *)ast->data);
+	llstiter(ast->children, (void (*)(void *))print_ast_text);
 }

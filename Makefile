@@ -1,5 +1,4 @@
 ###		SOURCE FILES	###
-
 HEADER		=	./inc/minishell.h
 
 EXECU_DIR	=	execution/
@@ -16,7 +15,8 @@ EXECU_NAME	=
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
 				dollar_expander.c\
-				quote_removal.c
+				quote_removal.c\
+				main_expansion.c
 
 REDIR_NAME	=	redirector.c\
 				here_doc.c
@@ -50,7 +50,7 @@ UTILS_NAME	=	ft_realloc.c\
 				type_token_utils1.c\
 				type_token_utils2.c
 
-MAIN_NAME	=	main_test.c
+MAIN_NAME	=	main.c
 
 EXECU_SRC	=	$(addprefix ${EXEC_DIR}, ${EXEC_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
