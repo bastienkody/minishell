@@ -23,7 +23,7 @@ void	print_ast_full(t_ast *ast)
 {
 	if (ast == NULL)
 		return ;
-	ft_fprintf(1, "%s\n", type_to_string(ast->type));
+	ft_fprintf(1, "type:%s(%i), ptr:%p\n", type_to_string(ast->type), ast->type, ast);
 	if (ast->type > 0 && ast->type < 9)
 		ft_fprintf(1, "%s\n", (char *)ast->data);
 	llstiter(ast->children, (void (*)(void *))print_ast_full);
@@ -32,7 +32,8 @@ void	print_ast_full(t_ast *ast)
 void	print_ast_text(t_ast *ast)
 {
 	if (ast == NULL)
-		return ();
+		return ;
+	ft_fprintf(1, "%p\n", ast);
 	if (ast->type > 0 && ast->type < 9)
 		ft_fprintf(1, "%s\n", (char *)ast->data);
 	llstiter(ast->children, (void (*)(void *))print_ast_text);

@@ -46,6 +46,7 @@
 # define ERR_PARENTHESE "unexpected EOF while looking for matching `)'"
 # define ERR_PERMDEN "Permission denied"
 # define ERR_NSFD "No such file or directory"
+# define ERR_CNF "Command not found"
 # define ERR_AMB_REDIR "ambiguous redirect"
 
 typedef enum e_type
@@ -102,10 +103,8 @@ typedef struct s_ast
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
-
 void	lstreduce(t_llist	**llst);
 t_llist	*tokenization(t_llist *llst);
-
 t_llist	*type_token(t_llist	*token_list);
 t_btree	*create_tree(t_llist *token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
@@ -124,6 +123,33 @@ int		isdelim(int c);
 char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
 char	*strfind_if(const char *str, int (*f)(int));
+
+/*	token_type_predicate	*/
+int		is_str_or(const char *str);
+int		is_str_and(const char *str);
+int		is_str_pipe(const char *str);
+int		is_str_great(const char *str);
+int		is_str_less(const char *str);
+int		is_str_dgreat(const char *str);
+int		is_str_dless(const char *str);
+int		is_str_compound(const char *str);
+int		is_str_word(const char *str);
+
+/*	ast */
+t_ast	*new_ast(t_type	type, void *data, t_llist *children);
+t_llist	*create_child(t_llist	*leaf, t_ast *(*create)(t_llist *));
+t_ast	*create_complete_command(t_llist	*token_list);
+t_ast	*create_pipeline(t_llist *token_list);
+t_ast	*create_logical_expression(t_llist	*token_list);
+t_ast	*create_command(t_llist	*token_list);
+t_llist	*create_suffixes(t_llist *leaf_list);
+t_llist	*create_prefixes(t_llist *leaf_list);
+t_ast	*create_redirection(t_llist	*leaf_list);
+void	free_ast(t_ast *ast);
+int		is_node_word(t_ast	*node);
+int		is_node_logical_operator(t_ast	*node);
+int		is_node_pipe(t_ast	*node);
+int		is_node_redirection(t_ast	*node);
 
 /*	utils general	*/
 char	*strjoin(const char *s1, const char *s2);
@@ -157,6 +183,10 @@ int		open_in(char *filename, char **envp);
 int		open_here_doc(char *lim, char **envp);
 int		open_out(int type, char *filename, char **envp);
 
+/*	execution	*/
+int		execute(char *cmd_name, char **cmd_args, char **envp);
+char	**get_path(char **envp);
+
 /*	printers	*/
 void	print_item(void *item);
 void	print_llist(t_llist *start);
@@ -166,32 +196,6 @@ void	err_msg(char *str, char *err);
 void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
 
-/*	token_type_predicate	*/
-int		is_str_or(const char *str);
-int		is_str_and(const char *str);
-int		is_str_pipe(const char *str);
-int		is_str_great(const char *str);
-int		is_str_less(const char *str);
-int		is_str_dgreat(const char *str);
-int		is_str_dless(const char *str);
-int		is_str_compound(const char *str);
-int		is_str_word(const char *str);
 
-/*	ast */
-t_ast	*new_ast(t_type	type, void *data, t_llist *children);
-t_llist	*create_child(t_llist	*leaf, t_ast *(*create)(t_llist *));
-t_ast	*create_complete_command(t_llist	*token_list);
-t_ast	*create_pipeline(t_llist *token_list);
-t_ast	*create_logical_expression(t_llist	*token_list);
-t_ast	*create_command(t_llist	*token_list);
-t_llist	*create_suffixes(t_llist *leaf_list);
-t_llist	*create_prefixes(t_llist *leaf_list);
-t_ast	*create_redirection(t_llist	*leaf_list);
-void	free_ast(t_ast *ast);
-
-int		is_node_word(t_ast	*node);
-int		is_node_logical_operator(t_ast	*node);
-int		is_node_pipe(t_ast	*node);
-int		is_node_redirection(t_ast	*node);
 
 #endif

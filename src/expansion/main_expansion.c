@@ -14,15 +14,22 @@
 
 int	expand_dollar_quotes_on_ast(t_ast *ast, char **envp)
 {
-	while (ast->children)
+
+	(void)envp;
+	while (ast)
 	{
-		if (ast->type == 8)
+		//ast->data = expand_dollar((char *)ast->data, envp);
+		ft_fprintf(1, "%i\n", (int)ast->type);
+		ft_fprintf(1, "%s\n", (char *)ast->data);
+	//	if (!ast->data)
+	//		return (MALLOC_FAIL_REDIR);
+		if (ast->children)
+			ast = ast->children->content;
+		else
 		{
-			ast->data = expand_dollar((char *)ast->data, envp);
-			if (!ast->data)
-				return (MALLOC_FAIL_REDIR);
+			ft_fprintf(1, "ast->children vaut null\n");
+		 	ast = NULL;
 		}
-		ast->children = ast->children->next;
 	}
 	return (1);
 }

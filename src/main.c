@@ -65,11 +65,13 @@ int	main(int argc, char **argv, char **envp)
 		ast = create_complete_command(leaf_list);
 		ft_fprintf(1, "-------------------------------\n");
 		ft_fprintf(1, "astree :\n");
-		print_ast_text(ast);
+		print_ast_full(ast);
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "expansion :\n");
 		expand_dollar_quotes_on_ast(ast, envp);
 		ft_fprintf(1, "-------------------------------\n");
 		ft_fprintf(1, "astree (post expansion) :\n");
-		print_ast_text(ast);
+		print_ast_full(ast);
 	}
 	llstclear(&token_list, free);
 }

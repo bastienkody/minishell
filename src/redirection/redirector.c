@@ -12,11 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-void	err_msg(char *str, char *err)
-{
-	ft_fprintf(2, "minishell: %s: %s\n", str, err);
-}
-
 int	open_in(char *filename, char **envp)
 {
 	int	fd;

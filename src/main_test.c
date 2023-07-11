@@ -1,7 +1,27 @@
 #include "../inc/minishell.h"
 
 
+// GET FULL CMD NAME
+int	main(void)
+{
 
+}
+
+// GET_PATH (ok with unset path)
+/*int	main(int argc, char **argv, char **envp)
+{
+	char	**path;
+	char	**path_tmp;
+
+	(void)argc;
+	(void)argv;
+	
+	path = get_path(envp);
+	path_tmp = path;
+	while(path_tmp && *path_tmp)
+		ft_fprintf(1, "%s\n", *path_tmp++);
+	free_char_matrix(path);
+}*/
 
 //	OPENING FILES
 /*int	main(int argc, char **argv, char **envp)
@@ -35,14 +55,14 @@
 }*/
 
 //	QUOTE REMOVAL
-int	main(void)
+/*int	main(void)
 {
 	char	*str = ft_strdup("salut\"\'yo\"");
 
 	str = rm_peer_quotes(str);
 	ft_fprintf(1, "%s\n", str);
 	free(str);
-}
+}*/
 
 // REDIR FILE EXPANSION
 /*int	main(int argc, char **argv, char **envp)
