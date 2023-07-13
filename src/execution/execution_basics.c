@@ -46,6 +46,17 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	return (free_char_matrix(path), ft_strdup("")); 
 }
 
+int	analyze_status(int status)
+{
+	//cmd dont exist 127
+	// no exec rights 126
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (WTERMSIG(status));
+	return (status);
+}
+
 int	execute(char *cmd_name, char **cmd_args, char **envp)
 {
 	char	*full_name;
@@ -59,10 +70,10 @@ int	execute(char *cmd_name, char **cmd_args, char **envp)
 			err_msg(cmd_name, ERR_CNF);
 		else
 			err_msg(cmd_name, ERR_NSFD);
-		return (free(full_name), exit(EXIT_FAILURE), -1);
+		return (free(full_name), 127);
 	}
 	if (access(full_name, X_OK))
-		return (err_msg(cmd_name, ERR_PERMDEN), free(full_name), exit(EXIT_FAILURE), -1);
+		return (err_msg(cmd_name, ERR_PERMDEN), free(full_name), 126);
 	cmd_args[0] = full_name;
 	execve(full_name, cmd_args, envp);
 	perror("minishell: execve:");

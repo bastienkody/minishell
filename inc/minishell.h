@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -185,6 +186,7 @@ int		open_out(int type, char *filename, char **envp);
 
 /*	execution	*/
 int		execute(char *cmd_name, char **cmd_args, char **envp);
+int		analyze_status(int status);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
 
