@@ -1,10 +1,19 @@
 #include "../inc/minishell.h"
 
 
-// GET FULL CMD NAME
-int	main(void)
+// GET FULL CMD NAME (ok with unset path)
+int	main(int argc, char **argv, char **envp)
 {
+	char	*cmd_name;
+	char	*full_cmd_name;
 
+	if (argc == 2)
+		cmd_name = argv[1];
+	else
+		cmd_name = "ls";
+	full_cmd_name = get_full_cmd_name(cmd_name, envp);
+	ft_fprintf(1, "%s\n", full_cmd_name);
+	free(full_cmd_name);
 }
 
 // GET_PATH (ok with unset path)

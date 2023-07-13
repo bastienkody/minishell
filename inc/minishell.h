@@ -185,6 +185,7 @@ int		open_out(int type, char *filename, char **envp);
 
 /*	execution	*/
 int		execute(char *cmd_name, char **cmd_args, char **envp);
+char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
 
 /*	printers	*/

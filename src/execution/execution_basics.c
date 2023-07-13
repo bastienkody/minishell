@@ -21,6 +21,7 @@ char	**get_path(char **envp)
 
 char	*get_full_cmd_name(char *cmd_name, char **envp)
 {
+	int		i;
 	char	**path;
 	char	*tmp_name;
 
@@ -31,16 +32,16 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 		return (NULL);
 	if (!ft_strlen(path[0]) && !path[1])
 		return (free(path[0]), free(path), ft_strdup(""));
-	while (path)
+	i = -1;
+	while (path[++i])
 	{
-		tmp_name = ft_strjoin(*path, "/");
+		tmp_name = ft_strjoin(path[i], "/");
 		tmp_name = strjoin(tmp_name, cmd_name); 
 		if (!tmp_name)
-	  		return (free_char_matrix(path), NULL);
+			return (free_char_matrix(path), NULL);
 		if (!access(tmp_name, F_OK))
 			return (free_char_matrix(path), tmp_name);
 		free(tmp_name);
-		path++;
 	}
 	return (free_char_matrix(path), ft_strdup("")); 
 }
