@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_ast_child.c                                    :+:      :+:    :+:   */
+/*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 22:53:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/26 22:56:52 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/28 13:48:48 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:45:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_llist	*new_ast_child(t_ast *leaf, t_type type, void *data)
+void	free_ast(t_ast *ast)
 {
-	t_llist	*new;
-
-	new = llstnew();
+	free(ast->data);
+	llstclear(&(ast->children), (void (*)(void *))free_ast);
 }

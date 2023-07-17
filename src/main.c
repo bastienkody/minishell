@@ -6,13 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/17 09:19:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/17 09:30:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-static const char *g_type_str[] = {"or", "and", "pipe", "great", "less", "dgreat", "dless", "compound", "word", "error", "COMPLETE_COMMAND", "LOGICAL_EXPRESSION", "PIPELINE", "SIMPLE_COMMAND", "CMD_NAME", "CMD_ARG", "CMD_PREFIX", "CMD_SUFFIX", "REDIRECTION", "OPERATOR", "FILENAME"};
 
 int	is_token_error(t_llist *llst)
 {
@@ -92,8 +90,15 @@ int	main(int argc, char **argv, char **envp)
 		leaf_list = token_to_leaf(token_list);
 		(void)leaf_list;
 		ast = create_complete_command(leaf_list);
-		print_ast(ast);
-
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "astree :\n");
+		print_ast_full(ast);
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "expansion :\n");
+		expand_dollar_quotes_on_ast(ast, envp);
+		ft_fprintf(1, "-------------------------------\n");
+		ft_fprintf(1, "astree (post expansion) :\n");
+		print_ast_full(ast);
 	}
 	llstclear(&token_list, free);
 }

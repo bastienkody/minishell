@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_child.c                                     :+:      :+:    :+:   */
+/*   token_to_leafs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 14:14:22 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/27 14:14:44 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/25 17:53:16 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/28 15:43:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_llist	*create_child(t_llist	*leaf, t_ast *(*create)(t_llist *))
+static t_ast	*new_leaf(t_token *token)
 {
-	t_ast	*subtree;
+	char	*text;
 
-	subtree = create(leaf);
-	if (subtree == NULL)
+	text = ft_strdup(token->text);
+	if (text == NULL)
 		return (NULL);
-	return (llstnew(subtree));
+	return (new_ast(token->type, text, NULL));
+}
+
+t_llist	*token_to_leaf(t_llist	*token_list)
+{
+	return (llstmap(token_list, (void *(*)(void *))new_leaf, free));
 }

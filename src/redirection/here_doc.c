@@ -12,8 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-/*	quotes in heredoc data : aucun effet!
-	tout depend de LIM : si quote pas d'expansion
+/*	quotes in heredoc data : aucun effet! tout depend de LIM
 	trouver une commande qui lit sur stdin du glob pour check no * expansion
 */
 
@@ -25,29 +24,29 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 
 	data = ft_strdup("");
 	if (!data)
-		return (0);
+		return (FALSE);
 	while (1)
 	{
 		ft_fprintf(1, "%s", HD_PROMPT);
 		line = get_next_line(0);
 		if (!line)
-			return (free(data), 0);
+			return (free(data), FALSE);
 		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
-			break ;
+			if (*line == 0 || ft_strlen(line) - 1 == ft_strlen(lim))
+				break ;
 		data = strj(data, line);
 		if (!data)
-			return (0);
+			return (FALSE);
 	}
 	if (!is_str_quote_enclosed(lim))
 		data = expand_dollar_here_doc(data, envp);
 	if (!data)
-		return (0);
+		return (FALSE);
 	write(fd, data, ft_strlen(data));
-	return (free(line), free(data), 1);
+	return (free(line), free(data), TRUE);
 }
 
-/*	create+open tmpfile in w, launch_hd to it. close n reopen in r	
-	code retour des fd different de -1 si malloc echoue pour pouvoir quitter le programme et pas juste skip la commande*/
+/*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
 int	open_here_doc(char *lim, char **envp)
 {
 	int			fd;
@@ -56,13 +55,13 @@ int	open_here_doc(char *lim, char **envp)
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb), HD_END);
 	if (!pathname)
-		return (BAD_FD);
+		return (MALLOC_FAIL_REDIR);
 	nb++;
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (free(pathname), perror("open here_doc in w"), BAD_FD);
 	if (!launch_here_doc(fd, lim, envp))
-		return (free(pathname), close (fd), BAD_FD); // malloc err during launch_hd must stop whole exec ?
+		return (free(pathname), close (fd), MALLOC_FAIL_REDIR);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)

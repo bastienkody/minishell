@@ -12,22 +12,18 @@
 
 #include "../../inc/minishell.h"
 
+// gerer sans erreur les cas ou envp est null (env -i ./minishell)
+
 /*	wd, wd_end and ret no need to be protected (cf. notion)	*/
 char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
-	char	*word;
 	char	*word_end;
 
-	word_end = str + 1;
-	if (is_c_dollar(*str))
-	{
-		word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
-		word = expand_wd(extract_wd(str, word_end), envp);
-		*ret = strjoin(*ret, word);
-		free(word);
-	}
+	word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+	if (*str == '$')
+		*ret = strjoin2(*ret, expand_wd(extract_wd(str, word_end), envp));
 	else
-		*ret = str_one_char_join(*ret, *str);
+		get_next_word_not_expanded(ret, str, word_end);
 	return (word_end);
 }
 
@@ -37,6 +33,7 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end)
 	return (word_end);
 }
 
+/*	apply on all WORD except : here_doc lim + already expanded WORD	*/
 char	*expand_dollar(char *str, char **envp)
 {
 	char	*tmp;
@@ -47,11 +44,11 @@ char	*expand_dollar(char *str, char **envp)
 	is_under_d_quote = -1;
 	tmp = str;
 	ret = ft_strdup("");
-	if (!ret || !tmp || !envp)
+	if (!ret || !tmp)
 		return (free(ret), free(tmp), NULL);
 	while (*tmp)
 	{
-		if (is_c_quote(*tmp) == 2)
+		if (*tmp == D_QUOTE)
 			is_under_d_quote *= -1;
 		next_s_quote = ft_strchr(tmp + 1, S_QUOTE);
 		if (is_under_d_quote < 0 && *tmp == S_QUOTE && next_s_quote)
@@ -59,7 +56,8 @@ char	*expand_dollar(char *str, char **envp)
 		else
 			tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (NULL);
+			return (free(tmp), free(ret), NULL); 
+		// double free possible on tmp (str) when freeing the tree?
 	}
 	return (free(str), ret);
 }
@@ -72,42 +70,42 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 
 	tmp = str;
 	ret = ft_strdup("");
-	if (!ret || !envp)
+	if (!ret)
 		return (free(ret), NULL);
 	while (*tmp)
 	{
 		tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (NULL);
+			return (free(tmp), free(ret), NULL);
 	}
 	return (free(str), ret);
 }
 
-/*	touch truc > yo$USER --> ok
-	touch truc > "ca va" --> ok
-	$A="yo yi" ; $B="\"yo yi\"" 
-	touch truc >  $A --> ko
-	touch truc >  $B --> ko (pas de lexing parsing ni expansion on expanded stuff)
-	touch truc >  "$B" --> ok (single word)
-	touch truc >  "yo $USER" --> ok (single word)
-	ccl :
-	- le redir file doit etre un single WORD apres expansion
-	- si quote (en dehors de l'expansion) : blank acceptables
-	- si quote dans lexpansion ($B) : blank dans l'expansion pas ok sauf si quote dans la cmd line
-	- si pas quote : aucun blank (peu importe si expand ou pas)	*/
-char	*expand_dollar_redir_file(char *str, char **envp)
+/*	search forbidden blank in $var of redirfilename
+	$var can have blank if underquote : "$var" ok ; var="\" \"" ko	*/
+int	check_amb_redir(char *str, char **envp)
 {
-	char	*ret;
-	char	*tmp;
+	char	*word;
 
-	tmp = ft_strdup(str);
-	if (!str || !tmp)
-		return (free(str), NULL);
-	ret = expand_dollar(tmp, envp);
-	if (!ret)
-		return (free(str), NULL);
-	if (!is_str_quote_enclosed(ret) && is_there_a_blank(ret))
-// verification des espaces dans l'expansion a faire uniquemnent sur ce qui est expandu (le $B passe ok en l'etat)
-		return (err_msg(str, ERR_AMB_REDIR), free(str), free(ret), NULL);
-	return (free(str), ret);
+	while (str && *str)
+	{
+		if (*str == D_QUOTE)
+			str = ft_strchr(str + 1, D_QUOTE) + 1;
+		if (*str == S_QUOTE)
+			str = ft_strchr(str + 1, S_QUOTE) + 1;
+		else if (*str == '$')
+		{
+			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
+				&is_c_blank_nl_dollar_s_d_quote)), envp);
+			if (!word)
+				return (MALLOC_FAIL_REDIR);
+			if (is_there_a_blank(word) || !ft_strlen(word))
+				return (free(word), FALSE);
+			free(word);
+			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+		}
+		else
+			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+	}
+	return (TRUE);
 }

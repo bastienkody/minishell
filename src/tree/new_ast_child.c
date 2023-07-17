@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_ast.c                                          :+:      :+:    :+:   */
+/*   new_ast_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 16:39:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/26 17:59:21 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/26 22:53:07 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/26 22:56:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_ast	*new_ast(t_type	type, void *data, t_llist *children)
+/*t_llist	*new_ast_child(t_ast *leaf, t_type type, void *data)
 {
-	t_ast	*new;
+	t_llist	*new;
 
-	new = malloc(sizeof(t_ast));
-	if (new == NULL)
-		return (NULL);
-	*new = (t_ast){type, data, children};
-	return (new);
-}
+	new = llstnew();
+}*/
