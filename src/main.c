@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/28 11:30:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/17 09:19:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,27 @@ void	print_ast(t_ast *ast)
 	llstiter(ast->children, (void (*)(void *))print_ast);
 }
 
+t_llist	*lexer(const char *line)
+{
+	t_llist *token_list;
+
+	token_list = lsttok(line);
+	if (token_list == NULL)
+		return (NULL);
+	// llstiter(token_list, print_item);
+	token_list = new_llst_with_compound(token_list);
+	if (token_list == NULL)
+		return (NULL);
+	// ft_fprintf(1, "post compound cmds:\n");
+	// llstiter(token_list, print_item);
+	// ft_fprintf(1, "_________________________\n");
+	llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
+	// llstiter(token_list, print_item);
+	token_list = type_token(token_list);
+	// llstiter(token_list, (void(*)(void *))print_token);
+	return (token_list);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char *line;
@@ -56,21 +77,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell prompt % ");
 		add_history(line);
-		token_list = lsttok(line);
-		free(line);
-		if (token_list == NULL)
-		break ;
-		llstiter(token_list, print_item);
-		token_list = new_llst_with_compound(token_list);
-		if (token_list == NULL)
-			break ;
-		ft_fprintf(1, "post compound cmds:\n");
-		llstiter(token_list, print_item);
-		ft_fprintf(1, "_________________________\n");
-		llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
-		llstiter(token_list, print_item);
-		token_list = type_token(token_list);
-		llstiter(token_list, (void(*)(void *))print_token);
+		token_list = lexer(line);
 		error = llstfind_if(token_list, (int(*)(void *))is_token_error);
 		if (error != NULL)
 		{
