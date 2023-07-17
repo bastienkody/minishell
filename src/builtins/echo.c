@@ -14,10 +14,9 @@
 
 int	echo(char **argv)
 {
-	int		trailing_nl;
-	char	nl;
+	int			trailing_nl;
+	const char	sep[2] = {'\n', ' '};
 
-	nl = '\n';
 	trailing_nl = 1;
 	if (argv && *argv && !ft_strcmp("-n", *argv) && ft_strlen(*argv) == 2)
 	{
@@ -28,10 +27,11 @@ int	echo(char **argv)
 	{
 		if (write(1, *argv, ft_strlen(*argv)) < 0)
 			return (-1);
-		if (trailing_nl)
-			if (write(1, &nl, 1) < 0)
-				return (-1);
+		if (*(argv + 1) && write(1, &sep[1], 1) < 0)
+			return (-1);	
 		argv++;
 	}
+	if (trailing_nl)
+		return (write(1, &sep[0], 1) < 0);
 	return (0);
 }

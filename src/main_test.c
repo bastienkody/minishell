@@ -1,7 +1,7 @@
 #include "../inc/minishell.h"
 
 // CD builtin (pwd and error seems good but no actual change in terminal, even if chdir directly called)
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	char	*path;
 
@@ -13,16 +13,18 @@ int	main(int argc, char **argv)
 	ft_fprintf(1, "%i\n", cd(path));
 	pwd();
 	//chdir(path);
-}
+}*/
 
 
-// ECHO builtin (ok, option -n ok, error write (bad fd) echo returns -1)
-/*int	main(void)
+// ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
+int	main(void)
 {
 	char	*args[5];
 	int		status;
 
+	//args[0] = NULL;
 	args[0] = "-n";
+	//args[0] = "salut";
 	args[1] = "aluts";
 	args[2] = "lutsa";
 	args[3] = "utsal";
@@ -30,7 +32,7 @@ int	main(int argc, char **argv)
 	status = echo(args);	
 	//(void)status;
 	ft_fprintf(1, "%i\n", status);
-}*/
+}
 
 // PWD builtin (symlink -> returns the dir pointed to by symlink, ok selon discord minishell)
 /*int	main(void)
