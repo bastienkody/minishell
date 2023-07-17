@@ -199,6 +199,9 @@ void	err_msg(char *str, char *err);
 void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
 
-
+/*	builtins	*/
+int		pwd(void);
+int		echo(char **argv);
+int		cd(char *path);
 
 #endif

@@ -1,6 +1,7 @@
 ###		SOURCE FILES	###
 HEADER		=	./inc/minishell.h
 
+BUILT_DIR	=	builtins/
 EXECU_DIR	=	execution/
 XPAND_DIR	=	expansion/
 REDIR_DIR	=	redirection/
@@ -9,6 +10,10 @@ TREE_DIR	=	tree/
 UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
+
+BUILT_NAME	=	pwd.c\
+				echo.c\
+				cd.c
 
 EXECU_NAME	=	execution_basics.c	
 
@@ -53,6 +58,7 @@ UTILS_NAME	=	ft_realloc.c\
 
 MAIN_NAME	=	main_test.c
 
+BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
 REDIR_SRC	=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
@@ -62,7 +68,7 @@ UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 
 SRCS_NAME	=	${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
-				${TREE_SRC} ${UTILS_SRC} ${MAIN_SRC}
+				${TREE_SRC} ${UTILS_SRC} ${MAIN_SRC} ${BUILT_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:.c=.o}
