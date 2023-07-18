@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/17 18:04:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:16:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,35 @@ t_llist	*lexer(const char *line)
 	return (token_list);
 }
 
+void	fill_array(void **array, size_t size, size_t length, void *elem)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < length)
+	{
+		array[i * size] = elem;
+		i++;
+	}
+}
+
 t_ast	*parser(t_llist	*token_list)
 {
 	t_llist	*leaf_list;
-	int		flag[256];
+	bool	flag[256];
 	t_ast	*ast;
 
 	leaf_list = token_to_leaf(token_list);
 	if (leaf_list == NULL)
 		return (NULL);
+	llstclear(&token_list, (void (*)(void *))free_token);
 	ast = create_complete_command(leaf_list);
 	if (ast == NULL)
 		return (NULL);
+	// free(leaf_list);
 	ft_fprintf(1, "-------------------------------\n");
 	ft_fprintf(1, "astree :\n");
-	for (int i = 0; i < 256; i++)
-		flag[i] = 1;
+	ft_memset(flag, 1, 256);
 	print_tree(ast, flag, 0, 0);
 	// print_ast_full(ast);
 	// ft_fprintf(1, "-------------------------------\n");
@@ -77,6 +90,41 @@ t_ast	*parser(t_llist	*token_list)
 	return (ast);
 }
 
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	char	*line;
+// 	t_llist	*token_list;
+// 	t_llist	*error;
+// 	t_ast	*ast;
+
+// 	(void)argv;
+// 	if (!argc || !envp)
+// 		return (1);
+// 	while (TRUE)
+// 	{
+// 		line = readline("minishell prompt % ");
+// 		add_history(line);
+// 		token_list = lexer(line);
+// 		if (token_list == NULL)
+// 			return (1);
+// 		error = llstfind_if(token_list, (int(*)(void *))is_token_error);
+// 		if (error != NULL)
+// 		{
+// 			print_token_error(*(t_token *)error->content);
+// 			break ;
+// 		}
+// 		if (!check_syntax(token_list))
+// 		{
+// 			printf("Syntax error !\n");
+// 			break ;
+// 		}
+// 		ast = parser(token_list);
+// 		if (ast == NULL)
+// 			return (1);
+// 		llstclear(&token_list, free);
+// 	}
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -87,27 +135,25 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (!argc || !envp)
 		return (1);
-	while (TRUE)
+	line = readline("minishell prompt % ");
+	add_history(line);
+	token_list = lexer(line);
+	if (token_list == NULL)
+		return (1);
+	error = llstfind_if(token_list, (int(*)(void *))is_token_error);
+	if (error != NULL)
 	{
-		line = readline("minishell prompt % ");
-		add_history(line);
-		token_list = lexer(line);
-		if (token_list == NULL)
-			return (1);
-		error = llstfind_if(token_list, (int(*)(void *))is_token_error);
-		if (error != NULL)
-		{
-			print_token_error(*(t_token *)error->content);
-			break ;
-		}
-		if (!check_syntax(token_list))
-		{
-			printf("Syntax error !\n");
-			break ;
-		}
-		ast = parser(token_list);
-		if (ast == NULL)
-			return (1);
-		llstclear(&token_list, free);
+		print_token_error(*(t_token *)error->content);
+		return (1);
 	}
+	if (!check_syntax(token_list))
+	{
+		printf("Syntax error !\n");
+		return (1);
+	}
+	ast = parser(token_list);
+	if (ast == NULL)
+		return (1);
+	// llstclear(&token_list, free_token);
+	free_ast(ast);
 }

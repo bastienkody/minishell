@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 10:42:13 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/17 15:28:53 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:36:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_ast *create_compound_command(t_llist *leaf)
 	t_llist		*leaf_list;
 	t_llist		*child;
 
+	llstclear(&leaf, (void (*)(void *))free_ast);
 	if (new_line == NULL)
 		return (NULL);
 	token_list = lexer(new_line);
@@ -27,6 +28,7 @@ t_ast *create_compound_command(t_llist *leaf)
 	if (token_list == NULL)
 		return (NULL);
 	leaf_list = token_to_leaf(token_list);
+	llstclear(&token_list, (void (*)(void *))free_token);
 	if (leaf_list == NULL)
 		return (NULL);
 	if (llstfind_if(leaf_list, (int (*)(void *))is_node_logical_operator))

@@ -50,7 +50,8 @@ UTILS_NAME	=	ft_realloc.c\
 				parsing_utils.c\
 				token_utils.c\
 				type_token_utils1.c\
-				type_token_utils2.c
+				type_token_utils2.c\
+				free_token.c
 
 MAIN_NAME	=	main.c
 

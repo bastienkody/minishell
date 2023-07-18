@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:24:22 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/17 17:46:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 17:48:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ static void	print_node(t_ast *ast, int depth)
 	ft_fprintf(1, "\n");
 }
 
-void	print_tree(t_ast *ast, int flag[256], int depth, int islast)
+void	print_tree(t_ast *ast, bool flag[256], int depth, int islast)
 {
+	t_llist	*current_child;
+
+	current_child = ast->children;
 	if (ast == NULL)
 		return ;
 	for (int i = 1; i < depth; ++i)
 	{
-		if (flag[i] == 1)
+		if (flag[i] == true)
 			ft_fprintf(1, "|     ");
 		else
 			ft_fprintf(1, "     ");
@@ -65,14 +68,14 @@ void	print_tree(t_ast *ast, int flag[256], int depth, int islast)
 	else if (islast)
 	{
 		print_node(ast, depth);
-		flag[depth] = 0;
+		flag[depth] = false;
 	}
 	else
 		print_node(ast, depth);
-	while (ast->children != NULL)
+	while (current_child != NULL)
 	{
-		print_tree(ast->children->content, flag, depth + 1, ast->children->next == NULL);
-		ast->children = ast->children->next;
+		print_tree(current_child->content, flag, depth + 1, current_child->next == NULL);
+		current_child = current_child->next;
 	}
-	flag[depth] = 1;
+	flag[depth] = true;
 }

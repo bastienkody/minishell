@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_to_leafs.c                                   :+:      :+:    :+:   */
+/*   free_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 17:53:16 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 18:06:46 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/18 16:42:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static t_ast	*new_leaf(t_token *token)
+void	free_token(t_token *token)
 {
-	char *const	text = ft_strdup(token->text);
-
-	if (text == NULL)
-		return (NULL);
-	return (new_ast(token->type, text, NULL));
-}
-
-t_llist	*token_to_leaf(t_llist	*token_list)
-{
-	t_llist *const	new = llstmap(token_list, (void *(*)(void *))new_leaf, free);
-
-	return (new);
+	(free(token->text), free(token));
 }

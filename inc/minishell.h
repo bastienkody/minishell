@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/17 17:32:56 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 17:45:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,9 +201,10 @@ void	print_token_error(t_token token);
 void	err_msg(char *str, char *err);
 void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
-void	print_tree(t_ast *ast, int flag[256], int depth, int islast);
+void	print_tree(t_ast *ast, bool flag[256], int depth, int islast);
 
 const char *type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ast	*parser(t_llist	*token_list);
+void	free_token(t_token *token);
 #endif
