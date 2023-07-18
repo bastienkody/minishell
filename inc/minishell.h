@@ -161,6 +161,7 @@ char	*strjoin2(const char *s1, const char *s2);
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char	*str_one_char_join(char *str, char c);
 void	*ft_realloc(void *ptr, size_t size);
+char	**charmatrix_dup(char **src_matrix);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
@@ -195,6 +196,7 @@ char	**get_path(char **envp);
 
 /*	printers	*/
 void	print_item(void *item);
+void	print_env(char **envp);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
 void	print_token_error(t_token token);
@@ -205,8 +207,12 @@ void	print_tree(t_ast *ast, int flag[256], int depth, int islast);
 
 /*	builtins	*/
 int		pwd(void);
+int		check_echo(char **argv);
 int		echo(char **argv);
-int		cd(char *path);const char *type_to_string(t_type type);
-t_llist	*lexer(const char *line);
-t_ast	*parser(t_llist	*token_list);
+int		cd(char *path, char **envp);
+
+const char 	*type_to_string(t_type type);
+t_llist		*lexer(const char *line);
+t_ast		*parser(t_llist	*token_list);
+
 #endif

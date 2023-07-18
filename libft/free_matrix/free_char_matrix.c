@@ -18,6 +18,9 @@ void	free_char_matrix(char **matrix)
 
 	i = 0;
 	while (matrix[i])
-		free(matrix[i++]);
+	{
+		free(matrix[i]);
+		i++;
+	}
 	free(matrix);
 }
