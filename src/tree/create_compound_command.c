@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 10:42:13 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 18:36:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:26:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ast *create_compound_command(t_llist *leaf)
+t_ast	*create_compound_command(t_llist *leaf)
 {
 	char *const	old_line = ((t_ast *)leaf->content)->data;
 	char *const	new_line = ft_substr(old_line, 1, ft_strlen(old_line) - 2);

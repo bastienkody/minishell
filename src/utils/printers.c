@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 14:47:09 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:33:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_item(void *item)
 {
 	if (!item)
 		return ;
-	ft_putstr_fd((char *)item ,1);
+	ft_putstr_fd((char *)item, 1);
 	ft_putstr_fd("\n", 1);
 }
 

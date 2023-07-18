@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/18 17:45:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:31:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,13 @@ int		is_str_dless(const char *str);
 int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
 
+/*	check_syntax_utils*/
+int	is_token_word(t_token *token);
+int	is_token_redirection_operator(t_token *token);
+int	is_token_pipe(t_token *token);
+int	is_token_logical_operator(t_token *token);
+int	is_token_operator(t_token *token);
+
 /*	ast */
 t_ast	*new_ast(t_type	type, void *data, t_llist *children);
 t_llist	*create_child(t_llist	*leaf, t_ast *(*create)(t_llist *));
@@ -201,7 +208,7 @@ void	print_token_error(t_token token);
 void	err_msg(char *str, char *err);
 void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
-void	print_tree(t_ast *ast, bool flag[256], int depth, int islast);
+void	print_tree(t_ast *ast);
 
 const char *type_to_string(t_type type);
 t_llist	*lexer(const char *line);

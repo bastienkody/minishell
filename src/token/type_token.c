@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 16:39:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:55:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static t_token	*new_token(char *text)
 
 t_llist	*type_token(t_llist	*token_list)
 {
-	t_llist *const	new_list = llstmap(token_list, (void *(*)(void *))new_token,
-		(void (*)(void *))free_token);;
-	return (llstclear(&token_list, free), new_list);
+	return (llstmap(token_list, (void *(*)(void *))new_token,
+		(void (*)(void *))free_token));
 }

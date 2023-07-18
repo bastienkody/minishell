@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 19:24:08 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 09:26:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:25:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,21 @@ t_ast	*create_redirection(t_llist	*leaf_list)
 {
 	t_llist	*children;
 	t_llist	*child;
+	t_llist	*extract;
 
 	if (llstsize(leaf_list) != 2)
 		return (NULL);
-	if (!is_node_redirection(leaf_list->content) || !is_node_word(leaf_list->next->content))
+	if (!is_node_redirection(leaf_list->content)
+		|| !is_node_word(leaf_list->next->content))
 		return (NULL);
 	children = NULL;
-	child = create_child(llstextractone(&leaf_list, leaf_list), create_operator);
+	extract = llstextractone(&leaf_list, leaf_list);
+	child = create_child(extract, create_operator);
 	if (child == NULL)
 		return (NULL);
 	llstadd_back(&children, child);
-	child = create_child(llstextractone(&leaf_list, leaf_list), create_filename);
+	extract = llstextractone(&leaf_list, leaf_list);
+	child = create_child(extract, create_filename);
 	if (child == NULL)
 		return (NULL);
 	llstadd_back(&children, child);

@@ -51,7 +51,9 @@ UTILS_NAME	=	ft_realloc.c\
 				token_utils.c\
 				type_token_utils1.c\
 				type_token_utils2.c\
-				free_token.c
+				free_token.c\
+				check_syntax_utils.c
+
 
 MAIN_NAME	=	main.c
 
