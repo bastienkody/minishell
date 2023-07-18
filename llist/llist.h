@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/26 18:37:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 23:24:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ t_llist	*llstnext(t_llist *llst, size_t n);
 t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),
 			void (*del)(void *));
-void	llstremove_range(t_llist **begin_llst, t_llist *begin, t_llist *end, void (*del)(void *));
+void	llstremove_range(t_llist **begin_llst, t_llist *begin, t_llist *end,
+			void (*del)(void *));
 void	llstremoveone(t_llist **begin, t_llist *llst, void (*del)(void *));
 int		llstall_of(t_llist *llst, int (*p)(void *));
 int		llstany_of(t_llist *llst, int (*p)(void *));
