@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/28 14:01:57 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/17 17:32:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef enum e_type
 	word,
 	error,
 	COMPLETE_COMMAND,
+	COMPOUND_COMMAND,
 	LOGICAL_EXPRESSION,
 	PIPELINE,
 	SIMPLE_COMMAND,
@@ -140,6 +141,7 @@ int		is_str_word(const char *str);
 t_ast	*new_ast(t_type	type, void *data, t_llist *children);
 t_llist	*create_child(t_llist	*leaf, t_ast *(*create)(t_llist *));
 t_ast	*create_complete_command(t_llist	*token_list);
+t_ast	*create_compound_command(t_llist *leaf_list);
 t_ast	*create_pipeline(t_llist *token_list);
 t_ast	*create_logical_expression(t_llist	*token_list);
 t_ast	*create_command(t_llist	*token_list);
@@ -151,6 +153,7 @@ int		is_node_word(t_ast	*node);
 int		is_node_logical_operator(t_ast	*node);
 int		is_node_pipe(t_ast	*node);
 int		is_node_redirection(t_ast	*node);
+int		is_node_compound(t_ast	*node);
 
 /*	utils general	*/
 char	*strjoin(const char *s1, const char *s2);
@@ -198,10 +201,12 @@ void	print_token_error(t_token token);
 void	err_msg(char *str, char *err);
 void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
+void	print_tree(t_ast *ast, int flag[256], int depth, int islast);
 
 /*	builtins	*/
 int		pwd(void);
 int		echo(char **argv);
-int		cd(char *path);
-
+int		cd(char *path);const char *type_to_string(t_type type);
+t_llist	*lexer(const char *line);
+t_ast	*parser(t_llist	*token_list);
 #endif
