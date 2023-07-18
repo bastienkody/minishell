@@ -10,7 +10,7 @@ UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
 
-EXECU_NAME	=	execution_basics.c	
+EXECU_NAME	=	execution_basics.c
 
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
@@ -33,6 +33,7 @@ TREE_NAME	=	new_ast.c\
 				token_to_leafs.c\
 				tree_printers.c\
 				create_complete_command.c\
+				create_compound_command.c\
 				create_logical_expression.c\
 				create_pipeline.c\
 				create_command.c\
@@ -51,7 +52,7 @@ UTILS_NAME	=	ft_realloc.c\
 				type_token_utils1.c\
 				type_token_utils2.c
 
-MAIN_NAME	=	main_test.c
+MAIN_NAME	=	main.c
 
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})

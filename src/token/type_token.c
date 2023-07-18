@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/22 14:20:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/18 13:48:19 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ static t_type	get_type(const char *text)
 static t_token	*new_token(char *text)
 {
 	const t_type	type = get_type(text);
-	t_token			*new;
+	t_token *const	new = malloc(sizeof(t_token));
 
-	new = malloc(sizeof(t_token));
 	if (new == NULL)
 		return (NULL);
 	*new = (t_token){text, type};

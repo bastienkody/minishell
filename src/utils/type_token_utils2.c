@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:08:19 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 15:45:28 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/17 19:08:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int	is_str_compound(const char *str)
 {
 	const size_t	len = ft_strlen(str);
 
-	return (len > 2 && str[0] == '(' && str[len - 1] == ')'
-		&& check_parenthesis(str));
+	if (len > 2 && str[0] == '(' && str[len - 1] == ')')
+		return (check_parenthesis(str));
+	return (0);
 }
 
 int	is_str_word(const char *str)

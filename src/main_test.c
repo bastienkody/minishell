@@ -8,6 +8,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*cmd_name;
 	char	*cmd_args[3];
 
+	status = 0;
 	if (argc == 2)
 	{
 		cmd_name = argv[1];
@@ -61,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	
+
 	path = get_path(envp);
 	path_tmp = path;
 	while(path_tmp && *path_tmp)
@@ -80,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 
 	infile = ft_strdup("Makefile");
 	outfile = ft_strdup("$truc");
- 
+
 	in_fd = open_in(infile, envp);
 	out_fd = open_out(5, outfile, envp);
 	ft_fprintf(1, "in_fd = %i\n", in_fd);
