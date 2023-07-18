@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include "../../libft/libft.h"
+#include "../../inc/minishell.h"
 
 /*	join 2 strings, free s1	*/
 char	*strjoin(const char *s1, const char *s2)

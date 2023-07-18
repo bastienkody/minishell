@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:28:44 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 15:43:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/17 15:18:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	is_token_word(t_token *token)
 {
@@ -36,6 +36,11 @@ static int	is_token_logical_operator(t_token *token)
 	return (type == and || type == or);
 }
 
+static int	is_token_operator(t_token *token)
+{
+	return (is_token_logical_operator(token) || is_token_pipe(token));
+}
+
 int	check_syntax(t_llist *token_list)
 {
 	t_llist	*current;
@@ -47,10 +52,10 @@ int	check_syntax(t_llist *token_list)
 		{
 			if (current->prev == NULL || current->next == NULL)
 				return (0);
-			if (!is_token_word(current->prev->content) && (!is_token_word(current->next->content) || !is_token_redirection_operator(current->next->content)))
+			if (is_token_operator(current->prev->content) || is_token_operator(current->next->content))
 				return (0);
 		}
-		if (is_token_redirection_operator(current->content))
+		else if (is_token_redirection_operator(current->content))
 		{
 			if (current->next->content == NULL)
 				return (0);

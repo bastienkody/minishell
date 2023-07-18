@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_to_leafs.c                                   :+:      :+:    :+:   */
+/*   new_ast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 17:53:16 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 15:43:30 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/26 16:39:07 by aguyon            #+#    #+#             */
+/*   Updated: 2023/06/26 17:59:21 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-static t_ast	*new_leaf(t_token *token)
+t_ast	*new_ast(t_type	type, void *data, t_llist *children)
 {
-	char	*text;
+	t_ast	*new;
 
-	text = ft_strdup(token->text);
-	if (text == NULL)
+	new = malloc(sizeof(t_ast));
+	if (new == NULL)
 		return (NULL);
-	return (new_ast(token->type, text, NULL));
-}
-
-t_llist	*token_to_leaf(t_llist	*token_list)
-{
-	return (llstmap(token_list, (void *(*)(void *))new_leaf, free));
+	*new = (t_ast){type, data, children};
+	return (new);
 }

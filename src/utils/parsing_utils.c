@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 09:18:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 15:45:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/17 14:53:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,9 @@ int	is_node_redirection(t_ast	*node)
 	const t_type	type = node->type;
 
 	return (type == less || type == great || type == dless || type == dgreat);
+}
+
+int	is_node_compound(t_ast	*node)
+{
+	return (node->type == compound);
 }

@@ -12,52 +12,24 @@
 
 #include "../../inc/minishell.h"
 
-char	*get_key(char *line)
+int	expand_dollar_quotes_on_ast(t_ast *ast, char **envp)
 {
-	char	*end;
 
-	end = strfind(line, '=');
-	if (!end)
-		return (NULL);
-	*end = '\0';
-	return (line);
-}
-
-char	*get_value(char *line)
-{
-	return (strfind(line, '=') + 1);
-}
-
-/*	end excluded	*/
-char	*extract_wd(char *start, char *end)
-{
-	char	*word;
-	int		len;
-
-	//if (!end || !start)
-		//return (NULL);
-	len = end - start;
-	//if (len <= 0)
-		//return (NULL);
-	word = malloc(len + 1);
-	if (!word)
-		return (NULL);
-	word[len--] = '\0';
-	while (--end >= start)
-		word[len--] = *end;
-	return (word);
-}
-
-/*	word is malloced and word[0] == '$'	*/
-char	*expand_wd(char *word, char **envp)
-{
-	if (!word)
-		return (NULL);
-	while (envp && *envp)
+	(void)envp;
+	while (ast)
 	{
-		if (!ft_strcmp(word + sizeof(char), get_key(*envp)))
-			return (free(word), ft_strdup(get_value(*envp)));
-		envp++;
+		//ast->data = expand_dollar((char *)ast->data, envp);
+		ft_fprintf(1, "%i\n", (int)ast->type);
+		ft_fprintf(1, "%s\n", (char *)ast->data);
+	//	if (!ast->data)
+	//		return (MALLOC_FAIL_REDIR);
+		if (ast->children)
+			ast = ast->children->content;
+		else
+		{
+			ft_fprintf(1, "ast->children vaut null\n");
+		 	ast = NULL;
+		}
 	}
-	return (free(word), ft_strdup(""));
+	return (1);
 }
