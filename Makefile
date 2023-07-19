@@ -50,6 +50,7 @@ TREE_NAME	=	new_ast.c\
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
 				printers.c\
+				print_env.c\
 				print_err_msg.c\
 				lsttok_utils.c\
 				parsing_utils.c\

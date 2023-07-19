@@ -14,19 +14,26 @@
 
 char	*get_envalue(char *key, char **envp)
 {
+	char	*key_comp;
+
 	while (envp && *envp)
 	{
-		if (!ft_strcmp(key, get_key(*envp)))
-			return (get_value(*envp));
+		ft_fprintf(1, "key(%s)envp:%s\n", key, *envp);
+		key_comp = get_key_2(*envp);	
+		if (!key_comp)
+			return (NULL);
+		if (!ft_strcmp(key, key_comp))
+			return (free(key_comp), ft_strdup(get_value(*envp)));
+		free(key_comp);
 		envp++;
 	}
-	return (NULL);
+	return (ft_strdup("")); // not a malloc error .. 
 }
 
 int	mod_envar(char *key, char *new_value, char **envp)
 {
-	char	*new_env_line;
 	char	*env_line;
+	char	*key_comp;
 
 	env_line = ft_strjoin(key, "=");
 	env_line = strjoin(env_line, new_value);
@@ -34,12 +41,18 @@ int	mod_envar(char *key, char *new_value, char **envp)
 		return (MALLOC_FAIL_REDIR);
 	while (envp && *envp)
 	{
-		if (!ft_strcmp(key, get_key(*envp)))
+		ft_fprintf(1, "key(%s)key_cmp(%s)New_value:(%s)*envp(%s)\n", key, key_comp, new_value, *envp);
+		key_comp = get_key_2(*envp);
+		if (!key_comp)
+			return (MALLOC_FAIL_REDIR);
+		if (!ft_strcmp(key, key_comp))
 		{
 			free(*envp);
 			*envp = env_line;
-			return (1);
+			ft_fprintf(1, "entrey modified:%s\n", env_line);
+			return (free(key_comp), 1);
 		}
+		free(key_comp);
 		envp++;
 	}
 	return (0);
@@ -47,7 +60,6 @@ int	mod_envar(char *key, char *new_value, char **envp)
 
 int	cd(char *path, char **envp)
 {
-	int		i;
 	int		chdir_status;
 
 	chdir_status = chdir(path);

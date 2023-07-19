@@ -84,19 +84,22 @@ int	main(int argc, char **argv, char **envp)
 	envp = charmatrix_dup(envp);
 	if (!envp)
 		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+//	print_env(envp);
 	args = malloc(sizeof(char *) * 3);
-	path = "./../";
+	path = "./src/expansion";
 	if (argc > 1)
 		path = argv[1];
 	else
-	(void)argv;
+		(void)argv;
+	print_envar_bad("PWD", envp);
+	print_envar_bad("OLDPWD", envp);
 	ft_fprintf(1, "%i\n", cd(path, envp));
 	pwd();
-	print_env(envp);
+	print_envar_bad("PWD", envp);
+	print_envar_bad("OLDPWD", envp);
 	//execve("/usr/bin/pwd", args, envp);
 	//chdir(path);
 }
-
 
 // ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
 /*int	main(void)

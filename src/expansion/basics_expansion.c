@@ -23,6 +23,21 @@ char	*get_key(char *line)
 	return (line);
 }
 
+/* malloc to avoid : (le = de *line (==*(envp)) is replaced by \0 so envp only contains key ...)	*/
+char	*get_key_2(char *line)
+{
+	char	*end;
+	char	*ret;
+
+	ret = ft_strdup(line);
+	if (!ret)
+		return (NULL);
+	end = strfind(ret, '=');
+	if (end)
+		*end = '\0';
+	return (ret);
+}
+
 char	*get_value(char *line)
 {
 	return (strfind(line, '=') + 1);

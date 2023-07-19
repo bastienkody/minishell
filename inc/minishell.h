@@ -171,6 +171,7 @@ int		is_str_quote_enclosed(char *str);
 int		is_c_blank_nl_dollar_s_d_quote(int c);
 int		check_amb_redir(char *str, char **envp);
 char	*get_key(char *line);
+char	*get_key_2(char *line);
 char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
@@ -197,6 +198,7 @@ char	**get_path(char **envp);
 /*	printers	*/
 void	print_item(void *item);
 void	print_env(char **envp);
+void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
 void	print_token_error(t_token token);

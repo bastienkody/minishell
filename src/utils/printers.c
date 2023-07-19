@@ -53,11 +53,4 @@ void	print_token_error(t_token token)
 	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.text);
 }
 
-void	print_env(char **envp)
-{
-	while (envp && *envp)
-	{
-		ft_fprintf(1, "%s\n", *envp);
-		envp++;
-	}
-}
+
