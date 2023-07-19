@@ -6,56 +6,63 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:55:39 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/28 15:41:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/19 14:45:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static t_ast	*create_cmd_name(t_llist *leaf)
+static int	add_prefixes_children(t_llist **children, t_llist **leaf_list,
+	t_llist *cmd_name_pos)
 {
-	return (new_ast(CMD_NAME, NULL, leaf));
+	t_llist *const	prefixes_leafs
+		= llstextract_range(leaf_list, *leaf_list, cmd_name_pos);
+	t_llist *const	new_children = create_prefixes(prefixes_leafs);
+
+	if (new_children == NULL)
+		return (0);
+	llstadd_back(children, new_children);
+	return (1);
 }
 
-t_llist	*find_cmd_name(t_llist	*leaf_list)
+static int	add_cmd_name_child(t_llist **children, t_llist **leaf_list,
+	t_llist *cmd_name_pos)
 {
-	while (leaf_list != NULL)
-	{
-		if (is_node_word(leaf_list->content))
-			return (leaf_list);
-		leaf_list = llstnext(leaf_list, 2);
-	}
-	return (NULL);
+	t_llist *const	extract = llstextractone(leaf_list, cmd_name_pos);
+	t_llist *const	new_child = create_child(extract, create_cmd_name);
+
+	if (new_child == NULL)
+		return (0);
+	llstadd_back(children, new_child);
+	return (1);
+}
+
+static int	add_suffixes_children(t_llist **children, t_llist **leaf_list)
+{
+	t_llist *const	extract = llstextract_range(leaf_list, *leaf_list, NULL);
+	t_llist *const	new_children = create_suffixes(extract);
+
+	if (new_children == NULL)
+		return (0);
+	llstadd_back(children, new_children);
+	return (1);
 }
 
 t_ast	*create_command(t_llist	*leaf_list)
 {
-	t_llist	*cmd_name_pos;
-	t_llist	*children;
-	t_llist	*new_children;
+	t_llist *const	cmd_name_pos = find_cmd_name(leaf_list);
+	t_llist			*children;
+	int				ok;
 
 	children = NULL;
-	cmd_name_pos = find_cmd_name(leaf_list);
+	ok = 1;
 	if (cmd_name_pos == NULL || cmd_name_pos->prev != NULL)
-	{
-		new_children = create_prefixes(llstextract_range(&leaf_list, leaf_list, cmd_name_pos));
-		if (new_children == NULL)
-			return (NULL);
-		llstadd_back(&children, new_children);
-	}
+		ok *= add_prefixes_children(&children, &leaf_list, cmd_name_pos);
 	if (cmd_name_pos != NULL)
-	{
-		new_children = create_child(llstextractone(&leaf_list, leaf_list), create_cmd_name);
-		if (new_children == NULL)
-			return (llstclear(&children, (void (*)(void *))free_ast), NULL);
-		llstadd_back(&children, new_children);
-	}
+		ok *= add_cmd_name_child(&children, &leaf_list, cmd_name_pos);
 	if (leaf_list != NULL)
-	{
-		new_children = create_suffixes(llstextract_range(&leaf_list, leaf_list, NULL));
-		if (new_children == NULL)
-			return (llstclear(&children, (void (*)(void *))free_ast), NULL);
-		llstadd_back(&children, new_children);
-	}
+		ok *= add_suffixes_children(&children, &leaf_list);
+	if (ok == 0)
+		return (llstclear(&children, (void (*)(void *))free_ast), NULL);
 	return (new_ast(SIMPLE_COMMAND, NULL, children));
 }

@@ -1,6 +1,8 @@
 ###		SOURCE FILES	###
 HEADER		=	./inc/minishell.h
 
+BUILD_DIR	=	./build
+
 EXECU_DIR	=	execution/
 XPAND_DIR	=	expansion/
 REDIR_DIR	=	redirection/
@@ -9,6 +11,7 @@ TREE_DIR	=	tree/
 UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
+OTHER_DIR	=	./
 
 EXECU_NAME	=	execution_basics.c
 
@@ -52,10 +55,16 @@ UTILS_NAME	=	ft_realloc.c\
 				type_token_utils1.c\
 				type_token_utils2.c\
 				free_token.c\
-				check_syntax_utils.c
+				check_syntax_utils.c\
+				create_command_utils.c\
 
 
-MAIN_NAME	=	main.c
+OTHER_NAME =			parser.c\
+				lexer.c\
+
+MAIN_NAME	=	main_debug.c # main.c
+
+# MAIN_DEBUG	=	main_debug.c
 
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
@@ -64,9 +73,10 @@ TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
 TREE_SRC	=	$(addprefix ${TREE_DIR}, ${TREE_NAME})
 UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
+OTHER_SRC	=	$(addprefix ${OTHER_DIR}, ${OTHER_NAME})
 
 SRCS_NAME	=	${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
-				${TREE_SRC} ${UTILS_SRC} ${MAIN_SRC}
+				${TREE_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:.c=.o}
@@ -96,6 +106,7 @@ LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./btree -lbtree\
 			@echo "\033[0m\c"
 
 all:		${NAME}
+
 
 ${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${BTREE} ${NTREE}
 			@echo "\033[32m\c"

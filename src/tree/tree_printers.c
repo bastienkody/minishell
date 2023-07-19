@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:24:22 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/18 19:24:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/19 18:50:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,17 @@ static const char	*g_type_str[]
 	"FILENAME"
 };
 
-const char	*type_to_string(t_type type)
+char	*type_to_string(t_type type)
 {
-	return (g_type_str[type]);
+	return ((char *)g_type_str[type]);
+}
+
+static void	print_data(t_ast *ast)
+{
+	if (ast->type == REDIRECTION || ast->type == OPERATOR)
+		ft_fprintf(1, ": %d", (intptr_t)ast->data);
+	else
+		ft_fprintf(1, ": %s", (char *)ast->data);
 }
 
 static void	print_node(t_ast *ast, int depth)
@@ -49,7 +57,7 @@ static void	print_node(t_ast *ast, int depth)
 		ft_fprintf(1, "+--- ");
 	ft_fprintf(1, "%s", type_to_string(ast->type));
 	if (ast->data != NULL)
-		ft_fprintf(1, ": %s", ast->data);
+		print_data(ast);
 	ft_fprintf(1, "\n");
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   dollar_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 16:04:39 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/19 19:47:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*expand_dollar(char *str, char **envp)
 		else
 			tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (free(tmp), free(ret), NULL); 
+			return (free(tmp), free(ret), NULL);
 		// double free possible on tmp (str) when freeing the tree?
 	}
 	return (free(str), ret);

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/18 19:31:37 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/19 19:36:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef enum e_type
 	FILENAME,
 }	t_type;
 
+typedef void *(*t_funptr)();
+
 typedef struct s_token
 {
 	char	*text;
@@ -92,7 +94,7 @@ union u_data
 typedef struct s_node
 {
 	t_type			type;
-	union	u_data	data;
+	union u_data	data;
 
 }	t_node;
 
@@ -126,6 +128,10 @@ char	*strfind(const char *str, int c);
 char	*strfind_not(const char *str, int c);
 char	*strfind_if(const char *str, int (*f)(int));
 
+/* create_command_utils*/
+t_ast	*create_cmd_name(t_llist *leaf);
+t_llist	*find_cmd_name(t_llist	*leaf_list);
+
 /*	token_type_predicate	*/
 int		is_str_or(const char *str);
 int		is_str_and(const char *str);
@@ -138,11 +144,11 @@ int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
 
 /*	check_syntax_utils*/
-int	is_token_word(t_token *token);
-int	is_token_redirection_operator(t_token *token);
-int	is_token_pipe(t_token *token);
-int	is_token_logical_operator(t_token *token);
-int	is_token_operator(t_token *token);
+int		is_token_word(t_token *token);
+int		is_token_redirection_operator(t_token *token);
+int		is_token_pipe(t_token *token);
+int		is_token_logical_operator(t_token *token);
+int		is_token_operator(t_token *token);
 
 /*	ast */
 t_ast	*new_ast(t_type	type, void *data, t_llist *children);
@@ -192,7 +198,9 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 /*	redirections	*/
 int		open_in(char *filename, char **envp);
 int		open_here_doc(char *lim, char **envp);
-int		open_out(int type, char *filename, char **envp);
+int		open_out(int type, char *filename, char **envp, t_ast *ast);
+void	manage_redir(t_ast *ast, char **envp);
+void	manage_here_doc(t_ast *ast, char **envp);
 
 /*	execution	*/
 int		execute(char *cmd_name, char **cmd_args, char **envp);
@@ -210,7 +218,7 @@ void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
 void	print_tree(t_ast *ast);
 
-const char *type_to_string(t_type type);
+char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ast	*parser(t_llist	*token_list);
 void	free_token(t_token *token);

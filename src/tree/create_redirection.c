@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 19:24:08 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 19:25:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/19 18:33:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static t_ast	*create_operator(t_llist *leaf)
 {
-	return (new_ast(OPERATOR, NULL, leaf));
+	t_type type;
+
+	type = ((t_ast *)leaf->content)->type;
+	return (new_ast(OPERATOR, (void *)type, leaf));
 }
 
 static t_ast	*create_filename(t_llist *leaf)
 {
-	return (new_ast(FILENAME, NULL, leaf));
+	char *const filename = ft_strdup(((t_ast *)leaf->content)->data);
+
+	if (filename == NULL)
+		return (NULL);
+	return (new_ast(FILENAME, filename, leaf));
 }
 
 t_ast	*create_redirection(t_llist	*leaf_list)
