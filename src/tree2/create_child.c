@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_token.c                                       :+:      :+:    :+:   */
+/*   create_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 13:49:17 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 15:08:06 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/20 15:08:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_token(t_token *token)
+t_llist	*create_child(t_llist	*leaf, t_ntree *(*create)(t_llist *))
 {
-	(free(token->data), free(token));
+	t_ntree	*subtree;
+
+	subtree = create(leaf);
+	if (subtree == NULL)
+		return (NULL);
+	return (llstnew(subtree));
 }

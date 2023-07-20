@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_ast_child.c                                    :+:      :+:    :+:   */
+/*   ast_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 22:53:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/26 22:56:52 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 15:18:59 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/20 15:26:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*t_llist	*new_ast_child(t_ast *leaf, t_type type, void *data)
+t_ntree	*ast_new(t_type type, void *data, t_llist *children)
 {
-	t_llist	*new;
+	t_token	*new_token;
+	t_ntree	*new_ntree;
 
-	new = llstnew();
-}*/
+	new_token = token_new(type, data);
+	if (new_token == NULL)
+		return (NULL);
+	new_ntree = ntree_new(new_token, children);
+	if (new_ntree == NULL)
+		return (free_token(new_token), NULL);
+	return (new_ntree);
+}

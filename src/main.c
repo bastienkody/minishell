@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/19 14:23:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/20 15:14:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 	char	*line;
 	t_llist	*token_list;
 	t_llist	*error;
-	t_ast	*ast;
+	t_ntree	*ast;
 
 	if (!argc || !envp)
 		return (1);
@@ -61,7 +61,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		ast = parser(token_list);
 		if (ast == NULL)
 			return (1);
-		free_ast(ast);
+		ntree_free(ast);
 	}
 }
 

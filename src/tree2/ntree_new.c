@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_token.c                                       :+:      :+:    :+:   */
+/*   ntree_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 13:49:17 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 13:19:29 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/20 13:22:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_token(t_token *token)
+t_ntree	*ntree_new(void *data, t_llist *children)
 {
-	(free(token->data), free(token));
+	t_ntree *const	new = malloc(sizeof(t_ntree));
+
+	if (new == NULL)
+		return (NULL);
+	*new = (t_ntree){data, children};
+	return (new);
 }

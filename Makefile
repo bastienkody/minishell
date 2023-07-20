@@ -7,7 +7,7 @@ EXECU_DIR	=	execution/
 XPAND_DIR	=	expansion/
 REDIR_DIR	=	redirection/
 TOKEN_DIR	=	token/
-TREE_DIR	=	tree/
+TREE_DIR	=	tree2/
 UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
@@ -30,11 +30,8 @@ TOKEN_NAME	=	type_token.c\
 				compound_cmd.c\
 				check_syntax.c
 
-TREE_NAME	=	new_ast.c\
-				new_ast_child.c\
-				free_ast.c\
-				token_to_leafs.c\
-				tree_printers.c\
+TREE_NAME	=	ast_new.c\
+				token_to_leaf.c\
 				create_complete_command.c\
 				create_compound_command.c\
 				create_logical_expression.c\
@@ -43,7 +40,11 @@ TREE_NAME	=	new_ast.c\
 				create_prefixes.c\
 				create_suffixes.c\
 				create_redirection.c\
-				create_child.c
+				create_child.c\
+				ntree_free.c\
+				ntree_new.c\
+				ntree_print.c\
+				utils.c\
 
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
@@ -88,15 +89,15 @@ NAME		=	minishell
 LIBFT		=	./libft/libft.a
 LLST		=	./llist/libllst.a
 BTREE		=	./btree/libbtree.a
-NTREE		=	./ntree/libntree.a
+# NTREE		=	./ntree/libntree.a
 
 CC			=	cc
 
 CFLAGS		=	-Wall -Wextra -Werror
 CFLAGSDEV	=	-Wall -Wextra -Werror -g3
 
-LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./btree -lbtree\
-				-L./ntree -lntree -lreadline
+LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./btree -lbtree -lreadline\
+				# -L./ntree -lntree
 
 
 ###		RULES		###
@@ -128,10 +129,10 @@ ${BTREE}:
 			@make --no-print-directory -C btree/
 			@echo "\033[33mbtree compiled\033[0m"
 
-${NTREE}:
-			@echo "\033[33mntree compilation ...\033[0m"
-			@make --no-print-directory -C ntree/
-			@echo "\033[33mntree compiled\033[0m"
+# ${NTREE}:
+# 			@echo "\033[33mntree compilation ...\033[0m"
+# 			@make --no-print-directory -C ntree/
+# 			@echo "\033[33mntree compiled\033[0m"
 
 clean:
 			@rm -rf ${OBJS}
@@ -139,7 +140,7 @@ clean:
 			@make --no-print-directory clean -C libft/
 			@make --no-print-directory clean -C llist/
 			@make --no-print-directory clean -C btree/
-			@make --no-print-directory clean -C ntree/
+
 
 fclean:		clean
 			@rm -rf ${NAME}
@@ -147,7 +148,7 @@ fclean:		clean
 			@make --no-print-directory fclean -C libft/
 			@make --no-print-directory fclean -C llist/
 			@make --no-print-directory fclean -C btree/
-			@make --no-print-directory fclean -C ntree/
+			# @make --no-print-directory fclean -C ntree/
 
 re:			fclean all
 

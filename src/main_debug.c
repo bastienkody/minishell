@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 19:30:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/20 16:14:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 	char	*line;
 	t_llist	*token_list;
 	t_llist	*error;
-	t_ast	*ast;
+	t_ntree	*ast;
 
 	if (!argc || !envp)
 		return (1);
@@ -53,11 +53,11 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		if (ast == NULL)
 			exit(EXIT_FAILURE); // erreur de malloc
 		// manage_here_doc(ast, envp);
-		print_tree(ast);
-		manage_redir(ast, envp);
-		ft_putendl_fd("-----------AST-----------", 1);
-		print_tree(ast);
-		ft_putendl_fd("", 1);
-		free_ast(ast);
+		// print_tree(ast);
+		// manage_redir(ast, envp);
+		// ft_putendl_fd("-----------AST-----------", 1);
+		// print_tree(ast);
+		// ft_putendl_fd("", 1);
+		// free_ast(ast);
 	}
 }

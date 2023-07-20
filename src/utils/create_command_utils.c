@@ -6,15 +6,15 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:45:03 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 14:46:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/20 16:09:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ast	*create_cmd_name(t_llist *leaf)
+t_ntree	*create_cmd_name(t_llist *leaf)
 {
-	return (new_ast(CMD_NAME, NULL, leaf));
+	return (ast_new(CMD_NAME, NULL, leaf));
 }
 
 t_llist	*find_cmd_name(t_llist	*leaf_list)
