@@ -75,30 +75,50 @@ t_ast	*parser(t_llist	*token_list)
 	free_char_matrix(new_envp);
 }*/
 
+// Export Builtin
+/*int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	(void)argc;
+	(void)argv;
+	args[0] = "export";
+	args[1] = "newentry=more";
+	args[2] = "//truc=machin";
+	args[3] = "otherentry=else";
+	args[4] = "-";
+	args[5] = "PWD=yop";
+	args[6] = NULL;
+	ft_fprintf(1, "export:%i\n", export(args, &envp));
+	//print_env(envp, NULL);
+	free_char_matrix(envp);
+}*/
+
 // CD builtin
 int	main(int argc, char **argv, char **envp)
 {
 	char	*path;
-	char	**args;
 
 	envp = charmatrix_dup(envp);
 	if (!envp)
 		return (ft_fprintf(2, "charmatrix malloc error?\n"));
 //	print_env(envp);
-	args = malloc(sizeof(char *) * 3);
-	path = "./src/expansion";
+	path = "./src/token/";
 	if (argc > 1)
 		path = argv[1];
 	else
 		(void)argv;
 	print_envar_bad("PWD", envp);
 	print_envar_bad("OLDPWD", envp);
-	ft_fprintf(1, "%i\n", cd(path, envp));
-	pwd();
+	ft_fprintf(1, "cd %s : %i\n", path, cd(path, envp));
 	print_envar_bad("PWD", envp);
 	print_envar_bad("OLDPWD", envp);
-	//execve("/usr/bin/pwd", args, envp);
-	//chdir(path);
+	ft_fprintf(1, "cd %s : %i\n", "../../..", cd("../../..", envp));
+	//print_env(envp, NULL);
+	free_char_matrix(envp);
 }
 
 // ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)

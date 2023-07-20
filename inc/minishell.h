@@ -29,12 +29,13 @@
 # define TRUE 1
 # define FALSE 0
 # define BAD_FD -1
-# define MALLOC_FAIL_REDIR -2
+# define MALLOC_FAIL -2
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
+# define PREFIX_EXPORT "declar -x "
 
 /*	here_doc	*/
 # define HD_PROMPT "here_doc > "
@@ -49,6 +50,7 @@
 # define ERR_NSFD "No such file or directory"
 # define ERR_CNF "Command not found"
 # define ERR_AMB_REDIR "ambiguous redirect"
+# define ERR_ID_EXPORT "not a valid identifier"
 
 typedef enum e_type
 {
@@ -159,9 +161,11 @@ int		is_node_compound(t_ast	*node);
 char	*strjoin(const char *s1, const char *s2);
 char	*strjoin2(const char *s1, const char *s2);
 char	*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+char	*strjoin3(char const *s1, char const *s2, char const *s3);
 char	*str_one_char_join(char *str, char c);
 void	*ft_realloc(void *ptr, size_t size);
 char	**charmatrix_dup(char **src_matrix);
+char	**charmatrix_add_one(char **src_matrix, char *entry);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
@@ -197,21 +201,28 @@ char	**get_path(char **envp);
 
 /*	printers	*/
 void	print_item(void *item);
-void	print_env(char **envp);
+void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
 void	print_token(t_token *token);
 void	print_token_error(t_token token);
+void	err_builtin(char *builtin, char *arg, char *err);
 void	err_msg(char *str, char *err);
 void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
 void	print_tree(t_ast *ast, int flag[256], int depth, int islast);
 
 /*	builtins	*/
+char	*get_envalue(char *key, char **envp);
+int		supp_envar(char *key, char **envp);
+int		add_envar(char *key, char *value, char ***envp);
+int		mod_envar(char *key, char *new_value, char **envp);
+int		is_var_set(char *key, char **envp);
 int		pwd(void);
 int		check_echo(char **argv);
 int		echo(char **argv);
 int		cd(char *path, char **envp);
+int		export(char **args, char ***envp);
 
 const char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);

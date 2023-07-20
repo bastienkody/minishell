@@ -11,7 +11,9 @@ UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
 
-BUILT_NAME	=	pwd.c\
+BUILT_NAME	=	builtin_basics.c\
+				pwd.c\
+				export.c\
 				echo.c\
 				cd.c
 

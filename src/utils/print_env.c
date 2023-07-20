@@ -12,10 +12,12 @@
 
 #include "../../inc/minishell.h"
 
-void	print_env(char **envp)
+void	print_env(char **envp, char *prefix)
 {
 	while (envp && *envp)
 	{
+		if (prefix)
+			ft_fprintf(1, "%s", prefix);
 		ft_fprintf(1, "%s\n", *envp);
 		envp++;
 	}
