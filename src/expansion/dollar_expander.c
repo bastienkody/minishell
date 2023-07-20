@@ -98,7 +98,7 @@ int	check_amb_redir(char *str, char **envp)
 			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
 				&is_c_blank_nl_dollar_s_d_quote)), envp);
 			if (!word)
-				return (MALLOC_FAIL_REDIR);
+				return (MALLOC_FAIL);
 			if (is_there_a_blank(word) || !ft_strlen(word))
 				return (free(word), FALSE);
 			free(word);

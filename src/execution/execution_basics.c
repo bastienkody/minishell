@@ -63,7 +63,7 @@ int	execute(char *cmd_name, char **cmd_args, char **envp)
 
 	full_name = get_full_cmd_name(cmd_name, envp);
 	if (!full_name)
-		return (MALLOC_FAIL_REDIR);
+		return (MALLOC_FAIL);
 	if (access(full_name, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
