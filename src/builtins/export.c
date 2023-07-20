@@ -88,7 +88,7 @@ int	export(char **args, char ***envp)
 		if (is_key_valid(key_value[0], *args) == 0)
 		{
 			ret = 1;
-			continue;
+			continue ;
 		}
 		if (export_each(key_value, *args, envp) == MALLOC_FAIL)
 			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);

@@ -19,7 +19,7 @@ char	*get_envalue(char *key, char **envp)
 	while (envp && *envp)
 	{
 		//ft_fprintf(1, "key(%s)envp:%s\n", key, *envp);
-		key_comp = get_key_2(*envp);	
+		key_comp = get_key_2(*envp);
 		if (!key_comp)
 			return (NULL);
 		if (!ft_strcmp(key, key_comp))
@@ -96,4 +96,3 @@ int	is_var_set(char *key, char **envp)
 	}
 	return (0);
 }
-

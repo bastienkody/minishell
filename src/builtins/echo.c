@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int	is_only_e_E_N(char *str)
+int	is_only_e_e_n(char *str)
 {
 	const char	*accepted_char = "eEn";
 
@@ -51,7 +51,7 @@ int	check_echo(char **argv)
 	if (argv && *argv && **argv == '-')
 	{
 		if (ft_strchr(*argv, 'e') || ft_strchr(*argv, 'E'))
-			if (is_only_e_E_N(*argv))
+			if (is_only_e_e_n(*argv))
 				return (0);
 	}
 	return (1);
@@ -74,7 +74,7 @@ int	echo(char **argv)
 		if (write(1, *argv, ft_strlen(*argv)) < 0)
 			return (-1);
 		if (*(argv + 1) && write(1, &sep[1], 1) < 0)
-			return (-1);	
+			return (-1);
 		argv++;
 	}
 	if (trailing_nl)
