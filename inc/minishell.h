@@ -166,6 +166,7 @@ char	*str_one_char_join(char *str, char c);
 void	*ft_realloc(void *ptr, size_t size);
 char	**charmatrix_dup(char **src_matrix);
 char	**charmatrix_add_one(char **src_matrix, char *entry);
+char	**charmatrix_del_one(char **src_matrix, char *key);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
@@ -214,7 +215,7 @@ void	print_tree(t_ast *ast, int flag[256], int depth, int islast);
 
 /*	builtins	*/
 char	*get_envalue(char *key, char **envp);
-int		supp_envar(char *key, char **envp);
+int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
@@ -223,6 +224,8 @@ int		check_echo(char **argv);
 int		echo(char **argv);
 int		cd(char *path, char **envp);
 int		export(char **args, char ***envp);
+int		env(char **envp, char *prefix);
+int		unset(char **args, char ***envp);
 
 const char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);

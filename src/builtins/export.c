@@ -41,7 +41,7 @@ int	args_to_key_value(char **key_value, char *args)
 
 int	is_key_valid(char *key, char *line)
 {
-	const char	*bad_char = "=+-/\\";
+	const char	*bad_char = ",.:!?~*^%$#@[]{}+-/\\";
 
 	if (ft_strlen(key) == 0)
 		return (err_builtin("export", line, ERR_ID_EXPORT), 0);
@@ -77,7 +77,7 @@ int	export(char **args, char ***envp)
 	char	*key_value[2];
 
 	if (!args[1])
-		return (print_env(*envp, PREFIX_EXPORT), 0);
+		return (env(*envp, PREFIX_EXPORT));
 	ret = 0;
 	key_value[0] = NULL;
 	key_value[1] = NULL;

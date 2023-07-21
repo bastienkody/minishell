@@ -60,19 +60,53 @@ t_ast	*parser(t_llist	*token_list)
 
 /////////////////////////////////////////////
 
-// charmatrix_dup util (ok, leakok, env-i ok, unset a var ok)
+// Unset builtin 
+int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	args[0] = "unset";
+	args[1] = "SHELL";
+	args[2] = "PWO";
+	args[3] = "OLDPWD";
+	args[4] = NULL;
+	ft_fprintf(1, "unset:%i\n", unset(args, &envp));
+	env(envp, NULL);
+	free_char_matrix(envp);
+}
+
+// charmatric del one
 /*int	main(int argc, char **argv, char **envp)
 {
-	char	**new_envp;
-	int		i;
 
-	((void)argc, (void)argv);
-	new_envp = charmatrix_dup(envp);
-	i = -1;
-	while (new_envp[++i])
-		ft_fprintf(1, "%s\n", new_envp[i]);
-	i = -1;
-	free_char_matrix(new_envp);
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	envp = charmatrix_del_one(envp, "PWDO");
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix_del_one malloc error?\n"));
+	env(envp, NULL);
+	free_char_matrix(envp);
+}*/
+
+
+// Env builtin
+/*int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	env(envp, NULL);
+	free_char_matrix(envp);
 }*/
 
 // Export Builtin
@@ -87,18 +121,20 @@ t_ast	*parser(t_llist	*token_list)
 	(void)argv;
 	args[0] = "export";
 	args[1] = "newentry=more";
-	args[2] = "//truc=machin";
+	args[1] = NULL;
+	args[2] = "truc:=machin";
 	args[3] = "otherentry=else";
 	args[4] = "-";
 	args[5] = "PWD=yop";
-	args[6] = NULL;
+	args[6] = "[PWD=bad";
+	args[7] = NULL;
 	ft_fprintf(1, "export:%i\n", export(args, &envp));
 	//print_env(envp, NULL);
 	free_char_matrix(envp);
 }*/
 
 // CD builtin
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*path;
 
@@ -119,7 +155,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "cd %s : %i\n", "../../..", cd("../../..", envp));
 	//print_env(envp, NULL);
 	free_char_matrix(envp);
-}
+}*/
 
 // ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
 /*int	main(void)

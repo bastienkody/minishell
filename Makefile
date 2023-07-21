@@ -14,7 +14,9 @@ SRC_DIR		=	./src/
 BUILT_NAME	=	builtin_basics.c\
 				pwd.c\
 				export.c\
+				unset.c\
 				echo.c\
+				env.c\
 				cd.c
 
 EXECU_NAME	=	execution_basics.c

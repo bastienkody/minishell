@@ -44,10 +44,11 @@ int	add_envar(char *key, char *value, char ***envp)
 	return (1);
 }
 
-int	supp_envar(char *key, char **envp)
+int	supp_envar(char *key, char ***envp)
 {
-	(void)key;
-	(void)envp;
+	*envp = charmatrix_del_one(*envp, key);
+	if (!*envp)
+		return (MALLOC_FAIL);
 	return (1);
 }
 

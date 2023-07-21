@@ -17,6 +17,7 @@ int	check_cd(char **args)
 {
 	int	argc;
 
+	argc = 0;
 	while (args && *args)
 	{
 		argc++;
