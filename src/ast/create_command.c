@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/26 17:55:39 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 14:45:58 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 14:57:56 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 16:57:08 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ static int	add_suffixes_children(t_llist **children, t_llist **leaf_list)
 	return (1);
 }
 
-t_ast	*create_command(t_llist	*leaf_list)
+t_ntree	*create_command(t_llist	*leaf_list)
 {
 	t_llist *const	cmd_name_pos = find_cmd_name(leaf_list);
 	t_llist			*children;
 	int				ok;
 
+	ft_fprintf(1, "\n create_cmd :\n");
+	llstiter(leaf_list, (t_unary_fun)print_leaf);
 	children = NULL;
 	ok = 1;
 	if (cmd_name_pos == NULL || cmd_name_pos->prev != NULL)
@@ -63,6 +65,6 @@ t_ast	*create_command(t_llist	*leaf_list)
 	if (leaf_list != NULL)
 		ok *= add_suffixes_children(&children, &leaf_list);
 	if (ok == 0)
-		return (llstclear(&children, (void (*)(void *))free_ast), NULL);
-	return (new_ast(SIMPLE_COMMAND, NULL, children));
+		return (llstclear(&children, (t_del_fun)ast_free), NULL);
+	return (ast_new(SIMPLE_COMMAND, NULL, children));
 }

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/20 16:09:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:17:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../llist/llist.h"
 # include "../libft/libft.h"
-# include "../btree/btree.h"
+# include "../llist/llist.h"
+# include "../ntree/ntree.h"
 
 /*	numeric const	*/
 # define TRUE 1
@@ -75,13 +76,6 @@ typedef enum e_type
 	FILENAME,
 }	t_type;
 
-typedef void *(*t_funptr)();
-typedef int (*t_predicate)(void *);
-typedef void (*t_unary_fun)(void *);
-typedef void *(*t_unary_op)(void *);
-typedef void *(*t_binary_op)(void *, void *);
-typedef void (*t_del_fun)(void *);
-
 typedef struct s_token
 {
 	t_type	type;
@@ -95,18 +89,11 @@ typedef struct s_ast
 	t_llist	*children;
 }	t_ast;
 
-typedef struct s_ntree
-{
-	void	*data;
-	t_llist	*children;
-}	t_ntree;
-
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
 void	lstreduce(t_llist	**llst);
 t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
-t_btree	*create_tree(t_llist *token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
 
@@ -149,6 +136,9 @@ int		is_token_operator(t_token *token);
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
 void	ast_free(t_ntree *ast);
+void	ast_print(t_ntree *ast);
+int		is_node_inside(t_ntree *node, t_type types[], size_t n);
+int		is_node_equal(t_ntree *node, t_type search_type);
 t_llist	*create_child(t_llist	*leaf, t_ntree *(*create)(t_llist *));
 t_ntree	*create_complete_command(t_llist	*token_list);
 t_ntree	*create_compound_command(t_llist *leaf_list);
@@ -219,11 +209,13 @@ void	print_tree(t_ast *ast);
 t_ntree	*ntree_new(void *data, t_llist *children);
 void	ntree_free(t_ntree *ntree, t_del_fun del);
 void	ntree_print(t_ntree *ntree, void (*print)(void *));
-
-
 char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ntree	*parser(t_llist	*token_list);
 void	free_token(t_token *token);
 t_token	*token_new(t_type type, void *data);
+t_token	*get_token(t_ntree *ast);
+void	ast_print(t_ntree *ast);
+void	print_leaf(t_ntree *leaf);
+
 #endif

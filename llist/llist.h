@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 12:57:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 16:50:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include <stddef.h>
 # include <stdlib.h>
+
+typedef void	*(*t_funptr)();
+typedef int		(*t_predicate)(void *);
+typedef void	(*t_unary_fun)(void *);
+typedef void	*(*t_unary_op)(void *);
+typedef void	*(*t_binary_op)(void *, void *);
+typedef void	(*t_del_fun)(void *);
 
 typedef struct s_llist
 {

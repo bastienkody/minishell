@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:27:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:17:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 18:45:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,11 @@ int	llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 		current1 = current1->next;
 		current2 = current2->next;
 	}
+	if (current1 == NULL && current2 == NULL)
+		return (0);
+	if (current1 == NULL && current2 != NULL)
+		return (1);
+	if (current1 != NULL && current2 == NULL)
+		return (-1);
 	return (comp(current1->content, current2->content));
 }

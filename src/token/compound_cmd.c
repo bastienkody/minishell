@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:52:53 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/18 19:39:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:13:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_llist	*join_token(t_llist *begin, t_llist *end)
 	t_llist	*tmp;
 	char	*s;
 
-	tmp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
+	tmp = llstmap_range(begin, end, (t_unary_op)ft_strdup, free);
 	if (tmp == NULL)
 		return (NULL);
-	s = llstfold(tmp, ft_strdup(""), (void *(*)(void *, void *))strjoin, free);
+	s = llstfold(tmp, ft_strdup(""), (t_binary_op)strjoin, free);
 	if (s == NULL)
 		return (llstclear(&tmp, free), NULL);
 	return (llstclear(&tmp, free), llstnew(s));

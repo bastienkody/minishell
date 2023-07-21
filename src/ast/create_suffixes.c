@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 14:21:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 19:13:45 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 15:00:12 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 16:57:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static t_ast	*create_cmd_arg(t_llist	*leaf)
+static t_ntree	*create_cmd_arg(t_llist	*leaf)
 {
-	return (new_ast(CMD_ARG, NULL, leaf));
+	return (ast_new(CMD_ARG, NULL, leaf));
 }
 
 t_llist	*create_suffixes(t_llist *leaf_list)
@@ -40,7 +40,7 @@ t_llist	*create_suffixes(t_llist *leaf_list)
 		else
 			new_child = NULL;
 		if (new_child == NULL)
-			return (llstclear(&suffixes, (void (*)(void *))free_ast), NULL);
+			return (llstclear(&suffixes, (t_del_fun)ast_free), NULL);
 		llstadd_back(&suffixes, new_child);
 	}
 	return (suffixes);

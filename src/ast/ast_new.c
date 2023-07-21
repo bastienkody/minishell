@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ntree_clear.c                                      :+:      :+:    :+:   */
+/*   ast_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:45:14 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/26 10:07:48 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 15:18:59 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 16:57:38 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ntree.h"
+#include "../../inc/minishell.h"
 
-void	ntree_clear(t_ntree **ntree, void (*del)(void *))
+t_ntree	*ast_new(t_type type, void *data, t_llist *children)
 {
-	t_llist	*current_child;
-	t_llist	*next_child;
+	t_token	*new_token;
+	t_ntree	*new_ntree;
 
-	del((*ntree)->item);
-	free(*ntree);
-	current_child = (*ntree)->children;
-	while (current_child != NULL)
-	{
-		next_child = current_child->next;
-		ntree_clear((t_ntree **)&(current_child->content), del);
-		current_child = next_child;
-	}
-	*ntree = NULL;
+	new_token = token_new(type, data);
+	if (new_token == NULL)
+		return (NULL);
+	new_ntree = ntree_new(new_token, children);
+	if (new_ntree == NULL)
+		return (free_token(new_token), NULL);
+	return (new_ntree);
 }

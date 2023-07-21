@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_apply.c                                        :+:      :+:    :+:   */
+/*   ntree_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 17:45:10 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 17:45:11 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 13:22:19 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 16:41:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "ntree.h"
 
-void	ast_apply(t_ast *ast, t_funptr f)
+void	ntree_free(t_ntree *ntree, t_del_fun del)
 {
-	t_llist *current;
+	t_llist	*current;
+	t_llist	*next;
 
-	f(ast);
-	current = ast->children;
+	if (ntree == NULL)
+		return ;
+	del(ntree->data);
+	current = ntree->children;
 	while (current != NULL)
 	{
-		ast_apply(current->content, f);
-		current = current->next;
+		next = current->next;
+		ntree_free(current->content, del);
+		current = next;
 	}
+	free(ntree);
 }

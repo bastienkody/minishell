@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   btree_apply_suffix.c                               :+:      :+:    :+:   */
+/*   create_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 19:16:17 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/21 13:30:44 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 15:08:06 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 17:09:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "btree.h"
+#include "../../inc/minishell.h"
 
-void	btree_apply_suffix(t_btree *root, void (*applyf)(void *))
+t_llist	*create_child(t_llist	*leaf, t_ntree *(*create)(t_llist *))
 {
-	if (root == NULL)
-		return ;
-	btree_apply_suffix(root->left, applyf);
-	btree_apply_suffix(root->right, applyf);
-	applyf(root->item);
+	t_ntree *const	subtree = create(leaf);
+
+	if (subtree == NULL)
+		return (NULL);
+	return (llstnew(subtree));
 }

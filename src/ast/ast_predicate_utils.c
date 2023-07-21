@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_new.c                                          :+:      :+:    :+:   */
+/*   ast_predicate_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/20 15:18:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 15:26:06 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/21 17:05:49 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 17:15:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ntree	*ast_new(t_type type, void *data, t_llist *children)
+int	is_node_inside(t_ntree *node, t_type types[], size_t n)
 {
-	t_token	*new_token;
-	t_ntree	*new_ntree;
+	const t_type	type = get_token(node)->type;
+	size_t			i;
 
-	new_token = token_new(type, data);
-	if (new_token == NULL)
-		return (NULL);
-	new_ntree = ntree_new(new_token, children);
-	if (new_ntree == NULL)
-		return (free_token(new_token), NULL);
-	return (new_ntree);
+	i = 0;
+	while (i < n)
+	{
+		if (type == types[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	is_node_equal(t_ntree *node, t_type search_type)
+{
+	const t_type	type = get_token(node)->type;
+
+	return (type == search_type);
 }

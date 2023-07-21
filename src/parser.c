@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 15:14:59 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 19:28:53 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_ntree	*parser(t_llist	*token_list)
 	leaf_list = token_to_leaf(token_list);
 	if (leaf_list == NULL)
 		return (NULL);
-	llstclear(&token_list, (void (*)(void *))free_token);
+	llstclear(&token_list, (t_del_fun)free_token);
+	llstiter(leaf_list, (t_unary_fun)print_leaf);
 	ast = create_complete_command(leaf_list);
 	if (ast == NULL)
 		return (NULL);

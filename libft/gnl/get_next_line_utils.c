@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:13:53 by bguillau          #+#    #+#             */
-/*   Updated: 2022/12/01 14:26:06 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:50:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*strj(char *s1, char *s2)
 	int		i;
 	int		j;
 
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
 	res = malloc((strle(s1) + strle(s2) + 1) * sizeof(char));
 	if (!res)

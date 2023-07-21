@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_ast.c                                         :+:      :+:    :+:   */
+/*   ast_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/28 13:48:48 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 19:18:22 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 17:16:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_ast(t_ast *ast)
+void	ast_free(t_ntree *ast)
 {
-	if (ast == NULL)
-		return ;
-	if (ast->type != REDIRECTION && ast->type != OPERATOR)
-		free(ast->data);
-	llstclear(&(ast->children), (void (*)(void *))free_ast);
-	free(ast);
+	ntree_free(ast, (t_del_fun)free_token);
 }

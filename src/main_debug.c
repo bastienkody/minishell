@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 16:14:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 19:16:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 	while (TRUE)
 	{
 		line = readline("minishell prompt % ");
+		if (line == NULL)
+			exit(1);
 		add_history(line);
 		token_list = lexer(line);
 		ft_putendl_fd("-----------TOKEN LIST-----------", 1);
@@ -38,7 +40,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		ft_putendl_fd("", 1);
 		if (token_list == NULL)
 			exit(EXIT_FAILURE); // erreur de malloc
-		error = llstfind_if(token_list, (int (*)(void *))is_token_error);
+		error = llstfind_if(token_list, (t_predicate)is_token_error);
 		if (error != NULL)
 		{
 			print_token_error(*(t_token *)error->content);
@@ -53,11 +55,12 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		if (ast == NULL)
 			exit(EXIT_FAILURE); // erreur de malloc
 		// manage_here_doc(ast, envp);
-		// print_tree(ast);
+		ast_print(ast);
 		// manage_redir(ast, envp);
 		// ft_putendl_fd("-----------AST-----------", 1);
 		// print_tree(ast);
 		// ft_putendl_fd("", 1);
+		ast_free(ast);
 		// free_ast(ast);
 	}
 }
