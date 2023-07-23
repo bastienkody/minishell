@@ -99,3 +99,32 @@ char	**charmatrix_del_one(char **src_matrix, char *key)
 	new_matrix[++j] = NULL;
 	return (free(key_comp), free_char_matrix(src_matrix), new_matrix);
 }
+
+/* dup src_matrix sorted, does not free	*/
+char	**charmatrix_buble_sort(char **src_matrix)
+{
+	char	**new_matrix;
+	char	*tmp;
+	int		i;
+	int		j;
+
+	new_matrix = charmatrix_dup(src_matrix);
+	if (!new_matrix)
+		return (NULL);
+	i = -1;
+	while (new_matrix[++i + 1])
+	{
+		j = 0;
+		while (new_matrix[j + 1])
+		{
+			if (ft_strcmp(new_matrix[j], new_matrix[j + 1]) > 0)
+			{
+				tmp = new_matrix[j];
+				new_matrix[j] = new_matrix[j + 1];
+				new_matrix[j + 1] = tmp;
+			}
+			j++;
+		}
+	}
+	return (new_matrix);
+}

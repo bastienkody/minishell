@@ -35,7 +35,7 @@
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
-# define PREFIX_EXPORT "declar -x "
+# define PREFIX_EXPORT "declare -x "
 
 /*	here_doc	*/
 # define HD_PROMPT "here_doc > "
@@ -172,6 +172,7 @@ void	*ft_realloc(void *ptr, size_t size);
 char	**charmatrix_dup(char **src_matrix);
 char	**charmatrix_add_one(char **src_matrix, char *entry);
 char	**charmatrix_del_one(char **src_matrix, char *key);
+char	**charmatrix_buble_sort(char **src_matrix);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
