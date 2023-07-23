@@ -12,6 +12,13 @@
 
 #include "../../inc/minishell.h"
 
+int	check_env(char **args)
+{
+	if (args[1])
+		return (0);
+	return (1);
+}
+
 int	env(char **envp, char *prefix)
 {
 	static const char	nl = '\n';

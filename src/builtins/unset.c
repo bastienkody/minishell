@@ -15,7 +15,7 @@
 /* builtin ret 1, execve ret 0 */
 int	check_unset(char **args)
 {
-	if (args && args[1] && args[1][0] == '-')
+	if (args && args[1] && args[1][0] == '-' && ft_strlen(args[1]) > 1)
 		return (0);
 	return (1);
 }

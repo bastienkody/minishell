@@ -12,6 +12,13 @@
 
 #include "../../inc/minishell.h"
 
+int	check_pwd(char **args)
+{
+	if (args[1] && args[1][0] == '-' && ft_strlen(args[1]) > 1)
+		return (0);
+	return (1);
+}
+
 int	pwd(void)
 {
 	char	*str;

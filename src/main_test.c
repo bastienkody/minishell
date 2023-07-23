@@ -60,8 +60,24 @@ t_ast	*parser(t_llist	*token_list)
 
 /////////////////////////////////////////////
 
-// Unset builtin 
+
+// is_a_builtin (echo ok, cd ok, pwd ok, export/unset ok, env ok) 
 int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	args[0] = "env";
+	args[1] = "-";
+	args[2] = "SHiELL";
+	args[1] = NULL;
+	ft_fprintf(1, "is_a_builtin:%i\n", is_a_builtin(args));
+}
+
+// Unset builtin 
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*args[10];
 
@@ -78,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "unset:%i\n", unset(args, &envp));
 	env(envp, NULL);
 	free_char_matrix(envp);
-}
+}*/
 
 // charmatric del one
 /*int	main(int argc, char **argv, char **envp)

@@ -45,37 +45,37 @@ int	is_only_n(char *str)
 }
 
 /* Use of builtin (1) or execve (0)	*/
-int	check_echo(char **argv)
+int	check_echo(char **args)
 {
-	++argv;
-	if (argv && *argv && **argv == '-')
+	++args;
+	if (args && *args && **args == '-')
 	{
-		if (ft_strchr(*argv, 'e') || ft_strchr(*argv, 'E'))
-			if (is_only_e_e_n(*argv))
+		if (ft_strchr(*args, 'e') || ft_strchr(*args, 'E'))
+			if (is_only_e_e_n(*args))
 				return (0);
 	}
 	return (1);
 }
 
-int	echo(char **argv)
+int	echo(char **args)
 {
 	int			trailing_nl;
 	const char	sep[2] = {'\n', ' '};
 
-	argv++;
+	args++;
 	trailing_nl = 1;
-	if (argv && *argv && !ft_strncmp("-n", *argv, 2) && is_only_n(*argv))
+	if (args && *args && !ft_strncmp("-n", *args, 2) && is_only_n(*args))
 	{
 		trailing_nl = 0;
-		argv++;
+		args++;
 	}
-	while (argv && *argv)
+	while (args && *args)
 	{
-		if (write(1, *argv, ft_strlen(*argv)) < 0)
+		if (write(1, *args, ft_strlen(*args)) < 0)
 			return (-1);
-		if (*(argv + 1) && write(1, &sep[1], 1) < 0)
+		if (*(args + 1) && write(1, &sep[1], 1) < 0)
 			return (-1);
-		argv++;
+		args++;
 	}
 	if (trailing_nl)
 		return (write(1, &sep[0], 1) < 0);

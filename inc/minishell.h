@@ -51,6 +51,8 @@
 # define ERR_CNF "Command not found"
 # define ERR_AMB_REDIR "ambiguous redirect"
 # define ERR_ID_EXPORT "not a valid identifier"
+# define ERR_TMA "too many arguments"
+# define ERR_TMA "too many arguments"
 
 typedef enum e_type
 {
@@ -104,6 +106,9 @@ typedef struct s_ast
 	void	*data;
 	t_llist	*children;
 }	t_ast;
+
+typedef int (*t_f)(char **);
+
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -213,19 +218,31 @@ void	print_ast_full(t_ast *ast);
 void	print_ast_text(t_ast *ast);
 void	print_tree(t_ast *ast, int flag[256], int depth, int islast);
 
-/*	builtins	*/
+/* builtins	*/
+int		pwd(void);
+int		echo(char **argv);
+int		cd(char *path, char **envp);
+int		env(char **envp, char *prefix);
+int		unset(char **args, char ***envp);
+int		export(char **args, char ***envp);
+int		exit_blt(char **args, char **envp, void *truc);
+
+/*	builtins utils	*/
 char	*get_envalue(char *key, char **envp);
 int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
-int		pwd(void);
-int		check_echo(char **argv);
-int		echo(char **argv);
-int		cd(char *path, char **envp);
-int		export(char **args, char ***envp);
-int		env(char **envp, char *prefix);
-int		unset(char **args, char ***envp);
+
+/*	builtins check	*/
+int		is_a_builtin(char **args);
+int		check_echo(char **args);
+int		check_cd(char **args);
+int		check_pwd(char **args);
+int		check_env(char **args);
+int		check_export(char **args);
+int		check_unset(char **args);
+int		check_exit(char **args);
 
 const char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);

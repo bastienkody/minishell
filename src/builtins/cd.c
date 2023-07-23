@@ -15,13 +15,15 @@
 /* builtin (ret 1) or execve (ret 0)	*/
 int	check_cd(char **args)
 {
+	int	i;
 	int	argc;
 
 	argc = 0;
-	while (args && *args)
+	i = 0;
+	while (args && args[i])
 	{
 		argc++;
-		args++;
+		i++;
 	}
 	if (argc != 2)
 		return (0);
