@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <stdio.h>
 
 /* builtin (ret 1) or execve (ret 0)	*/
 int	check_cd(char **args)
@@ -30,6 +31,19 @@ int	check_cd(char **args)
 	if (args[1][0] == '-')
 		return (0);
 	return (1);
+}
+
+int	cd_error(char *path)
+{
+	char		*msg;
+	const char	*prefix = "minishell: cd: ";
+
+	msg = ft_strjoin(prefix, path);
+	if (!msg)
+		return (MALLOC_FAIL);
+	perror(msg);
+	free(msg);
+	return (0);
 }
 
 int	cd(char *path, char **envp)
@@ -53,5 +67,8 @@ int	cd(char *path, char **envp)
 			return (free(export_args[1]), MALLOC_FAIL);
 		free(export_args[1]);
 	}
+	else
+		if (cd_error(path) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
 	return (chdir_status);
 }

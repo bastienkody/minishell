@@ -165,9 +165,11 @@ t_ast	*parser(t_llist	*token_list)
 }*/
 
 // CD builtin
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*path;
+	char	*path_permden = "impossible";
+	char	*path_too_long = "lopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalop";
 
 	envp = charmatrix_dup(envp);
 	if (!envp)
@@ -178,15 +180,17 @@ t_ast	*parser(t_llist	*token_list)
 		path = argv[1];
 	else
 		(void)argv;
-	print_envar_bad("PWD", envp);
-	print_envar_bad("OLDPWD", envp);
-	ft_fprintf(1, "cd %s : %i\n", path, cd(path, envp));
-	print_envar_bad("PWD", envp);
-	print_envar_bad("OLDPWD", envp);
-	ft_fprintf(1, "cd %s : %i\n", "../../..", cd("../../..", envp));
+//	print_envar_bad("PWD", envp);
+//	print_envar_bad("OLDPWD", envp);
+//	ft_fprintf(1, "cd %s : %i\n", path, cd(path, envp));
+//	print_envar_bad("PWD", envp);
+//	print_envar_bad("OLDPWD", envp);
+	(void)path;
+	(void)path_too_long;
+	ft_fprintf(1, "cd: %i\n", cd(path_permden, envp));
 	//print_env(envp, NULL);
 	free_char_matrix(envp);
-}*/
+}
 
 // ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
 /*int	main(void)
@@ -349,7 +353,7 @@ t_ast	*parser(t_llist	*token_list)
 }*/
 
 //	DOLLAR EXPANSION
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("salut \"\'$USER\'\" \'$USER\'");
 
@@ -366,7 +370,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "pst_exp:%s\n", str);
 	free(str);
 	free_char_matrix(envp);
-}
+}*/
 
 //	HEREDOC N EXPANSION
 /*int	main(int argc, char **argv, char **envp)

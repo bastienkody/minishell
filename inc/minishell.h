@@ -52,7 +52,6 @@
 # define ERR_AMB_REDIR "ambiguous redirect"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
-# define ERR_TMA "too many arguments"
 
 typedef enum e_type
 {
