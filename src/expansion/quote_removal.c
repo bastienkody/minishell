@@ -31,7 +31,7 @@ char	*rm_peer_quotes(char *str)
 				close_quote = strfind(tmp + 1, '\'');
 			else
 				close_quote = strfind(tmp + 1, '\"');
-			tmp = get_next_word_not_expanded(&ret, tmp + 1, close_quote) ;
+			tmp = get_next_word_not_expanded(&ret, tmp + 1, close_quote);
 		}
 		else
 			tmp = get_next_word_not_expanded(&ret, tmp, strfind_if(tmp + 1, \

@@ -140,7 +140,7 @@ t_ast	*parser(t_llist	*token_list)
 }*/
 
 // Export Builtin
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*args[10];
 
@@ -162,7 +162,7 @@ int	main(int argc, char **argv, char **envp)
 	//export(args, &envp);
 	print_env(envp, NULL);
 	free_char_matrix(envp);
-}
+}*/
 
 // CD builtin
 /*int	main(int argc, char **argv, char **envp)
@@ -349,20 +349,24 @@ int	main(int argc, char **argv, char **envp)
 }*/
 
 //	DOLLAR EXPANSION
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("salut \"\'$USER\'\" \'$USER\'");
 
-	if (argc > 1)
-	{
-		free(str);
-		str = ft_strdup(argv[1]);
-	}
-	ft_fprintf(1, "%s\n", str);
+	envp = charmatrix_dup(envp);
+	(void)argc;
+	(void)argv;
+	ft_fprintf(1, "pre_exp:%s\n", str);
 	str = expand_dollar(str, envp);
-	ft_fprintf(1, "%s\n", str);
+	ft_fprintf(1, "pst_exp:%s\n", str);
 	free(str);
-}*/
+	str = ft_strdup("$USER $PWD");
+	ft_fprintf(1, "pre_exp:%s\n", str);
+	str = expand_dollar(str, envp);
+	ft_fprintf(1, "pst_exp:%s\n", str);
+	free(str);
+	free_char_matrix(envp);
+}
 
 //	HEREDOC N EXPANSION
 /*int	main(int argc, char **argv, char **envp)

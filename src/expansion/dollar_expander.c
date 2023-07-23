@@ -45,7 +45,7 @@ char	*expand_dollar(char *str, char **envp)
 	tmp = str;
 	ret = ft_strdup("");
 	if (!ret || !tmp)
-		return (free(ret), free(tmp), NULL);
+		return (free(ret), free(str), NULL);
 	while (*tmp)
 	{
 		if (*tmp == D_QUOTE)
@@ -56,7 +56,7 @@ char	*expand_dollar(char *str, char **envp)
 		else
 			tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (free(tmp), free(ret), NULL); 
+			return (free(str), free(ret), NULL); 
 		// double free possible on tmp (str) when freeing the tree?
 	}
 	return (free(str), ret);
@@ -71,12 +71,12 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 	tmp = str;
 	ret = ft_strdup("");
 	if (!ret)
-		return (free(ret), NULL);
+		return (free(str), free(ret), NULL);
 	while (*tmp)
 	{
 		tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (free(tmp), free(ret), NULL);
+			return (free(str), free(ret), NULL);
 	}
 	return (free(str), ret);
 }
