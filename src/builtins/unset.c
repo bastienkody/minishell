@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_char_matrix.c                                 :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 16:39:00 by bguillau          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:26 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/21 14:44:14 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/21 14:44:16 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../inc/minishell.h"
 
-void	free_char_matrix(char **matrix)
+/* builtin ret 1, execve ret 0 */
+int	check_unset(char **args)
 {
-	int	i;
+	if (args && args[1] && args[1][0] == '-')
+		return (0);
+	return (1);
+}
 
-	i = 0;
-	while (matrix[i])
+int	unset(char **args, char ***envp)
+{
+	args++;
+	while (*args)
 	{
-		free(matrix[i]);
-		i++;
+		if (is_var_set(*args, *envp))
+			if (supp_envar(*args, envp) == MALLOC_FAIL)
+				return (MALLOC_FAIL);
+		args++;
 	}
-	free(matrix);
+	return (0);
 }

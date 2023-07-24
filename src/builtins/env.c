@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_char_matrix.c                                 :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 16:39:00 by bguillau          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:26 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/21 14:13:59 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/21 14:14:03 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../inc/minishell.h"
 
-void	free_char_matrix(char **matrix)
+int	env(char **envp, char *prefix)
 {
-	int	i;
+	static const char	nl = '\n';
+	int					i;
 
-	i = 0;
-	while (matrix[i])
+	i = -1;
+	while (envp && envp[++i])
 	{
-		free(matrix[i]);
-		i++;
+		if (prefix)
+			if (write(1, prefix, ft_strlen(prefix)) < 0)
+				return (1);
+		if (write(1, envp[i], ft_strlen(envp[i])) < 0 || write(1, &nl, 1) < 0)
+			return (1);
 	}
-	free(matrix);
+	return (0);
 }

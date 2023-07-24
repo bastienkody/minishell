@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_char_matrix.c                                 :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 16:39:00 by bguillau          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:26 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/19 17:35:03 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/19 17:35:06 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../inc/minishell.h"
 
-void	free_char_matrix(char **matrix)
+void	print_env(char **envp, char *prefix)
 {
-	int	i;
-
-	i = 0;
-	while (matrix[i])
+	while (envp && *envp)
 	{
-		free(matrix[i]);
-		i++;
+		if (prefix)
+			ft_fprintf(1, "%s", prefix);
+		ft_fprintf(1, "%s\n", *envp);
+		envp++;
 	}
-	free(matrix);
+}
+
+void	print_envar_bad(char *var, char **envp)
+{
+	while (envp && *envp)
+	{
+		if (!ft_strncmp(*envp, var, ft_strlen(var)))
+			return((void)ft_fprintf(1, "%s\n", *envp));
+		envp++;
+	}
 }

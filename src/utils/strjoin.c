@@ -31,7 +31,7 @@ char	*strjoin2(const char *s1, const char *s2)
 	char	*ret;
 
 	if (!s1 || !s2)
-		return (free((void *)s1), NULL);
+		return (free((void *)s1), free((void *)s2), NULL);
 	ret = ft_strjoin(s1, s2);
 	free((void *)s1);
 	free((void *)s2);
@@ -49,6 +49,20 @@ char	*ft_strjoin3(char const *s1, char const *s2, char const *s3)
 	tmp = ft_strjoin(s1, s2);
 	ret = ft_strjoin(tmp, s3);
 	free((void *)s2);
+	return (free((void *)tmp), ret);
+}
+
+/*	join 3 strings, free third only	*/
+char	*strjoin3(char const *s1, char const *s2, char const *s3)
+{
+	char	*tmp;
+	char	*ret;
+
+	if (!s1 || !s2 || !s3)
+		return (free((void *)s3), NULL);
+	tmp = ft_strjoin(s1, s2);
+	ret = ft_strjoin(tmp, s3);
+	free((void *)s3);
 	return (free((void *)tmp), ret);
 }
 

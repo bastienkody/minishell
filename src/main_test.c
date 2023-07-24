@@ -1,7 +1,192 @@
 #include "../inc/minishell.h"
 
-// EXECUTE
+int	is_token_error(t_llist *llst)
+{
+	t_token	token = *(t_token *)llst;
+
+	return (token.type == error);
+}
+
+void	print_ast(t_ast *ast)
+{
+	if (ast == NULL)
+		return ;
+	printf("%s\n", type_to_string(ast->type));
+	if (ast->type > 0 && ast->type < 9)
+		printf(": %s\n", (char *)ast->data);
+	llstiter(ast->children, (void (*)(void *))print_ast);
+}
+
+t_llist	*lexer(const char *line)
+{
+	t_llist *token_list;
+
+	token_list = lsttok(line);
+	if (token_list == NULL)
+		return (NULL);
+	// llstiter(token_list, print_item);
+	token_list = new_llst_with_compound(token_list);
+	if (token_list == NULL)
+		return (NULL);
+	// ft_fprintf(1, "post compound cmds:\n");
+	// llstiter(token_list, print_item);
+	// ft_fprintf(1, "_________________________\n");
+	llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
+	// llstiter(token_list, print_item);
+	token_list = type_token(token_list);
+	// llstiter(token_list, (void(*)(void *))print_token);
+	return (token_list);
+}
+
+t_ast	*parser(t_llist	*token_list)
+{
+	t_llist	*leaf_list;
+	int		flag[256];
+	t_ast	*ast;
+
+	leaf_list = token_to_leaf(token_list);
+	if (leaf_list == NULL)
+		return (NULL);
+	ast = create_complete_command(leaf_list);
+	if (ast == NULL)
+		return (NULL);
+	ft_fprintf(1, "-------------------------------\n");
+	ft_fprintf(1, "astree :\n");
+	for (int i = 0; i < 256; i++)
+		flag[i] = 1;
+	print_tree(ast, flag, 0, 0);
+	return (ast);
+}
+
+/////////////////////////////////////////////
+
+// Unset builtin 
 int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	args[0] = "unset";
+	args[1] = "SHELL";
+	args[2] = "PWO";
+	args[3] = "OLDPWD";
+	args[4] = NULL;
+	ft_fprintf(1, "unset:%i\n", unset(args, &envp));
+	env(envp, NULL);
+	free_char_matrix(envp);
+}
+
+// charmatric del one
+/*int	main(int argc, char **argv, char **envp)
+{
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	envp = charmatrix_del_one(envp, "PWDO");
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix_del_one malloc error?\n"));
+	env(envp, NULL);
+	free_char_matrix(envp);
+}*/
+
+
+// Env builtin
+/*int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	env(envp, NULL);
+	free_char_matrix(envp);
+}*/
+
+// Export Builtin
+/*int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+	(void)argc;
+	(void)argv;
+	args[0] = "export";
+	args[1] = "newentry=more";
+	args[1] = NULL;
+	args[2] = "truc:=machin";
+	args[3] = "otherentry=else";
+	args[4] = "-";
+	args[5] = "PWD=yop";
+	args[6] = "[PWD=bad";
+	args[7] = NULL;
+	ft_fprintf(1, "export:%i\n", export(args, &envp));
+	//print_env(envp, NULL);
+	free_char_matrix(envp);
+}*/
+
+// CD builtin
+/*int	main(int argc, char **argv, char **envp)
+{
+	char	*path;
+
+	envp = charmatrix_dup(envp);
+	if (!envp)
+		return (ft_fprintf(2, "charmatrix malloc error?\n"));
+//	print_env(envp);
+	path = "./src/token/";
+	if (argc > 1)
+		path = argv[1];
+	else
+		(void)argv;
+	print_envar_bad("PWD", envp);
+	print_envar_bad("OLDPWD", envp);
+	ft_fprintf(1, "cd %s : %i\n", path, cd(path, envp));
+	print_envar_bad("PWD", envp);
+	print_envar_bad("OLDPWD", envp);
+	ft_fprintf(1, "cd %s : %i\n", "../../..", cd("../../..", envp));
+	//print_env(envp, NULL);
+	free_char_matrix(envp);
+}*/
+
+// ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
+/*int	main(void)
+{
+	char	*args[5];
+	int		status;
+
+	//args[0] = NULL;
+	args[0] = "echo";
+	//args[0] = "salut";
+	args[1] = "nen";
+	args[2] = "first word";
+	args[3] = "second word";
+	args[4] = NULL;
+	if (check_echo(args))
+		ft_fprintf(1, "builtin\n");
+	else
+	 	return (ft_fprintf(1, "NOT BUILTIN (e or E then?)\n"));
+	status = echo(args);
+	(void)status;
+	//ft_fprintf(1, "%i\n", status);
+}*/
+
+// PWD builtin (symlink -> returns the dir pointed to by symlink, ok selon discord minishell)
+/*int	main(void)
+{
+	ft_fprintf(1, "%i\n", pwd());
+}*/
+
+// EXECUTE
+/*int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	int		status;
@@ -37,7 +222,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_fprintf(1, "analyze(status) : %i\n", analyze_status(status));
 	}
 	return (analyze_status(status));
-}
+}*/
 
 // GET FULL CMD NAME (ok with unset path)
 /*int	main(int argc, char **argv, char **envp)

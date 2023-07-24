@@ -20,7 +20,7 @@ int	open_in(char *filename, char **envp)
 		return (err_msg(filename, ERR_AMB_REDIR), BAD_FD);
 	filename = expand_dollar(filename, envp);
 	if (!filename)
-		return (MALLOC_FAIL_REDIR);
+		return (MALLOC_FAIL);
 	if (access(filename, F_OK))
 		return (err_msg(filename, ERR_NSFD), BAD_FD);
 	if (access(filename, R_OK))
@@ -43,7 +43,7 @@ int	open_out(int type, char *filename, char **envp, t_ast *ast)
 	filename = expand_dollar(filename, envp);
 	// printf("TEST : %s\n", (char *)((t_ast *)ast->children->next->content)->data);
 	if (!filename)
-		return (MALLOC_FAIL_REDIR);
+		return (MALLOC_FAIL);
 	if (!access(filename, F_OK) && access(filename, W_OK))
 		return (err_msg(filename, ERR_PERMDEN), BAD_FD);
 	fd = BAD_FD;

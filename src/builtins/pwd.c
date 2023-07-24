@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_char_matrix.c                                 :+:      :+:    :+:   */
+/*   redirector.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/24 16:39:00 by bguillau          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:26 by bguillau         ###   ########.fr       */
+/*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
+/*   Updated: 2023/06/22 11:50:46 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../inc/minishell.h"
 
-void	free_char_matrix(char **matrix)
+int	pwd(void)
 {
-	int	i;
+	char	*str;
 
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
+	str = NULL;
+	str = getcwd(str, 0);
+	if (!str)
+		return (-1);
+	ft_fprintf(1, "%s\n", str);
+	free(str);
+	return (0);
 }

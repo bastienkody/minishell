@@ -55,13 +55,13 @@ int	open_here_doc(char *lim, char **envp)
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb), HD_END);
 	if (!pathname)
-		return (MALLOC_FAIL_REDIR);
+		return (MALLOC_FAIL);
 	nb++;
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (free(pathname), perror("open here_doc in w"), BAD_FD);
 	if (!launch_here_doc(fd, lim, envp))
-		return (free(pathname), close (fd), MALLOC_FAIL_REDIR);
+		return (free(pathname), close (fd), MALLOC_FAIL);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)

@@ -2,7 +2,7 @@
 HEADER		=	./inc/minishell.h
 
 BUILD_DIR	=	./build
-
+BUILT_DIR	=	builtins/
 EXECU_DIR	=	execution/
 XPAND_DIR	=	expansion/
 REDIR_DIR	=	redirection/
@@ -12,6 +12,14 @@ UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
 OTHER_DIR	=	./
+
+BUILT_NAME	=	builtin_basics.c\
+				pwd.c\
+				export.c\
+				unset.c\
+				echo.c\
+				env.c\
+				cd.c
 
 EXECU_NAME	=	execution_basics.c
 
@@ -49,6 +57,7 @@ AST_NAME	=	ast_new.c\
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
 				printers.c\
+				print_env.c\
 				print_err_msg.c\
 				lsttok_utils.c\
 				parsing_utils.c\
@@ -63,10 +72,14 @@ UTILS_NAME	=	ft_realloc.c\
 OTHER_NAME =			parser.c\
 				lexer.c\
 
-MAIN_NAME	=	main_debug.c # main.c
+# MAIN_NAME	=	main_debug.c # main.c
 
 # MAIN_DEBUG	=	main_debug.c
+				charmatrix_dup.c
 
+MAIN_NAME	=	main_test.c
+
+BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
 REDIR_SRC	=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
