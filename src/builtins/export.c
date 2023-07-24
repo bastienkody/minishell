@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirector.c                                       :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 11:50:46 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/24 14:43:29 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 14:43:32 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,16 @@ int	export_each(char *key_value[2], char *entry, char ***envp)
 int	export(char **args, char ***envp)
 {
 	int		ret;
+	char	**sorted;
 	char	*key_value[2];
 
 	if (!args[1])
-		return (env(*envp, PREFIX_EXPORT));
+	{
+		sorted = charmatrix_buble_sort(*envp);
+		if (!sorted)
+			return (MALLOC_FAIL);
+		return (env(sorted, PREFIX_EXPORT), free_char_matrix(sorted), 0);
+	}
 	ret = 0;
 	key_value[0] = NULL;
 	key_value[1] = NULL;
@@ -86,11 +92,8 @@ int	export(char **args, char ***envp)
 		if (args_to_key_value(key_value, *args) == 0)
 			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
 		if (is_key_valid(key_value[0], *args) == 0)
-		{
 			ret = 1;
-			continue ;
-		}
-		if (export_each(key_value, *args, envp) == MALLOC_FAIL)
+		else if (export_each(key_value, *args, envp) == MALLOC_FAIL)
 			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
 	}
 	return (free(key_value[0]), free(key_value[1]), ret);

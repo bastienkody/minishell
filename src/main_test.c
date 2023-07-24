@@ -9,8 +9,38 @@ int	is_token_error(t_llist *llst)
 
 /////////////////////////////////////////////
 
-// Unset builtin
-int	main(int argc, char **argv, char **envp)
+// charmatrix buble sort
+/*int	main(int argc, char **argv, char **envp)
+{
+	char	**envp_sorted;
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	envp_sorted = charmatrix_buble_sort(envp);
+	env(envp_sorted, PREFIX_EXPORT);
+	free_char_matrix(envp);
+	free_char_matrix(envp_sorted);
+}*/
+
+
+// is_a_builtin (echo ok, cd ok, pwd ok, export/unset ok, env ok) 
+/*int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	args[0] = "env";
+	args[1] = "-";
+	args[2] = "SHiELL";
+	args[1] = NULL;
+	ft_fprintf(1, "is_a_builtin:%i\n", is_a_builtin(args));
+}*/
+
+// Unset builtin 
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*args[10];
 
@@ -27,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "unset:%i\n", unset(args, &envp));
 	env(envp, NULL);
 	free_char_matrix(envp);
-}
+}*/
 
 // charmatric del one
 /*int	main(int argc, char **argv, char **envp)
@@ -70,7 +100,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	args[0] = "export";
 	args[1] = "newentry=more";
-	args[1] = NULL;
+	//args[1] = NULL;
 	args[2] = "truc:=machin";
 	args[3] = "otherentry=else";
 	args[4] = "-";
@@ -78,14 +108,17 @@ int	main(int argc, char **argv, char **envp)
 	args[6] = "[PWD=bad";
 	args[7] = NULL;
 	ft_fprintf(1, "export:%i\n", export(args, &envp));
-	//print_env(envp, NULL);
+	//export(args, &envp);
+	print_env(envp, NULL);
 	free_char_matrix(envp);
 }*/
 
 // CD builtin
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*path;
+	char	*path_permden = "impossible";
+	char	*path_too_long = "lopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalopilolalop";
 
 	envp = charmatrix_dup(envp);
 	if (!envp)
@@ -96,15 +129,17 @@ int	main(int argc, char **argv, char **envp)
 		path = argv[1];
 	else
 		(void)argv;
-	print_envar_bad("PWD", envp);
-	print_envar_bad("OLDPWD", envp);
-	ft_fprintf(1, "cd %s : %i\n", path, cd(path, envp));
-	print_envar_bad("PWD", envp);
-	print_envar_bad("OLDPWD", envp);
-	ft_fprintf(1, "cd %s : %i\n", "../../..", cd("../../..", envp));
+//	print_envar_bad("PWD", envp);
+//	print_envar_bad("OLDPWD", envp);
+//	ft_fprintf(1, "cd %s : %i\n", path, cd(path, envp));
+//	print_envar_bad("PWD", envp);
+//	print_envar_bad("OLDPWD", envp);
+	(void)path;
+	(void)path_too_long;
+	ft_fprintf(1, "cd: %i\n", cd(path_permden, envp));
 	//print_env(envp, NULL);
 	free_char_matrix(envp);
-}*/
+}
 
 // ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
 /*int	main(void)
@@ -271,15 +306,19 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("salut \"\'$USER\'\" \'$USER\'");
 
-	if (argc > 1)
-	{
-		free(str);
-		str = ft_strdup(argv[1]);
-	}
-	ft_fprintf(1, "%s\n", str);
+	envp = charmatrix_dup(envp);
+	(void)argc;
+	(void)argv;
+	ft_fprintf(1, "pre_exp:%s\n", str);
 	str = expand_dollar(str, envp);
-	ft_fprintf(1, "%s\n", str);
+	ft_fprintf(1, "pst_exp:%s\n", str);
 	free(str);
+	str = ft_strdup("$USER $PWD");
+	ft_fprintf(1, "pre_exp:%s\n", str);
+	str = expand_dollar(str, envp);
+	ft_fprintf(1, "pst_exp:%s\n", str);
+	free(str);
+	free_char_matrix(envp);
 }*/
 
 //	HEREDOC N EXPANSION

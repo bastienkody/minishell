@@ -30,12 +30,15 @@
 # define FALSE 0
 # define BAD_FD -1
 # define MALLOC_FAIL -2
+# define STDIN 0
+# define STDOUT 0
+# define STDERR 0
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
-# define PREFIX_EXPORT "declar -x "
+# define PREFIX_EXPORT "declare -x "
 
 /*	here_doc	*/
 # define HD_PROMPT "here_doc > "
@@ -51,6 +54,11 @@
 # define ERR_CNF "Command not found"
 # define ERR_AMB_REDIR "ambiguous redirect"
 # define ERR_ID_EXPORT "not a valid identifier"
+# define ERR_TMA "too many arguments"
+# define ERR_DUP "minishell: dup2: "
+# define ERR_EXECVE "minishell: execve:"
+# define ERR_PIPE "minishell: pipe:"
+# define ERR_FORK "minishell: fork:"
 
 typedef enum e_type
 {
@@ -90,6 +98,9 @@ typedef struct s_ast
 	void	*data;
 	t_llist	*children;
 }	t_ast;
+
+typedef int (*t_f)(char **);
+
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -167,6 +178,7 @@ void	*ft_realloc(void *ptr, size_t size);
 char	**charmatrix_dup(char **src_matrix);
 char	**charmatrix_add_one(char **src_matrix, char *entry);
 char	**charmatrix_del_one(char **src_matrix, char *key);
+char	**charmatrix_buble_sort(char **src_matrix);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
@@ -229,19 +241,31 @@ t_token	*get_token(t_ntree *ast);
 void	ast_print(t_ntree *ast);
 void	print_leaf(t_ntree *leaf);
 
-/*	builtins	*/
+/* builtins	*/
+int		pwd(void);
+int		echo(char **argv);
+int		cd(char *path, char **envp);
+int		env(char **envp, char *prefix);
+int		unset(char **args, char ***envp);
+int		export(char **args, char ***envp);
+int		exit_blt(char **args, char **envp, void *truc);
+
+/*	builtins utils	*/
 char	*get_envalue(char *key, char **envp);
 int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
-int		pwd(void);
-int		check_echo(char **argv);
-int		echo(char **argv);
-int		cd(char *path, char **envp);
-int		export(char **args, char ***envp);
-int		env(char **envp, char *prefix);
-int		unset(char **args, char ***envp);
+
+/*	builtins check	*/
+int		is_a_builtin(char **args);
+int		check_echo(char **args);
+int		check_cd(char **args);
+int		check_pwd(char **args);
+int		check_env(char **args);
+int		check_export(char **args);
+int		check_unset(char **args);
+int		check_exit(char **args);
 
 char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);

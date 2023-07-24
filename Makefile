@@ -14,11 +14,13 @@ SRC_DIR		=	./src/
 OTHER_DIR	=	./
 
 BUILT_NAME	=	builtin_basics.c\
+				builtin_check.c\
 				pwd.c\
 				export.c\
 				unset.c\
 				echo.c\
 				env.c\
+				exit.c\
 				cd.c
 
 EXECU_NAME	=	execution_basics.c

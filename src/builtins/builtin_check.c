@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 14:13:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/21 14:14:03 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 14:36:05 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_env(char **args)
+static int	intermed(char **args, int (*f)(char **))
 {
-	if (args[1])
-		return (0);
-	return (1);
+	return (f(args));
 }
 
-int	env(char **envp, char *prefix)
+int	is_a_builtin(char **args)
 {
-	static const char	nl = '\n';
 	int					i;
+	static const char	*b_name[8] = {"echo", "cd", "pwd", "export", "unset",
+		"env", "exit", NULL};
+	static t_f			b_fct[7] = {&check_echo, &check_cd, &check_pwd,
+		&check_export, &check_unset, &check_env, &check_exit};
 
 	i = -1;
-	while (envp && envp[++i])
+	while (b_name[++i])
 	{
-		if (prefix)
-			if (write(1, prefix, ft_strlen(prefix)) < 0)
-				return (1);
-		if (write(1, envp[i], ft_strlen(envp[i])) < 0 || write(1, &nl, 1) < 0)
-			return (1);
+		if (!ft_strcmp(b_name[i], args[0]))
+			return (intermed(args, b_fct[i]));
 	}
 	return (0);
+}
+
+int	exec_builtin(char **cmd_args)
+{
+	return (1);
 }

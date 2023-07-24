@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   basics_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 16:04:39 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/24 14:06:40 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 14:06:42 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/*	envp is fucked : '=' de *envp is replaced by \0 so only keys in envp	*/
 char	*get_key(char *line)
 {
 	char	*end;
@@ -23,7 +24,7 @@ char	*get_key(char *line)
 	return (line);
 }
 
-/* malloc to avoid : (le = de *line (==*(envp)) is replaced by \0 so envp only contains key ...)	*/
+/* malloc to avoid fucking up envp 	*/
 char	*get_key_2(char *line)
 {
 	char	*end;
@@ -49,11 +50,7 @@ char	*extract_wd(char *start, char *end)
 	char	*word;
 	int		len;
 
-	//if (!end || !start)
-		//return (NULL);
 	len = end - start;
-	//if (len <= 0)
-		//return (NULL);
 	word = malloc(len + 1);
 	if (!word)
 		return (NULL);
@@ -66,13 +63,19 @@ char	*extract_wd(char *start, char *end)
 /*	word is malloced and word[0] == '$'	*/
 char	*expand_wd(char *word, char **envp)
 {
+	char	*key_comp;
+
 	if (!word)
 		return (NULL);
 	while (envp && *envp)
 	{
-		if (!ft_strcmp(word + sizeof(char), get_key(*envp)))
-			return (free(word), ft_strdup(get_value(*envp)));
+		key_comp = get_key_2(*envp);
+		if (!key_comp)
+			return (free(word), NULL);
+		if (!ft_strcmp(word + sizeof(char), key_comp))
+			return (free(word), free(key_comp), ft_strdup(get_value(*envp)));
 		envp++;
+		free(key_comp);
 	}
 	return (free(word), ft_strdup(""));
 }

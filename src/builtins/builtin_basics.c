@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   builtin_basics.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 16:04:39 by bguillau         ###   ########.fr       */
+/*   Created: 2023/07/24 14:08:34 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 14:08:37 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*get_envalue(char *key, char **envp)
 
 	while (envp && *envp)
 	{
-		//ft_fprintf(1, "key(%s)envp:%s\n", key, *envp);
 		key_comp = get_key_2(*envp);
 		if (!key_comp)
 			return (NULL);
@@ -70,7 +69,6 @@ int	mod_envar(char *key, char *new_value, char **envp)
 		{
 			free(*envp);
 			*envp = env_line;
-			ft_fprintf(1, "entrey modified:%s\n", env_line);
 			return (free(key_comp), 1);
 		}
 		free(key_comp);
