@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:58:45 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/19 17:49:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 16:02:17 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	execute_logical_operator(t_ast *ast, char **envp)
 	*/
 }
 
-int	execute_simple_command(t_ast *ast, char **envp)
-{
-	/*
-	transformer la liste chainee en commande
-	executer la commande
-	*/
-}
+// int	execute_simple_command(t_ast *ast, char **envp)
+// {
+// 	/*
+// 	transformer la liste chainee en commande
+// 	executer la commande
+// 	*/
+// }

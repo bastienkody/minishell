@@ -23,7 +23,9 @@ BUILT_NAME	=	builtin_basics.c\
 				exit.c\
 				cd.c
 
-EXECU_NAME	=	execution_basics.c
+EXECU_NAME	=	execution_basics.c\
+				pipe_execution.c\
+				# execution_ast.c\
 
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
@@ -90,7 +92,7 @@ UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 OTHER_SRC	=	$(addprefix ${OTHER_DIR}, ${OTHER_NAME})
 
-SRCS_NAME	=	${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
+SRCS_NAME	=	${BUILT_SRC} ${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
 				${AST_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})

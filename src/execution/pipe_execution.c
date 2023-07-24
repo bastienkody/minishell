@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:44:50 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:05:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	dupper(int old_fd, int new_fd)
 }
 
 //files[0] = infile && files[0] = outfile;
-void	fork_pipe_dup(char **args, int *prevpipe, int files[2], char **envp)
+void	fork_pipe_dup(char **args, int *prevpipe, int files[2])
 {
 	int	pipefd[2];
 	int	pid;
@@ -47,9 +47,9 @@ void	fork_pipe_dup(char **args, int *prevpipe, int files[2], char **envp)
 		if (TRUE) // pas de rediction outfile
 			dupper(pipefd[1], STDOUT);
 		else
-			dupper(files[1], STDOUT); 
+			dupper(files[1], STDOUT);
 
-		execute(args[0], args, envp);
+		execute(args[0], args);
 	}
 	else if (pid > 0)
 	{
@@ -59,7 +59,7 @@ void	fork_pipe_dup(char **args, int *prevpipe, int files[2], char **envp)
 	}
 }
 
-void	pipex(t_info *info, char **envp)
+void	pipex(t_info *info)
 {
 	int	prevpipe;
 
@@ -67,7 +67,7 @@ void	pipex(t_info *info, char **envp)
 	while (info->cmd)
 	{
 		if (info->cmd->next)
-			fork_pipe_dup(info->cmd, info, &prevpipe, envp);
+			fork_pipe_dup(info->cmd, info, &prevpipe);
 		info->cmd = info->cmd->next;
 	}
 }
