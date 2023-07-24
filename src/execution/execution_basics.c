@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_basics.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 14:46:47 by bguillau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 /* returns null on malloc err ; ["", NULL] if no path or no envp	*/
@@ -75,8 +87,10 @@ int	execute(char *cmd_name, char **cmd_args, char **envp)
 	if (access(full_name, X_OK))
 		return (err_msg(cmd_name, ERR_PERMDEN), free(full_name), 126);
 	cmd_args[0] = full_name;
+	if (is_a_builtin(cmd_args))
+		return (exec_builtin(cmd_args));
 	execve(full_name, cmd_args, envp);
-	perror("minishell: execve:");
+	perror(ERR_EXECVE);
 	free(full_name);
 	//close inf/outfile
 	exit(EXIT_FAILURE);

@@ -30,6 +30,9 @@
 # define FALSE 0
 # define BAD_FD -1
 # define MALLOC_FAIL -2
+# define STDIN 0
+# define STDOUT 0
+# define STDERR 0
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
@@ -52,6 +55,10 @@
 # define ERR_AMB_REDIR "ambiguous redirect"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
+# define ERR_DUP "minishell: dup2: "
+# define ERR_EXECVE "minishell: execve:"
+# define ERR_PIPE "minishell: pipe:"
+# define ERR_FORK "minishell: fork:"
 
 typedef enum e_type
 {
