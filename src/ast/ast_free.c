@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 17:16:48 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 14:21:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ast_free(t_ntree *ast)
 {
-	ntree_free(ast, (t_del_fun)free_token);
+	ntree_free(ast, (t_del_fun)free_node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:30:08 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 16:30:09 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:12:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_c_quote(int c)
 	return (0);
 }
 
-int	is_str_quote_enclosed(char *str)
+int	is_str_quote_enclosed(const char *str)
 {
 	if ((str[0] == '\'') && str[0] == str[ft_strlen(str) - 1])
 		return (1);

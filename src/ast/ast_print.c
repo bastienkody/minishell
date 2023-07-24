@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:01:21 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 17:16:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 14:51:54 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static void	print_data(t_token *token)
 	ft_fprintf(1, "%s", type_to_string(token->type));
 	if (token->data == NULL)
 		return ;
-	if (token->type == REDIRECTION || token->type == OPERATOR)
+	// if (token->type == OPERATOR)
+	// 	ft_fprintf(1, ": %s", type_to_string(token->type));
+	if (token->type == REDIRECTION)
 		ft_fprintf(1, ": %d", (intptr_t)token->data);
 	else
 		ft_fprintf(1, ": %s", (char *)token->data);

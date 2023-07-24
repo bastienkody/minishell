@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 13:48:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 15:12:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ char	**charmatrix_del_one(char **src_matrix, char *key);
 int		is_c_dollar(int c);
 int		is_c_quote(int c);
 int		is_there_a_blank(char *str);
-int		is_str_quote_enclosed(char *str);
+int		is_str_quote_enclosed(const char *str);
 int		is_c_blank_nl_dollar_s_d_quote(int c);
 int		check_amb_redir(char *str, char **envp);
 char	*get_key(char *line);
@@ -190,11 +190,11 @@ char	*rm_peer_quotes(char *str);
 char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
-int		open_in(char *filename, char **envp);
-int		open_here_doc(char *lim, char **envp);
-int		open_out(int type, char *filename, char **envp, t_ast *ast);
-void	manage_redir(t_ast *ast, char **envp);
-void	manage_here_doc(t_ast *ast, char **envp);
+int		open_in(const char *filename);
+int		open_here_doc(const char *lim, char **envp);
+int		open_out(t_type type, const char *filename);
+void	manage_redir(t_ntree *ast, char **envp);
+void	manage_here_doc(t_ntree *ast, char **envp);
 
 /*	execution	*/
 int		execute(char *cmd_name, char **cmd_args, char **envp);
@@ -223,6 +223,7 @@ char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ntree	*parser(t_llist	*token_list);
 void	free_token(t_token *token);
+void	free_node(t_token *token);
 t_token	*token_new(t_type type, void *data);
 t_token	*get_token(t_ntree *ast);
 void	ast_print(t_ntree *ast);

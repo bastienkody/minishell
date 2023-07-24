@@ -76,7 +76,7 @@ OTHER_NAME =			parser.c\
 
 # MAIN_DEBUG	=	main_debug.c
 
-MAIN_NAME	=	main_test.c
+MAIN_NAME	=	main_debug.c
 
 BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
