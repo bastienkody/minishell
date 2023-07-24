@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:52:53 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/19 15:32:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:13:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_llist	*join_token(t_llist *begin, t_llist *end)
 	t_llist	*tmp;
 	char	*s;
 
-	tmp = llstmap_range(begin, end, (void *(*)(void *))ft_strdup, free);
+	tmp = llstmap_range(begin, end, (t_unary_op)ft_strdup, free);
 	if (tmp == NULL)
 		return (NULL);
-	s = llstfold(tmp, ft_strdup(""), (void *(*)(void *, void *))strjoin, free);
+	s = llstfold(tmp, ft_strdup(""), (t_binary_op)strjoin, free);
 	if (s == NULL)
 		return (llstclear(&tmp, free), NULL);
 	return (llstclear(&tmp, free), llstnew(s));
@@ -70,32 +70,27 @@ t_llist	*new_llst_with_compound(t_llist *start)
 {
 	t_llist	*new_lst;
 	t_llist	*new;
-	t_llist	*current;
 	char	*str;
 
 	new_lst = NULL;
-	current = start;
-	while (current)
+	while (start)
 	{
-		if (!is_str_op_p(current->content))
+		if (!is_str_op_p(start->content))
 		{
-			str = ft_strdup(current->content);
+			str = ft_strdup(start->content);
 			if (str == NULL)
-				new = NULL;
-			else
-			{
-				new = llstnew(str);
-				current = current->next;
-			}
+				return (llstclear(&new_lst, &free), NULL);
+			new = llstnew(str);
+			if (new == NULL)
+				return (llstclear(&new_lst, &free), free(str), NULL);
+			start = start->next;
 		}
 		else
 		{
-			new = handle_parenthese(current);
-			current = get_next_node(current);
+			new = handle_parenthese(start);
+			start = get_next_node(start);
 		}
-		if (!new)
-			return (llstclear(&new_lst, &free), NULL);
 		llstadd_back(&new_lst, new);
 	}
-	return (llstclear(&start, free), new_lst);
+	return (new_lst);
 }

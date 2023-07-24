@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 13:48:19 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/21 18:52:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ static int (*const	g_type_predicate[])(const char *str)
 	NULL,
 };
 
-static void	free_token(t_token *token)
-{
-	free(token->text);
-}
-
 static t_type	get_type(const char *text)
 {
 	t_type	type;
@@ -45,19 +40,31 @@ static t_type	get_type(const char *text)
 	return (type);
 }
 
-static t_token	*new_token(char *text)
+t_token	*str_to_token(char *str)
 {
-	const t_type	type = get_type(text);
+	const t_type	type = get_type(str);
 	t_token *const	new = malloc(sizeof(t_token));
+	char *const		new_data = ft_strdup(str);
 
 	if (new == NULL)
-		return (NULL);
-	*new = (t_token){text, type};
+		return (free(new_data), NULL);
+	if (new_data == NULL)
+		return (free_token(new), free(new_data), NULL);
+	*new = (t_token){type, new_data};
+	return (new);
+}
+
+t_token	*token_new(t_type type, void *data)
+{
+	t_token *const	new = malloc(sizeof(t_token));
+
+	if (new != NULL)
+		*new = (t_token){type, data};
 	return (new);
 }
 
 t_llist	*type_token(t_llist	*token_list)
 {
-	return (llstmap(token_list, (void *(*)(void *))new_token,
-		(void (*)(void *))free_token));
+	return (llstmap(token_list, (t_unary_op)str_to_token,
+			(t_del_fun)free_token));
 }

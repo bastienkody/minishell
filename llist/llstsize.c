@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:19:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/13 23:50:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/23 17:07:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 size_t	llstsize(t_llist *llst)
 {
-	size_t	len;
-
-	len = 0;
-	while (llst != NULL)
-	{
-		len++;
-		llst = llst->next;
-	}
-	return (len);
+	if (llst == NULL)
+		return (0);
+	return (1 + llstsize(llst->next));
 }

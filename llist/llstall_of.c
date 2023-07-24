@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:56:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 14:33:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/23 16:56:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,7 @@
 
 int	llstall_of(t_llist *llst, int (*p)(void *))
 {
-	t_llist	*current;
-
-	current = llst;
-	while (current != llst)
-	{
-		if (!p(current->content))
-			return (0);
-		current = current->next;
-	}
-	return (1);
+	if (llst == NULL)
+		return (1);
+	return (p(llst) && llstall_of(llst->next, p));
 }
