@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:36:05 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:48:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	is_a_builtin(char **args)
 
 int	exec_builtin(char **cmd_args)
 {
+	(void)cmd_args;
 	return (1);
 }

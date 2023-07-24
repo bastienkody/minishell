@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 15:39:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:04:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,33 @@ typedef struct s_token
 	void	*data;
 }	t_token;
 
-typedef struct s_ast
+typedef struct s_cmd
 {
-	t_type	type;
-	void	*data;
-	t_llist	*children;
-}	t_ast;
+	int				fd_in;
+	int				fd_out;
+	int				index;
+	char			*cmd_name;
+	char			*cmd_fullname;
+	char			**cmd_args;
+	int				exist;
+	int				is_exec;
+	struct s_cmd	*next;
+}					t_cmd;
+
+typedef struct s_info
+{
+	t_cmd	*cmd;
+	pid_t	last_pid;
+	char	***envp;
+	int		exit_code;
+}	t_info;
+
+// typedef struct s_ast
+// {
+// 	t_type	type;
+// 	void	*data;
+// 	t_llist	*children;
+// }	t_ast;
 
 typedef int (*t_f)(char **);
 

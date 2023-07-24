@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_basics.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:46:47 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:05:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	while (path[++i])
 	{
 		tmp_name = ft_strjoin(path[i], "/");
-		tmp_name = strjoin(tmp_name, cmd_name); 
+		tmp_name = strjoin(tmp_name, cmd_name);
 		if (!tmp_name)
 			return (free_char_matrix(path), NULL);
 		if (!access(tmp_name, F_OK))
 			return (free_char_matrix(path), tmp_name);
 		free(tmp_name);
 	}
-	return (free_char_matrix(path), ft_strdup("")); 
+	return (free_char_matrix(path), ft_strdup(""));
 }
 
 int	analyze_status(int status)
@@ -69,11 +69,11 @@ int	analyze_status(int status)
 	return (status);
 }
 
-int	execute(char *cmd_name, char **cmd_args, char **envp)
+int	execute(char *cmd_name, char **cmd_args)
 {
 	char	*full_name;
 
-	full_name = get_full_cmd_name(cmd_name, envp);
+	full_name = get_full_cmd_name(cmd_name);
 	if (!full_name)
 		return (MALLOC_FAIL);
 	if (access(full_name, F_OK))
@@ -89,7 +89,7 @@ int	execute(char *cmd_name, char **cmd_args, char **envp)
 	cmd_args[0] = full_name;
 	if (is_a_builtin(cmd_args))
 		return (exec_builtin(cmd_args));
-	execve(full_name, cmd_args, envp);
+	execve(full_name, cmd_args);
 	perror(ERR_EXECVE);
 	free(full_name);
 	//close inf/outfile
