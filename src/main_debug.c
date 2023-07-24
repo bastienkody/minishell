@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 19:16:40 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 13:26:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,21 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		if (error != NULL)
 		{
 			print_token_error(*(t_token *)error->content);
-			break ;
+			continue ;
 		}
 		if (!check_syntax(token_list))
 		{
 			printf("Syntax error !\n");
-			break ;
+			continue ;
 		}
 		ast = parser(token_list);
 		if (ast == NULL)
 			exit(EXIT_FAILURE); // erreur de malloc
 		// manage_here_doc(ast, envp);
-		ast_print(ast);
 		// manage_redir(ast, envp);
-		// ft_putendl_fd("-----------AST-----------", 1);
-		// print_tree(ast);
-		// ft_putendl_fd("", 1);
+		ft_putendl_fd("-----------AST-----------", 1);
+			ast_print(ast);
+		ft_putendl_fd("", 1);
 		ast_free(ast);
-		// free_ast(ast);
 	}
 }

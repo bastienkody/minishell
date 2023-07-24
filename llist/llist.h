@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 16:50:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 13:29:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int		llstnone_of(t_llist *llst, int (*p)(void *));
 void	*llstmax(t_llist *llst, int (*comp)(void *, void *));
 void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
 void	*llstmin(t_llist *llst, int (*comp)(void *, void *));
-int		llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
-int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
+// int		llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
+// int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
 			int (*comp)(void *, void *));
 void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
 			void del(void *));
