@@ -59,3 +59,15 @@ void	fork_pipe_dup(char **args, int *prevpipe, int files[2], char **envp)
 	}
 }
 
+void	pipex(t_info *info, char **envp)
+{
+	int	prevpipe;
+
+	prevpipe = dup(0);
+	while (info->cmd)
+	{
+		if (info->cmd->next)
+			fork_pipe_dup(info->cmd, info, &prevpipe, envp);
+		info->cmd = info->cmd->next;
+	}
+}
