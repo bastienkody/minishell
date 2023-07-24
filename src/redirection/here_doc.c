@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/22 14:19:24 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:12:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 
 /*	stops at lim or eof (modified gnl) - returns 0 if malloc failed	*/
-int	launch_here_doc(int fd, char *lim, char **envp)
+int	launch_here_doc(int fd, const char *lim, char **envp)
 {
 	char	*line;
 	char	*data;
@@ -47,7 +47,7 @@ int	launch_here_doc(int fd, char *lim, char **envp)
 }
 
 /*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
-int	open_here_doc(char *lim, char **envp)
+int	open_here_doc(const char *lim, char **envp)
 {
 	int			fd;
 	static int	nb = 0;

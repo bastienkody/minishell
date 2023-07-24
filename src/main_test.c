@@ -7,57 +7,6 @@ int	is_token_error(t_llist *llst)
 	return (token.type == error);
 }
 
-void	print_ast(t_ast *ast)
-{
-	if (ast == NULL)
-		return ;
-	printf("%s\n", type_to_string(ast->type));
-	if (ast->type > 0 && ast->type < 9)
-		printf(": %s\n", (char *)ast->data);
-	llstiter(ast->children, (void (*)(void *))print_ast);
-}
-
-t_llist	*lexer(const char *line)
-{
-	t_llist *token_list;
-
-	token_list = lsttok(line);
-	if (token_list == NULL)
-		return (NULL);
-	// llstiter(token_list, print_item);
-	token_list = new_llst_with_compound(token_list);
-	if (token_list == NULL)
-		return (NULL);
-	// ft_fprintf(1, "post compound cmds:\n");
-	// llstiter(token_list, print_item);
-	// ft_fprintf(1, "_________________________\n");
-	llstremove_if(&token_list, (int(*)(void *))is_str_blank, free);
-	// llstiter(token_list, print_item);
-	token_list = type_token(token_list);
-	// llstiter(token_list, (void(*)(void *))print_token);
-	return (token_list);
-}
-
-t_ast	*parser(t_llist	*token_list)
-{
-	t_llist	*leaf_list;
-	int		flag[256];
-	t_ast	*ast;
-
-	leaf_list = token_to_leaf(token_list);
-	if (leaf_list == NULL)
-		return (NULL);
-	ast = create_complete_command(leaf_list);
-	if (ast == NULL)
-		return (NULL);
-	ft_fprintf(1, "-------------------------------\n");
-	ft_fprintf(1, "astree :\n");
-	for (int i = 0; i < 256; i++)
-		flag[i] = 1;
-	print_tree(ast, flag, 0, 0);
-	return (ast);
-}
-
 /////////////////////////////////////////////
 
 // charmatrix buble sort

@@ -69,7 +69,7 @@ UTILS_NAME	=	ft_realloc.c\
 				free_token.c\
 				check_syntax_utils.c\
 				create_command_utils.c\
-
+				charmatrix_dup.c
 
 OTHER_NAME =			parser.c\
 				lexer.c\
@@ -77,9 +77,8 @@ OTHER_NAME =			parser.c\
 # MAIN_NAME	=	main_debug.c # main.c
 
 # MAIN_DEBUG	=	main_debug.c
-				charmatrix_dup.c
 
-MAIN_NAME	=	main_test.c
+MAIN_NAME	=	main_debug.c
 
 BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
