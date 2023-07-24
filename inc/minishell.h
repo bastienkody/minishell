@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 15:12:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 15:39:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ int		execute(char *cmd_name, char **cmd_args, char **envp);
 int		analyze_status(int status);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
+int		exec_builtin(char **cmd_args);
 
 /*	printers	*/
 void	print_item(void *item);
