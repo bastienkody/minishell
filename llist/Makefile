@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/26 10:05:19 by aguyon           ###   ########.fr        #
+#    Updated: 2023/07/24 13:50:46 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ SRC =	llstadd_after.c \
 		llstall_of.c \
 		llstany_of.c \
 		llstclear.c \
-		llstcomp.c \
 		llstdelone.c \
 		llstempty.c \
 		llstextract.c\
@@ -37,7 +36,6 @@ SRC =	llstadd_after.c \
 		llstmerge.c \
 		llstmerge.c\
 		llstmin.c \
-		llstncomp.c \
 		llstnew.c \
 		llstnext.c \
 		llstnone_of.c \

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/21 17:17:06 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 13:48:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,8 @@ int		export(char **args, char ***envp);
 int		env(char **envp, char *prefix);
 int		unset(char **args, char ***envp);
 
-const char 	*type_to_string(t_type type);
+char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);
-t_ast		*parser(t_llist	*token_list);
+t_ntree		*parser(t_llist	*token_list);
 
 #endif
