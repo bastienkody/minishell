@@ -29,10 +29,13 @@
 # define TRUE 1
 # define FALSE 0
 # define BAD_FD -1
+# define NO_REDIR 0
+# define REDIR_PB -3
 # define MALLOC_FAIL -2
 # define STDIN 0
 # define STDOUT 0
 # define STDERR 0
+
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
@@ -230,11 +233,10 @@ void	manage_redir(t_ntree *ast, char **envp);
 void	manage_here_doc(t_ntree *ast, char **envp);
 
 /*	execution	*/
-int		execute(char *cmd_name, char **cmd_args, char **envp);
-int		analyze_status(int status);
+int		execute(char *cmd_name, char **cmd_args, t_info *info);
+int		analyze_status(t_info *info);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
-int		exec_builtin(char **cmd_args);
 
 /*	printers	*/
 void	print_item(void *item);
@@ -278,6 +280,7 @@ int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
+int		exec_builtin(char **cmd_args, char ***envp);
 
 /*	builtins check	*/
 int		is_a_builtin(char **args);

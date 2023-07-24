@@ -58,10 +58,19 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	return (free_char_matrix(path), ft_strdup(""));
 }
 
-int	analyze_status(int status)
+int	analyze_status(t_info *info)
 {
-	//cmd dont exist 127
-	// no exec rights 126
+	int		status;
+	t_cmd	*last_cmd;
+
+	last_cmd = info->cmd;	// info->cmd is NULL ; reach last cmd of pipe TO DO !
+	status = info->exit_code;
+	if (last_cmd->exist)
+		return (127);
+	if (last_cmd->is_exec)
+		return (126);
+	if (last_cmd->fd_in == REDIR_PB || last_cmd->fd_out == REDIR_PB)
+		return (1);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
@@ -69,29 +78,26 @@ int	analyze_status(int status)
 	return (status);
 }
 
-int	execute(char *cmd_name, char **cmd_args)
+// cmd_args[0] == cmd_name (not fullname) ?
+int	execute(char *cmd_name, char **cmd_args, t_info *info)
 {
-	char	*full_name;
-
-	full_name = get_full_cmd_name(cmd_name);
-	if (!full_name)
-		return (MALLOC_FAIL);
-	if (access(full_name, F_OK))
+	if (!cmd_args)
+		return (0); // cas redirection sans commande name ni args
+	if (access(info->cmd->cmd_fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
 			err_msg(cmd_name, ERR_CNF);
 		else
 			err_msg(cmd_name, ERR_NSFD);
-		return (free(full_name), 127);
+		return (127);
 	}
-	if (access(full_name, X_OK))
-		return (err_msg(cmd_name, ERR_PERMDEN), free(full_name), 126);
-	cmd_args[0] = full_name;
+	if (access(info->cmd->cmd_fullname, X_OK))
+		return (err_msg(cmd_name, ERR_PERMDEN), 126);
+	info->cmd->cmd_args[0] = info->cmd->cmd_fullname;
 	if (is_a_builtin(cmd_args))
-		return (exec_builtin(cmd_args));
-	execve(full_name, cmd_args);
+		return (exec_builtin(cmd_args, info->envp));
+	execve(cmd_args[0], cmd_args, *(info->envp));
 	perror(ERR_EXECVE);
-	free(full_name);
 	//close inf/outfile
 	exit(EXIT_FAILURE);
 }

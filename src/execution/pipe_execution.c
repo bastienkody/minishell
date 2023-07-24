@@ -11,23 +11,46 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <stdlib.h>
 
-int	dupper(int old_fd, int new_fd)
+int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
-	int	fd;
-
-	fd = dup2(old_fd, new_fd) == -1;
-	if (fd < -1)
-	{
-		perror(ERR_DUP);
-		exit(EXIT_FAILURE);
-	}
+	int	old_fd;
+	
+	// infile
+	if (!info->cmd->fd_in)
+		old_fd = prevpipe;
+	else
+		old_fd = info->cmd->fd_in;
+	if (dup2(old_fd, STDIN) < 0)
+		return (perror(ERR_DUP), BAD_FD); // maybe exit_failure? we must end the program if syscall error
 	close(old_fd);
-	return (fd);
+	// outfile
+	if (!info->cmd->fd_out)
+		old_fd = pipefd[1];
+	else
+	 	old_fd = info->cmd->fd_out;
+	if (dup2(old_fd, STDOUT) < 0)
+		return (perror(ERR_DUP), BAD_FD);
+	close(old_fd);
+	return (0);
 }
 
-//files[0] = infile && files[0] = outfile;
-void	fork_pipe_dup(char **args, int *prevpipe, int files[2])
+void	wait_cmds(t_info *info)
+{
+	int		child_status;
+	pid_t	ret;
+
+	ret = 0;
+	while (ret != -1)
+	{
+		if (ret == info->last_pid)
+			info->exit_code = child_status;
+		ret = waitpid(-1, &child_status, 0);
+	}
+}
+
+void	fork_pipe_dup(char **args, int *prevpipe, t_info *info)
 {
 	int	pipefd[2];
 	int	pid;
@@ -40,34 +63,30 @@ void	fork_pipe_dup(char **args, int *prevpipe, int files[2])
 	if (pid == 0)
 	{
 		close(pipefd[0]);
-		if (TRUE) // pas de redirection infile
-			dupper(*prevpipe, STDIN);
-		else
-			dupper(files[0], STDIN);
-		if (TRUE) // pas de rediction outfile
-			dupper(pipefd[1], STDOUT);
-		else
-			dupper(files[1], STDOUT);
-
-		execute(args[0], args);
+		if (dupper(info, prevpipe, pipefd) == BAD_FD)
+			exit(EXIT_FAILURE); // on exit l'enfant ? quitter le prog parent aussi? 
+		execute(args[0], args, info);
 	}
 	else if (pid > 0)
 	{
+		if (!info->cmd->next)
+			info->last_pid = pid;
 		close(pipefd[1]);
 		close(*prevpipe);
 		*prevpipe = pipefd[0];
 	}
 }
 
-void	pipex(t_info *info)
+int	pipex(t_info *info)
 {
 	int	prevpipe;
 
 	prevpipe = dup(0);
 	while (info->cmd)
 	{
-		if (info->cmd->next)
-			fork_pipe_dup(info->cmd, info, &prevpipe);
+		fork_pipe_dup(info->cmd->cmd_args, &prevpipe, info);
 		info->cmd = info->cmd->next;
 	}
+	wait_cmds(info);
+	return (analyze_status(info));
 }
