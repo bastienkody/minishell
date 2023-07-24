@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_check.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 14:36:05 by bguillau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 static int	intermed(char **args, int (*f)(char **))
@@ -20,4 +32,9 @@ int	is_a_builtin(char **args)
 			return (intermed(args, b_fct[i]));
 	}
 	return (0);
+}
+
+int	exec_builtin(char **cmd_args)
+{
+	return (1);
 }
