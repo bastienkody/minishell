@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/23 13:10:15 by aguyon            #+#    #+#              #
-#    Updated: 2023/06/26 10:05:05 by aguyon           ###   ########.fr        #
+#    Created: 2023/07/21 15:53:05 by aguyon            #+#    #+#              #
+#    Updated: 2023/07/21 16:39:29 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =	ntree_add_children.c \
-		ntree_clear.c \
-		ntree_new.c \
+SRC =	ntree_free.c\
+		ntree_new.c\
+		ntree_print.c\
 
 OBJ =	$(SRC:.c=.o)
 
@@ -39,10 +39,8 @@ clean:
 fclean:
 	@rm -rf $(OBJ)
 	@rm -rf $(NAME)
-	@echo "\033[33mntree fcleaned\033[0m"
+	@echo "\033[33mntree.a fcleaned\033[0m"
 
 re:	fclean all
-
-.PHONY:		all clean fclean re
 
 .PHONY:		all clean fclean re

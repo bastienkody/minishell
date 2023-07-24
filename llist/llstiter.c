@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:08:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 15:01:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/24 12:14:53 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	llstiter(t_llist *llst, void (*f)(void *))
 {
-	while (llst != NULL)
-	{
-		f(llst->content);
-		llst = llst->next;
-	}
+	if (llst != NULL)
+		(f(llst->content), llstiter(llst->next, f));
 }

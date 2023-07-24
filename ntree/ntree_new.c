@@ -5,20 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 12:41:30 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/23 13:12:47 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/20 13:19:29 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/21 16:41:53 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ntree.h"
 
-t_ntree	*ntree_new(void *item)
+t_ntree	*ntree_new(void *data, t_llist *children)
 {
-	t_ntree	*new;
+	t_ntree *const	new = malloc(sizeof(t_ntree));
 
-	new = malloc(sizeof(t_ntree));
 	if (new == NULL)
 		return (NULL);
-	*new = (t_ntree){item, NULL};
+	*new = (t_ntree){data, children};
 	return (new);
 }
