@@ -6,46 +6,54 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:58:45 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 15:23:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 18:55:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	execute_complete_command(t_ntree *ast, char **envp)
+int	execute_ast(t_ntree *ast)
 {
-	/*
-	executer pipeline
-	ou
-	executer compound
-	ou
-	executer logical_operator
-	*/
+	const t_execute_ast_fun	execute_function = get_execute_function(ast);
+
+	return (execute_function(ast));
 }
 
-int	execute_pipeline(t_ntree *ntree, char **envp)
+int	execute_complete_command(t_ntree *ast)
 {
-	/*
-	executer chaque commande
-	retourner le code erreur de la derniere commande
-	*/
+	t_ntree *const			child = ast->children->content;
+	const t_execute_ast_fun	execute_function = get_execute_function(child);
+
+	return (execute_function(child));
 }
 
-int	execute_logical_operator(t_ntree *ast, char **envp)
+int	execute_pipeline(t_ntree *ast)
 {
-	/*
-	executer fils gauche et garder en memoire le code erreur
-	si type du noeud == && et code erreur == 0 alors
-		executer fils droit
-	si type du noeud == || et code erreur != 0 alors
-		executer fils droit
-	*/
+	t_info *const	pipex_info = get_token(ast)->data;
+
+	return (pipex(pipex_info));
 }
 
-// int	execute_simple_command(t_ast *ast, char **envp)
-// {
-// 	/*
-// 	transformer la liste chainee en commande
-// 	executer la commande
-// 	*/
-// }
+int	execute_compound_command(t_ntree *ast)
+{
+	t_ntree *const			child = ast->children->content;
+	const t_execute_ast_fun	execute_function = get_execute_function(child);
+
+	return (execute_function(child));
+}
+
+int	execute_logical_expression(t_ntree *ast)
+{
+	t_ntree *const	lhs = ast->children->content;
+	t_ntree *const	rhs = ast->children->next->content;
+	const t_execute_ast_fun	lhs_execute_function = get_execute_function(lhs);
+	const t_execute_ast_fun	rhs_execute_function = get_execute_function(rhs);
+	int	lhs_return_status;
+
+	lhs_return_status = lhs_execute_function(lhs);
+	if (lhs_return_status == 0 && ft_strcmp(get_token(lhs->data)->data, "&&"))
+		return (rhs_execute_function(rhs));
+	else if (lhs_return_status != 0 && ft_strcmp(get_token(lhs->data)->data, "||"))
+		return (rhs_execute_function(rhs));
+	return (lhs_return_status);
+}

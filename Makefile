@@ -25,7 +25,8 @@ BUILT_NAME	=	builtin_basics.c\
 
 EXECU_NAME	=	execution_basics.c\
 				pipe_execution.c\
-				# execution_ast.c\
+				execute_ast.c\
+				execute_ast_utils.c
 
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
@@ -77,7 +78,7 @@ OTHER_NAME =	parser.c\
 				manage_pipeline.c\
 				pipex_info.c
 
-MAIN_NAME	=	main_test.c
+MAIN_NAME	=	main_debug.c
 
 BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})

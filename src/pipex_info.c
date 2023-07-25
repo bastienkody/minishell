@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 17:05:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 18:59:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ char	**get_command_args(t_ntree *simple_command_node, char *command_name)
 	cmd_name_node = get_command_name_node(simple_command_node);
 	i = 0;
 	args[i++] = command_name;
-	current = cmd_name_node->children;
+	current = simple_command_node->children;
 	while (current != NULL)
 	{
 		if (get_token(current->content)->type == CMD_ARG)
 		{
-			args[i] = ft_strdup(get_arg_name(((t_ntree *)current)->children->content));
+			args[i] = ft_strdup(get_arg_name(current->content));
 			if (args[i] == NULL)
 				return (free_char_matrix(args), NULL);
 			i++;
@@ -206,5 +206,6 @@ t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp)
 		current = current->next;
 		i++;
 	}
+	pipex_info->cmd_start = pipex_info->cmds;
 	return (pipex_info);
 }
