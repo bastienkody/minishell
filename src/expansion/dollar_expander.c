@@ -15,10 +15,16 @@
 // gerer sans erreur les cas ou envp est null (env -i ./minishell)
 
 /*	wd, wd_end and ret no need to be protected (cf. notion)	*/
-char	*get_next_word_expanded(char **ret, char *str, char **envp)
+char	*get_next_word_expanded(char **ret, char *str, char **envp, int last_status)
 {
 	char	*word_end;
 
+	last_status = LAST_RETURN_STATUS;
+	if (*str == '$' && *(str + 1) == '?')
+	{
+		*ret = strjoin2(*ret, ft_itoa(last_status));
+		return (str + 2);
+	}
 	word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 	if (*str == '$')
 		*ret = strjoin2(*ret, expand_wd(extract_wd(str, word_end), envp));
@@ -34,7 +40,7 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end)
 }
 
 /*	apply on all WORD except : here_doc lim + already expanded WORD	*/
-char	*expand_dollar(char *str, char **envp)
+char	*expand_dollar(char *str, char **envp, int last_status)
 {
 	char	*tmp;
 	char	*ret;
@@ -54,7 +60,7 @@ char	*expand_dollar(char *str, char **envp)
 		if (is_under_d_quote < 0 && *tmp == S_QUOTE && next_s_quote)
 			tmp = get_next_word_not_expanded(&ret, tmp, next_s_quote + 1);
 		else
-			tmp = get_next_word_expanded(&ret, tmp, envp);
+			tmp = get_next_word_expanded(&ret, tmp, envp, last_status);
 		if (!tmp || !ret)
 			return (free(str), free(ret), NULL); 
 		// double free possible on tmp (str) when freeing the tree?
@@ -63,7 +69,7 @@ char	*expand_dollar(char *str, char **envp)
 }
 
 /*	quoted stuff are expanded + str cant be null (cf. launch hd)	*/
-char	*expand_dollar_here_doc(char *str, char **envp)
+char	*expand_dollar_here_doc(char *str, char **envp, int last_status)
 {
 	char	*tmp;
 	char	*ret;
@@ -74,7 +80,7 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 		return (free(str), free(ret), NULL);
 	while (*tmp)
 	{
-		tmp = get_next_word_expanded(&ret, tmp, envp);
+		tmp = get_next_word_expanded(&ret, tmp, envp, last_status);
 		if (!tmp || !ret)
 			return (free(str), free(ret), NULL);
 	}

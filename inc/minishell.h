@@ -33,8 +33,9 @@
 # define REDIR_PB -3
 # define MALLOC_FAIL -2
 # define STDIN 0
-# define STDOUT 0
-# define STDERR 0
+# define STDOUT 1
+# define STDERR 2
+# define LAST_RETURN_STATUS 1023 // tmp const ; must be a var declared in main
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
@@ -206,8 +207,8 @@ char	*get_key_2(char *line);
 char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
-char	*expand_dollar(char *str, char **envp);
-char	*expand_dollar_here_doc(char *str, char **envp);
+char	*expand_dollar(char *str, char **envp, int last_status);
+char	*expand_dollar_here_doc(char *str, char **envp, int last_status);
 char	*expand_dollar_redir_file(char *str, char **envp);
 
 /*	general expansion	*/
