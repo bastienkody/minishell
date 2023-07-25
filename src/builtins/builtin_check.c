@@ -34,8 +34,9 @@ int	is_a_builtin(char **args)
 	return (0);
 }
 
-int	exec_builtin(char **cmd_args)
+int	exec_builtin(char **cmd_args, char ***envp)
 {
 	(void)cmd_args;
+	(void)envp;
 	return (1);
 }

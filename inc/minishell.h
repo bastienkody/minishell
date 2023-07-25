@@ -36,7 +36,6 @@
 # define STDOUT 0
 # define STDERR 0
 
-
 /*	char const	*/
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
@@ -116,12 +115,12 @@ typedef struct s_info
 	int		exit_code;
 }	t_info;
 
-// typedef struct s_ast
-// {
-// 	t_type	type;
-// 	void	*data;
-// 	t_llist	*children;
-// }	t_ast;
+ typedef struct s_ast
+ {
+ 	t_type	type;
+ 	void	*data;
+ 	t_llist	*children;
+ }	t_ast;
 
 typedef int (*t_f)(char **);
 

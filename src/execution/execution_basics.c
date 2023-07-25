@@ -83,6 +83,8 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 {
 	if (!cmd_args)
 		return (0); // cas redirection sans commande name ni args
+	if (is_a_builtin(cmd_args))
+		return (exec_builtin(cmd_args, info->envp));
 	if (access(info->cmd->cmd_fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
@@ -94,10 +96,11 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (access(info->cmd->cmd_fullname, X_OK))
 		return (err_msg(cmd_name, ERR_PERMDEN), 126);
 	info->cmd->cmd_args[0] = info->cmd->cmd_fullname;
-	if (is_a_builtin(cmd_args))
-		return (exec_builtin(cmd_args, info->envp));
 	execve(cmd_args[0], cmd_args, *(info->envp));
 	perror(ERR_EXECVE);
-	//close inf/outfile
+	if (info->cmd->fd_in > NO_REDIR)
+		close(info->cmd->fd_in);
+	if (info->cmd->fd_out > NO_REDIR)
+		close(info->cmd->fd_in);
 	exit(EXIT_FAILURE);
 }

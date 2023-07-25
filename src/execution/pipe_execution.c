@@ -63,7 +63,7 @@ void	fork_pipe_dup(char **args, int *prevpipe, t_info *info)
 	if (pid == 0)
 	{
 		close(pipefd[0]);
-		if (dupper(info, prevpipe, pipefd) == BAD_FD)
+		if (dupper(info, *prevpipe, pipefd) == BAD_FD)
 			exit(EXIT_FAILURE); // on exit l'enfant ? quitter le prog parent aussi? 
 		execute(args[0], args, info);
 	}
