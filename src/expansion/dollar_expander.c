@@ -18,12 +18,14 @@
 char	*get_next_word_expanded(char **ret, char *str, char **envp, int last_status)
 {
 	char	*word_end;
+	char	*last_stratus;
 
-	last_status = LAST_RETURN_STATUS;
+	last_status = LAST_RETURN_STATUS; // to be suppressed when main has last_status
 	if (*str == '$' && *(str + 1) == '?')
 	{
-		*ret = strjoin2(*ret, ft_itoa(last_status));
-		return (str + 2);
+		last_stratus = ft_itoa(last_status);
+		*ret = strjoin2(*ret, last_stratus);
+		return (free(last_stratus), str + 2);
 	}
 	word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 	if (*str == '$')

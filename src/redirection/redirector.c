@@ -28,7 +28,7 @@ char *get_redirection_filename(t_ntree *redirection_node)
 	return (get_token(word_node)->data);
 }
 
-int	open_node(t_ntree *node, char **envp)
+int	open_node(t_ntree *node, char **envp, int last_status)
 {
 	const t_type	type = get_redirection_type(node);
 	const char	*filename = get_redirection_filename(node);
@@ -39,7 +39,7 @@ int	open_node(t_ntree *node, char **envp)
 	else if (type == less)
 		fd = open_in(filename);
 	else
-		fd = open_here_doc(filename, envp);
+		fd = open_here_doc(filename, envp, last_status);
 	return (fd);
 }
 
@@ -136,7 +136,7 @@ int open_out(t_type type, const char *filename)
 // 	}
 // }
 
-void	manage_redir(t_ntree *ast, char **envp)
+void	manage_redir(t_ntree *ast, char **envp, int last_status)
 {
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;
@@ -148,20 +148,20 @@ void	manage_redir(t_ntree *ast, char **envp)
 	{
 		redirection_type = get_redirection_type(ast);
 		if (redirection_type == less || redirection_type == dgreat || redirection_type == great)
-			get_token(ast)->data = (void *)(intptr_t)open_node(ast, envp);
+			get_token(ast)->data = (void *)(intptr_t)open_node(ast, envp, last_status);
 	}
 	else
 	{
 		current = ast->children;
 		while (current != NULL)
 		{
-			manage_redir(current->content, envp);
+			manage_redir(current->content, envp, last_status);
 			current = current->next;
 		}
 	}
 }
 
-void	manage_here_doc(t_ntree *ast, char **envp)
+void	manage_here_doc(t_ntree *ast, char **envp, int last_status)
 {
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;
@@ -173,14 +173,14 @@ void	manage_here_doc(t_ntree *ast, char **envp)
 	{
 		redirection_type = get_redirection_type(ast);
 		if (redirection_type == dless)
-			get_token(ast)->data = (void *)(intptr_t)open_node(ast, envp);
+			get_token(ast)->data = (void *)(intptr_t)open_node(ast, envp, last_status);
 	}
 	else
 	{
 		current = ast->children;
 		while (current != NULL)
 		{
-			manage_here_doc(current->content, envp);
+			manage_here_doc(current->content, envp, last_status);
 			current = current->next;
 		}
 	}

@@ -290,12 +290,14 @@ int	is_token_error(t_llist *llst)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("salut \"\'$USER $?\'\" \'$USER $?\' $?$USER $SHELL$?$?$? $?sl");
+	int	last_status;
 
+	last_status = 0;
 	envp = charmatrix_dup(envp);
 	(void)argc;
 	(void)argv;
 	ft_fprintf(1, "pre_exp:%s\n", str);
-	str = expand_dollar(str, envp);
+	str = expand_dollar(str, envp, last_status);
 	ft_fprintf(1, "pst_exp:%s\n", str);
 	free(str);
 	free_char_matrix(envp);

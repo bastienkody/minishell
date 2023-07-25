@@ -95,7 +95,6 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	}
 	if (access(info->cmds->fullname, X_OK))
 		return (err_msg(cmd_name, ERR_PERMDEN), 126);
-	info->cmds->args[0] = info->cmds->fullname;
 	execve(cmd_args[0], cmd_args, *(info->envp));
 	perror(ERR_EXECVE);
 	if (info->cmds->fd_in > NO_REDIR)

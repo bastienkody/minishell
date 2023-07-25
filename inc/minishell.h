@@ -217,10 +217,10 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_in(const char *filename);
-int		open_here_doc(const char *lim, char **envp);
+int		open_here_doc(const char *lim, char **envp, int last_status);
 int		open_out(t_type type, const char *filename);
-void	manage_redir(t_ntree *ast, char **envp);
-void	manage_here_doc(t_ntree *ast, char **envp);
+void	manage_redir(t_ntree *ast, char **envp, int last_status);
+void	manage_here_doc(t_ntree *ast, char **envp, int last_status);
 
 /*	execution	*/
 int		execute(char *cmd_name, char **cmd_args, t_info *info);
