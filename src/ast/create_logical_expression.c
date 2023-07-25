@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 17:12:06 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 18:17:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ t_ntree	*create_logical_expression(t_llist *leaf_list)
 		= llstextract_range(&leaf_list, operator_pos->next, NULL);
 	t_llist			*children;
 	t_llist			*new_child;
+	char *const		data = ft_strdup(get_token(leaf_list->content)->data);
 
+	if (data == NULL)
+		return (NULL);
 	children = NULL;
 	new_child = create_rhs(extract);
 	if (new_child == NULL)
@@ -55,5 +58,5 @@ t_ntree	*create_logical_expression(t_llist *leaf_list)
 	if (new_child == NULL)
 		return (llstclear(&children, (t_del_fun)ast_free), NULL);
 	llstadd_front(&children, new_child);
-	return (ast_new(LOGICAL_EXPRESSION, NULL, children));
+	return (ast_new(LOGICAL_EXPRESSION, data, children));
 }

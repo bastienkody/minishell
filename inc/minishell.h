@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/25 17:20:01 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:30:25 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ typedef enum e_type
 	REDIRECTION,
 	OPERATOR,
 	FILENAME,
+	AND,
+	OR,
 }	t_type;
 
 typedef struct s_token
@@ -109,10 +111,11 @@ typedef struct s_cmd
 
 typedef struct s_info
 {
-	t_cmd	*cmds;
-	pid_t	last_pid;
-	char	***envp;
-	int		exit_code;
+	t_cmd			*cmds;
+	t_cmd *const	cmd_start;
+	pid_t			last_pid;
+	char			***envp;
+	int				exit_code;
 }	t_info;
 
 typedef int (*t_f)(char **);
@@ -222,6 +225,7 @@ void	manage_redir(t_ntree *ast, char **envp);
 void	manage_here_doc(t_ntree *ast, char **envp);
 
 /*	execution	*/
+int		execute_ast(t_ntree *ast);
 int		execute(char *cmd_name, char **cmd_args, t_info *info);
 int		analyze_status(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
@@ -229,6 +233,7 @@ void	manage_pipeline(t_ntree *ast, char **envp);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
+int		pipex(t_info *info);
 
 /*	printers	*/
 void	print_item(void *item);
