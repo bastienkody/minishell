@@ -59,6 +59,9 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6daf1da3c1dbd50bd0a0394edee168b30892a40e
 int	analyze_status(t_info *info)
 {
 	int		status;
@@ -105,6 +108,7 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 		close(info->cmd->fd_in);
 	exit(EXIT_FAILURE);
 }
+<<<<<<< HEAD
 =======
 // int	analyze_status(int status)
 // {
@@ -144,3 +148,5 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 // 	exit(EXIT_FAILURE);
 // }
 >>>>>>> main
+=======
+>>>>>>> 6daf1da3c1dbd50bd0a0394edee168b30892a40e
