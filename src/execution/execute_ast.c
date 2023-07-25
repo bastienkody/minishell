@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:58:45 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/24 16:02:17 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:23:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	execute_complete_command(t_ast *ast, char **envp)
+int	execute_complete_command(t_ntree *ast, char **envp)
 {
 	/*
 	executer pipeline
@@ -23,7 +23,7 @@ int	execute_complete_command(t_ast *ast, char **envp)
 	*/
 }
 
-int	execute_pipeline(t_ast *ast, char **envp)
+int	execute_pipeline(t_ntree *ntree, char **envp)
 {
 	/*
 	executer chaque commande
@@ -31,7 +31,7 @@ int	execute_pipeline(t_ast *ast, char **envp)
 	*/
 }
 
-int	execute_logical_operator(t_ast *ast, char **envp)
+int	execute_logical_operator(t_ntree *ast, char **envp)
 {
 	/*
 	executer fils gauche et garder en memoire le code erreur
