@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/25 18:30:25 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 19:02:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,14 @@ typedef struct s_cmd
 typedef struct s_info
 {
 	t_cmd			*cmds;
-	t_cmd *const	cmd_start;
+	t_cmd			*cmd_start;
 	pid_t			last_pid;
 	char			***envp;
 	int				exit_code;
 }	t_info;
 
 typedef int (*t_f)(char **);
+typedef int (*t_execute_ast_fun)(t_ntree *ast);
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -225,7 +226,12 @@ void	manage_redir(t_ntree *ast, char **envp);
 void	manage_here_doc(t_ntree *ast, char **envp);
 
 /*	execution	*/
+t_execute_ast_fun	get_execute_function(t_ntree *ast);
 int		execute_ast(t_ntree *ast);
+int		execute_complete_command(t_ntree *ast);
+int		execute_logical_expression(t_ntree *ast);
+int		execute_compound_command(t_ntree *ast);
+int		execute_pipeline(t_ntree *ast);
 int		execute(char *cmd_name, char **cmd_args, t_info *info);
 int		analyze_status(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
@@ -237,6 +243,7 @@ int		pipex(t_info *info);
 
 /*	printers	*/
 void	print_item(void *item);
+
 void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);

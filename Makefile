@@ -26,6 +26,7 @@ BUILT_NAME	=	builtin_basics.c\
 EXECU_NAME	=	execution_basics.c\
 				pipe_execution.c\
 				execute_ast.c\
+				execute_ast_utils.c
 
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
