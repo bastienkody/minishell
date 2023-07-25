@@ -286,6 +286,21 @@ int	is_token_error(t_llist *llst)
 	close(out_fd);
 }*/
 
+//	Last return status expansion : $?
+int	main(int argc, char **argv, char **envp)
+{
+	char	*str = ft_strdup("salut \"\'$USER $?\'\" \'$USER $?\' $?$USER $SHELL$?$?$? $?sl");
+
+	envp = charmatrix_dup(envp);
+	(void)argc;
+	(void)argv;
+	ft_fprintf(1, "pre_exp:%s\n", str);
+	str = expand_dollar(str, envp);
+	ft_fprintf(1, "pst_exp:%s\n", str);
+	free(str);
+	free_char_matrix(envp);
+}
+
 //	QUOTE REMOVAL
 /*int	main(void)
 {
