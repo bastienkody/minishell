@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/25 16:09:00 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 17:20:01 by bguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define TRUE 1
 # define FALSE 0
 # define BAD_FD -1
+# define NO_REDIR 0
+# define REDIR_PB -3
 # define MALLOC_FAIL -2
 # define STDIN 0
 # define STDOUT 0
@@ -114,7 +116,6 @@ typedef struct s_info
 }	t_info;
 
 typedef int (*t_f)(char **);
-
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -221,14 +222,13 @@ void	manage_redir(t_ntree *ast, char **envp);
 void	manage_here_doc(t_ntree *ast, char **envp);
 
 /*	execution	*/
+int		execute(char *cmd_name, char **cmd_args, t_info *info);
+int		analyze_status(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 void	manage_pipeline(t_ntree *ast, char **envp);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
-int		execute(char *cmd_name, char **cmd_args, char **envp);
-int		analyze_status(int status);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
-int		exec_builtin(char **cmd_args);
 
 /*	printers	*/
 void	print_item(void *item);
@@ -269,6 +269,7 @@ int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
+int		exec_builtin(char **cmd_args, char ***envp);
 
 /*	builtins check	*/
 int		is_a_builtin(char **args);

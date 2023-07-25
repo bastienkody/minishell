@@ -9,6 +9,22 @@ int	is_token_error(t_llist *llst)
 
 /////////////////////////////////////////////
 
+// acces pour les buitin ? ok (/usr/bin/x) pour echo, env et pwd ; ko pour les autres 
+/*int	main(int argc, char **argv, char **envp)
+{
+	char *builtin[8] = {"echo", "env", "pwd", "cd", "unset", "export", "exit", NULL};
+	int		i;
+
+	(void)argc;
+	(void)argv;
+	i = -1;
+	while (builtin[++i])
+	{
+		ft_fprintf(1, "%s : %s\n", builtin[i], get_full_cmd_name(builtin[i], envp));
+	}
+
+}*/
+
 // charmatrix buble sort
 /*int	main(int argc, char **argv, char **envp)
 {
@@ -114,7 +130,7 @@ int	is_token_error(t_llist *llst)
 }*/
 
 // CD builtin
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*path;
 	char	*path_permden = "impossible";
@@ -139,7 +155,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "cd: %i\n", cd(path_permden, envp));
 	//print_env(envp, NULL);
 	free_char_matrix(envp);
-}
+}*/
 
 // ECHO builtin (ok args et no args, option -n ok, error write (bad fd) echo returns -1)
 /*int	main(void)
