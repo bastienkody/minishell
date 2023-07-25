@@ -31,7 +31,6 @@ XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
 				dollar_expander.c\
 				quote_removal.c\
-				main_expansion.c
 
 REDIR_NAME	=	redirector.c\
 				here_doc.c
@@ -75,6 +74,8 @@ UTILS_NAME	=	ft_realloc.c\
 
 OTHER_NAME =	parser.c\
 				lexer.c\
+				manage_pipeline.c\
+				pipex_info.c
 
 MAIN_NAME	=	main_test.c
 
