@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/24 15:10:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:18:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		// ast_print(ast);
 		manage_here_doc(ast, envp);
 		manage_redir(ast, envp);
+		manage_pipeline(ast, envp);
 		ft_putendl_fd("-----------AST-----------", 1);
 		ast_print(ast);
 		ft_putendl_fd("", 1);

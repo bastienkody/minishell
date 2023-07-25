@@ -1,18 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution_basics.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 17:05:28 by aguyon           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   execution_basics.c                                 :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
+// /*   Updated: 2023/07/24 17:05:28 by aguyon           ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* returns null on malloc err ; ["", NULL] if no path or no envp	*/
+// /* returns null on malloc err ; ["", NULL] if no path or no envp	*/
 char	**get_path(char **envp)
 {
 	char	**no_path;
@@ -58,6 +58,7 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	return (free_char_matrix(path), ft_strdup(""));
 }
 
+<<<<<<< HEAD
 int	analyze_status(t_info *info)
 {
 	int		status;
@@ -104,3 +105,42 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 		close(info->cmd->fd_in);
 	exit(EXIT_FAILURE);
 }
+=======
+// int	analyze_status(int status)
+// {
+// 	//cmd dont exist 127
+// 	// no exec rights 126
+// 	if (WIFEXITED(status))
+// 		return (WEXITSTATUS(status));
+// 	if (WIFSIGNALED(status))
+// 		return (WTERMSIG(status));
+// 	return (status);
+// }
+
+// int	execute(char *cmd_name, char **cmd_args)
+// {
+// 	char	*full_name;
+
+// 	full_name = get_full_cmd_name(cmd_name);
+// 	if (!full_name)
+// 		return (MALLOC_FAIL);
+// 	if (access(full_name, F_OK))
+// 	{
+// 		if (!ft_strchr(cmd_name, '/'))
+// 			err_msg(cmd_name, ERR_CNF);
+// 		else
+// 			err_msg(cmd_name, ERR_NSFD);
+// 		return (free(full_name), 127);
+// 	}
+// 	if (access(full_name, X_OK))
+// 		return (err_msg(cmd_name, ERR_PERMDEN), free(full_name), 126);
+// 	cmd_args[0] = full_name;
+// 	if (is_a_builtin(cmd_args))
+// 		return (exec_builtin(cmd_args));
+// 	execve(full_name, cmd_args);
+// 	perror(ERR_EXECVE);
+// 	free(full_name);
+// 	//close inf/outfile
+// 	exit(EXIT_FAILURE);
+// }
+>>>>>>> main
