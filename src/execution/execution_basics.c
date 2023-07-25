@@ -63,7 +63,7 @@ int	analyze_status(t_info *info)
 	int		status;
 	t_cmd	*last_cmd;
 
-	last_cmd = info->cmds;	// info->cmd is NULL ; reach last cmd of pipe TO DO !
+	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
 	if (last_cmd->exist)
 		return (127);

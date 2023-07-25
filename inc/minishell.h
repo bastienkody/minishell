@@ -187,6 +187,9 @@ int		is_node_pipe(t_ntree	*node);
 int		is_node_redirection(t_ntree	*node);
 int		is_node_compound(t_ntree	*node);
 
+/* t_cmd	*/
+t_cmd	*cmd_last(t_cmd *cmds);
+
 /*	utils general	*/
 char	*strjoin(const char *s1, const char *s2);
 char	*strjoin2(const char *s1, const char *s2);
