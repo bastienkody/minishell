@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 17:04:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 16:09:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ typedef struct s_cmd
 	int				fd_in;
 	int				fd_out;
 	int				index;
-	char			*cmd_name;
-	char			*cmd_fullname;
-	char			**cmd_args;
+	char			*name;
+	char			*fullname;
+	char			**args;
 	int				exist;
 	int				is_exec;
 	struct s_cmd	*next;
@@ -107,18 +107,11 @@ typedef struct s_cmd
 
 typedef struct s_info
 {
-	t_cmd	*cmd;
+	t_cmd	*cmds;
 	pid_t	last_pid;
 	char	***envp;
 	int		exit_code;
 }	t_info;
-
-// typedef struct s_ast
-// {
-// 	t_type	type;
-// 	void	*data;
-// 	t_llist	*children;
-// }	t_ast;
 
 typedef int (*t_f)(char **);
 
@@ -182,7 +175,6 @@ t_ntree	*create_command(t_llist	*token_list);
 t_llist	*create_suffixes(t_llist *leaf_list);
 t_llist	*create_prefixes(t_llist *leaf_list);
 t_ntree	*create_redirection(t_llist	*leaf_list);
-void	free_ast(t_ast *ast);
 int		is_node_word(t_ntree	*node);
 int		is_node_logical_operator(t_ntree	*node);
 int		is_node_pipe(t_ntree	*node);
@@ -216,7 +208,6 @@ char	*extract_wd(char *start, char *end);
 char	*expand_dollar(char *str, char **envp);
 char	*expand_dollar_here_doc(char *str, char **envp);
 char	*expand_dollar_redir_file(char *str, char **envp);
-int		expand_dollar_quotes_on_ast(t_ast *ast, char **envp);
 
 /*	general expansion	*/
 char	*rm_peer_quotes(char *str);
@@ -230,6 +221,9 @@ void	manage_redir(t_ntree *ast, char **envp);
 void	manage_here_doc(t_ntree *ast, char **envp);
 
 /*	execution	*/
+t_type	get_redirection_type(t_ntree *redirection_node);
+void	manage_pipeline(t_ntree *ast, char **envp);
+t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 int		execute(char *cmd_name, char **cmd_args, char **envp);
 int		analyze_status(int status);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
@@ -245,9 +239,6 @@ void	print_token(t_token *token);
 void	print_token_error(t_token token);
 void	err_builtin(char *builtin, char *arg, char *err);
 void	err_msg(char *str, char *err);
-void	print_ast_full(t_ast *ast);
-void	print_ast_text(t_ast *ast);
-void	print_tree(t_ast *ast);
 
 /* ntree functions */
 t_ntree	*ntree_new(void *data, t_llist *children);

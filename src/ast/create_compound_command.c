@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:54:51 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 16:22:57 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:25:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_ntree	*create_compound_command(t_llist *leaf)
 {
-	char *const	old_line = ((t_ast *)leaf->content)->data;
+	char *const	old_line = get_token(leaf->content)->data;
 	char *const	new_line = ft_substr(old_line, 1, ft_strlen(old_line) - 2);
 	t_llist		*token_list;
 	t_llist		*leaf_list;
