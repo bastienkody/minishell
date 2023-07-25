@@ -63,7 +63,7 @@ int	analyze_status(t_info *info)
 	int		status;
 	t_cmd	*last_cmd;
 
-	last_cmd = info->cmd;	// info->cmd is NULL ; reach last cmd of pipe TO DO !
+	last_cmd = info->cmds;	// info->cmd is NULL ; reach last cmd of pipe TO DO !
 	status = info->exit_code;
 	if (last_cmd->exist)
 		return (127);
@@ -85,7 +85,7 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 		return (0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args))
 		return (exec_builtin(cmd_args, info->envp));
-	if (access(info->cmd->cmd_fullname, F_OK))
+	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
 			err_msg(cmd_name, ERR_CNF);
@@ -93,14 +93,15 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 			err_msg(cmd_name, ERR_NSFD);
 		return (127);
 	}
-	if (access(info->cmd->cmd_fullname, X_OK))
+	if (access(info->cmds->fullname, X_OK))
 		return (err_msg(cmd_name, ERR_PERMDEN), 126);
-	info->cmd->cmd_args[0] = info->cmd->cmd_fullname;
+	info->cmds->args[0] = info->cmds->fullname;
 	execve(cmd_args[0], cmd_args, *(info->envp));
 	perror(ERR_EXECVE);
-	if (info->cmd->fd_in > NO_REDIR)
-		close(info->cmd->fd_in);
-	if (info->cmd->fd_out > NO_REDIR)
-		close(info->cmd->fd_in);
+	if (info->cmds->fd_in > NO_REDIR)
+		close(info->cmds->fd_in);
+	if (info->cmds->fd_out > NO_REDIR)
+		close(info->cmds->fd_in);
 	exit(EXIT_FAILURE);
 }
+
