@@ -26,6 +26,8 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 		return (perror(ERR_DUP), BAD_FD); // maybe exit_failure? we must end the program if syscall error
 	close(old_fd);
 	// outfile
+    if (!info->cmds->next && info->cmds->fd_out == NO_REDIR)
+      return (0);
 	if (info->cmds->fd_out == NO_REDIR)
 		old_fd = pipefd[1];
 	else
