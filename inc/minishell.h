@@ -58,10 +58,10 @@
 # define ERR_AMB_REDIR "ambiguous redirect"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
-# define ERR_DUP "minishell: dup2: "
-# define ERR_EXECVE "minishell: execve:"
-# define ERR_PIPE "minishell: pipe:"
-# define ERR_FORK "minishell: fork:"
+# define ERR_DUP "minishell: dup2"
+# define ERR_EXECVE "minishell: execve"
+# define ERR_PIPE "minishell: pipe"
+# define ERR_FORK "minishell: fork"
 
 typedef enum e_type
 {
