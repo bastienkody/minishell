@@ -1,14 +1,14 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   execution_basics.c                                 :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-// /*   Updated: 2023/07/24 17:05:28 by aguyon           ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_basics.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
+/*   Updated: 2023/07/24 17:05:28 by aguyon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -65,7 +65,7 @@ int	analyze_status(t_info *info)
 
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
-//	printf("%d\n", info->exit_code);
+	printf("%d\n", info->exit_code);
 	if (last_cmd->exist)
 		return (ft_fprintf(1, "RET 127\n"), 127);
 	if (last_cmd->is_exec)
@@ -79,9 +79,25 @@ int	analyze_status(t_info *info)
 	return (status);
 }
 
+void	wait_cmds(t_info *info)
+{
+	int		child_status;
+	pid_t	ret;
+
+	ret = 0;
+	while (ret != -1)
+	{
+		ret = waitpid(-1, &child_status, 0);
+		if (ret == info->last_pid)
+			info->exit_code = child_status;
+	}
+}
+
 // cmd_args[0] == cmd_name (not fullname) ?
 int	execute(char *cmd_name, char **cmd_args, t_info *info)
 {
+	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
+		return (1);
 	if (!cmd_args)
 		return (0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args))
@@ -104,4 +120,3 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 		close(info->cmds->fd_in);
 	exit(EXIT_FAILURE);
 }
-

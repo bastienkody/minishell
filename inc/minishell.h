@@ -58,7 +58,8 @@
 # define ERR_AMB_REDIR "ambiguous redirect"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
-# define ERR_DUP "minishell: dup2"
+# define ERR_DUP_IN "minishell: infile dup2"
+# define ERR_DUP_OUT "minishell: outfile dup2"
 # define ERR_EXECVE "minishell: execve"
 # define ERR_PIPE "minishell: pipe"
 # define ERR_FORK "minishell: fork"
@@ -238,6 +239,7 @@ int		execute_compound_command(t_ntree *ast);
 int		execute_pipeline(t_ntree *ast);
 int		execute(char *cmd_name, char **cmd_args, t_info *info);
 int		analyze_status(t_info *info);
+void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 void	manage_pipeline(t_ntree *ast, char **envp);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
