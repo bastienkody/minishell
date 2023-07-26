@@ -46,9 +46,9 @@ void	wait_cmds(t_info *info)
 	ret = 0;
 	while (ret != -1)
 	{
+		ret = waitpid(-1, &child_status, 0);
 		if (ret == info->last_pid)
 			info->exit_code = child_status;
-		ret = waitpid(-1, &child_status, 0);
 	}
 }
 

@@ -65,9 +65,9 @@ int	analyze_status(t_info *info)
 
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
-	printf("%d\n", info->exit_code);
+//	printf("%d\n", info->exit_code);
 	if (last_cmd->exist)
-		return (127);
+		return (ft_fprintf(1, "RET 127\n"), 127);
 	if (last_cmd->is_exec)
 		return (126);
 	if (last_cmd->fd_in == REDIR_PB || last_cmd->fd_out == REDIR_PB)

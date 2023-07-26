@@ -1,0 +1,8 @@
+- close les fd de pipes + fd des fichiers, dans enfant et parents
+- regarder readline
+- fonction qui appellent les bultin
+- += dans export
+- unlink les tmpfiles de heredoc
+- gestion ouverture fichiers et fd
+
+
