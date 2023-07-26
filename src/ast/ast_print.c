@@ -6,24 +6,17 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:01:21 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 11:11:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 11:16:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// static void print_pipeline(t_info *pipex_info)
-// {
-
-// }
 
 static void	print_data(t_token *token)
 {
 	ft_fprintf(1, "%s", type_to_string(token->type));
 	if (token->data == NULL)
 		return ;
-	// if (token->type == OPERATOR)
-	// 	ft_fprintf(1, ": %s", type_to_string(token->type));
 	if (token->type == REDIRECTION)
 		ft_fprintf(1, ": %d", (intptr_t)token->data);
 	else if (token->type == PIPELINE)

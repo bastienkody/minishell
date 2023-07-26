@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 19:17:54 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:00:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		line = readline("minishell prompt % ");
 		if (line == NULL)
 			exit(1);
+		if (is_str_blank(line))
+		{
+			free(line);
+			continue ;
+		}
 		add_history(line);
 		token_list = lexer(line);
 		ft_putendl_fd("-----------TOKEN LIST-----------", 1);
