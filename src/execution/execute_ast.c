@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:58:45 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 18:55:37 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 11:11:17 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	execute_logical_expression(t_ntree *ast)
 	int	lhs_return_status;
 
 	lhs_return_status = lhs_execute_function(lhs);
-	if (lhs_return_status == 0 && ft_strcmp(get_token(lhs->data)->data, "&&"))
+	if (lhs_return_status == 0 && (intptr_t)get_token(ast)->data == AND)
 		return (rhs_execute_function(rhs));
-	else if (lhs_return_status != 0 && ft_strcmp(get_token(lhs->data)->data, "||"))
+	else if (lhs_return_status != 0 && (intptr_t)get_token(ast)->data == OR)
 		return (rhs_execute_function(rhs));
 	return (lhs_return_status);
 }
