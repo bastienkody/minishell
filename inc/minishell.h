@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/25 19:02:18 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:38:17 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct s_info
 	t_cmd			*cmds;
 	t_cmd			*cmd_start;
 	pid_t			last_pid;
-	char			***envp;
+	char			**envp;
 	int				exit_code;
 }	t_info;
 

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 12:00:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 14:14:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		}
 		add_history(line);
 		token_list = lexer(line);
+		free(line);
+		line = NULL;
 		ft_putendl_fd("-----------TOKEN LIST-----------", 1);
 		llstiter(token_list, (void (*)(void *))print_token);
 		ft_putendl_fd("", 1);

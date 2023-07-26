@@ -65,6 +65,7 @@ int	analyze_status(t_info *info)
 
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
+	printf("%d\n", info->exit_code);
 	if (last_cmd->exist)
 		return (127);
 	if (last_cmd->is_exec)
@@ -84,7 +85,7 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (!cmd_args)
 		return (0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args))
-		return (exec_builtin(cmd_args, info->envp));
+		return (exec_builtin(cmd_args, &info->envp));
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
@@ -95,7 +96,7 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	}
 	if (access(info->cmds->fullname, X_OK))
 		return (err_msg(cmd_name, ERR_PERMDEN), 126);
-	execve(cmd_args[0], cmd_args, *(info->envp));
+	execve(cmd_args[0], cmd_args, info->envp);
 	perror(ERR_EXECVE);
 	if (info->cmds->fd_in > NO_REDIR)
 		close(info->cmds->fd_in);

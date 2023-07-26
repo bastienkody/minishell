@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 17:05:06 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:47:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
 	int	old_fd;
-	
+
 	// infile
 	if (info->cmds->fd_in == NO_REDIR)
 		old_fd = prevpipe;
@@ -66,7 +66,7 @@ void	fork_pipe_dup(char **args, int *prevpipe, t_info *info)
 	{
 		close(pipefd[0]);
 		if (dupper(info, *prevpipe, pipefd) == BAD_FD)
-			exit(EXIT_FAILURE); // on exit l'enfant ? quitter le prog parent aussi? 
+			exit(EXIT_FAILURE); // on exit l'enfant ? quitter le prog parent aussi?
 		execute(args[0], args, info);
 	}
 	else if (pid > 0)

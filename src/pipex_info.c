@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 10:46:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:39:08 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,10 @@ int	get_fd_out(t_ntree *simple_command_node)
 
 t_cmd	*cmd_new(t_ntree *simple_command_node, int index, char **envp)
 {
-	t_cmd	*cmd = malloc(sizeof(t_cmd));
+	t_cmd *const cmd = malloc(sizeof(t_cmd));
 
+	if (cmd == NULL)
+		return (NULL);
 	cmd->fd_in = get_fd_in(simple_command_node);
 	cmd->fd_out = get_fd_out(simple_command_node);
 	cmd->index = index;
@@ -189,9 +191,10 @@ t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp)
 	t_cmd			*new_cmd;
 	size_t			i;
 
+
 	if (pipex_info == NULL)
 		return (NULL);
-	pipex_info->envp = &envp;
+	pipex_info->envp = envp;
 	pipex_info->exit_code = 0;
 	pipex_info->last_pid = 0;
 	pipex_info->cmds = NULL;
