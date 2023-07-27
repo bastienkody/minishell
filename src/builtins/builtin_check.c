@@ -36,7 +36,19 @@ int	is_a_builtin(char **args)
 
 int	exec_builtin(char **cmd_args, char ***envp)
 {
-	(void)cmd_args;
-	(void)envp;
+	if (ft_strcmp(cmd_args[0], "echo"))
+		return (echo(cmd_args));
+	if (ft_strcmp(cmd_args[0], "cd"))
+		return (cd(cmd_args[0], *envp));
+	if (ft_strcmp(cmd_args[0], "pwd"))
+		return (pwd());
+	if (ft_strcmp(cmd_args[0], "export"))
+		return (export(cmd_args, envp));
+	if (ft_strcmp(cmd_args[0], "unset"))
+		return (unset(cmd_args, envp));
+	if (ft_strcmp(cmd_args[0], "env"))
+		return (env(*envp, NULL));
+	if (ft_strcmp(cmd_args[0], "exit"))
+		return (exit_blt(cmd_args, *envp, NULL));
 	return (1);
 }
