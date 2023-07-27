@@ -71,35 +71,25 @@ void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
 		close (info->cmds->fd_out);
 }
 
-void	fork_pipe_dup(int *prevpipe, t_info *info)
-{
-	int	pipefd[2];
-	int	pid;
-
-	if (pipe(pipefd) == -1)
-		perror(ERR_PIPE);
-	//ft_fprintf(1, "cmd:%s\npipefd[0]:%i\npipefd[1]:%i\n", args[0], pipefd[0], pipefd[1]);
-	pid = fork();
-	if (pid == -1)
-		perror(ERR_FORK); // + close n free ?
-	if (pid == 0)
-	{
-		in_child(info, pipefd, prevpipe);
-	}
-	else if (pid > 0)
-	{
-		in_parent(info, pipefd, prevpipe, pid);
-	}
-}
-
 int	pipex(t_info *info)
 {
 	int	prevpipe;
+	int	pipefd[2];
+	int	pid;
 
 	prevpipe = dup(0);
 	while (info->cmds)
 	{
-		fork_pipe_dup(&prevpipe, info);
+		if (pipe(pipefd) == -1)
+			perror(ERR_PIPE);
+		//ft_fprintf(1, "cmd:%s\npipefd[0]:%i\npipefd[1]:%i\n", args[0], pipefd[0], pipefd[1]);
+		pid = fork();
+		if (pid == -1)
+			perror(ERR_FORK); // + close n free ?
+		if (pid == 0)
+			in_child(info, pipefd, &prevpipe);
+		else if (pid > 0)
+			in_parent(info, pipefd, &prevpipe, pid);
 		info->cmds = info->cmds->next;
 	}
 	wait_cmds(info);
