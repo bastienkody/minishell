@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 12:05:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 15:11:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 	t_llist	*token_list;
 	t_llist	*error;
 	t_ntree	*ast;
+	int		last_status;
 
 	if (!argc || !envp)
 		return (1);
+	last_status = 0;
 	while (TRUE)
 	{
 		line = readline("minishell prompt % ");
@@ -61,13 +63,15 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		ast = parser(token_list);
 		if (ast == NULL)
 			exit(EXIT_FAILURE); // erreur de malloc
-		manage_here_doc(ast, envp, LAST_RETURN_STATUS);
-		manage_redir(ast, envp, LAST_RETURN_STATUS);
+		manage_dollar_expansion(ast, envp, last_status);
+		manage_quote_remove(ast);
+		manage_here_doc(ast, envp, last_status);
+		manage_redir(ast, envp, last_status);
 		manage_pipeline(ast, envp);
 		ft_putendl_fd("-----------AST-----------", 1);
 		ast_print(ast);
 		ft_putendl_fd("", 1);
-		execute_ast(ast);
+		last_status = execute_ast(ast);
 		ast_free(ast);
 	}
 }

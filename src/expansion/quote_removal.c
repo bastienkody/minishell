@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:36:22 by bguillau          #+#    #+#             */
-/*   Updated: 2023/06/28 10:36:26 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:05:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*rm_peer_quotes(char *str)
 	tmp = str;
 	ret = ft_strdup("");
 	if (!str || !ret)
-		return (free(tmp), free(ret), NULL);
+		return (free(ret), NULL);
 	while (*tmp)
 	{
 		if (*tmp == '\'' || *tmp == '\"')
@@ -37,7 +37,7 @@ char	*rm_peer_quotes(char *str)
 			tmp = get_next_word_not_expanded(&ret, tmp, strfind_if(tmp + 1, \
 				is_c_quote));
 		if (!tmp || !ret)
-			return (free(str), NULL);
+			return (NULL);
 	}
-	return (free(str), ret);
+	return (ret);
 }

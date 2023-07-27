@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/19 19:47:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 14:56:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*expand_dollar(char *str, char **envp, int last_status)
 	tmp = str;
 	ret = ft_strdup("");
 	if (!ret || !tmp)
-		return (free(ret), free(str), NULL);
+		return (free(ret), NULL);
 	while (*tmp)
 	{
 		if (*tmp == D_QUOTE)
@@ -64,10 +64,10 @@ char	*expand_dollar(char *str, char **envp, int last_status)
 		else
 			tmp = get_next_word_expanded(&ret, tmp, envp, last_status);
 		if (!tmp || !ret)
-			return (free(str), free(ret), NULL); 
+			return (free(ret), NULL);
 		// double free possible on tmp (str) when freeing the tree?
 	}
-	return (free(str), ret);
+	return (ret);
 }
 
 /*	quoted stuff are expanded + str cant be null (cf. launch hd)	*/

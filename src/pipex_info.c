@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 13:32:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 14:22:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,6 @@ size_t	get_args_length(t_ntree *simple_command_node)
 	return (i);
 }
 
-void	free_char_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		free(matrix[i++]);
-	free(matrix);
-}
-
 char *get_arg_name(t_ntree *cmd_arg_node)
 {
 	t_token	*const token = ((t_ntree *)cmd_arg_node->children->content)->data;
@@ -78,7 +68,10 @@ char	**get_command_args(t_ntree *simple_command_node, char *command_name)
 		return (NULL);
 	cmd_name_node = get_command_name_node(simple_command_node);
 	i = 0;
-	args[i++] = command_name;
+	args[i] = ft_strdup(command_name);
+	if (args[i] == NULL)
+		return (NULL);
+	i++;
 	current = simple_command_node->children;
 	while (current != NULL)
 	{
@@ -156,7 +149,7 @@ t_cmd	*cmd_new(t_ntree *simple_command_node, int index, char **envp)
 	cmd->fd_in = get_fd_in(simple_command_node);
 	cmd->fd_out = get_fd_out(simple_command_node);
 	cmd->index = index;
-	if (llstfind_if(simple_command_node->children, (t_predicate)is_token_logical_operator) != NULL)
+	if (llstfind_if(simple_command_node->children, (t_predicate)is_node_cmd_name) != NULL)
 	{
 		cmd->name = get_command_name(simple_command_node);
 		cmd->fullname = get_full_cmd_name(cmd->name, envp);
@@ -175,15 +168,19 @@ t_cmd	*cmd_last(t_cmd *cmds)
 void	cmd_clear(t_cmd **cmds)
 {
 	t_cmd	*current;
+	t_cmd	*next;
 
 	if (cmds == NULL)
 		return ;
 	current = *cmds;
 	while (current != NULL)
 	{
+		next = current->next;
+		free(current->name);
 		free(current->fullname);
 		free_char_matrix(current->args);
-		current = current->next;
+		free(current);
+		current = next;
 	}
 	*cmds = NULL;
 }

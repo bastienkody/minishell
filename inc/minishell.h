@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/27 11:19:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 15:10:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int		is_node_compound(t_ntree	*node);
 
 /* t_cmd	*/
 t_cmd	*cmd_last(t_cmd *cmds);
+void	cmd_clear(t_cmd **cmds);
 
 /*	utils general	*/
 char	*strjoin(const char *s1, const char *s2);
@@ -243,7 +244,9 @@ int		execute(char *cmd_name, char **cmd_args, t_info *info);
 int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
-void	manage_pipeline(t_ntree *ast, char **envp);
+int		manage_pipeline(t_ntree *ast, char **envp);
+int		manage_dollar_expansion(t_ntree *ast, char **envp, int last_status);
+int		manage_quote_remove(t_ntree *ast);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);

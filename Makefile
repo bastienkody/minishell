@@ -76,6 +76,8 @@ UTILS_NAME	=	ft_realloc.c\
 OTHER_NAME =	parser.c\
 				lexer.c\
 				manage_pipeline.c\
+				manage_dollar_expansion.c\
+				manage_quote_remove.c\
 				pipex_info.c
 
 MAIN_NAME	=	main_debug.c
