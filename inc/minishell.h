@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/27 15:10:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 18:04:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,8 @@ t_ntree	*create_command(t_llist	*token_list);
 t_llist	*create_suffixes(t_llist *leaf_list);
 t_llist	*create_prefixes(t_llist *leaf_list);
 t_ntree	*create_redirection(t_llist	*leaf_list);
+t_ntree	*create_classic_redirection(t_llist *leaf_list);
+t_ntree	*create_here_doc(t_llist *leaf_list);
 int		is_node_word(t_ntree	*node);
 int		is_node_logical_operator(t_ntree	*node);
 int		is_node_pipe(t_ntree	*node);
@@ -191,6 +193,12 @@ int		is_node_redirection(t_ntree	*node);
 int		is_node_compound(t_ntree	*node);
 
 /* t_cmd	*/
+int		get_fd_in(t_ntree *simple_command_node);
+int		get_fd_out(t_ntree *simple_command_node);
+char	*get_command_name(t_ntree *simple_command_node);
+char	**get_command_args(t_ntree *simple_command_node, char *command_name);
+void	cmd_add_back(t_cmd **cmds, t_cmd *new_cmd);
+t_cmd	*cmd_new(t_ntree *simple_command_node, int index, char **envp);
 t_cmd	*cmd_last(t_cmd *cmds);
 void	cmd_clear(t_cmd **cmds);
 

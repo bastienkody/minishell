@@ -6,15 +6,15 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:55:19 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 18:55:28 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:15:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_execute_ast_fun get_execute_function(t_ntree *ast)
+t_execute_ast_fun	get_execute_function(t_ntree *ast)
 {
-	const t_type type = get_token(ast)->type;
+	const t_type	type = get_token(ast)->type;
 
 	if (type == PIPELINE)
 		return (execute_pipeline);

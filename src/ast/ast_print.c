@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:01:21 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 11:30:22 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:04:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ void	print_leaf(t_ntree *leaf)
 	ft_fprintf(1, "type : %s, ", type_to_string(token->type));
 	ft_fprintf(1, "data : %s\n", (char *)token->data);
 }
-

@@ -6,15 +6,15 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 15:09:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:14:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static const char g_expansible_node[] = {CMD_NAME, CMD_ARG, FILENAME, 0};
+static const char	g_expansible_node[] = {CMD_NAME, CMD_ARG, FILENAME, 0};
 
-static int remove_quote_word(t_ntree *word_node)
+static int	remove_quote_word(t_ntree *word_node)
 {
 	char	*word;
 	char	*word_without_quote;

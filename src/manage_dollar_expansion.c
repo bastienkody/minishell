@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 15:00:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:13:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static const char g_expansible_node[] = {CMD_NAME, CMD_ARG, FILENAME, 0};
+static const char	g_expansible_node[] = {CMD_NAME, CMD_ARG, FILENAME, 0};
 
 static int	expand_dollar_word(t_ntree *word_node, char **envp, int last_status)
 {

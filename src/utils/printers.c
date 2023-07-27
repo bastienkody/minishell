@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/20 16:12:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 18:10:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,3 @@ void	print_token_error(t_token token)
 {
 	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.data);
 }
-
-
