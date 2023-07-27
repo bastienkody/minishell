@@ -1,4 +1,4 @@
-- close les fd de pipes + fd des fichiers, dans enfant et parents
+- close les fd de pipes[DONE] + fd des fichiers, dans enfant et parents
 - regarder readline
 - fonction qui appellent les bultin
 - += dans export
