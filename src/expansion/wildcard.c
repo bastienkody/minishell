@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 19:20:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 20:10:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,72 +52,72 @@ char	*get_pwd(char **envp)
 	return (NULL);
 }
 
-t_llist	*get_matching_files(DIR *dir, char *regexp)
+static int add_filename(t_llist **matching_files, char *filename)
 {
-	t_llist	*matching_files;
 	char	*new_filename;
-	t_llist	*new_leaf;
+	t_llist	*new_node;
+
+	new_filename = ft_strdup(filename);
+	if (new_filename == NULL)
+		return (0);
+	new_node = ast_new(word, new_filename, NULL);
+	if (new_node == NULL)
+		return (free(new_filename), 0);
+	llstadd_back(matching_files, new_node);
+	return (1);
+}
+
+t_llist	*get_matching_files(char *pattern, char **envp)
+{
+	char *const current_dir = get_pwd(envp);
+	DIR	*dir;
+	t_llist	*matching_files;
 	struct dirent* info;
 
+	dir = opendir(current_dir);
+	if (dir == NULL)
+		return (NULL);
 	matching_files = NULL;
 	info = readdir(dir);
 	while (info != NULL)
 	{
-		if (match(regexp, info->d_name))
-		{
-			new_filename = ft_strdup(info->d_name);
-			if (new_filename == NULL)
-				return (NULL);
-			new_leaf = ast_new(word, new_filename, NULL);
-			if (new_leaf == NULL)
-				return (free(new_filename), NULL);
-			llstadd_back(&matching_files, new_leaf);
-		}
+		if (match(pattern, info->d_name))
+			if (!add_filename(&matching_files, info->d_name))
+				return (llstclear(&matching_files, (t_del)ast_free));
 		info = readdir(dir);
 	}
+	if (closedir(dir) == -1)
+		return (llstclear(&matching_files, (t_del)ast_free), NULL);
 	return (matching_files);
 }
 
-int manage_wildcard(char *pattern, char **envp)
+void replace(t_llist **leaf_list, t_llist *to_replace, t_llist *replace)
 {
-	char *const	current_dir = get_pwd(envp);
-	DIR *const	dir = opendir(current_dir);
-	t_llist	*matching_files;
+	t_llist *const prev = to_replace->prev;
+	t_llist *const next = to_replace->next;
 
-	if (dir == NULL)
-		return (0);
-	matching_files = NULL;
-	if (closedir(dir) == -1)
-		return (free(matching_files), 0);
-	return (1);
+	llstremoveone(leaf_list, to_replace, (t_del_fun)ast_free);
+	llstadd_after(&prev, replace);
+	replace->next = next;
 }
 
-// t_llist	*replace(t_ntree *leaf)
-// {
-
-// }
-
-int no_name(t_ntree *ast, char **envp)
+int manage_wildcard(t_llist *leaf_list, char **envp)
 {
 	t_llist	*current;
+	t_llist	*get_matching_files;
+	t_token	*prev_token;
 	t_token	*token;
 
-	if (ast == NULL)
-		return (1);
-	token = get_token(ast);
-	if (token->type == CMD_NAME || token->type == CMD_ARG || token->type == FILENAME)
+	current = leaf_list;
+	prev_token = NULL;
+	while (current != NULL)
 	{
-		//replace
-	}
-	else
-	{
-		current = ast->children;
-		while (current != NULL)
-		{
-			if (!no_name(current->content, envp))
-				return (0);
-			current = current->next;
-		}
+		if (current->prev != NULL)
+			prev_token = get_token(current->prev->content);
+		token = get_token(current->content);
+		if (token->type == word && ft_strcmp(prev_token->data, "<<") != 0)
+			replace(&leaf_list, current, NULL);
+		current = current->next;
 	}
 	return (1);
 }
