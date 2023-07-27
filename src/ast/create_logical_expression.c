@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 11:09:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:05:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ t_type	get_logical_expression_type(const char *data)
 t_ntree	*create_logical_expression(t_llist *leaf_list)
 {
 	t_llist *const	operator_pos = llstfind_if_reverse(leaf_list,
-		(t_predicate)is_node_logical_operator);
+			(t_predicate)is_node_logical_operator);
 	t_llist *const	extract
 		= llstextract_range(&leaf_list, operator_pos->next, NULL);
 	t_llist			*children;
 	t_llist			*new_child;
-	const t_type	type = get_logical_expression_type(get_token(operator_pos->content)->data);
+	const t_type	type
+		= get_logical_expression_type(get_token(operator_pos->content)->data);
 
 	children = NULL;
 	new_child = create_rhs(extract);

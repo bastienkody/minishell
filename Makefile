@@ -55,6 +55,8 @@ AST_NAME	=	ast_new.c\
 				create_prefixes.c\
 				create_suffixes.c\
 				create_redirection.c\
+				create_classic_redirection.c\
+				create_here_doc.c\
 				create_child.c\
 				utils.c\
 
@@ -76,7 +78,12 @@ UTILS_NAME	=	ft_realloc.c\
 OTHER_NAME =	parser.c\
 				lexer.c\
 				manage_pipeline.c\
-				pipex_info.c
+				manage_dollar_expansion.c\
+				manage_quote_remove.c\
+				pipex_info.c\
+				pipex_info_utils1.c\
+				pipex_info_utils2.c\
+				pipex_cmd.c\
 
 MAIN_NAME	=	main_debug.c
 

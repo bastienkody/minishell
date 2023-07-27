@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:57:56 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 14:18:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:04:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ t_ntree	*create_command(t_llist	*leaf_list)
 	t_llist			*children;
 	int				ok;
 
-	// ft_fprintf(1, "\n create_cmd :\n");
-	// llstiter(leaf_list, (t_unary_fun)print_leaf);
 	children = NULL;
 	ok = 1;
 	if (cmd_name_pos == NULL || cmd_name_pos->prev != NULL)

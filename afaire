@@ -4,5 +4,3 @@
 - += dans export
 - unlink les tmpfiles de heredoc
 - gestion ouverture fichiers et fd
-
-
