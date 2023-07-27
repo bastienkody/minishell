@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/26 12:38:17 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 11:19:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef enum e_type
 	FILENAME,
 	AND,
 	OR,
+	HERE_DOC,
+	HERE_END,
 }	t_type;
 
 typedef struct s_token

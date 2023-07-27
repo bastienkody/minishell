@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 12:39:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/27 13:32:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,22 @@ char	**get_command_args(t_ntree *simple_command_node, char *command_name)
 int	get_fd_in(t_ntree *simple_command_node)
 {
 	t_llist	*current;
+	t_token	*current_token;
 	t_type	redirection_type;
 
 	current = llstlast(simple_command_node->children);
 	while (current != NULL)
 	{
-		if (get_token(current->content)->type == REDIRECTION)
+		current_token = get_token(current->content);
+		if (current_token->type == REDIRECTION)
 		{
 			redirection_type = get_redirection_type(current->content);
-			if (redirection_type == less || redirection_type == dless)
-				return ((intptr_t)(get_token(current->content)->data));
+			if (redirection_type == less)
+				return ((intptr_t)(current_token->data));
+		}
+		else if (current_token->type == HERE_DOC)
+		{
+			return ((intptr_t)(current_token->data));
 		}
 		current = current->prev;
 	}
@@ -133,22 +139,29 @@ int	get_fd_out(t_ntree *simple_command_node)
 	return (0);
 }
 
+int	is_node_cmd_name(t_ntree *node)
+{
+	const t_type	type = get_token(node)->type;
+
+	return (type == CMD_NAME);
+}
+
 t_cmd	*cmd_new(t_ntree *simple_command_node, int index, char **envp)
 {
 	t_cmd *const cmd = malloc(sizeof(t_cmd));
 
 	if (cmd == NULL)
 		return (NULL);
+	*cmd = (t_cmd){};
 	cmd->fd_in = get_fd_in(simple_command_node);
 	cmd->fd_out = get_fd_out(simple_command_node);
 	cmd->index = index;
-	cmd->name = get_command_name(simple_command_node);
-	cmd->fullname = get_full_cmd_name(cmd->name, envp);
-	cmd->args = get_command_args(simple_command_node, cmd->fullname);
-	cmd->exist = 0;
-	cmd->is_exec = 0;
-	cmd->next = NULL;
-
+	if (llstfind_if(simple_command_node->children, (t_predicate)is_token_logical_operator) != NULL)
+	{
+		cmd->name = get_command_name(simple_command_node);
+		cmd->fullname = get_full_cmd_name(cmd->name, envp);
+		cmd->args = get_command_args(simple_command_node, cmd->fullname);
+	}
 	return (cmd);
 }
 
