@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/24 13:49:21 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/28 17:05:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	llstdelone(t_llist *llst, void (*del)(void *));
 void	llstclear(t_llist **llst, void (*del)(void *));
 void	llstiter(t_llist *llst, void (*f)(void *));
 t_llist	*llstmap(t_llist *llst, void *(*f)(void *), void (*del)(void *));
-// void	llstremoveone(t_llist *llst, void (*del)(void *));
 t_llist	*llstfind(t_llist *llst, void *value, int comp(void *, void *));
 t_llist	*llstfind_if(t_llist *llst, int (*p)(void *));
 t_llist	*llstfind_if_not(t_llist *llst, int (*p)(void *));
@@ -61,15 +60,12 @@ int		llstnone_of(t_llist *llst, int (*p)(void *));
 void	*llstmax(t_llist *llst, int (*comp)(void *, void *));
 void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
 void	*llstmin(t_llist *llst, int (*comp)(void *, void *));
-// int		llstcomp(t_llist *llst1, t_llist *llst2, int (*comp)(void *, void *));
-// int		llstncomp(t_llist *llst1, t_llist *llst2, size_t n,
-			// int (*comp)(void *, void *));
 void	*llstfold(t_llist *llst, void *acc, void *(*f)(void *, void *),
 			void del(void *));
-// t_llist	*llstextract(t_llist *llst);
 t_llist	*llstextract_range(t_llist **begin_llst, t_llist *begin, t_llist *end);
 t_llist	*llstextractone(t_llist **begin_llst, t_llist *llst);
 void	llstremove_if(t_llist **llst, int (*p)(void *), void (*del)(void *));
 void	llstmerge(t_llist **begin_list1, t_llist *begin_list2);
+void	llstreplace(t_llist **original_list, t_llist *new_list, t_del_fun del);
 
 #endif
