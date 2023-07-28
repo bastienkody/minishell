@@ -32,6 +32,7 @@ XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
 				dollar_expander.c\
 				quote_removal.c\
+				wildcard.c\
 
 REDIR_NAME	=	redirector.c\
 				here_doc.c
