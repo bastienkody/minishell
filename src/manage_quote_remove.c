@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 14:03:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 14:10:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,3 @@ int	manage_quote_remove(t_llist *token_list)
 	}
 	return (1);
 }
-
-// int	manage_quote_remove(t_ntree *ast)
-// {
-// 	t_type		type;
-// 	t_llist		*current;
-
-// 	if (ast == NULL)
-// 		return (1);
-// 	type = get_token(ast)->type;
-// 	if (ft_strchr(g_expansible_node, type))
-// 	{
-// 		if (!remove_quote_word(ast->children->content))
-// 			return (0);
-// 	}
-// 	else
-// 	{
-// 		current = ast->children;
-// 		while (current != NULL)
-// 		{
-// 			if (!manage_quote_remove(current->content))
-// 				return (0);
-// 			current = current->next;
-// 		}
-// 	}
-// 	return (1);
-// }

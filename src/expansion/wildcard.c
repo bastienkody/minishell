@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 13:59:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 14:22:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,26 @@ int	is_prev_here_operator(t_llist *token_list)
 	return (ft_strcmp(prev_token->data, "<<") == 0);
 }
 
+t_llist	*node_dup(t_llist *node)
+{
+	const t_token	*original_token = node->content;
+	t_llist			*new_node;
+	t_token			*new_token;
+	char			*new_str;
+
+	new_str = ft_strdup(original_token->data);
+	if (new_str == NULL)
+		return (NULL);
+	new_token = token_new(original_token->type, new_str);
+	if (new_token == NULL)
+		return (free(new_str), NULL);
+	new_node = llstnew(new_token);
+	if (new_node == NULL)
+		return (free_token(new_token), NULL);
+	return (new_node);
+
+}
+
 t_llist	*wildcard_list(t_llist *token_list, char **envp)
 {
 	t_llist	*current;
@@ -123,8 +143,14 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp)
 			new_nodes = get_wildcard_nodes(token->data, envp);
 			if (new_nodes == NULL)
 				return (llstclear(&new_token_list, (t_del_fun)free_token), NULL);
-			llstadd_back(&new_token_list, new_nodes);
 		}
+		else
+		{
+			new_nodes = node_dup(current);
+			if (new_nodes == NULL)
+				return (llstclear(&new_token_list, (t_del_fun)free_token), NULL);
+		}
+		llstadd_back(&new_token_list, new_nodes);
 		current = current->next;
 	}
 	return (new_token_list);

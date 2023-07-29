@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 14:04:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 14:10:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,3 @@ int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
 	}
 	return (1);
 }
-
-// int	manage_dollar_expansion(t_ntree *ast, char **envp, int last_status)
-// {
-// 	t_type		type;
-// 	t_llist		*current;
-
-// 	if (ast == NULL)
-// 		return (1);
-// 	type = get_token(ast)->type;
-// 	if (ft_strchr(g_expansible_node, type))
-// 	{
-// 		if (!expand_dollar_word(ast->children->content, envp, last_status))
-// 			return (0);
-// 	}
-// 	else
-// 	{
-// 		current = ast->children;
-// 		while (current != NULL)
-// 		{
-// 			if (!manage_dollar_expansion(current->content, envp, last_status))
-// 				return (0);
-// 			current = current->next;
-// 		}
-// 	}
-// 	return (1);
-// }
