@@ -6,5 +6,6 @@
 - gestion ouverture fichiers et fd
 - builtin ne sont pas exécutable
 - si ambigous redirect le programme quitte
-- bug a corriger dans la fonction _word_len de lsttok
+- bug a corriger dans la fonction _word_len de lsttok (quote)
 - extension avant ou après la vérification des tokens ?
+- gestion des signaux
