@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 14:22:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:42:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,23 @@ t_llist	*node_dup(t_llist *node)
 
 }
 
+int	is_str_redirection(const char *str)
+{
+	return (is_str_great(str) == 0
+		||  is_str_dgreat(str) == 0
+		|| is_str_less(str) == 0);
+}
+
+int	check_ambigous_redirect(t_llist *new_nodes , t_llist *prev_node)
+{
+	const t_token	*prev_token;
+
+	if (prev_node == NULL)
+		return (0);
+	prev_token = prev_node->content;
+	return (llstsize(new_nodes) >= 2 && is_str_redirection(prev_token->data));
+}
+
 t_llist	*wildcard_list(t_llist *token_list, char **envp)
 {
 	t_llist	*current;
@@ -143,6 +160,8 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp)
 			new_nodes = get_wildcard_nodes(token->data, envp);
 			if (new_nodes == NULL)
 				return (llstclear(&new_token_list, (t_del_fun)free_token), NULL);
+			if (check_ambigous_redirect(new_nodes, current->prev))
+				return (llstclear(&new_token_list, (t_del_fun)free_token), puts("Error wildcard\n"), NULL);
 		}
 		else
 		{

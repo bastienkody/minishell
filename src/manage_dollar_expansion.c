@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 14:10:37 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:43:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
 	while (current != NULL)
 	{
 		current_token = current->content;
+		if (!check_amb_redir(current_token->data, envp))
+			return (puts("Error dollar expansion\n"), 0);
 		if (current_token->type == word && !is_prev_here_operator(current))
 			if (!expand_dollar_word((t_token **)&(current->content), envp, last_status))
 				return (0);
