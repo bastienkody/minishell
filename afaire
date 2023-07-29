@@ -9,3 +9,5 @@
 - bug a corriger dans la fonction _word_len de lsttok (quote)
 - extension avant ou après la vérification des tokens ?
 - gestion des signaux
+- vérifier cascade des malloca
+- faire ses tests
