@@ -85,6 +85,7 @@ OTHER_NAME =	parser.c\
 				pipex_info_utils1.c\
 				pipex_info_utils2.c\
 				pipex_cmd.c\
+				expand_token_list.c\
 
 MAIN_NAME	=	main_debug.c
 

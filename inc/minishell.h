@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/27 18:37:13 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 13:57:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,8 +254,8 @@ int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_ntree *ast, char **envp);
-int		manage_dollar_expansion(t_ntree *ast, char **envp, int last_status);
-int		manage_quote_remove(t_ntree *ast);
+int		manage_dollar_expansion(t_llist *leaf_list, char **envp, int last_status);
+int		manage_quote_remove(t_llist *leaf_list);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
@@ -316,5 +316,8 @@ int		check_exit(char **args);
 char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);
 t_ntree		*parser(t_llist	*token_list);
+int			is_prev_here_operator(t_llist *leaf_list);
+t_llist	*wildcard_list(t_llist *token_list, char **envp);
+t_llist	*expand_token_list(t_llist *token_list, char **envp, int last_status);
 
 #endif

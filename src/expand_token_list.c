@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstreplace.c                                      :+:      :+:    :+:   */
+/*   expand_token_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 17:02:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 13:29:51 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/29 13:51:59 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/29 14:02:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../inc/minishell.h"
 
-int	llstreplace(t_llist **original_list, t_llist *new_list, t_del_fun del)
+t_llist	*expand_token_list(t_llist *token_list, char **envp, int last_status)
 {
-	if (new_list == NULL)
-		return (0);
-	llstclear(original_list, del);
-	*original_list = new_list;
-	return (1);
+	if (!manage_dollar_expansion(token_list, envp, last_status))
+		return (NULL);
+	if (!manage_quote_remove(token_list))
+		return (NULL);
+	if (!llstreplace(&token_list, wildcard_list(token_list, envp), (t_del_fun)free_token))
+		return (NULL);
+	return (token_list);
 }
