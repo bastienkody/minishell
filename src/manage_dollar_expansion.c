@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 16:57:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:16:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,21 @@ static int	expand_dollar_word(t_token **token, char **envp, int last_status)
 	return (1);
 }
 
+int	is_str_redir(const char *str)
+{
+	return (is_str_great(str) || is_str_dgreat(str) || is_str_less(str));
+}
+
+int	is_prev_redir_operator(t_llist *node)
+{
+	t_token	*prev_token;
+
+	if (node->prev == NULL)
+		return (0);
+	prev_token = node->prev->content;
+	return (is_str_redir(prev_token->data) == 1);
+}
+
 int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
 {
 	t_llist	*current;
@@ -35,11 +50,13 @@ int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
 	while (current != NULL)
 	{
 		current_token = current->content;
-		if (!check_amb_redir(current_token->data, envp))
-			return (puts("Error dollar expansion\n"), 0);
 		if (current_token->type == word && !is_prev_here_operator(current))
+		{
+			if (is_prev_redir_operator(current) && !check_amb_redir(current_token->data, envp))
+				return (EAMBREDIR);
 			if (!expand_dollar_word((t_token **)&(current->content), envp, last_status))
 				return (0);
+		}
 		current = current->next;
 	}
 	return (1);

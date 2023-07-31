@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 13:59:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 11:34:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 	t_llist	*error;
 	t_ntree	*ast;
 	int		last_status;
+	int		return_code;
 
 	if (!argc || !envp)
 		return (1);
@@ -47,7 +48,14 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		ft_putendl_fd("-----------TOKEN LIST-----------", 1);
 		llstiter(token_list, (void (*)(void *))print_token);
 		ft_putendl_fd("", 1);
-		token_list = expand_token_list(token_list, envp, last_status);
+		return_code = expand_token_list(&token_list, envp, last_status);
+		if (return_code == 0)
+			exit(1);
+		if (return_code == 42)
+		{
+			puts(ERR_AMB_REDIR);
+			continue ;
+		}
 		ft_putendl_fd("-------TOKEN LIST EXPAND-------", 1);
 		llstiter(token_list, (void (*)(void *))print_token);
 		ft_putendl_fd("", 1);

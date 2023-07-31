@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/29 13:57:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:11:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
+# define EAMBREDIR 42
 # define LAST_RETURN_STATUS 1023 // tmp const ; must be a var declared in main
 
 /*	char const	*/
@@ -165,7 +166,7 @@ int		is_str_word(const char *str);
 
 /*	check_syntax_utils*/
 int		is_token_word(t_token *token);
-int		is_token_redirection_operator(t_token *token);
+int		tion_operator(t_token *token);
 int		is_token_pipe(t_token *token);
 int		is_token_logical_operator(t_token *token);
 int		is_token_operator(t_token *token);
@@ -318,6 +319,6 @@ t_llist		*lexer(const char *line);
 t_ntree		*parser(t_llist	*token_list);
 int			is_prev_here_operator(t_llist *leaf_list);
 t_llist	*wildcard_list(t_llist *token_list, char **envp);
-t_llist	*expand_token_list(t_llist *token_list, char **envp, int last_status);
+int		expand_token_list(t_llist **token_list, char **envp, int last_status);
 
 #endif
