@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:57:56 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 17:04:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:53:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ t_ntree	*create_command(t_llist	*leaf_list)
 	if (leaf_list != NULL)
 		ok *= add_suffixes_children(&children, &leaf_list);
 	if (ok == 0)
-		return (llstclear(&children, (t_del_fun)ast_free), NULL);
+		return (llstclear(&children, ast_free), NULL);
 	return (ast_new(SIMPLE_COMMAND, NULL, children));
 }

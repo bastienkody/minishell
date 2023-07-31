@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:52:29 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 18:02:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:34:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,16 @@ char	*get_command_name(t_ntree *simple_command_node)
 char	**get_command_args(t_ntree *simple_command_node, char *command_name)
 {
 	char	**args;
-	t_ntree	*cmd_name_node;
 	t_llist	*current;
 	int		i;
 
 	args = malloc((get_args_length(simple_command_node) + 2) * sizeof(char *));
 	if (args == NULL)
 		return (NULL);
-	cmd_name_node = get_command_name_node(simple_command_node);
 	i = 0;
 	args[i] = ft_strdup(command_name);
 	if (args[i] == NULL)
-		return (NULL);
+		return (free_char_matrix(args), NULL);
 	i++;
 	current = simple_command_node->children;
 	while (current != NULL)
@@ -85,6 +83,5 @@ char	**get_command_args(t_ntree *simple_command_node, char *command_name)
 		}
 		current = current->next;
 	}
-	args[i] = NULL;
-	return (args);
+	return (args[i] = NULL, args);
 }

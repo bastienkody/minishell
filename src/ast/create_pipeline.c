@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:52:05 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 16:57:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:53:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_ntree	*create_pipeline(t_llist *leaf_list)
 	{
 		child = get_next_command(&leaf_list);
 		if (child == NULL)
-			return (llstclear(&children, (t_del_fun)ast_free), NULL);
+			return (llstclear(&children, ast_free), NULL);
 		llstadd_back(&children, child);
 	}
 	return (ast_new(PIPELINE, NULL, children));

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:54:51 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 15:25:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:53:47 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_ntree	*create_compound_command(t_llist *leaf)
 	t_llist		*leaf_list;
 	t_llist		*child;
 
-	llstclear(&leaf, (t_del_fun)ast_free);
+	llstclear(&leaf, ast_free);
 	if (new_line == NULL)
 		return (NULL);
 	token_list = lexer(new_line);
@@ -28,7 +28,7 @@ t_ntree	*create_compound_command(t_llist *leaf)
 	if (token_list == NULL)
 		return (NULL);
 	leaf_list = token_to_leaf(token_list);
-	llstclear(&token_list, (t_del_fun)free_token);
+	llstclear(&token_list, free_token);
 	if (leaf_list == NULL)
 		return (NULL);
 	if (llstfind_if(leaf_list, (t_predicate)is_node_logical_operator))

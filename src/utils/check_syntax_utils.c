@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:29:06 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 19:32:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:38:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@ int	is_token_word(t_token *token)
 	return (token->type == word);
 }
 
-int	is_token_redirection_operator(t_token *token)
+int	is_token_redirection(t_token *token)
 {
 	const t_type	type = token->type;
 
-	return (type == less || type == great || type == dless || type == dgreat);
+	return (type == less || type == great || type == dgreat);
+}
+
+int	is_token_here_doc(t_token *token)
+{
+	return (token->type == dless);
 }
 
 int	is_token_pipe(t_token *token)

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/31 13:45:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:50:47 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ typedef struct s_info
 	int				exit_code;
 }	t_info;
 
-typedef int (*t_f)(char **);
-typedef int (*t_execute_ast_fun)(t_ntree *ast);
+typedef int	(*t_f)(char **);
+typedef int	(*t_execute_ast_fun)(t_ntree *ast);
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
@@ -153,7 +153,7 @@ char	*strfind_if(const char *str, int (*f)(int));
 t_ntree	*create_cmd_name(t_llist *leaf);
 t_llist	*find_cmd_name(t_llist	*leaf_list);
 
-/*	token_type_predicate	*/
+/*	string_predicate	*/
 int		is_str_or(const char *str);
 int		is_str_and(const char *str);
 int		is_str_pipe(const char *str);
@@ -163,6 +163,7 @@ int		is_str_dgreat(const char *str);
 int		is_str_dless(const char *str);
 int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
+int		is_str_redirection(const char *str);
 
 /*	check_syntax_utils*/
 int		is_token_word(t_token *token);
@@ -170,7 +171,8 @@ int		tion_operator(t_token *token);
 int		is_token_pipe(t_token *token);
 int		is_token_logical_operator(t_token *token);
 int		is_token_operator(t_token *token);
-int		is_token_redirection_operator(t_token *token);
+int		is_token_redirection(t_token *token);
+int		is_token_here_doc(t_token *token);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
@@ -245,7 +247,7 @@ void	manage_redir(t_ntree *ast, char **envp, int last_status);
 void	manage_here_doc(t_ntree *ast, char **envp, int last_status);
 
 /*	execution	*/
-t_execute_ast_fun	get_execute_function(t_ntree *ast);
+void	*get_execute_function(t_ntree *ast);
 int		execute_ast(t_ntree *ast);
 int		execute_complete_command(t_ntree *ast);
 int		execute_logical_expression(t_ntree *ast);
@@ -256,7 +258,8 @@ int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_ntree *ast, char **envp);
-int		manage_dollar_expansion(t_llist *leaf_list, char **envp, int last_status);
+int		manage_dollar_expansion(t_llist *leaf_list, char **envp,
+			int last_status);
 int		manage_quote_remove(t_llist *leaf_list);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
@@ -315,11 +318,14 @@ int		check_export(char **args);
 int		check_unset(char **args);
 int		check_exit(char **args);
 
-char 	*type_to_string(t_type type);
-t_llist		*lexer(const char *line);
-t_ntree		*parser(t_llist	*token_list);
-int			is_prev_here_operator(t_llist *leaf_list);
+char	*type_to_string(t_type type);
+t_llist	*lexer(const char *line);
+t_ntree	*parser(t_llist	*token_list);
+int		is_prev_here_operator(t_llist *leaf_list);
 int		wildcard_list(t_llist **token_list_ptr, char **envp);
+char	*get_pwd(char **envp);
+int		match(char *pattern, char *text);
+t_llist	*node_dup(t_llist *node);
 int		expand_token_list(t_llist **token_list, char **envp, int last_status);
 
 #endif

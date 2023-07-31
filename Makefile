@@ -33,6 +33,8 @@ XPAND_NAME	=	utils_expansion.c\
 				dollar_expander.c\
 				quote_removal.c\
 				wildcard.c\
+				wildcard_match.c\
+				wildcard_utils.c\
 
 REDIR_NAME	=	redirector.c\
 				here_doc.c
@@ -69,8 +71,9 @@ UTILS_NAME	=	ft_realloc.c\
 				lsttok_utils.c\
 				parsing_utils.c\
 				token_utils.c\
-				type_token_utils1.c\
-				type_token_utils2.c\
+				str_predicate1.c\
+				str_predicate2.c\
+				str_predicate3.c\
 				free_token.c\
 				check_syntax_utils.c\
 				create_command_utils.c\
