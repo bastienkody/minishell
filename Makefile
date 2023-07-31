@@ -37,6 +37,7 @@ XPAND_NAME	=	utils_expansion.c\
 				wildcard_utils.c\
 
 REDIR_NAME	=	redirector.c\
+				redirector_utils.c\
 				here_doc.c
 
 TOKEN_NAME	=	type_token.c\

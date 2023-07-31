@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/31 15:50:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 16:28:09 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,11 @@ int		open_here_doc(const char *lim, char **envp, int last_status);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp, int last_status);
 void	manage_here_doc(t_ntree *ast, char **envp, int last_status);
+/*	utils	*/
+t_type	get_redirection_type(t_ntree *redirection_node);
+char	*get_redirection_filename(t_ntree *redirection_node);
+char	*get_here_end(t_ntree *here_doc_node);
+int		open_redirections(t_type type, const char *filename);
 
 /*	execution	*/
 void	*get_execute_function(t_ntree *ast);
