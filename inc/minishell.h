@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/31 13:11:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:31:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ char 	*type_to_string(t_type type);
 t_llist		*lexer(const char *line);
 t_ntree		*parser(t_llist	*token_list);
 int			is_prev_here_operator(t_llist *leaf_list);
-t_llist	*wildcard_list(t_llist *token_list, char **envp);
+int		wildcard_list(t_llist **token_list_ptr, char **envp);
 int		expand_token_list(t_llist **token_list, char **envp, int last_status);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 16:42:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:34:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ t_llist	*node_dup(t_llist *node)
 
 int	is_str_redirection(const char *str)
 {
-	return (is_str_great(str) == 0
-		||  is_str_dgreat(str) == 0
-		|| is_str_less(str) == 0);
+	return (is_str_great(str)
+		||  is_str_dgreat(str)
+		|| is_str_less(str));
 }
 
 int	check_ambigous_redirect(t_llist *new_nodes , t_llist *prev_node)
@@ -143,7 +143,7 @@ int	check_ambigous_redirect(t_llist *new_nodes , t_llist *prev_node)
 	return (llstsize(new_nodes) >= 2 && is_str_redirection(prev_token->data));
 }
 
-t_llist	*wildcard_list(t_llist *token_list, char **envp)
+int	wildcard_list(t_llist **token_list_ptr, char **envp)
 {
 	t_llist	*current;
 	t_token	*token;
@@ -151,7 +151,7 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp)
 	t_llist	*new_token_list;
 
 	new_token_list = NULL;
-	current = token_list;
+	current = *token_list_ptr;
 	while (current != NULL)
 	{
 		token = current->content;
@@ -159,20 +159,21 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp)
 		{
 			new_nodes = get_wildcard_nodes(token->data, envp);
 			if (new_nodes == NULL)
-				return (llstclear(&new_token_list, (t_del_fun)free_token), NULL);
+				return (llstclear(&new_token_list, (t_del_fun)free_token), 0);
 			if (check_ambigous_redirect(new_nodes, current->prev))
-				return (llstclear(&new_token_list, (t_del_fun)free_token), puts("Error wildcard\n"), NULL);
+				return (llstclear(&new_token_list, (t_del_fun)free_token), EAMBREDIR);
 		}
 		else
 		{
 			new_nodes = node_dup(current);
 			if (new_nodes == NULL)
-				return (llstclear(&new_token_list, (t_del_fun)free_token), NULL);
+				return (llstclear(&new_token_list, (t_del_fun)free_token), 0);
 		}
 		llstadd_back(&new_token_list, new_nodes);
 		current = current->next;
 	}
-	return (new_token_list);
+	*token_list_ptr = new_token_list;
+	return (1);
 }
 
 // int	main(int argc, char ** argv, char **envp)
