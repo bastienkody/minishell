@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/31 13:31:13 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:45:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int		tion_operator(t_token *token);
 int		is_token_pipe(t_token *token);
 int		is_token_logical_operator(t_token *token);
 int		is_token_operator(t_token *token);
+int		is_token_redirection_operator(t_token *token);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
