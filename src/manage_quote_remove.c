@@ -6,13 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 14:10:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:57:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-// static const char	g_expansible_node[] = {CMD_NAME, CMD_ARG, FILENAME, 0};
 
 static int	remove_quote_word(t_token **token)
 {

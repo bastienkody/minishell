@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:08:11 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 19:45:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/29 17:21:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static size_t	_word_len(const char *str)
 			is_inside_quote = 0;
 			quote = '\0';
 		}
-		else if (ft_strchr("\"\'", *str), !is_inside_quote)
+		else if (ft_strchr("\"\'", *str) && !is_inside_quote)
 		{
 			is_inside_quote = 1;
 			quote = *str;
