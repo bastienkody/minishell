@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 17:23:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 18:21:25 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	set_ast(t_ntree **ast, const char *line, char **envp, int last_status)
 	llstiter(token_list, (void *)token_print);
 	ft_fprintf(1, "\n");
 	return_code = expand_token_list(&token_list, envp, last_status);
-	if (return_code == 0)
+	if (return_code == ALLOC_FAIL)
 		return (EXIT); // malloc error
-	if (return_code == 42)
+	if (return_code == EAMBREDIR)
 		return (CONTINUE); // Ambigous redirect
 	if (check_error(token_list) != 0)
 		return (CONTINUE); // Token/syntax error
