@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 18:21:25 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 18:26:38 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	read_command(char **line)
 {
 	*line = readline("minishell prompt % ");
 	if (*line == NULL)
-		return (EOF);
+		return (ft_fprintf(2, "exit\n"), EOF);
 	if (is_str_blank(*line))
 		return (LINE_EMPTY);
 	return (0);
