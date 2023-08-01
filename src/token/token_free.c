@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstclear.c                                        :+:      :+:    :+:   */
+/*   token_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:01:16 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 13:58:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 15:06:55 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 16:05:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../../inc/minishell.h"
 
-void	llstclear(t_llist **llst, void *del)
+void	token_free(t_token *token)
 {
-	t_llist	*next;
-	t_llist	*current;
-
-	if (llst == NULL || del == NULL)
-		return ;
-	current = *llst;
-	while (current != NULL)
-	{
-		next = current->next;
-		llstdelone(current, del);
-		current = next;
-	}
-	*llst = NULL;
+	(free(token->data), free(token));
 }

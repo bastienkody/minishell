@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/20 15:14:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 10:13:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	print_ast(t_ast *ast)
 {
 	if (ast == NULL)
 		return ;
-	printf("%s\n", type_to_string(ast->type));
+	ft_fprintf(1, "%s\n", type_to_string(ast->type));
 	if (ast->type > 0 && ast->type < 9)
-		printf(": %s\n", (char *)ast->data);
+		ft_fprintf(1, ": %s\n", (char *)ast->data);
 	llstiter(ast->children, (void (*)(void *))print_ast);
 }
 
@@ -55,7 +55,7 @@ int	main(int argc, __attribute__((unused))char **argv, char **envp)
 		}
 		if (!check_syntax(token_list))
 		{
-			printf("Syntax error !\n");
+			ft_fprintf(1, "Syntax error !\n");
 			break ;
 		}
 		ast = parser(token_list);

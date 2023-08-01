@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 11:24:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 11:45:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:39:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 # include <readline/history.h>
 #include "inc/minishell.h"
 
-void	sig_handler(int signal)
+void	sig_handler(int signum)
 {
-	if (signal == SIGINT)
+	if (signum == SIGINT)
 		printf("\nCtrl-c pressed\n");
-	else if (signal == SIGQUIT)
+	else if (signum == SIGQUIT)
 		printf("\nCtrl-\\ pressed\n");
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int	main(void)
@@ -29,13 +31,16 @@ int	main(void)
 	char *line;
 
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("prompt: ");
 		if (line == NULL)
 			exit(0);
-		printf("%s", line);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		fprintf(stderr, "execution : %s\n", line);
+		sleep(5);
 	}
 	return (0);
 }

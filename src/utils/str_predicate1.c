@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   llstclear.c                                        :+:      :+:    :+:   */
+/*   str_predicate1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 18:01:16 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 13:58:29 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/31 13:54:34 by aguyon            #+#    #+#             */
+/*   Updated: 2023/07/31 13:54:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "llist.h"
+#include "../../inc/minishell.h"
 
-void	llstclear(t_llist **llst, void *del)
+int	is_str_or(const char *str)
 {
-	t_llist	*next;
-	t_llist	*current;
+	return (ft_strcmp(str, "||") == 0);
+}
 
-	if (llst == NULL || del == NULL)
-		return ;
-	current = *llst;
-	while (current != NULL)
-	{
-		next = current->next;
-		llstdelone(current, del);
-		current = next;
-	}
-	*llst = NULL;
+int	is_str_and(const char *str)
+{
+	return (ft_strcmp(str, "&&") == 0);
+}
+
+int	is_str_pipe(const char *str)
+{
+	return (ft_strcmp(str, "|") == 0);
+}
+
+int	is_str_great(const char *str)
+{
+	return (ft_strcmp(str, ">") == 0);
+}
+
+int	is_str_less(const char *str)
+{
+	return (ft_strcmp(str, "<") == 0);
 }

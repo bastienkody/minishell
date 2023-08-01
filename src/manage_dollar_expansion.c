@@ -6,50 +6,56 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 17:13:59 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 14:04:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static const char	g_expansible_node[] = {CMD_NAME, CMD_ARG, FILENAME, 0};
-
-static int	expand_dollar_word(t_ntree *word_node, char **envp, int last_status)
+static int	expand_dollar_word(t_llist *node, char **envp, int last_status)
 {
 	char	*word;
 	char	*expanded_word;
+	t_token	*token;
 
-	word = get_token(word_node)->data;
+	token = node->content;
+	word = token->data;
 	expanded_word = expand_dollar(word, envp, last_status);
 	if (expanded_word == NULL)
 		return (0);
 	free(word);
-	get_token(word_node)->data = expanded_word;
+	token->data = expanded_word;
 	return (1);
 }
 
-int	manage_dollar_expansion(t_ntree *ast, char **envp, int last_status)
+int	is_prev_redir_operator(t_llist *node)
 {
-	t_type		type;
-	t_llist		*current;
+	t_token	*prev_token;
 
-	if (ast == NULL)
-		return (1);
-	type = get_token(ast)->type;
-	if (ft_strchr(g_expansible_node, type))
+	if (node->prev == NULL)
+		return (0);
+	prev_token = node->prev->content;
+	return (is_str_redirection(prev_token->data) == 1);
+}
+
+int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
+{
+	t_llist	*current;
+	t_token	*current_token;
+
+	current = token_list;
+	while (current != NULL)
 	{
-		if (!expand_dollar_word(ast->children->content, envp, last_status))
-			return (0);
-	}
-	else
-	{
-		current = ast->children;
-		while (current != NULL)
+		current_token = current->content;
+		if (current_token->type == word && !is_prev_here_operator(current))
 		{
-			if (!manage_dollar_expansion(current->content, envp, last_status))
+			if (is_prev_redir_operator(current)
+				&& !check_amb_redir(current_token->data, envp))
+				return (EAMBREDIR);
+			if (!expand_dollar_word(current, envp, last_status))
 				return (0);
-			current = current->next;
 		}
+		current = current->next;
 	}
 	return (1);
 }

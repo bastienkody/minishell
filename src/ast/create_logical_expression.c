@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 17:05:20 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:53:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_ntree	*create_logical_expression(t_llist *leaf_list)
 	llstremoveone(&leaf_list, operator_pos, (t_del_fun)ast_free);
 	new_child = create_lhs(leaf_list);
 	if (new_child == NULL)
-		return (llstclear(&children, (t_del_fun)ast_free), NULL);
+		return (llstclear(&children, ast_free), NULL);
 	llstadd_front(&children, new_child);
 	return (ast_new(LOGICAL_EXPRESSION, (void *)type, children));
 }

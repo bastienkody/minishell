@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:59:37 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 18:28:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:54:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_llist	*create_prefixes(t_llist *leaf_list)
 		extract = llstextract_range(&leaf_list, leaf_list, next);
 		new_child = create_child(extract, create_redirection);
 		if (new_child == NULL)
-			return (llstclear(&prefixes, (t_del_fun)ast_free), NULL);
+			return (llstclear(&prefixes, ast_free), NULL);
 		llstadd_back(&prefixes, new_child);
 	}
 	return (prefixes);

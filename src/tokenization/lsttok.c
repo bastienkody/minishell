@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:08:11 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/18 19:45:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 11:03:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static size_t	_word_len(const char *str)
 	len = 0;
 	is_inside_quote = 0;
 	quote = '\0';
-	while (*str != '\0' && ft_strchr(DELIM, *str) == NULL)
+	while (*str != '\0' && (ft_strchr(DELIM, *str) == NULL || is_inside_quote))
 	{
 		if (ft_strchr("\"\'", *str) && is_inside_quote && *str == quote)
 		{
 			is_inside_quote = 0;
 			quote = '\0';
 		}
-		else if (ft_strchr("\"\'", *str), !is_inside_quote)
+		else if (ft_strchr("\"\'", *str) && !is_inside_quote)
 		{
 			is_inside_quote = 1;
 			quote = *str;
