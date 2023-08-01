@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 17:59:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 18:08:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int	wildcard_list(t_llist **token_list_ptr, char **envp)
 			new_nodes = node_dup(current);
 		if (new_nodes == NULL)
 			return (llstclear(&new_token_list, token_free), ALLOC_FAIL);
+		llstadd_back(&new_token_list, new_nodes);
 		if (check_ambigous_redirect(new_nodes, current->prev))
 			return (llstclear(&new_token_list, token_free), EAMBREDIR);
-		llstadd_back(&new_token_list, new_nodes);
 		current = current->next;
 	}
 	llstreplace(token_list_ptr, new_token_list, token_free);
