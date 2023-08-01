@@ -67,8 +67,10 @@ AST_NAME	=	ast_new.c\
 
 TOKEN_NAME	= 	token_free.c\
 				token_new.c\
+				token_print.c\
 				token_predicate1.c\
 				token_predicate2.c\
+				utils.c\
 
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
@@ -96,7 +98,7 @@ OTHER_NAME =	parser.c\
 				pipex_cmd.c\
 				expand_token_list.c\
 				cleanup.c\
-				main_utils.c\
+				main_utils_debug.c\
 
 MAIN_NAME	=	main_debug.c
 

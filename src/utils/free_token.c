@@ -6,16 +6,20 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:04:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:10:57 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-const char	g_data_token[]
-	= {word, ppipe, great, dgreat, less, dless, FILENAME, 0};
+static const size_t g_nb_data_token = 9;
+
+static const t_type g_data_token[]
+	= {word, ppipe, or, and, great, dgreat, less, dless, FILENAME};
 
 // a modifier
+
+
 
 void	free_pipex_info(t_info *pipex_info)
 {
@@ -29,7 +33,7 @@ void	free_node(t_token *token)
 
 	if (type == PIPELINE)
 		free_pipex_info(token->data);
-	else if (ft_strchr(g_data_token, type))
+	else if (is_type_inside(token->type, g_data_token, g_nb_data_token))
 		free(token->data);
 	free(token);
 }

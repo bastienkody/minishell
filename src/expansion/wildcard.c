@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 15:16:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:59:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ static int	add_filename(t_llist **wildcard_list, char *filename)
 
 	new_filename = ft_strdup(filename);
 	if (new_filename == NULL)
-		return (0);
+		return (ALLOC_FAIL);
 	new_token = token_new(word, new_filename);
 	if (new_token == NULL)
-		return (free(new_filename), 0);
+		return (free(new_filename), ALLOC_FAIL);
 	new_node = llstnew(new_token);
 	if (new_node == NULL)
-		return (token_free(new_token), 0);
+		return (token_free(new_token), ALLOC_FAIL);
 	llstadd_back(wildcard_list, new_node);
-	return (1);
+	return (0);
 }
 
 t_llist	*get_wildcard_nodes(char *pattern, char **envp)
@@ -47,12 +47,12 @@ t_llist	*get_wildcard_nodes(char *pattern, char **envp)
 	{
 		if (match(pattern, info->d_name))
 		{
-			if (!add_filename(&wildcard_list, info->d_name))
+			if (add_filename(&wildcard_list, info->d_name) != 0)
 				return (llstclear(&wildcard_list, token_free), NULL);
 		}
 		info = readdir(dir);
 	}
-	if (wildcard_list == NULL && !add_filename(&wildcard_list, pattern))
+	if (wildcard_list == NULL && add_filename(&wildcard_list, pattern) != 0)
 		return (NULL);
 	if (closedir(dir) == -1)
 		return (llstclear(&wildcard_list, token_free), NULL);
@@ -86,14 +86,14 @@ int	wildcard_list(t_llist **token_list_ptr, char **envp)
 		else
 			new_nodes = node_dup(current);
 		if (new_nodes == NULL)
-			return (llstclear(&new_token_list, token_free), 0);
+			return (llstclear(&new_token_list, token_free), ALLOC_FAIL);
 		if (check_ambigous_redirect(new_nodes, current->prev))
 			return (llstclear(&new_token_list, token_free), EAMBREDIR);
 		llstadd_back(&new_token_list, new_nodes);
 		current = current->next;
 	}
 	llstreplace(token_list_ptr, new_token_list, token_free);
-	return (1);
+	return (0);
 }
 
 // int	main(int argc, char ** argv, char **envp)

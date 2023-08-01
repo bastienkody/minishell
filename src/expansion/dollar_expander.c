@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/27 14:56:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	check_amb_redir(char *str, char **envp)
 			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
 				&is_c_blank_nl_dollar_s_d_quote)), envp);
 			if (!word)
-				return (MALLOC_FAIL);
+				return (ALLOC_FAIL);
 			if (is_there_a_blank(word) || !ft_strlen(word))
 				return (free(word), FALSE);
 			free(word);

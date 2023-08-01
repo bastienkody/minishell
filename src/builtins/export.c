@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:29 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:43:32 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,16 @@ int	export_each(char *key_value[2], char *entry, char ***envp)
 {
 	if (is_var_set(key_value[0], *envp) == 1 && ft_strchr(entry, '='))
 	{
-		if (mod_envar(key_value[0], key_value[1], *envp) == MALLOC_FAIL)
-			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
+		if (mod_envar(key_value[0], key_value[1], *envp) == ALLOC_FAIL)
+			return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
 	}
 	else if (is_var_set(key_value[0], *envp) == 0 && ft_strchr(entry, '='))
 	{
-		if (add_envar(key_value[0], key_value[1], envp) == MALLOC_FAIL)
-			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
+		if (add_envar(key_value[0], key_value[1], envp) == ALLOC_FAIL)
+			return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
 	}
-	else if (is_var_set(key_value[0], *envp) == MALLOC_FAIL)
-		return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
+	else if (is_var_set(key_value[0], *envp) == ALLOC_FAIL)
+		return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
 	return (TRUE);
 }
 
@@ -81,7 +81,7 @@ int	export(char **args, char ***envp)
 	{
 		sorted = charmatrix_buble_sort(*envp);
 		if (!sorted)
-			return (MALLOC_FAIL);
+			return (ALLOC_FAIL);
 		return (env(sorted, PREFIX_EXPORT), free_char_matrix(sorted), 0);
 	}
 	ret = 0;
@@ -90,11 +90,11 @@ int	export(char **args, char ***envp)
 	while (*(++args))
 	{
 		if (args_to_key_value(key_value, *args) == 0)
-			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
+			return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
 		if (is_key_valid(key_value[0], *args) == 0)
 			ret = 1;
-		else if (export_each(key_value, *args, envp) == MALLOC_FAIL)
-			return (free(key_value[0]), free(key_value[1]), MALLOC_FAIL);
+		else if (export_each(key_value, *args, envp) == ALLOC_FAIL)
+			return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
 	}
 	return (free(key_value[0]), free(key_value[1]), ret);
 }

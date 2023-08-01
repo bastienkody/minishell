@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 15:58:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:56:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define BAD_FD -1
 # define NO_REDIR 0
 # define REDIR_PB -3
-# define MALLOC_FAIL -2
+# define ALLOC_FAIL -2
 # define LINE_EMPTY -4
 # define STDIN 0
 # define STDOUT 1
@@ -61,7 +61,7 @@
 # define ERR_PERMDEN "Permission denied"
 # define ERR_NSFD "No such file or directory"
 # define ERR_CNF "Command not found"
-# define ERR_AMB_REDIR "ambiguous redirect"
+# define ERR_AMB_REDIR "ambiguous redirect\n"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
 # define ERR_DUP_IN "minishell: infile dup2"
@@ -69,6 +69,7 @@
 # define ERR_EXECVE "minishell: execve"
 # define ERR_PIPE "minishell: pipe"
 # define ERR_FORK "minishell: fork"
+# define ERR_ALLOC "Cannot allocate memory"
 
 typedef enum e_type
 {
@@ -169,15 +170,6 @@ int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
 int		is_str_redirection(const char *str);
 
-/*	check_syntax_utils*/
-int		is_token_word(t_token *token);
-int		is_token_pipe(t_token *token);
-int		is_token_logical_operator(t_token *token);
-int		is_token_operator(t_token *token);
-int		is_token_redirection(t_token *token);
-int		is_token_here_doc(t_token *token);
-int		is_token_error(t_token *token);
-
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
 void	ast_free(t_ntree *ast);
@@ -200,6 +192,20 @@ int		is_node_logical_operator(t_ntree	*node);
 int		is_node_pipe(t_ntree	*node);
 int		is_node_redirection(t_ntree	*node);
 int		is_node_compound(t_ntree	*node);
+
+/* token */
+int		is_token_word(t_token *token);
+int		is_token_pipe(t_token *token);
+int		is_token_logical_operator(t_token *token);
+int		is_token_operator(t_token *token);
+int		is_token_redirection(t_token *token);
+int		is_token_here_doc(t_token *token);
+int		is_token_error(t_token *token);
+t_token	*token_new(t_type type, void *data);
+void	token_free(t_token *token);
+void	token_print(t_token *token);
+int	is_type_inside(t_type type, const t_type types[], size_t n);
+
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
@@ -281,7 +287,6 @@ void	print_item(void *item);
 void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
-void	print_token(t_token *token);
 void	print_token_error(t_token token);
 void	err_builtin(char *builtin, char *arg, char *err);
 void	err_msg(char *str, char *err);
@@ -293,9 +298,7 @@ void	ntree_print(t_ntree *ntree, void (*print)(void *));
 char	*type_to_string(t_type type);
 t_llist	*tokenization(const char *line);
 t_ntree	*parser(t_llist	*token_list);
-void	token_free(t_token *token);
 void	free_node(t_token *token);
-t_token	*token_new(t_type type, void *data);
 t_token	*get_token(t_ntree *ast);
 void	ast_print(t_ntree *ast);
 void	print_leaf(t_ntree *leaf);

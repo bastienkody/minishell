@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 15:12:18 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int	open_here_doc(const char *lim, char **envp, int last_status)
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb), HD_END);
 	if (!pathname)
-		return (MALLOC_FAIL);
+		return (ALLOC_FAIL);
 	nb++;
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (free(pathname), perror("open here_doc in w"), BAD_FD);
 	if (!launch_here_doc(fd, lim, envp, last_status))
-		return (free(pathname), close (fd), MALLOC_FAIL);
+		return (free(pathname), close (fd), ALLOC_FAIL);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)

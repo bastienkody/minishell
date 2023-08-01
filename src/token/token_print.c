@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   token_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 14:43:57 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 17:16:57 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 17:22:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* builtin ret 1, execve ret 0 */
-int	check_unset(char **args)
-{
-	if (args && args[1] && args[1][0] == '-' && ft_strlen(args[1]) > 1)
-		return (0);
-	return (1);
-}
+static const char	*g_type[]
+	= {
+	"or",
+	"and",
+	"pipe",
+	"great",
+	"less",
+	"dgreat",
+	"dless",
+	"compound",
+	"word",
+	"error"
+};
 
-int	unset(char **args, char ***envp)
+void	token_print(t_token *token)
 {
-	args++;
-	while (*args)
-	{
-		if (is_var_set(*args, *envp))
-			if (supp_envar(*args, envp) == ALLOC_FAIL)
-				return (ALLOC_FAIL);
-		args++;
-	}
-	return (0);
+	ft_fprintf(1, "text : %s, type : %s\n", token->data, g_type[token->type]);
 }

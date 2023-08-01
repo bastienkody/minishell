@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:42:56 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:43:00 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	cd_error(char *path)
 
 	msg = ft_strjoin(prefix, path);
 	if (!msg)
-		return (MALLOC_FAIL);
+		return (ALLOC_FAIL);
 	perror(msg);
 	free(msg);
 	return (0);
@@ -57,18 +57,18 @@ int	cd(char *path, char **envp)
 		export_args[0] = "export";
 		export_args[1] = strjoin3("OLDPWD", "=", get_envalue("PWD", envp));
 		export_args[2] = NULL;
-		if (export(export_args, &envp) == MALLOC_FAIL)
-			return (free(export_args[1]), MALLOC_FAIL);
+		if (export(export_args, &envp) == ALLOC_FAIL)
+			return (free(export_args[1]), ALLOC_FAIL);
 		free(export_args[1]);
 		export_args[0] = "export";
 		export_args[1] = strjoin3("PWD", "=", getcwd(NULL, 0));
 		export_args[2] = NULL;
-		if (export(export_args, &envp) == MALLOC_FAIL)
-			return (free(export_args[1]), MALLOC_FAIL);
+		if (export(export_args, &envp) == ALLOC_FAIL)
+			return (free(export_args[1]), ALLOC_FAIL);
 		free(export_args[1]);
 	}
 	else
-		if (cd_error(path) == MALLOC_FAIL)
-			return (MALLOC_FAIL);
+		if (cd_error(path) == ALLOC_FAIL)
+			return (ALLOC_FAIL);
 	return (chdir_status);
 }
