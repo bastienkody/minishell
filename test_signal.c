@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 11:24:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 20:00:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 23:26:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,41 @@ int signalset = 0;
 
 int read_command(char **envp);
 
-void	sigint_handler(int signum)
+void	handle_sig_prompt(int sig)
 {
-	signalset = 1;
-	printf("TEST");
-	if (signum == SIGINT)
-	{
-		// printf("\nCtrl-c pressed\n");
-		printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	(void)sig;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	rl_redisplay();
 }
 
-// void	sigchildhandler(int signum)
-// {
-// 	printf("\n");
-// 	rl_on_new_line();
-// 	rl_redisplay();
-// }
+void	handle_sig_parent(int sig)
+{
+	if (sig == SIGINT)
+		printf("\n");
+	else if (sig == SIGQUIT)
+		printf("Quit (core dumped)\n");
+
+}
+
+void	set_signal_prompt(void)
+{
+	signal(SIGINT, handle_sig_prompt);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	set_signal_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	set_signal_parent(void)
+{
+	signal(SIGINT, handle_sig_parent);
+	signal(SIGQUIT, handle_sig_parent);
+}
 
 void	execute_command(char *command, char **envp)
 {
@@ -49,34 +65,26 @@ void	execute_command(char *command, char **envp)
 	(void)command;
 	if (pid == 0)
 	{
-		if (signalset)
-		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-		}
+		set_signal_child();
 		execve("/bin/sleep", (char*[]){"/bin/sleep", "5", NULL}, envp);
 	}
 	else
+	{
+		set_signal_parent();
 		wait(NULL);
+	}
 }
 
 int read_command(char **envp)
 {
 	char *command;
 
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
 	command = readline("prompt: ");
 	if (command == NULL)
 		return (-1);
-	// signal(SIGINT, SIG_IGN);
 	execute_command(command, envp);
-	signalset = 0;
 	free(command);
-	printf("\n");
-	// printf("%s\n", rl_line_buffer);
-	rl_on_new_line();
-	rl_replace_line("", 1);
+	set_signal_prompt();
 	return (0);
 }
 
@@ -85,17 +93,9 @@ int	main(int argc, char *argv[], char **envp)
 	char *line;
 	(void)argc;
 	(void)argv;
-	// rl_catch_signals = 0;
-	// printf("%d\n", rl_catch_signals);
+	set_signal_prompt();
 	while (1)
 	{
-		// if (signalset == 1)
-		// {
-		// 	rl_replace_line("", 0);
-		// 	printf("\n");
-		// 	rl_on_new_line();
-		// 	rl_redisplay();
-		// }
 		if (read_command(envp) == -1)
 			return (0);
 	}
