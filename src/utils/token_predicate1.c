@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_syntax_utils.c                               :+:      :+:    :+:   */
+/*   token_predicate1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 19:29:06 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:38:40 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 09:58:42 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 10:00:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,4 @@ int	is_token_logical_operator(t_token *token)
 	const t_type	type = token->type;
 
 	return (type == and || type == or);
-}
-
-int	is_token_operator(t_token *token)
-{
-	return (is_token_logical_operator(token) || is_token_pipe(token));
 }

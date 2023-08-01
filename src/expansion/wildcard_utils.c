@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:48:22 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:52:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 10:07:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_pwd(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(envp[i], "PWD=", 4) == 0)
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 			return (envp[i] + 4);
 		i++;
 	}

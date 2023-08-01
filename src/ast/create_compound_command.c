@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:54:51 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:53:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 14:53:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ntree	*create_compound_command(t_llist *leaf)
 	llstclear(&leaf, ast_free);
 	if (new_line == NULL)
 		return (NULL);
-	token_list = lexer(new_line);
+	token_list = tokenization(new_line);
 	free(new_line);
 	if (token_list == NULL)
 		return (NULL);

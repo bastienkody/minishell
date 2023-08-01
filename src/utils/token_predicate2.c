@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   token_predicate2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 12:02:14 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 09:58:44 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 10:00:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_ntree	*parser(t_llist	*token_list)
+int	is_token_operator(t_token *token)
 {
-	t_llist	*leaf_list;
-
-	leaf_list = token_to_leaf(token_list);
-	if (leaf_list == NULL)
-		return (NULL);
-	return (create_complete_command(leaf_list));
+	return (is_token_logical_operator(token) || is_token_pipe(token));
 }

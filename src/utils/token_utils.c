@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:02:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/29 17:05:24 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 10:07:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_str_blank(const char *str)
 {
 	while (*str != '\0')
 	{
-		if (strchr(" \t", *str) == NULL)
+		if (ft_strchr(" \t", *str) == NULL)
 			return (0);
 		str++;
 	}

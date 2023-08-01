@@ -76,7 +76,8 @@ UTILS_NAME	=	ft_realloc.c\
 				str_predicate2.c\
 				str_predicate3.c\
 				free_token.c\
-				check_syntax_utils.c\
+				token_predicate1.c\
+				token_predicate2.c\
 				create_command_utils.c\
 				charmatrix_dup.c
 

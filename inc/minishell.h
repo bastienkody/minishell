@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/31 16:28:09 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:02:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define NO_REDIR 0
 # define REDIR_PB -3
 # define MALLOC_FAIL -2
+# define LINE_EMPTY -4
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
@@ -130,7 +131,7 @@ typedef int	(*t_execute_ast_fun)(t_ntree *ast);
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
 void	lstreduce(t_llist	**llst);
-t_llist	*tokenization(t_llist *llst);
+// t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
@@ -167,7 +168,6 @@ int		is_str_redirection(const char *str);
 
 /*	check_syntax_utils*/
 int		is_token_word(t_token *token);
-int		tion_operator(t_token *token);
 int		is_token_pipe(t_token *token);
 int		is_token_logical_operator(t_token *token);
 int		is_token_operator(t_token *token);
@@ -287,7 +287,7 @@ t_ntree	*ntree_new(void *data, t_llist *children);
 void	ntree_free(t_ntree *ntree, t_del_fun del);
 void	ntree_print(t_ntree *ntree, void (*print)(void *));
 char	*type_to_string(t_type type);
-t_llist	*lexer(const char *line);
+t_llist	*tokenization(const char *line);
 t_ntree	*parser(t_llist	*token_list);
 void	free_token(t_token *token);
 void	free_node(t_token *token);

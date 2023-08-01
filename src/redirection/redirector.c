@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/31 16:26:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 13:25:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	open_simple_command_redir(t_llist *child, char **envp, int last_status,
 		if (error == 0)
 		{
 			redirection_type = get_redirection_type(current_node);
-			if (redirection_type == less || redirection_type == dgreat || redirection_type == great)
+			if (ft_strchr((char[]){less, dgreat, great, 0}, redirection_type))
 			{
 				fd = open_node(current_node, envp, last_status);
 				if (fd == -1)
@@ -94,6 +94,8 @@ void	manage_here_doc(t_ntree *ast, char **envp, int last_status)
 	if (type == HERE_DOC)
 	{
 		fd = open_node(ast, envp, last_status);
+		if (fd < 0)
+			return ;
 		get_token(ast)->data = (void *)(intptr_t)fd;
 	}
 	else
