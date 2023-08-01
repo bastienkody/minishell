@@ -6,18 +6,16 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 15:02:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:04:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-const char	g_data_token[] = {word, ppipe, great, dgreat, less, dless, FILENAME, 0};
+const char	g_data_token[]
+	= {word, ppipe, great, dgreat, less, dless, FILENAME, 0};
 
-void	free_token(t_token *token)
-{
-	(free(token->data), free(token));
-}
+// a modifier
 
 void	free_pipex_info(t_info *pipex_info)
 {

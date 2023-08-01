@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_new.c                                          :+:      :+:    :+:   */
+/*   token_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/20 15:18:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 15:16:39 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 15:07:40 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 16:03:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ntree	*ast_new(t_type type, void *data, t_llist *children)
+t_token	*token_new(t_type type, void *data)
 {
-	t_token	*new_token;
-	t_ntree	*new_ntree;
+	t_token *const	new = malloc(sizeof(t_token));
 
-	new_token = token_new(type, data);
-	if (new_token == NULL)
-		return (NULL);
-	new_ntree = ntree_new(new_token, children);
-	if (new_ntree == NULL)
-		return (token_free(new_token), NULL);
-	return (new_ntree);
+	if (new != NULL)
+		*new = (t_token){type, data};
+	return (new);
 }

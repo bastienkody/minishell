@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:48:22 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 10:07:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:16:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ t_llist	*node_dup(t_llist *node)
 		return (free(new_str), NULL);
 	new_node = llstnew(new_token);
 	if (new_node == NULL)
-		return (free_token(new_token), NULL);
+		return (token_free(new_token), NULL);
 	return (new_node);
 }

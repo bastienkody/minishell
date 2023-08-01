@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 18:52:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:27:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,13 @@ t_token	*str_to_token(char *str)
 	if (new == NULL)
 		return (free(new_data), NULL);
 	if (new_data == NULL)
-		return (free_token(new), free(new_data), NULL);
+		return (token_free(new), free(new_data), NULL);
 	*new = (t_token){type, new_data};
-	return (new);
-}
-
-t_token	*token_new(t_type type, void *data)
-{
-	t_token *const	new = malloc(sizeof(t_token));
-
-	if (new != NULL)
-		*new = (t_token){type, data};
 	return (new);
 }
 
 t_llist	*type_token(t_llist	*token_list)
 {
 	return (llstmap(token_list, (t_unary_op)str_to_token,
-			(t_del_fun)free_token));
+			(t_del_fun)token_free));
 }

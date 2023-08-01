@@ -6,8 +6,9 @@ BUILT_DIR	=	builtins/
 EXECU_DIR	=	execution/
 XPAND_DIR	=	expansion/
 REDIR_DIR	=	redirection/
-TOKEN_DIR	=	token/
+LEX_DIR		=	tokenization/
 AST_DIR		=	ast/
+TOKEN_DIR	=	token/
 UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
@@ -40,7 +41,7 @@ REDIR_NAME	=	redirector.c\
 				redirector_utils.c\
 				here_doc.c
 
-TOKEN_NAME	=	type_token.c\
+LEX_NAME	=	type_token.c\
 				lsttok.c\
 				compound_cmd.c\
 				check_syntax.c
@@ -64,6 +65,11 @@ AST_NAME	=	ast_new.c\
 				create_child.c\
 				utils.c\
 
+TOKEN_NAME	= 	token_free.c\
+				token_new.c\
+				token_predicate1.c\
+				token_predicate2.c\
+
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
 				printers.c\
@@ -75,11 +81,9 @@ UTILS_NAME	=	ft_realloc.c\
 				str_predicate1.c\
 				str_predicate2.c\
 				str_predicate3.c\
-				free_token.c\
-				token_predicate1.c\
-				token_predicate2.c\
 				create_command_utils.c\
-				charmatrix_dup.c
+				charmatrix_dup.c\
+				free_token.c
 
 OTHER_NAME =	parser.c\
 				lexer.c\
@@ -91,6 +95,8 @@ OTHER_NAME =	parser.c\
 				pipex_info_utils2.c\
 				pipex_cmd.c\
 				expand_token_list.c\
+				cleanup.c\
+				main_utils.c\
 
 MAIN_NAME	=	main_debug.c
 
@@ -98,14 +104,15 @@ BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
 REDIR_SRC	=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
-TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
+LEX_SRC		=	$(addprefix ${LEX_DIR}, ${LEX_NAME})
 AST_SRC		=	$(addprefix ${AST_DIR}, ${AST_NAME})
+TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
 UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 OTHER_SRC	=	$(addprefix ${OTHER_DIR}, ${OTHER_NAME})
 
-SRCS_NAME	=	${BUILT_SRC} ${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
-				${AST_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
+SRCS_NAME	=	${BUILT_SRC} ${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC} ${LEX_SRC}\
+				${AST_SRC} ${TOKEN_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:.c=.o}

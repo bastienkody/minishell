@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 15:02:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:58:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 # define STDERR 2
 # define EAMBREDIR 42
 # define LAST_RETURN_STATUS 1023 // tmp const ; must be a var declared in main
+# define CONTINUE 1000
+# define EXIT 1001
+# define OK 1002
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
@@ -173,6 +176,7 @@ int		is_token_logical_operator(t_token *token);
 int		is_token_operator(t_token *token);
 int		is_token_redirection(t_token *token);
 int		is_token_here_doc(t_token *token);
+int		is_token_error(t_token *token);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
@@ -289,7 +293,7 @@ void	ntree_print(t_ntree *ntree, void (*print)(void *));
 char	*type_to_string(t_type type);
 t_llist	*tokenization(const char *line);
 t_ntree	*parser(t_llist	*token_list);
-void	free_token(t_token *token);
+void	token_free(t_token *token);
 void	free_node(t_token *token);
 t_token	*token_new(t_type type, void *data);
 t_token	*get_token(t_ntree *ast);
@@ -332,5 +336,13 @@ char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
 int		expand_token_list(t_llist **token_list, char **envp, int last_status);
+
+/*	cleanup	*/
+void	data_cleanup(char **data);
+void	token_list_cleanup(t_llist **token_list);
+void	ast_cleanup(t_ntree **ast);
+
+/*	main_utils	*/
+void	reader_loop(char **envp, int last_status);
 
 #endif

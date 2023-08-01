@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 13:25:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:03:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	open_simple_command_redir(t_llist *child, char **envp, int last_status,
 		if (error == 0)
 		{
 			redirection_type = get_redirection_type(current_node);
-			if (ft_strchr((char[]){less, dgreat, great, 0}, redirection_type))
+			if (ft_strchr((char []){less, dgreat, great, 0}, redirection_type))
 			{
 				fd = open_node(current_node, envp, last_status);
 				if (fd == -1)

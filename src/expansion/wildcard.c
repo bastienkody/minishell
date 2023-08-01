@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 16:03:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:16:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	add_filename(t_llist **wildcard_list, char *filename)
 		return (free(new_filename), 0);
 	new_node = llstnew(new_token);
 	if (new_node == NULL)
-		return (free_token(new_token), 0);
+		return (token_free(new_token), 0);
 	llstadd_back(wildcard_list, new_node);
 	return (1);
 }
@@ -48,14 +48,14 @@ t_llist	*get_wildcard_nodes(char *pattern, char **envp)
 		if (match(pattern, info->d_name))
 		{
 			if (!add_filename(&wildcard_list, info->d_name))
-				return (llstclear(&wildcard_list, free_token), NULL);
+				return (llstclear(&wildcard_list, token_free), NULL);
 		}
 		info = readdir(dir);
 	}
 	if (wildcard_list == NULL && !add_filename(&wildcard_list, pattern))
 		return (NULL);
 	if (closedir(dir) == -1)
-		return (llstclear(&wildcard_list, free_token), NULL);
+		return (llstclear(&wildcard_list, token_free), NULL);
 	return (wildcard_list);
 }
 
@@ -86,13 +86,13 @@ int	wildcard_list(t_llist **token_list_ptr, char **envp)
 		else
 			new_nodes = node_dup(current);
 		if (new_nodes == NULL)
-			return (llstclear(&new_token_list, free_token), 0);
+			return (llstclear(&new_token_list, token_free), 0);
 		if (check_ambigous_redirect(new_nodes, current->prev))
-			return (llstclear(&new_token_list, free_token), EAMBREDIR);
+			return (llstclear(&new_token_list, token_free), EAMBREDIR);
 		llstadd_back(&new_token_list, new_nodes);
 		current = current->next;
 	}
-	llstreplace(token_list_ptr, new_token_list, free_token);
+	llstreplace(token_list_ptr, new_token_list, token_free);
 	return (1);
 }
 
@@ -106,9 +106,9 @@ int	wildcard_list(t_llist **token_list_ptr, char **envp)
 // 	llstadd_back(&leaf_list, llstnew(token_new(word, ft_strdup("outfile"))));
 // 	llstadd_back(&leaf_list, llstnew(token_new(word, ft_strdup("l*"))));
 // 	llstiter(leaf_list, (t_unary_fun)print_token), puts("");
-// 	if (!llstreplace(&leaf_list, wildcard_list(leaf_list, envp), free_token))
-// 		return (llstclear(&leaf_list, (t_del_fun)free_token), 1);
+// 	if (!llstreplace(&leaf_list, wildcard_list(leaf_list, envp), token_free)))
+// 		return (llstclear(&leaf_list, (t_del_fun)token_free)), 1);
 // 	llstiter(leaf_list, (t_unary_fun)print_token), puts("");
-// 	llstclear(&leaf_list, (t_del_fun)free_token);
+// 	llstclear(&leaf_list, (t_del_fun)token_free));
 // 	return (0);
 // }

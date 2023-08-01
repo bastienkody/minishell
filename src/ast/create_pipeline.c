@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:52:05 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 14:31:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:05:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static t_llist	*get_next_command(t_llist	**leaf_list)
 		= llstextract_range(leaf_list, *leaf_list, pipe_pos);
 	t_llist *const	command = create_child(extract, create_command);
 
-	// if (command == NULL)
-	// 	return (NULL);
 	llstremoveone(leaf_list, pipe_pos, (t_del_fun)ast_free);
 	return (command);
 }
