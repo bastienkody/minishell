@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:22:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
 	data = ft_strdup("");
 	if (!data)
 		return (FALSE);
+	set_here_doc_signals();
 	while (1)
 	{
-		ft_fprintf(1, "%s", HD_PROMPT);
-		line = get_next_line(0);
+		line = readline(HD_PROMPT);
 		if (!line)
 			return (free(data), FALSE);
 		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
-			if (*line == 0 || ft_strlen(line) - 1 == ft_strlen(lim))
+			if (*line == 0 || ft_strlen(line) == ft_strlen(lim))
 				break ;
-		data = strj(data, line);
+		data = strj(data, strj(line, ft_strdup("\n")));
 		if (!data)
 			return (FALSE);
 	}

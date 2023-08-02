@@ -9,6 +9,7 @@ REDIR_DIR	=	redirection/
 LEX_DIR		=	tokenization/
 AST_DIR		=	ast/
 TOKEN_DIR	=	token/
+SIGNAL_DIR	=	signal/
 UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
@@ -65,12 +66,15 @@ AST_NAME	=	ast_new.c\
 				create_child.c\
 				utils.c\
 
-TOKEN_NAME	= 	token_free.c\
+TOKEN_NAME	=	token_free.c\
 				token_new.c\
 				token_print.c\
 				token_predicate1.c\
 				token_predicate2.c\
 				utils.c\
+
+SIGNAL_NAME	=	signal_handlers.c\
+				signal_setters.c\
 
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
@@ -109,12 +113,13 @@ REDIR_SRC	=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
 LEX_SRC		=	$(addprefix ${LEX_DIR}, ${LEX_NAME})
 AST_SRC		=	$(addprefix ${AST_DIR}, ${AST_NAME})
 TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
+SIGNAL_SRC	=	$(addprefix ${SIGNAL_DIR}, ${SIGNAL_NAME})
 UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 OTHER_SRC	=	$(addprefix ${OTHER_DIR}, ${OTHER_NAME})
 
 SRCS_NAME	=	${BUILT_SRC} ${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC} ${LEX_SRC}\
-				${AST_SRC} ${TOKEN_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
+				${AST_SRC} ${TOKEN_SRC} ${SIGNAL_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:.c=.o}

@@ -6,16 +6,16 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 17:10:57 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:28:47 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const size_t g_nb_data_token = 9;
+static const size_t g_nb_data_token = 10;
 
 static const t_type g_data_token[]
-	= {word, ppipe, or, and, great, dgreat, less, dless, FILENAME};
+	= {word, ppipe, or, and, great, dgreat, less, dless, FILENAME, HERE_END};
 
 // a modifier
 

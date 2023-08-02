@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:57:29 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 18:26:35 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:56:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	reader_loop(char **envp, int last_status)
 	int	return_code;
 
 	__attribute__((cleanup(data_cleanup))) char *line;
+	set_prompt_signals();
 	line = NULL;
 	return_code = read_command(&line);
 	if (return_code == EOF)

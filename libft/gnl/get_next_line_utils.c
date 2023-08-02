@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 12:13:53 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/21 18:50:48 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:24:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*strj(char *s1, char *s2)
 	int		j;
 
 	if (!s1 || !s2)
-		return (NULL);
+		return (free(s1), free(s2), NULL);
 	res = malloc((strle(s1) + strle(s2) + 1) * sizeof(char));
 	if (!res)
 		return (NULL);

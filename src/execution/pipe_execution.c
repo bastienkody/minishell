@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/26 12:47:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:58:47 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,12 @@ void	fork_pipe_dup(int *prevpipe, t_info *info)
 		perror(ERR_FORK); // + close n free ?
 	if (pid == 0)
 	{
+		set_child_signals();
 		in_child(info, pipefd, prevpipe);
 	}
 	else if (pid > 0)
 	{
+		set_parent_signals();
 		in_parent(info, pipefd, prevpipe, pid);
 	}
 }
