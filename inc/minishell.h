@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:56:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/02 17:54:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,16 @@ int		check_env(char **args);
 int		check_export(char **args);
 int		check_unset(char **args);
 int		check_exit(char **args);
+
+/*	signal */
+void	set_prompt_signals(void);
+void	set_parent_signals(void);
+void	set_child_signals(void);
+void	set_here_doc_signals(void);
+void	handle_prompt_signals(int signum);
+void	handle_parent_signals(int signum);
+void	handle_here_doc_signals(int signum);
+
 
 char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
