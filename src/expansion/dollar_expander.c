@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:01:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp, int last_status
 	{
 		last_stratus = ft_itoa(last_status);
 		*ret = strjoin2(*ret, last_stratus);
-		return (free(last_stratus), str + 2);
+		return (str + 2);
 	}
 	word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 	if (*str == '$')
