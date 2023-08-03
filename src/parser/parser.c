@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 15:42:03 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:00:55 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 11:35:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	data_cleanup(char **data)
+t_ntree	*parser(t_llist	*token_list)
 {
-	free(*data);
-}
+	t_llist	*leaf_list;
 
-void	token_list_cleanup(t_llist **token_list)
-{
-	llstclear(token_list, token_free);
-}
-
-void	ast_cleanup(t_ntree **ast)
-{
-	ast_free(*ast);
+	leaf_list = token_to_leaf(token_list);
+	if (leaf_list == NULL)
+		return (NULL);
+	return (create_complete_command(leaf_list));
 }

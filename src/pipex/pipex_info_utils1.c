@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:52:29 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:34:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 15:05:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static t_ntree	*get_command_name_node(const t_ntree *simple_command_node)
 {

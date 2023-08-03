@@ -6,12 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/03 10:51:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 15:05:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdlib.h>
 
 int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {

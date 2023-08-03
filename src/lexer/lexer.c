@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_ast_utils.c                                :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/25 18:55:19 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 14:55:11 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/19 14:23:23 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 11:31:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	*get_execute_function(t_ntree *ast)
+t_llist	*tokenization(const char *line)
 {
-	const t_type	type = get_token(ast)->type;
+	t_llist	*token_list;
 
-	if (type == PIPELINE)
-		return (execute_pipeline);
-	else if (type == COMPLETE_COMMAND)
-		return (execute_complete_command);
-	else if (type == COMPOUND_COMMAND)
-		return (execute_compound_command);
-	else if (type == LOGICAL_EXPRESSION)
-		return (execute_logical_expression);
-	else
+	token_list = lsttok(line);
+	if (token_list == NULL)
 		return (NULL);
+	if (!llstreplace(&token_list, new_llst_with_compound(token_list), free))
+		return (llstclear(&token_list, free), NULL);
+	llstremove_if(&token_list, (int (*)(void *))is_str_blank, free);
+	if (!llstreplace(&token_list, type_token(token_list), free))
+		return (llstclear(&token_list, free), NULL);
+	return (token_list);
 }

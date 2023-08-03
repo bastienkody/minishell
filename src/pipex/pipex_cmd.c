@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:48:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 18:06:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 15:05:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	is_node_cmd_name(t_ntree *node)
 {

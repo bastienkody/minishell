@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 11:10:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:15:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ void	reader_loop(char **envp)
 	return_code = interpret_command(line, envp);
 	if (return_code == EXIT)
 		return ;
-	printf("exit status:%d\n", g_exit_status);
+	// printf("exit status:%d\n", g_exit_status);
 	return (reader_loop(envp));
 }
