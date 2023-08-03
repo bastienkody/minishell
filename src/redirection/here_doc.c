@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/02 18:22:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:05:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 
 /*	stops at lim or eof (modified gnl) - returns 0 if malloc failed	*/
-int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
+int	launch_here_doc(int fd, const char *lim, char **envp)
 {
 	char	*line;
 	char	*data;
@@ -39,7 +39,7 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
 			return (FALSE);
 	}
 	if (!is_str_quote_enclosed(lim))
-		data = expand_dollar_here_doc(data, envp, last_status);
+		data = expand_dollar_here_doc(data, envp);
 	if (!data)
 		return (FALSE);
 	write(fd, data, ft_strlen(data));
@@ -47,7 +47,7 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
 }
 
 /*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
-int	open_here_doc(const char *lim, char **envp, int last_status)
+int	open_here_doc(const char *lim, char **envp)
 {
 	int			fd;
 	static int	nb = 0;
@@ -60,7 +60,7 @@ int	open_here_doc(const char *lim, char **envp, int last_status)
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (free(pathname), perror("open here_doc in w"), BAD_FD);
-	if (!launch_here_doc(fd, lim, envp, last_status))
+	if (!launch_here_doc(fd, lim, envp))
 		return (free(pathname), close (fd), ALLOC_FAIL);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);

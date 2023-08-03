@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 14:04:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:07:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	expand_dollar_word(t_llist *node, char **envp, int last_status)
+static int	expand_dollar_word(t_llist *node, char **envp)
 {
 	char	*word;
 	char	*expanded_word;
@@ -20,7 +20,7 @@ static int	expand_dollar_word(t_llist *node, char **envp, int last_status)
 
 	token = node->content;
 	word = token->data;
-	expanded_word = expand_dollar(word, envp, last_status);
+	expanded_word = expand_dollar(word, envp);
 	if (expanded_word == NULL)
 		return (0);
 	free(word);
@@ -38,7 +38,7 @@ int	is_prev_redir_operator(t_llist *node)
 	return (is_str_redirection(prev_token->data) == 1);
 }
 
-int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
+int	manage_dollar_expansion(t_llist *token_list, char **envp)
 {
 	t_llist	*current;
 	t_token	*current_token;
@@ -52,7 +52,7 @@ int	manage_dollar_expansion(t_llist *token_list, char **envp, int last_status)
 			if (is_prev_redir_operator(current)
 				&& !check_amb_redir(current_token->data, envp))
 				return (EAMBREDIR);
-			if (!expand_dollar_word(current, envp, last_status))
+			if (!expand_dollar_word(current, envp))
 				return (0);
 		}
 		current = current->next;

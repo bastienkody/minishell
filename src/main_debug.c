@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:00:17 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:07:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@
 // 	}
 // }
 
+int	g_exit_status;
+
 int	main(int argc, char **argv, char **envp)
 {
 	((void)argc, (void)argv);
-	reader_loop(envp, 0);
+	reader_loop(envp);
 	return (0);
 }

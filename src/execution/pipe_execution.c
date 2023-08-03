@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/02 17:58:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 10:51:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ int	pipex(t_info *info)
 		info->cmds = info->cmds->next;
 	}
 	wait_cmds(info);
-	return (analyze_status(info));
+	g_exit_status = analyze_status(info);
+	return (g_exit_status);
 }

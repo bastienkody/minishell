@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:57:29 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/02 17:56:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:07:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_error(t_llist *token_list)
 	return (0);
 }
 
-int	set_ast(t_ntree **ast, const char *line, char **envp, int last_status)
+int	set_ast(t_ntree **ast, const char *line, char **envp)
 {
 	int		return_code;
 
@@ -39,7 +39,7 @@ int	set_ast(t_ntree **ast, const char *line, char **envp, int last_status)
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	return_code = expand_token_list(&token_list, envp, last_status);
+	return_code = expand_token_list(&token_list, envp);
 	if (return_code == 0)
 		return (EXIT); // malloc error
 	if (return_code == 42)
@@ -49,26 +49,26 @@ int	set_ast(t_ntree **ast, const char *line, char **envp, int last_status)
 	*ast = parser(token_list);
 	if (*ast == NULL)
 		return (EXIT); // malloc error
-	manage_here_doc(*ast, envp, last_status);
-	manage_redir(*ast, envp, last_status);
+	manage_here_doc(*ast, envp);
+	manage_redir(*ast, envp);
 	if (manage_pipeline(*ast, envp) == 0)
 		return (EXIT);
 	return (OK);
 }
 
-int	interpret_command(const char *line, char **envp, int last_status)
+int	interpret_command(const char *line, char **envp)
 {
 	int		return_code;
 
 	__attribute__((cleanup(ast_cleanup))) t_ntree * ast;
 	ast = NULL;
-	return_code = set_ast(&ast, line, envp, last_status);
+	return_code = set_ast(&ast, line, envp);
 	if (return_code != OK)
 		return (return_code);
 	return (execute_ast(ast));
 }
 
-void	reader_loop(char **envp, int last_status)
+void	reader_loop(char **envp)
 {
 	int	return_code;
 
@@ -79,10 +79,10 @@ void	reader_loop(char **envp, int last_status)
 	if (return_code == EOF)
 		return ;
 	if (return_code == LINE_EMPTY)
-		return (reader_loop(envp, last_status));
+		return (reader_loop(envp));
 	add_history(line);
-	return_code = interpret_command(line, envp, last_status);
+	return_code = interpret_command(line, envp);
 	if (return_code == EXIT)
 		return ;
-	return (reader_loop(envp, last_status));
+	return (reader_loop(envp));
 }
