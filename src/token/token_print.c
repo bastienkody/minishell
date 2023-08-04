@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_predicate3.c                                   :+:      :+:    :+:   */
+/*   token_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 13:54:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 10:50:57 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 17:16:57 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 17:22:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const char	*g_builtins[] = {"echo", "cd", "pwd", "export", "unset",
-	"env", "exit", NULL};
+static const char	*g_type[]
+	= {
+	"or",
+	"and",
+	"pipe",
+	"great",
+	"less",
+	"dgreat",
+	"dless",
+	"compound",
+	"word",
+	"error"
+};
 
-int	is_str_redirection(const char *str)
+void	token_print(t_token *token)
 {
-	return (is_str_great(str) || is_str_dgreat(str) || is_str_less(str));
-}
-
-int	is_str_builtin(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (g_builtins[i])
-	{
-		if (strcmp(str, g_builtins[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
+	ft_fprintf(1, "text : %s, type : %s\n", token->data, g_type[token->type]);
 }

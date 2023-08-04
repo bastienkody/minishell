@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 15:58:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 10:19:09 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define BAD_FD -1
 # define NO_REDIR 0
 # define REDIR_PB -3
-# define MALLOC_FAIL -2
+# define ALLOC_FAIL -2
 # define LINE_EMPTY -4
 # define STDIN 0
 # define STDOUT 1
@@ -61,7 +61,7 @@
 # define ERR_PERMDEN "Permission denied"
 # define ERR_NSFD "No such file or directory"
 # define ERR_CNF "Command not found"
-# define ERR_AMB_REDIR "ambiguous redirect"
+# define ERR_AMB_REDIR "ambiguous redirect\n"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
 # define ERR_DUP_IN "minishell: infile dup2"
@@ -69,6 +69,7 @@
 # define ERR_EXECVE "minishell: execve"
 # define ERR_PIPE "minishell: pipe"
 # define ERR_FORK "minishell: fork"
+# define ERR_ALLOC "Cannot allocate memory"
 
 typedef enum e_type
 {
@@ -131,6 +132,8 @@ typedef struct s_info
 typedef int	(*t_f)(char **);
 typedef int	(*t_execute_ast_fun)(t_ntree *ast);
 
+extern int	g_exit_status;
+
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
 void	lstreduce(t_llist	**llst);
@@ -140,11 +143,6 @@ t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
 
 /*	utils token	*/
-int		is_str_op_p(const char *str);
-int		is_str_cl_p(const char *str);
-int		is_str_quote(const char *str);
-int		is_str_operator(const char *str);
-int		is_str_blank(const char *str);
 t_llist	*new_llst_with_compound(t_llist *start);
 
 /*	lsttok_utils	*/
@@ -168,15 +166,12 @@ int		is_str_dless(const char *str);
 int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
 int		is_str_redirection(const char *str);
-
-/*	check_syntax_utils*/
-int		is_token_word(t_token *token);
-int		is_token_pipe(t_token *token);
-int		is_token_logical_operator(t_token *token);
-int		is_token_operator(t_token *token);
-int		is_token_redirection(t_token *token);
-int		is_token_here_doc(t_token *token);
-int		is_token_error(t_token *token);
+int		is_str_builtin(const char *str);
+int		is_str_op_p(const char *str);
+int		is_str_cl_p(const char *str);
+int		is_str_quote(const char *str);
+int		is_str_operator(const char *str);
+int		is_str_blank(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
@@ -200,6 +195,19 @@ int		is_node_logical_operator(t_ntree	*node);
 int		is_node_pipe(t_ntree	*node);
 int		is_node_redirection(t_ntree	*node);
 int		is_node_compound(t_ntree	*node);
+
+/* token */
+int		is_token_word(t_token *token);
+int		is_token_pipe(t_token *token);
+int		is_token_logical_operator(t_token *token);
+int		is_token_operator(t_token *token);
+int		is_token_redirection(t_token *token);
+int		is_token_here_doc(t_token *token);
+int		is_token_error(t_token *token);
+t_token	*token_new(t_type type, void *data);
+void	token_free(t_token *token);
+void	token_print(t_token *token);
+int		is_type_inside(t_type type, const t_type types[], size_t n);
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
@@ -235,8 +243,8 @@ char	*get_key_2(char *line);
 char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
-char	*expand_dollar(char *str, char **envp, int last_status);
-char	*expand_dollar_here_doc(char *str, char **envp, int last_status);
+char	*expand_dollar(char *str, char **envp);
+char	*expand_dollar_here_doc(char *str, char **envp);
 char	*expand_dollar_redir_file(char *str, char **envp);
 
 /*	general expansion	*/
@@ -245,10 +253,10 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_in(const char *filename);
-int		open_here_doc(const char *lim, char **envp, int last_status);
+int		open_here_doc(const char *lim, char **envp);
 int		open_out(t_type type, const char *filename);
-void	manage_redir(t_ntree *ast, char **envp, int last_status);
-void	manage_here_doc(t_ntree *ast, char **envp, int last_status);
+void	manage_redir(t_ntree *ast, char **envp);
+void	manage_here_doc(t_ntree *ast, char **envp);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
 char	*get_redirection_filename(t_ntree *redirection_node);
@@ -267,8 +275,7 @@ int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_ntree *ast, char **envp);
-int		manage_dollar_expansion(t_llist *leaf_list, char **envp,
-			int last_status);
+int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
 int		manage_quote_remove(t_llist *leaf_list);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
@@ -281,7 +288,6 @@ void	print_item(void *item);
 void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
-void	print_token(t_token *token);
 void	print_token_error(t_token token);
 void	err_builtin(char *builtin, char *arg, char *err);
 void	err_msg(char *str, char *err);
@@ -293,9 +299,6 @@ void	ntree_print(t_ntree *ntree, void (*print)(void *));
 char	*type_to_string(t_type type);
 t_llist	*tokenization(const char *line);
 t_ntree	*parser(t_llist	*token_list);
-void	token_free(t_token *token);
-void	free_node(t_token *token);
-t_token	*token_new(t_type type, void *data);
 t_token	*get_token(t_ntree *ast);
 void	ast_print(t_ntree *ast);
 void	print_leaf(t_ntree *leaf);
@@ -327,6 +330,15 @@ int		check_export(char **args);
 int		check_unset(char **args);
 int		check_exit(char **args);
 
+/*	signal */
+void	set_prompt_signals(void);
+void	set_parent_signals(void);
+void	set_child_signals(void);
+void	set_here_doc_signals(void);
+void	handle_prompt_signals(int signum);
+void	handle_parent_signals(int signum);
+void	handle_here_doc_signals(int signum);
+
 char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ntree	*parser(t_llist	*token_list);
@@ -335,7 +347,7 @@ int		wildcard_list(t_llist **token_list_ptr, char **envp);
 char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
-int		expand_token_list(t_llist **token_list, char **envp, int last_status);
+int		expand_token_list(t_llist **token_list, char **envp);
 
 /*	cleanup	*/
 void	data_cleanup(char **data);
@@ -343,6 +355,6 @@ void	token_list_cleanup(t_llist **token_list);
 void	ast_cleanup(t_ntree **ast);
 
 /*	main_utils	*/
-void	reader_loop(char **envp, int last_status);
+void	reader_loop(char **envp);
 
 #endif

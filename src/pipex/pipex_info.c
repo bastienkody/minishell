@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 18:07:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 11:30:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp)
 {

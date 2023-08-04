@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 15:12:18 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:05:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 
 /*	stops at lim or eof (modified gnl) - returns 0 if malloc failed	*/
-int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
+int	launch_here_doc(int fd, const char *lim, char **envp)
 {
 	char	*line;
 	char	*data;
@@ -25,21 +25,21 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
 	data = ft_strdup("");
 	if (!data)
 		return (FALSE);
+	set_here_doc_signals();
 	while (1)
 	{
-		ft_fprintf(1, "%s", HD_PROMPT);
-		line = get_next_line(0);
+		line = readline(HD_PROMPT);
 		if (!line)
 			return (free(data), FALSE);
 		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
-			if (*line == 0 || ft_strlen(line) - 1 == ft_strlen(lim))
+			if (*line == 0 || ft_strlen(line) == ft_strlen(lim))
 				break ;
-		data = strj(data, line);
+		data = strj(data, strj(line, ft_strdup("\n")));
 		if (!data)
 			return (FALSE);
 	}
 	if (!is_str_quote_enclosed(lim))
-		data = expand_dollar_here_doc(data, envp, last_status);
+		data = expand_dollar_here_doc(data, envp);
 	if (!data)
 		return (FALSE);
 	write(fd, data, ft_strlen(data));
@@ -47,7 +47,7 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int last_status)
 }
 
 /*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
-int	open_here_doc(const char *lim, char **envp, int last_status)
+int	open_here_doc(const char *lim, char **envp)
 {
 	int			fd;
 	static int	nb = 0;
@@ -55,13 +55,13 @@ int	open_here_doc(const char *lim, char **envp, int last_status)
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb), HD_END);
 	if (!pathname)
-		return (MALLOC_FAIL);
+		return (ALLOC_FAIL);
 	nb++;
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (free(pathname), perror("open here_doc in w"), BAD_FD);
-	if (!launch_here_doc(fd, lim, envp, last_status))
-		return (free(pathname), close (fd), MALLOC_FAIL);
+	if (!launch_here_doc(fd, lim, envp))
+		return (free(pathname), close (fd), ALLOC_FAIL);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)

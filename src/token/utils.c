@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_ast_utils.c                                :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/25 18:55:19 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 14:55:11 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 17:11:15 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 17:11:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	*get_execute_function(t_ntree *ast)
+int	is_type_inside(t_type type, const t_type types[], size_t n)
 {
-	const t_type	type = get_token(ast)->type;
+	size_t	i;
 
-	if (type == PIPELINE)
-		return (execute_pipeline);
-	else if (type == COMPLETE_COMMAND)
-		return (execute_complete_command);
-	else if (type == COMPOUND_COMMAND)
-		return (execute_compound_command);
-	else if (type == LOGICAL_EXPRESSION)
-		return (execute_logical_expression);
-	else
-		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		if (types[i] == type)
+			return (1);
+		i++;
+	}
+	return (0);
 }

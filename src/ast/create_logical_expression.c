@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:53:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:34:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ t_ntree	*create_logical_expression(t_llist *leaf_list)
 	const t_type	type
 		= get_logical_expression_type(get_token(operator_pos->content)->data);
 
+	llstremoveone(&leaf_list, operator_pos, (t_del_fun)ast_free);
 	children = NULL;
 	new_child = create_rhs(extract);
 	if (new_child == NULL)
 		return (NULL);
 	llstadd_back(&children, new_child);
-	llstremoveone(&leaf_list, operator_pos, (t_del_fun)ast_free);
 	new_child = create_lhs(leaf_list);
 	if (new_child == NULL)
 		return (llstclear(&children, ast_free), NULL);

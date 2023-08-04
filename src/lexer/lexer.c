@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:23:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:05:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:31:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 t_llist	*tokenization(const char *line)
 {

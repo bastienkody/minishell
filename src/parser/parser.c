@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_predicate3.c                                   :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 13:54:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 10:50:57 by aguyon           ###   ########.fr       */
+/*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/04 11:09:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const char	*g_builtins[] = {"echo", "cd", "pwd", "export", "unset",
-	"env", "exit", NULL};
-
-int	is_str_redirection(const char *str)
+t_ntree	*parser(t_llist	*token_list)
 {
-	return (is_str_great(str) || is_str_dgreat(str) || is_str_less(str));
-}
+	t_llist	*leaf_list;
 
-int	is_str_builtin(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (g_builtins[i])
-	{
-		if (strcmp(str, g_builtins[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
+	leaf_list = token_to_leaf(token_list);
+	if (leaf_list == NULL)
+		return (NULL);
+	return (create_complete_command(leaf_list));
 }

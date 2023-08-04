@@ -6,12 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/26 12:47:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 15:05:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdlib.h>
 
 int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
@@ -84,10 +83,12 @@ void	fork_pipe_dup(int *prevpipe, t_info *info)
 		perror(ERR_FORK); // + close n free ?
 	if (pid == 0)
 	{
+		set_child_signals();
 		in_child(info, pipefd, prevpipe);
 	}
 	else if (pid > 0)
 	{
+		set_parent_signals();
 		in_parent(info, pipefd, prevpipe, pid);
 	}
 }
@@ -103,5 +104,6 @@ int	pipex(t_info *info)
 		info->cmds = info->cmds->next;
 	}
 	wait_cmds(info);
-	return (analyze_status(info));
+	g_exit_status = analyze_status(info);
+	return (g_exit_status);
 }

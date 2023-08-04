@@ -6,11 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:52:55 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/27 18:01:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 10:18:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	get_fd_in(t_ntree *simple_command_node)
 {

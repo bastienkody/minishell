@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   strfind.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 15:42:03 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:00:55 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/03 11:23:54 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 11:24:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	data_cleanup(char **data)
+char	*strfind_if(const char *str, int (*f)(int))
 {
-	free(*data);
+	while (*str != '\0' && !f(*str))
+		str++;
+	return ((char *)str);
 }
 
-void	token_list_cleanup(t_llist **token_list)
+char	*strfind(const char *str, int c)
 {
-	llstclear(token_list, token_free);
+	while (*str != '\0' && *str != c)
+		str++;
+	return ((char *)str);
 }
 
-void	ast_cleanup(t_ntree **ast)
+char	*strfind_not(const char *str, int c)
 {
-	ast_free(*ast);
+	while (*str != '\0' && *str == c)
+		str++;
+	return ((char *)str);
 }
+

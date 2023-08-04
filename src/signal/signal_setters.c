@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lsttok_utils.c                                     :+:      :+:    :+:   */
+/*   signal_setters.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 14:16:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/16 14:22:02 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/02 17:43:51 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/02 17:52:06 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*strfind_if(const char *str, int (*f)(int))
+void	set_prompt_signals(void)
 {
-	while (*str != '\0' && !f(*str))
-		str++;
-	return ((char *)str);
+	signal(SIGINT, handle_prompt_signals);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-char	*strfind(const char *str, int c)
+void	set_parent_signals(void)
 {
-	while (*str != '\0' && *str != c)
-		str++;
-	return ((char *)str);
+	signal(SIGINT, handle_parent_signals);
+	signal(SIGQUIT, handle_parent_signals);
 }
 
-char	*strfind_not(const char *str, int c)
+void	set_child_signals(void)
 {
-	while (*str != '\0' && *str == c)
-		str++;
-	return ((char *)str);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
-int	isdelim(int c)
+void	set_here_doc_signals(void)
 {
-	return (ft_strchr(DELIM, c) != NULL);
+	signal(SIGINT, handle_here_doc_signals);
+	signal(SIGQUIT, SIG_IGN);
 }
