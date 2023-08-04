@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 11:17:12 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 11:25:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static const t_type g_data_token[]
 
 static void	free_pipex_info(t_info *pipex_info)
 {
+	if (pipex_info == NULL)
+		return ;
 	cmd_clear(&(pipex_info->cmd_start));
 	free(pipex_info);
 }
