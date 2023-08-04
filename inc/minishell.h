@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/03 11:25:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 10:19:09 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,6 @@ t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
 
 /*	utils token	*/
-int		is_str_op_p(const char *str);
-int		is_str_cl_p(const char *str);
-int		is_str_quote(const char *str);
-int		is_str_operator(const char *str);
-int		is_str_blank(const char *str);
 t_llist	*new_llst_with_compound(t_llist *start);
 
 /*	lsttok_utils	*/
@@ -171,6 +166,12 @@ int		is_str_dless(const char *str);
 int		is_str_compound(const char *str);
 int		is_str_word(const char *str);
 int		is_str_redirection(const char *str);
+int		is_str_builtin(const char *str);
+int		is_str_op_p(const char *str);
+int		is_str_cl_p(const char *str);
+int		is_str_quote(const char *str);
+int		is_str_operator(const char *str);
+int		is_str_blank(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);

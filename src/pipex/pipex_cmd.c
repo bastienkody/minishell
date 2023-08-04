@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:48:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 15:05:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 10:22:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,17 @@ t_cmd	*cmd_new(t_ntree *simple_command_node, int index, char **envp)
 	if (llstfind_if(children, (t_predicate)is_node_cmd_name))
 	{
 		cmd->name = get_command_name(simple_command_node);
-		cmd->fullname = get_full_cmd_name(cmd->name, envp);
+		if (cmd->name == NULL)
+			return (free(cmd), NULL);
+		if (is_str_builtin(cmd->name))
+			cmd->fullname = ft_strdup(cmd->name);
+		else
+			cmd->fullname = get_full_cmd_name(cmd->name, envp);
+		if (cmd->fullname == NULL)
+			return (free(cmd->name), free(cmd), NULL);
 		cmd->args = get_command_args(simple_command_node, cmd->fullname);
+		if (cmd->name == NULL)
+			return (free(cmd->name), free(cmd->fullname), free(cmd), NULL);
 	}
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 11:15:35 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 09:39:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	set_ast(t_ntree **ast, const char *line, char **envp)
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	ft_fprintf(1, "DEBUG : TOKEN_LIST\n");
-	llstiter(token_list, (void *)token_print);
-	ft_fprintf(1, "\n");
+	// ft_fprintf(1, "DEBUG : TOKEN_LIST\n");
+	// llstiter(token_list, (void *)token_print);
+	// ft_fprintf(1, "\n");
 	return_code = expand_token_list(&token_list, envp);
 	if (return_code == ALLOC_FAIL)
 		return (EXIT); // malloc error
