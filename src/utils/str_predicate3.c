@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:54:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 10:18:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 10:50:57 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_str_builtin(const char *str)
 	i = 0;
 	while (g_builtins[i])
 	{
-		if (strcmp(str, g_builtins[i]))
+		if (strcmp(str, g_builtins[i]) == 0)
 			return (1);
 		i++;
 	}
