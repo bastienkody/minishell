@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:34:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 12:44:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_llist	*create_rhs(t_llist *llst)
 		new = create_child(llst, create_compound_command);
 	else
 		new = create_child(llst, create_pipeline);
+	if (new == NULL)
+		llstclear(&llst, ast_free);
 	return (new);
 }
 
@@ -61,7 +63,7 @@ t_ntree	*create_logical_expression(t_llist *leaf_list)
 	children = NULL;
 	new_child = create_rhs(extract);
 	if (new_child == NULL)
-		return (NULL);
+		return (llstclear(&leaf_list, ast_free), NULL);
 	llstadd_back(&children, new_child);
 	new_child = create_lhs(leaf_list);
 	if (new_child == NULL)
