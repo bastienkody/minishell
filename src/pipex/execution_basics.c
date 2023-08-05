@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/04 10:51:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 10:11:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,22 +96,24 @@ void	wait_cmds(t_info *info)
 int	execute(char *cmd_name, char **cmd_args, t_info *info)
 {
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
-		return (1);
+		exit(1);
 	if (!cmd_args)
-		return (0); // cas redirection sans commande name ni args
+		exit(0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args))
-		return (exec_builtin(cmd_args, &info->envp));
+		exec_builtin(cmd_args, &info->envp);
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
 			err_msg(cmd_name, ERR_CNF);
 		else
 			err_msg(cmd_name, ERR_NSFD);
-		// return (127);
 		exit(127);
 	}
 	if (access(info->cmds->fullname, X_OK))
-		return (err_msg(cmd_name, ERR_PERMDEN), 126);
+	{
+		err_msg(cmd_name, ERR_PERMDEN);
+		exit(126);
+	}
 	execve(cmd_args[0], cmd_args, info->envp);
 	perror(ERR_EXECVE);
 	if (info->cmds->fd_in > NO_REDIR)
@@ -119,4 +121,5 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (info->cmds->fd_out > NO_REDIR)
 		close(info->cmds->fd_in);
 	exit(EXIT_FAILURE);
+	return (1);
 }
