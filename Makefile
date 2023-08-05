@@ -124,8 +124,7 @@ SRCS_NAME	=	${BUILT_SRC} ${PIPEX_SRC} ${XPAND_SRC} ${REDIR_SRC} ${LEXER_SRC} ${P
 				${AST_SRC} ${TOKEN_SRC} ${SIGNAL_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
-OBJS		=	${SRCS:.c=.o}
-
+OBJS		=	${SRCS:%.c=$(BUILD_DIR)/%.o}
 
 ###		DEFINITIONS		###
 NAME		=	minishell
@@ -142,15 +141,21 @@ CFLAGSDEV	=	-Wall -Wextra -Werror -g3
 LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -lreadline
 
 ###		RULES		###
-.c.o:
-			@echo "\033[32m\c"
-			${CC} ${CFLAGSDEV} -c $< -o ${<:.c=.o}
-			@echo "\033[0m\c"
+# .c.o:
+# 			@echo "\033[32m\c"
+# 			${CC} ${CFLAGSDEV} -c $< -o ${<:.c=$.o}
+# 			@echo "\033[0m\c"
 
-all:		${NAME}
+all:		$(BUILD_DIR)/${NAME}
+
+$(BUILD_DIR)/%.o: %.c
+	mkdir -p $(dir $@)
+	@echo "\033[32m\c"
+	${CC} ${CFLAGSDEV} -c $< -o $@
+	@echo "\033[0m\c"
 
 
-${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${NTREE}
+$(BUILD_DIR)/${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${NTREE}
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"
@@ -171,7 +176,7 @@ ${NTREE}:
 			@echo "\033[33mntree.a compiled\033[0m"
 
 clean:
-			@rm -rf ${OBJS}
+			@rm -rf $(BUILD_DIR)
 			@echo "\033[32m${NAME} obj cleaned"
 			@make --no-print-directory clean -C libft/
 			@make --no-print-directory clean -C llist/
