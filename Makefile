@@ -60,6 +60,7 @@ PARSER_NAME	=	parser.c\
 				token_to_leaf.c\
 
 AST_NAME	=	ast_new.c\
+				ast_dup.c\
 				ast_print.c\
 				ast_free.c\
 				ast_predicate.c\
@@ -81,6 +82,7 @@ AST_NAME	=	ast_new.c\
 
 TOKEN_NAME	=	token_free.c\
 				token_new.c\
+				token_dup.c\
 				token_print.c\
 				token_predicate1.c\
 				token_predicate2.c\
@@ -146,7 +148,7 @@ LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -lreadline
 # 			${CC} ${CFLAGSDEV} -c $< -o ${<:.c=$.o}
 # 			@echo "\033[0m\c"
 
-all:		$(BUILD_DIR)/${NAME}
+all:		${NAME}
 
 $(BUILD_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
@@ -155,7 +157,7 @@ $(BUILD_DIR)/%.o: %.c
 	@echo "\033[0m\c"
 
 
-$(BUILD_DIR)/${NAME}:	${OBJS} ${HEADER} ${LIBFT} ${LLST} ${NTREE}
+${NAME}:	${OBJS} ${LIBFT} ${LLST} ${NTREE}
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"

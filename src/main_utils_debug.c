@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 12:38:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 16:56:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	set_ast(t_ntree **ast, const char *line, char **envp)
 	*ast = parser(token_list);
 	if (*ast == NULL)
 		return (EXIT); // malloc error
+	// ast_print(*ast);
 	manage_here_doc(*ast, envp);
 	manage_redir(*ast, envp);
 	if (manage_pipeline(*ast, envp) == 0)

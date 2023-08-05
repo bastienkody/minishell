@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:57:56 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:53:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 14:26:19 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	add_cmd_name_child(t_llist **children, t_llist **leaf_list,
 	t_llist *const	extract = llstextractone(leaf_list, cmd_name_pos);
 	t_llist *const	new_child = create_child(extract, create_cmd_name);
 
+	(void)extract;
 	if (new_child == NULL)
 		return (0);
 	llstadd_back(children, new_child);

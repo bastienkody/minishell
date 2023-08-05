@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:52:53 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/21 17:13:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 14:25:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ t_llist	*new_llst_with_compound(t_llist *start)
 			if (str == NULL)
 				return (llstclear(&new_lst, &free), NULL);
 			new = llstnew(str);
-			if (new == NULL)
-				return (llstclear(&new_lst, &free), free(str), NULL);
 			start = start->next;
 		}
 		else
@@ -90,6 +88,8 @@ t_llist	*new_llst_with_compound(t_llist *start)
 			new = handle_parenthese(start);
 			start = get_next_node(start);
 		}
+		if (new == NULL)
+			return (llstclear(&new_lst, &free), free(str), NULL);
 		llstadd_back(&new_lst, new);
 	}
 	return (new_lst);

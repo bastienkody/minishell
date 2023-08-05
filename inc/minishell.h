@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/04 12:31:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 16:50:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	lstreduce(t_llist	**llst);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
+t_llist	*leaf_node_dup(t_llist *leaf_node);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);
@@ -175,6 +176,7 @@ int		is_str_blank(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
+t_ntree	*ast_dup(t_ntree *ast);
 void	ast_free(t_ntree *ast);
 void	ast_print(t_ntree *ast);
 int		is_node_inside(t_ntree *node, t_type types[], size_t n);
@@ -205,6 +207,7 @@ int		is_token_redirection(t_token *token);
 int		is_token_here_doc(t_token *token);
 int		is_token_error(t_token *token);
 t_token	*token_new(t_type type, void *data);
+t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
 int		is_type_inside(t_type type, const t_type types[], size_t n);
@@ -293,9 +296,6 @@ void	err_builtin(char *builtin, char *arg, char *err);
 void	err_msg(char *str, char *err);
 
 /* ntree functions */
-t_ntree	*ntree_new(void *data, t_llist *children);
-void	ntree_free(t_ntree *ntree, t_del_fun del);
-void	ntree_print(t_ntree *ntree, void (*print)(void *));
 char	*type_to_string(t_type type);
 t_llist	*tokenization(const char *line);
 t_ntree	*parser(t_llist	*token_list);

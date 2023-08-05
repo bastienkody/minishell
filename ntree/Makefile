@@ -6,12 +6,13 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/21 15:53:05 by aguyon            #+#    #+#              #
-#    Updated: 2023/07/21 16:39:29 by aguyon           ###   ########.fr        #
+#    Updated: 2023/08/05 16:35:17 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC =	ntree_free.c\
 		ntree_new.c\
+		ntree_dup.c\
 		ntree_print.c\
 
 OBJ =	$(SRC:.c=.o)
