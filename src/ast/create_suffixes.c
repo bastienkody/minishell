@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:00:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 16:57:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/07/31 15:54:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_llist	*create_suffixes(t_llist *leaf_list)
 		else
 			new_child = NULL;
 		if (new_child == NULL)
-			return (llstclear(&suffixes, (t_del_fun)ast_free), NULL);
+			return (llstclear(&suffixes, ast_free), NULL);
 		llstadd_back(&suffixes, new_child);
 	}
 	return (suffixes);

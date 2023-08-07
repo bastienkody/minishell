@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 11:09:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:34:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,23 @@ t_type	get_logical_expression_type(const char *data)
 t_ntree	*create_logical_expression(t_llist *leaf_list)
 {
 	t_llist *const	operator_pos = llstfind_if_reverse(leaf_list,
-		(t_predicate)is_node_logical_operator);
+			(t_predicate)is_node_logical_operator);
 	t_llist *const	extract
 		= llstextract_range(&leaf_list, operator_pos->next, NULL);
 	t_llist			*children;
 	t_llist			*new_child;
-	const t_type	type = get_logical_expression_type(get_token(operator_pos->content)->data);
+	const t_type	type
+		= get_logical_expression_type(get_token(operator_pos->content)->data);
 
+	llstremoveone(&leaf_list, operator_pos, (t_del_fun)ast_free);
 	children = NULL;
 	new_child = create_rhs(extract);
 	if (new_child == NULL)
 		return (NULL);
 	llstadd_back(&children, new_child);
-	llstremoveone(&leaf_list, operator_pos, (t_del_fun)ast_free);
 	new_child = create_lhs(leaf_list);
 	if (new_child == NULL)
-		return (llstclear(&children, (t_del_fun)ast_free), NULL);
+		return (llstclear(&children, ast_free), NULL);
 	llstadd_front(&children, new_child);
 	return (ast_new(LOGICAL_EXPRESSION, (void *)type, children));
 }

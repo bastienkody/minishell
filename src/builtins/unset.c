@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:57 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:43:58 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	unset(char **args, char ***envp)
 	while (*args)
 	{
 		if (is_var_set(*args, *envp))
-			if (supp_envar(*args, envp) == MALLOC_FAIL)
-				return (MALLOC_FAIL);
+			if (supp_envar(*args, envp) == ALLOC_FAIL)
+				return (ALLOC_FAIL);
 		args++;
 	}
 	return (0);

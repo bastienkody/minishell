@@ -6,12 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/26 12:47:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 15:05:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdlib.h>
 
 int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
@@ -71,27 +70,40 @@ void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
 		close (info->cmds->fd_out);
 }
 
+void	fork_pipe_dup(int *prevpipe, t_info *info)
+{
+	int	pipefd[2];
+	int	pid;
+
+	if (pipe(pipefd) == -1)
+		perror(ERR_PIPE);
+	//ft_fprintf(1, "cmd:%s\npipefd[0]:%i\npipefd[1]:%i\n", args[0], pipefd[0], pipefd[1]);
+	pid = fork();
+	if (pid == -1)
+		perror(ERR_FORK); // + close n free ?
+	if (pid == 0)
+	{
+		set_child_signals();
+		in_child(info, pipefd, prevpipe);
+	}
+	else if (pid > 0)
+	{
+		set_parent_signals();
+		in_parent(info, pipefd, prevpipe, pid);
+	}
+}
+
 int	pipex(t_info *info)
 {
 	int	prevpipe;
-	int	pipefd[2];
-	int	pid;
 
 	prevpipe = dup(0);
 	while (info->cmds)
 	{
-		if (pipe(pipefd) == -1)
-			perror(ERR_PIPE);
-		//ft_fprintf(1, "cmd:%s\npipefd[0]:%i\npipefd[1]:%i\n", args[0], pipefd[0], pipefd[1]);
-		pid = fork();
-		if (pid == -1)
-			perror(ERR_FORK); // + close n free ?
-		if (pid == 0)
-			in_child(info, pipefd, &prevpipe);
-		else if (pid > 0)
-			in_parent(info, pipefd, &prevpipe, pid);
+		fork_pipe_dup(&prevpipe, info);
 		info->cmds = info->cmds->next;
 	}
 	wait_cmds(info);
-	return (analyze_status(info));
+	g_exit_status = analyze_status(info);
+	return (g_exit_status);
 }

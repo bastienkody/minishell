@@ -6,11 +6,35 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/24 14:21:13 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 11:25:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static const size_t g_nb_data_token = 10;
+
+static const t_type g_data_token[]
+	= {word, ppipe, or, and, great, dgreat, less, dless, FILENAME, HERE_END};
+
+static void	free_pipex_info(t_info *pipex_info)
+{
+	if (pipex_info == NULL)
+		return ;
+	cmd_clear(&(pipex_info->cmd_start));
+	free(pipex_info);
+}
+
+static void	free_node(t_token *token)
+{
+	const t_type	type = token->type;
+
+	if (type == PIPELINE)
+		free_pipex_info(token->data);
+	else if (is_type_inside(token->type, g_data_token, g_nb_data_token))
+		free(token->data);
+	free(token);
+}
 
 void	ast_free(t_ntree *ast)
 {

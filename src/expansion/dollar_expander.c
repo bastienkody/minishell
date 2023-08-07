@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/19 19:47:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/03 11:05:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 // gerer sans erreur les cas ou envp est null (env -i ./minishell)
 
 /*	wd, wd_end and ret no need to be protected (cf. notion)	*/
-char	*get_next_word_expanded(char **ret, char *str, char **envp, int last_status)
+char	*get_next_word_expanded(char **ret, char *str, char **envp)
 {
 	char	*word_end;
 	char	*last_stratus;
 
-	last_status = LAST_RETURN_STATUS; // to be suppressed when main has last_status
 	if (*str == '$' && *(str + 1) == '?')
 	{
-		last_stratus = ft_itoa(last_status);
+		last_stratus = ft_itoa(g_exit_status);
 		*ret = strjoin2(*ret, last_stratus);
-		return (free(last_stratus), str + 2);
+		return (str + 2);
 	}
 	word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 	if (*str == '$')
@@ -42,7 +41,7 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end)
 }
 
 /*	apply on all WORD except : here_doc lim + already expanded WORD	*/
-char	*expand_dollar(char *str, char **envp, int last_status)
+char	*expand_dollar(char *str, char **envp)
 {
 	char	*tmp;
 	char	*ret;
@@ -53,7 +52,7 @@ char	*expand_dollar(char *str, char **envp, int last_status)
 	tmp = str;
 	ret = ft_strdup("");
 	if (!ret || !tmp)
-		return (free(ret), free(str), NULL);
+		return (free(ret), NULL);
 	while (*tmp)
 	{
 		if (*tmp == D_QUOTE)
@@ -62,16 +61,16 @@ char	*expand_dollar(char *str, char **envp, int last_status)
 		if (is_under_d_quote < 0 && *tmp == S_QUOTE && next_s_quote)
 			tmp = get_next_word_not_expanded(&ret, tmp, next_s_quote + 1);
 		else
-			tmp = get_next_word_expanded(&ret, tmp, envp, last_status);
+			tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
-			return (free(str), free(ret), NULL); 
+			return (free(ret), NULL);
 		// double free possible on tmp (str) when freeing the tree?
 	}
-	return (free(str), ret);
+	return (ret);
 }
 
 /*	quoted stuff are expanded + str cant be null (cf. launch hd)	*/
-char	*expand_dollar_here_doc(char *str, char **envp, int last_status)
+char	*expand_dollar_here_doc(char *str, char **envp)
 {
 	char	*tmp;
 	char	*ret;
@@ -82,7 +81,7 @@ char	*expand_dollar_here_doc(char *str, char **envp, int last_status)
 		return (free(str), free(ret), NULL);
 	while (*tmp)
 	{
-		tmp = get_next_word_expanded(&ret, tmp, envp, last_status);
+		tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
 			return (free(str), free(ret), NULL);
 	}
@@ -106,7 +105,7 @@ int	check_amb_redir(char *str, char **envp)
 			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
 				&is_c_blank_nl_dollar_s_d_quote)), envp);
 			if (!word)
-				return (MALLOC_FAIL);
+				return (ALLOC_FAIL);
 			if (is_there_a_blank(word) || !ft_strlen(word))
 				return (free(word), FALSE);
 			free(word);

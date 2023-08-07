@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_token.c                                       :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 16:38:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/24 14:52:07 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 15:42:03 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 11:29:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-const char g_data_token[] = {word, great, dgreat, less, dless, FILENAME, 0};
-
-void	free_token(t_token *token)
+void	data_cleanup(char **data)
 {
-	(free(token->data), free(token));
+	free(*data);
 }
 
-void	free_node(t_token *token)
+void	token_list_cleanup(t_llist **token_list)
 {
-	const t_type	type = token->type;
+	llstclear(token_list, token_free);
+}
 
-	if (ft_strchr(g_data_token, type))
-		free(token->data);
-	free(token);
+void	ast_cleanup(t_ntree **ast)
+{
+	ast_free(*ast);
 }

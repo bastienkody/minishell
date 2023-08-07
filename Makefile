@@ -3,11 +3,14 @@ HEADER		=	./inc/minishell.h
 
 BUILD_DIR	=	./build
 BUILT_DIR	=	builtins/
-EXECU_DIR	=	execution/
+PIPEX_DIR	=	pipex/
 XPAND_DIR	=	expansion/
 REDIR_DIR	=	redirection/
-TOKEN_DIR	=	token/
+LEXER_DIR	=	lexer/
+PARSER_DIR	=	parser/
 AST_DIR		=	ast/
+TOKEN_DIR	=	token/
+SIGNAL_DIR	=	signal/
 UTILS_DIR	=	utils/
 MAIN_DIR	=	./
 SRC_DIR		=	./src/
@@ -23,30 +26,46 @@ BUILT_NAME	=	builtin_basics.c\
 				exit.c\
 				cd.c
 
-EXECU_NAME	=	execution_basics.c\
+PIPEX_NAME	=	execution_basics.c\
+				manage_pipeline.c\
+				pipex_info.c\
+				pipex_info_utils1.c\
+				pipex_info_utils2.c\
+				pipex_cmd.c\
 				pipe_execution.c\
-				execute_ast.c\
-				execute_ast_utils.c
 
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
 				dollar_expander.c\
 				quote_removal.c\
+				wildcard.c\
+				wildcard_match.c\
+				wildcard_utils.c\
+				manage_dollar_expansion.c\
+				manage_quote_remove.c\
+				expand_token_list.c\
 
 REDIR_NAME	=	redirector.c\
+				redirector_utils.c\
 				here_doc.c
 
-TOKEN_NAME	=	type_token.c\
+LEXER_NAME	=	lexer.c\
+				type_token.c\
 				lsttok.c\
+				lsttok_utils.c\
 				compound_cmd.c\
 				check_syntax.c
+
+PARSER_NAME	=	parser.c\
+				token_to_leaf.c\
 
 AST_NAME	=	ast_new.c\
 				ast_print.c\
 				ast_free.c\
 				ast_predicate.c\
 				ast_predicate_utils.c\
-				token_to_leaf.c\
+				ast_execute.c\
+				ast_execute_utils.c\
 				create_complete_command.c\
 				create_compound_command.c\
 				create_logical_expression.c\
@@ -55,43 +74,54 @@ AST_NAME	=	ast_new.c\
 				create_prefixes.c\
 				create_suffixes.c\
 				create_redirection.c\
+				create_classic_redirection.c\
+				create_here_doc.c\
 				create_child.c\
 				utils.c\
+
+TOKEN_NAME	=	token_free.c\
+				token_new.c\
+				token_print.c\
+				token_predicate1.c\
+				token_predicate2.c\
+				utils.c\
+
+SIGNAL_NAME	=	signal_handlers.c\
+				signal_setters.c\
 
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
 				printers.c\
 				print_env.c\
 				print_err_msg.c\
-				lsttok_utils.c\
-				parsing_utils.c\
-				token_utils.c\
-				type_token_utils1.c\
-				type_token_utils2.c\
-				free_token.c\
-				check_syntax_utils.c\
+				str_predicate1.c\
+				str_predicate2.c\
+				str_predicate3.c\
+				str_predicate4.c\
+				strfind.c\
 				create_command_utils.c\
-				charmatrix_dup.c
+				charmatrix_dup.c\
+				cleanup.c\
 
-OTHER_NAME =	parser.c\
-				lexer.c\
-				manage_pipeline.c\
-				pipex_info.c
+OTHER_NAME =	main_utils_debug.c\
 
 MAIN_NAME	=	main_debug.c
 
 BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
-EXECU_SRC	=	$(addprefix ${EXECU_DIR}, ${EXECU_NAME})
+PIPEX_SRC	=	$(addprefix ${PIPEX_DIR}, ${PIPEX_NAME})
 XPAND_SRC	=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
 REDIR_SRC	=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
-TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
+LEXER_SRC	=	$(addprefix ${LEXER_DIR}, ${LEXER_NAME})
+PARSER_SRC	=	$(addprefix ${PARSER_DIR}, ${PARSER_NAME})
 AST_SRC		=	$(addprefix ${AST_DIR}, ${AST_NAME})
+TOKEN_SRC	=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
+SIGNAL_SRC	=	$(addprefix ${SIGNAL_DIR}, ${SIGNAL_NAME})
 UTILS_SRC	=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC	=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 OTHER_SRC	=	$(addprefix ${OTHER_DIR}, ${OTHER_NAME})
 
-SRCS_NAME	=	${BUILT_SRC} ${EXECU_SRC} ${XPAND_SRC} ${REDIR_SRC}  ${TOKEN_SRC}\
-				${AST_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
+SRCS_NAME	=	${BUILT_SRC} ${PIPEX_SRC} ${XPAND_SRC} ${REDIR_SRC} ${LEXER_SRC} ${PARSER_SRC}\
+				${AST_SRC} ${TOKEN_SRC} ${SIGNAL_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})
 OBJS		=	${SRCS:.c=.o}

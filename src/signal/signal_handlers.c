@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lsttok_utils.c                                     :+:      :+:    :+:   */
+/*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 14:16:32 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/16 14:22:02 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/02 17:44:01 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 10:47:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*strfind_if(const char *str, int (*f)(int))
+void	handle_prompt_signals(int signum)
 {
-	while (*str != '\0' && !f(*str))
-		str++;
-	return ((char *)str);
+	if (signum == SIGINT)
+	{
+		g_exit_status = 130;
+		ft_putendl_fd("", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
 }
 
-char	*strfind(const char *str, int c)
+void	handle_parent_signals(int signum)
 {
-	while (*str != '\0' && *str != c)
-		str++;
-	return ((char *)str);
+	if (signum == SIGINT)
+		ft_putendl_fd("", 1);
+	else if (signum == SIGQUIT)
+		ft_putendl_fd("Quit (core dumped)", 1);
 }
 
-char	*strfind_not(const char *str, int c)
+void	handle_here_doc_signals(int signum)
 {
-	while (*str != '\0' && *str == c)
-		str++;
-	return ((char *)str);
+	if (signum == SIGINT)
+	{
+		g_exit_status = 130;
+		close(0);
+	}
 }
 
-int	isdelim(int c)
-{
-	return (ft_strchr(DELIM, c) != NULL);
-}

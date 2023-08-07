@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/24 13:20:52 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 17:11:15 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/01 17:11:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_ntree	*parser(t_llist	*token_list)
+int	is_type_inside(t_type type, const t_type types[], size_t n)
 {
-	t_llist	*leaf_list;
-	t_ntree	*ast;
+	size_t	i;
 
-	leaf_list = token_to_leaf(token_list);
-	if (leaf_list == NULL)
-		return (NULL);
-	llstclear(&token_list, (t_del_fun)free_token);
-	llstiter(leaf_list, (t_unary_fun)print_leaf);
-	ast = create_complete_command(leaf_list);
-	if (ast == NULL)
-		return (NULL);
-	return (ast);
+	i = 0;
+	while (i < n)
+	{
+		if (types[i] == type)
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 17:05:28 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/04 10:51:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	analyze_status(t_info *info)
 
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
-	printf("%d\n", info->exit_code);
 	if (last_cmd->exist)
 		return (ft_fprintf(1, "RET 127\n"), 127);
 	if (last_cmd->is_exec)
@@ -113,7 +112,8 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 			err_msg(cmd_name, ERR_CNF);
 		else
 			err_msg(cmd_name, ERR_NSFD);
-		return (127);
+		// return (127);
+		exit(127);
 	}
 	if (access(info->cmds->fullname, X_OK))
 		return (err_msg(cmd_name, ERR_PERMDEN), 126);

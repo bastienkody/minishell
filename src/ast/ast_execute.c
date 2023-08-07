@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_ast.c                                      :+:      :+:    :+:   */
+/*   ast_execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 14:58:45 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/26 11:11:17 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/03 15:08:53 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 15:08:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	execute_compound_command(t_ntree *ast)
 
 int	execute_logical_expression(t_ntree *ast)
 {
-	t_ntree *const	lhs = ast->children->content;
-	t_ntree *const	rhs = ast->children->next->content;
+	t_ntree *const			lhs = ast->children->content;
+	t_ntree *const			rhs = ast->children->next->content;
 	const t_execute_ast_fun	lhs_execute_function = get_execute_function(lhs);
 	const t_execute_ast_fun	rhs_execute_function = get_execute_function(rhs);
-	int	lhs_return_status;
+	int						lhs_return_status;
 
 	lhs_return_status = lhs_execute_function(lhs);
 	if (lhs_return_status == 0 && (intptr_t)get_token(ast)->data == AND)

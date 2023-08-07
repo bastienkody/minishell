@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_char_matrix.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 16:39:00 by bguillau          #+#    #+#             */
-/*   Updated: 2023/03/24 16:43:26 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:43:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_char_matrix(char **matrix)
 {
 	int	i;
 
+	if (matrix == NULL)
+		return ;
 	i = 0;
 	while (matrix[i])
 	{

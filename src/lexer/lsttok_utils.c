@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_pipeline.c                                  :+:      :+:    :+:   */
+/*   lsttok_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/25 15:14:06 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/25 15:18:17 by aguyon           ###   ########.fr       */
+/*   Created: 2023/06/16 14:16:32 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/03 11:23:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	manage_pipeline(t_ntree *ast, char **envp)
+int	isdelim(int c)
 {
-	t_token	*token;
-	t_llist	*current;
-
-	if (ast == NULL)
-		return ;
-	token = get_token(ast);
-	if (token->type == PIPELINE)
-		token->data = get_pipex_info(ast, envp);
-	else
-	{
-		current = ast->children;
-		while (current != NULL)
-		{
-			manage_pipeline(current->content, envp);
-			current = current->next;
-		}
-	}
+	return (ft_strchr(DELIM, c) != NULL);
 }

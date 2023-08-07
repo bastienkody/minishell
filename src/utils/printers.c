@@ -6,25 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/20 16:12:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:21:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static const char	*g_type[]
-	= {
-	"or",
-	"and",
-	"pipe",
-	"great",
-	"less",
-	"dgreat",
-	"dless",
-	"compound",
-	"word",
-	"error"
-};
 
 void	print_item(void *item)
 {
@@ -43,14 +29,7 @@ void	print_llist(t_llist *start)
 	ft_fprintf(1, "------------------\n");
 }
 
-void	print_token(t_token *token)
-{
-	ft_fprintf(1, "text : %s, type : %s\n", token->data, g_type[token->type]);
-}
-
 void	print_token_error(t_token token)
 {
 	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.data);
 }
-
-
