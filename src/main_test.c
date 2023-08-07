@@ -1,13 +1,31 @@
 #include "../inc/minishell.h"
 
-int	is_token_error(t_llist *llst)
+int	g_exit_status;
+/*int	is_token_error(t_llist *llst)
 {
 	t_token	token = *(t_token *)llst;
 
 	return (token.type == error);
-}
+}*/
 
 /////////////////////////////////////////////
+
+// test mod de envp dans processus fils : triple pointeur ou double?
+int	main(int argc, char **argv, char **envp)
+{
+	char	*args[10];
+
+	(void)argc; 
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	env(envp, NULL);
+	args[0] = "export";
+	args[1] = "zzzzzzzzzzzzzzzzz=aaaaaaaaaaaaaaaaaaa";
+	args[2] = "SHELL=yo";
+	args[3] = NULL;
+	export(args, &envp);
+	env(envp, NULL);
+}
 
 // acces pour les buitin ? ok (/usr/bin/x) pour echo, env et pwd ; ko pour les autres 
 /*int	main(int argc, char **argv, char **envp)
@@ -287,7 +305,7 @@ int	is_token_error(t_llist *llst)
 }*/
 
 //	Last return status expansion : $?
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*str = ft_strdup("salut \"\'$USER $?\'\" \'$USER $?\' $?$USER $SHELL$?$?$? $?sl");
 	int	last_status;
@@ -301,7 +319,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_fprintf(1, "pst_exp:%s\n", str);
 	free(str);
 	free_char_matrix(envp);
-}
+}*/
 
 //	QUOTE REMOVAL
 /*int	main(void)
