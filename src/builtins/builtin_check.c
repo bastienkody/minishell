@@ -26,7 +26,6 @@ int	is_a_builtin(char **args, char *cmd_name)
 		&check_export, &check_unset, &check_env, &check_exit};
 
 	i = -1;
-	ft_fprintf(1, "name : %s\n", cmd_name);
 	while (b_name[++i])
 	{
 		if (!ft_strcmp(b_name[i], cmd_name))
