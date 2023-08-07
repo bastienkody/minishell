@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/05 17:00:00 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/07 11:15:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,5 @@ t_ntree	*parser(t_llist	*token_list)
 		return (NULL);
 	ast = create_complete_command(leaf_list);
 	llstclear(&leaf_list, ast_free);
-	if (ast == NULL)
-		return (llstclear(&leaf_list, ast_free), NULL);
 	return (ast);
 }
