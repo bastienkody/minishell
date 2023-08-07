@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:54:51 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 17:39:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/07 18:21:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_ntree	*create_compound_command(t_llist *leaf)
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
 	t_llist		*leaf_list;
 	t_llist		*child;
+	// int			return_code;
 
 
 	token_list = NULL;
@@ -28,6 +29,9 @@ t_ntree	*create_compound_command(t_llist *leaf)
 	free(new_line);
 	if (token_list == NULL)
 		return (NULL);
+	// return_code = expand_token_list(&token_list, envp);
+	// if (return_code == ALLOC_FAIL)
+	// 	return (EXIT); // malloc error
 	leaf_list = token_to_leaf(token_list);
 	if (leaf_list == NULL)
 		return (NULL);
