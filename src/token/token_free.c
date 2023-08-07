@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:06:55 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 16:05:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/07 18:04:57 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	token_free(t_token *token)
 {
-	(free(token->data), free(token));
+	if (token->type != LOGICAL_EXPRESSION)
+		free(token->data);
+	free(token);
 }

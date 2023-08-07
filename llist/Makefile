@@ -6,7 +6,7 @@
 #    By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:10:26 by aguyon            #+#    #+#              #
-#    Updated: 2023/08/05 10:49:30 by aguyon           ###   ########.fr        #
+#    Updated: 2023/08/07 16:04:57 by aguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC =	llstadd_after.c \
 		llstremoveone.c \
 		llstreplace.c \
 		llstsize.c \
+		llstsize_range.c \
 
 SRC_TEST =	main_test.c
 

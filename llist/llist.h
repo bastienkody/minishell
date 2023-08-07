@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 14:02:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:44:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_llist
 
 t_llist	*llstnew(void *content);
 size_t	llstsize(t_llist *llst);
+size_t	llstsize_range(t_llist *begin, t_llist *end);
 t_llist	*llstfirst(t_llist *llst);
 t_llist	*llstlast(const t_llist *llst);
 int		llstempty(t_llist *llst);
@@ -45,8 +46,10 @@ void	llstiter(t_llist *llst, void (*f)(void *));
 t_llist	*llstmap(t_llist *llst, void *(*f)(void *), void (*del)(void *));
 t_llist	*llstfind(t_llist *llst, void *value, int comp(void *, void *));
 t_llist	*llstfind_if(t_llist *llst, int (*p)(void *));
+t_llist	*llstfind_if_range(t_llist *begin, t_llist *end, int (*p)(void *));
 t_llist	*llstfind_if_not(t_llist *llst, int (*p)(void *));
 t_llist	*llstfind_if_reverse(const t_llist *llst, int (*p)(void *));
+t_llist	*llstfind_if_reverse_range(const t_llist *rbegin, const t_llist *rend, int (*p)(void *));
 t_llist	*llstnext(t_llist *llst, size_t n);
 t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),
