@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_redirection.c                               :+:      :+:    :+:   */
+/*   ast_dup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/20 15:00:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 14:23:24 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/05 16:41:16 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/05 16:55:47 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ntree	*create_redirection(t_llist	*begin, t_llist *end)
+t_ntree	*ast_dup(t_ntree *ast)
 {
-	t_ntree *const	operator_leaf = begin->content;
-	char *const		operator_str = get_token(operator_leaf)->data;
-
-	if (ft_strcmp(operator_str, "<<") == 0)
-		return (create_here_doc(begin, end));
-	return (create_classic_redirection(begin, end));
+	return (ntree_dup(ast, (t_unary_op)token_dup, (t_del_fun)token_free));
 }

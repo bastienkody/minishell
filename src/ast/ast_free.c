@@ -6,16 +6,16 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 11:25:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 13:49:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const size_t g_nb_data_token = 10;
+static const size_t g_nb_data_token = 11;
 
 static const t_type g_data_token[]
-	= {word, ppipe, or, and, great, dgreat, less, dless, FILENAME, HERE_END};
+	= {word, ppipe, or, compound, and, great, dgreat, less, dless, FILENAME, HERE_END};
 
 static void	free_pipex_info(t_info *pipex_info)
 {
@@ -27,16 +27,19 @@ static void	free_pipex_info(t_info *pipex_info)
 
 static void	free_node(t_token *token)
 {
-	const t_type	type = token->type;
+	t_type	type;
 
+	if (token == NULL)
+		return ;
+	type = token->type;
 	if (type == PIPELINE)
 		free_pipex_info(token->data);
-	else if (is_type_inside(token->type, g_data_token, g_nb_data_token))
+	else if (is_type_inside(type, g_data_token, g_nb_data_token))
 		free(token->data);
 	free(token);
 }
 
 void	ast_free(t_ntree *ast)
 {
-	ntree_free(ast, (t_del_fun)free_node);
+	ntree_free(&ast, (t_del_fun)free_node);
 }

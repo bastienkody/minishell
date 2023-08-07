@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/04 10:19:09 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:17:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	lstreduce(t_llist	**llst);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list);
+t_llist	*leaf_node_dup(t_llist *leaf_node);
 
 /*	utils token	*/
 t_llist	*new_llst_with_compound(t_llist *start);
@@ -153,7 +154,7 @@ char	*strfind_if(const char *str, int (*f)(int));
 
 /* create_command_utils*/
 t_ntree	*create_cmd_name(t_llist *leaf);
-t_llist	*find_cmd_name(t_llist	*leaf_list);
+t_llist	*find_cmd_name(t_llist *begin, t_llist *end);
 
 /*	string_predicate	*/
 int		is_str_or(const char *str);
@@ -175,21 +176,23 @@ int		is_str_blank(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
+t_ntree	*ast_dup(t_ntree *ast);
 void	ast_free(t_ntree *ast);
 void	ast_print(t_ntree *ast);
 int		is_node_inside(t_ntree *node, t_type types[], size_t n);
 int		is_node_equal(t_ntree *node, t_type search_type);
-t_llist	*create_child(t_llist	*leaf, t_ntree *(*create)(t_llist *));
-t_ntree	*create_complete_command(t_llist	*token_list);
-t_ntree	*create_compound_command(t_llist *leaf_list);
-t_ntree	*create_pipeline(t_llist *token_list);
-t_ntree	*create_logical_expression(t_llist	*token_list);
-t_ntree	*create_command(t_llist	*token_list);
-t_llist	*create_suffixes(t_llist *leaf_list);
-t_llist	*create_prefixes(t_llist *leaf_list);
-t_ntree	*create_redirection(t_llist	*leaf_list);
-t_ntree	*create_classic_redirection(t_llist *leaf_list);
-t_ntree	*create_here_doc(t_llist *leaf_list);
+t_llist	*create_child_range(t_llist	*begin, t_llist *end, t_ntree *(*create)(t_llist *, t_llist *));
+t_llist	*create_child(t_llist *llist, t_ntree *(*create)(t_llist *));
+t_ntree	*create_complete_command(t_llist	*leaf_list);
+t_ntree	*create_compound_command(t_llist	*leaf);
+t_ntree	*create_pipeline(t_llist	*begin, t_llist *end);
+t_ntree	*create_logical_expression(t_llist	*begin, t_llist *end);
+t_ntree	*create_command(t_llist	*begin, t_llist *end);
+t_llist	*create_suffixes(t_llist	*begin, t_llist *end);
+t_llist	*create_prefixes(t_llist	*begin, t_llist *end);
+t_ntree	*create_redirection(t_llist	*begin, t_llist *end);
+t_ntree	*create_classic_redirection(t_llist	*begin, t_llist *end);
+t_ntree	*create_here_doc(t_llist	*begin, t_llist *end);
 int		is_node_word(t_ntree	*node);
 int		is_node_logical_operator(t_ntree	*node);
 int		is_node_pipe(t_ntree	*node);
@@ -205,6 +208,7 @@ int		is_token_redirection(t_token *token);
 int		is_token_here_doc(t_token *token);
 int		is_token_error(t_token *token);
 t_token	*token_new(t_type type, void *data);
+t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
 int		is_type_inside(t_type type, const t_type types[], size_t n);
@@ -293,9 +297,6 @@ void	err_builtin(char *builtin, char *arg, char *err);
 void	err_msg(char *str, char *err);
 
 /* ntree functions */
-t_ntree	*ntree_new(void *data, t_llist *children);
-void	ntree_free(t_ntree *ntree, t_del_fun del);
-void	ntree_print(t_ntree *ntree, void (*print)(void *));
 char	*type_to_string(t_type type);
 t_llist	*tokenization(const char *line);
 t_ntree	*parser(t_llist	*token_list);

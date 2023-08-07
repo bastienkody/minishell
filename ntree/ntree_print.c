@@ -6,18 +6,19 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 13:26:00 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 13:28:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/05 15:57:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ntree.h"
+#include <stdio.h>
 
 static void	print_node(t_ntree *ntree, int depth, void (*print)(void *))
 {
 	if (depth != 0)
-		ft_fprintf(1, "+--- ");
+		printf("+--- ");
 	print(ntree->data);
-	ft_fprintf(1, "\n");
+	printf("\n");
 }
 
 static void	print_tree_rec(t_ntree *ntree, bool flag[256], t_node_info info,
@@ -33,9 +34,9 @@ static void	print_tree_rec(t_ntree *ntree, bool flag[256], t_node_info info,
 	while (++i < info.depth)
 	{
 		if (flag[i] == true)
-			ft_fprintf(1, "|     ");
+			printf("|     ");
 		else
-			ft_fprintf(1, "     ");
+			printf("     ");
 	}
 	if (info.depth == 0 || !info.islast)
 		print_node(ntree, info.depth, print);

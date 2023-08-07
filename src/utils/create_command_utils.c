@@ -6,24 +6,32 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:45:03 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/20 16:09:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/07 16:55:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ntree	*create_cmd_name(t_llist *leaf)
+t_ntree	*create_cmd_name(t_llist *leaf_node)
 {
-	return (ast_new(CMD_NAME, NULL, leaf));
+	t_llist	*new_leaf_node;
+
+	new_leaf_node = leaf_node_dup(leaf_node);
+	if (new_leaf_node == NULL)
+		return (NULL);
+	return (ast_new(CMD_NAME, NULL, new_leaf_node));
 }
 
-t_llist	*find_cmd_name(t_llist	*leaf_list)
+t_llist	*find_cmd_name(t_llist	*begin, t_llist *end)
 {
-	while (leaf_list != NULL)
+	t_llist	*current;
+
+	current = begin;
+	while (current != NULL || current != end)
 	{
-		if (is_node_word(leaf_list->content))
-			return (leaf_list);
-		leaf_list = llstnext(leaf_list, 2);
+		if (is_node_word(current->content))
+			return (current);
+		current = llstnext(current, 2);
 	}
 	return (NULL);
 }
