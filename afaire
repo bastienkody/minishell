@@ -10,6 +10,9 @@
 - extension avant ou après la vérification des tokens ? : avant ✅
 - corriger la création des noeuds compound command
 - gestion des signaux ✅
+- expansion dans les subshells
+- gestion des codes retours
+- fermetures des fichiers inutilises
 - norme
 - vérification des fuites de mémoires
 - vérifier cascade des allocations / desallocations
