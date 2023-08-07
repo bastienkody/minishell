@@ -103,6 +103,7 @@ int	g_exit_status;
 int	main(int argc, char **argv, char **envp)
 {
 	((void)argc, (void)argv);
+	envp = charmatrix_dup(envp);
 	reader_loop(envp);
 	return (0);
 }

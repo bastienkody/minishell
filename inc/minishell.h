@@ -319,10 +319,10 @@ int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
-int		exec_builtin(char **cmd_args, char ***envp);
+int		exec_builtin(char *cmd_name, char **cmd_args, char ***envp);
 
 /*	builtins check	*/
-int		is_a_builtin(char **args);
+int		is_a_builtin(char **args, char *cmd_name);
 int		check_echo(char **args);
 int		check_cd(char **args);
 int		check_pwd(char **args);
