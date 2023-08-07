@@ -92,7 +92,6 @@ void	wait_cmds(t_info *info)
 	}
 }
 
-// cmd_args[0] == cmd_name (not fullname) ?
 int	execute(char *cmd_name, char **cmd_args, t_info *info)
 {
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
@@ -102,7 +101,7 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (is_a_builtin(cmd_args, cmd_name))
 	{
 		ft_fprintf(1, "%s is_a builtin\n", cmd_name);
-		return (exec_builtin(cmd_name, cmd_args, &info->envp));
+		return (exec_builtin(cmd_name, cmd_args, &(info->envp)));
 	}
 	else
 		ft_fprintf(1, "%s is not a builtin\n", cmd_name);
@@ -112,7 +111,6 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 			err_msg(cmd_name, ERR_CNF);
 		else
 			err_msg(cmd_name, ERR_NSFD);
-		// return (127);
 		exit(127);
 	}
 	if (access(info->cmds->fullname, X_OK))

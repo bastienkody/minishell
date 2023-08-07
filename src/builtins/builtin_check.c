@@ -40,7 +40,7 @@ int	exec_builtin(char * cmd_name, char **cmd_args, char ***envp)
 	if (!ft_strcmp(cmd_name, "echo"))
 		return (echo(cmd_args));
 	if (!ft_strcmp(cmd_name, "cd"))
-		return (cd(cmd_name, *envp));
+		return (cd(cmd_args[1], *envp));
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd_name, "export"))
