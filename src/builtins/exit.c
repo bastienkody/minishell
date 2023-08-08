@@ -14,15 +14,71 @@
 
 int	check_exit(char **args)
 {
-	if (args[1] && args[1][0] == '-')
-		return (0);
-	return (1);
+	return ((void) args, 1);
 }
 
-int	exit_blt(char **args, char **envp, void *truc)
+/*
+	si pas d'arg : exit last status
+	si premier argument str : 
+		- clean and exit
+		- print "exit" on stdout
+		- code 2
+		- stderr : "bash: exit: abc: numeric argument required" abc is the first arg	
+	si premier arg est nb:
+		si seul arg : 
+			- clean and exit
+			- print "exit" on stdout
+			- code = atoi_255(arg) (use unsigned byte)
+		si poly arg : 
+			- do not clean and exit but still...
+			- print "exit" on stdout
+			- code 2
+			- err : "bash: exit: too many arguments"
+
+2 trucs chelous : 
+	- dans bash : ls | exit does not output "exit" on stdout. it exits the fork (ok)
+	- pas de pb dans minishell pour le return (vs un exit) quand exit avec poly numeric args.
+*/
+
+/* 1 str ; 0 nb */
+int	check_first_arg(char *arg)
 {
-	(void)args;
-	(void)envp;
-	(void)truc;
+	if (arg[0] == '-' || arg[0] == '+')
+		arg++;
+	if (!*arg)
+		return (1);
+	while (*arg)
+	{
+		if (!ft_isdigit(*arg))
+			return (1);
+		arg++;
+	}
 	return (0);
+}
+
+void	cleaner(t_info *info)
+{
+	(void)info;
+	return ;
+}
+
+int	exit_blt(char **args, t_info *info)
+{
+	const char	*exit_msg = "exit\n";
+
+	write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
+	if (!args[1])
+		return (cleaner(info), exit(g_exit_status), g_exit_status);
+	if (check_first_arg(args[1])) // first arg str
+	{
+		err_builtin(args[0], args[1], ERR_NMR);
+		cleaner(info);
+		g_exit_status = 2;
+		exit(2);
+	}
+	if (args[1 + 1]) // poly args numeric
+		return (err_msg(args[0], ERR_TMA), BUILTIN_ERR_CODE); // pb si appele dans dans un pipe/fork? 
+	cleaner(info); // solo arg numeric
+	g_exit_status = (unsigned int) ft_atoi(args[1]);
+	exit(g_exit_status);
 }

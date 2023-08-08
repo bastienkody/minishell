@@ -72,12 +72,13 @@ int	echo(char **args)
 	while (args && *args)
 	{
 		if (write(1, *args, ft_strlen(*args)) < 0)
-			return (-1);
+			return (BUILTIN_ERR_CODE);
 		if (*(args + 1) && write(1, &sep[1], 1) < 0)
-			return (-1);
+			return (BUILTIN_ERR_CODE);
 		args++;
 	}
 	if (trailing_nl)
-		return (write(1, &sep[0], 1) < 0);
+		if (write(1, &sep[0], 1) < 0)
+			return (BUILTIN_ERR_CODE);
 	return (0);
 }

@@ -29,9 +29,9 @@ int	env(char **envp, char *prefix)
 	{
 		if (prefix)
 			if (write(1, prefix, ft_strlen(prefix)) < 0)
-				return (1);
+				return (BUILTIN_ERR_CODE);
 		if (write(1, envp[i], ft_strlen(envp[i])) < 0 || write(1, &nl, 1) < 0)
-			return (1);
+			return (BUILTIN_ERR_CODE);
 	}
 	return (0);
 }

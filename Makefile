@@ -151,7 +151,7 @@ LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -lreadline
 all:		${NAME}
 
 $(BUILD_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	@echo "\033[32m\c"
 	${CC} ${CFLAGSDEV} -c $< -o $@
 	@echo "\033[0m\c"

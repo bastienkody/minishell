@@ -97,14 +97,9 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
 		exit(1);
 	if (!cmd_args)
-		return (0); // cas redirection sans commande name ni args
+		exit(0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args, cmd_name))
-	{
-		// ft_fprintf(1, "%s is_a builtin\n", cmd_name);
-		return (exec_builtin(cmd_name, cmd_args, &(info->envp)));
-	}
-	else
-		// ft_fprintf(1, "%s is not a builtin\n", cmd_name);
+		exit(exec_builtin(cmd_name, cmd_args, &(info->envp), info));
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
@@ -125,5 +120,4 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (info->cmds->fd_out > NO_REDIR)
 		close(info->cmds->fd_in);
 	exit(EXIT_FAILURE);
-	return (1);
 }
