@@ -10,8 +10,29 @@ int	g_exit_status;
 
 /////////////////////////////////////////////
 
+// test exit pour code normalize a 255
+/*int	main(void)
+{
+	int	nb;
+
+	nb = -2;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+	nb = 0;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+	nb = 1;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+	nb = 255;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+	nb = 256;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+	nb = -254;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+	nb = 2147483646;
+	ft_fprintf(1, "%i -> %i\n", nb, (unsigned char) nb);
+}*/
+
 // test mod de envp dans processus fils : triple pointeur ou double?
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char	*args[10];
 
@@ -25,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	args[3] = NULL;
 	export(args, &envp);
 	env(envp, NULL);
-}
+}*/
 
 // acces pour les buitin ? ok (/usr/bin/x) pour echo, env et pwd ; ko pour les autres 
 /*int	main(int argc, char **argv, char **envp)

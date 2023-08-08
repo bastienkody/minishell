@@ -34,21 +34,21 @@ int	is_a_builtin(char **args, char *cmd_name)
 	return (0);
 }
 
-int	exec_builtin(char * cmd_name, char **cmd_args, char ***envp)
+int	exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info)
 {
 	if (!ft_strcmp(cmd_name, "echo"))
-		return (echo(cmd_args));
+		return (echo(args));
 	if (!ft_strcmp(cmd_name, "cd"))
-		return (cd(cmd_args[1], *envp));
+		return (cd(args[1], *envp));
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd_name, "export"))
-		return (export(cmd_args, envp));
+		return (export(args, envp));
 	if (!ft_strcmp(cmd_name, "unset"))
-		return (unset(cmd_args, envp));
+		return (unset(args, envp));
 	if (!ft_strcmp(cmd_name, "env"))
 		return (env(*envp, NULL));
 	if (!ft_strcmp(cmd_name, "exit"))
-		return (exit_blt(cmd_args, *envp, NULL));
+		return (exit_blt(args, info));
 	return (1);
 }

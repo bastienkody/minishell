@@ -12,12 +12,12 @@
 
 #include "../../inc/minishell.h"
 
-void	err_msg(char *str, char *err)
+void	err_msg(const char *str, const char *err)
 {
 	ft_fprintf(2, "minishell: %s: %s\n", str, err);
 }
 
-void	err_builtin(char *builtin, char *arg, char *err)
+void	err_builtin(const char *builtin, const char *arg, const char *err)
 {
 	ft_fprintf(2, "minishell: %s: `%s': %s\n", builtin, arg, err);
 }

@@ -99,7 +99,7 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (!cmd_args)
 		exit(0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args, cmd_name))
-		exit(exec_builtin(cmd_name, cmd_args, &(info->envp)));
+		exit(exec_builtin(cmd_name, cmd_args, &(info->envp), info));
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
@@ -120,5 +120,4 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 	if (info->cmds->fd_out > NO_REDIR)
 		close(info->cmds->fd_in);
 	exit(EXIT_FAILURE);
-	return (1);
 }

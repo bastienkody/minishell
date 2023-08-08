@@ -38,10 +38,10 @@
 # define STDOUT 1
 # define STDERR 2
 # define EAMBREDIR 42
-# define LAST_RETURN_STATUS 1023 // tmp const ; must be a var declared in main
 # define CONTINUE 1000
 # define EXIT 1001
 # define OK 1002
+# define BUILTIN_ERR_CODE 2
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
@@ -64,6 +64,7 @@
 # define ERR_AMB_REDIR "ambiguous redirect\n"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
+# define ERR_NMR "numeric argument required"
 # define ERR_DUP_IN "minishell: infile dup2"
 # define ERR_DUP_OUT "minishell: outfile dup2"
 # define ERR_EXECVE "minishell: execve"
@@ -288,13 +289,12 @@ int		pipex(t_info *info);
 
 /*	printers	*/
 void	print_item(void *item);
-
 void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
 void	print_token_error(t_token token);
-void	err_builtin(char *builtin, char *arg, char *err);
-void	err_msg(char *str, char *err);
+void	err_builtin(const char *builtin, const char *arg, const char *err);
+void	err_msg(const char *str, const char *err);
 
 /* ntree functions */
 char	*type_to_string(t_type type);
@@ -311,7 +311,7 @@ int		cd(char *path, char **envp);
 int		env(char **envp, char *prefix);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
-int		exit_blt(char **args, char **envp, void *truc);
+int		exit_blt(char **args, t_info *info);
 
 /*	builtins utils	*/
 char	*get_envalue(char *key, char **envp);
@@ -319,7 +319,7 @@ int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
-int		exec_builtin(char *cmd_name, char **cmd_args, char ***envp);
+int		exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info);
 
 /*	builtins check	*/
 int		is_a_builtin(char **args, char *cmd_name);
