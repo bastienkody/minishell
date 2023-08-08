@@ -12,6 +12,10 @@
 
 #include "../../inc/minishell.h"
 
+// pb with export a=g* (bad free)
+// export +=. 
+
+
 /* builtin ret 1, execve ret 0	*/
 int	check_export(char **args)
 {

@@ -77,7 +77,6 @@ void	fork_pipe_dup(int *prevpipe, t_info *info)
 
 	if (pipe(pipefd) == -1)
 		perror(ERR_PIPE);
-	//ft_fprintf(1, "cmd:%s\npipefd[0]:%i\npipefd[1]:%i\n", args[0], pipefd[0], pipefd[1]);
 	pid = fork();
 	if (pid == -1)
 		perror(ERR_FORK); // + close n free ?

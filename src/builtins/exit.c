@@ -32,7 +32,7 @@ int	check_exit(char **args)
 		si poly arg : 
 			- do not clean and exit but still...
 			- print "exit" on stdout
-			- code 2
+			- code 1
 			- err : "bash: exit: too many arguments"
 
 2 trucs chelous : 
@@ -77,7 +77,7 @@ int	exit_blt(char **args, t_info *info)
 		exit(2);
 	}
 	if (args[1 + 1]) // poly args numeric
-		return (err_msg(args[0], ERR_TMA), BUILTIN_ERR_CODE); // pb si appele dans dans un pipe/fork? 
+		return (err_msg(args[0], ERR_TMA), g_exit_status = 1, 1); // pb si appele dans dans un pipe/fork? 
 	cleaner(info); // solo arg numeric
 	g_exit_status = (unsigned int) ft_atoi(args[1]);
 	exit(g_exit_status);
