@@ -66,7 +66,7 @@ int	exit_blt(char **args, t_info *info)
 {
 	const char	*exit_msg = "exit\n";
 
-	write(STDOUT_FILENO, exit_msg, ft_strlen(exit_msg));
+	write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
 	if (!args[1])
 		return (cleaner(info), exit(g_exit_status), g_exit_status);
 	if (check_first_arg(args[1])) // first arg str
