@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 20:01:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:52:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	g_exit_status;
 int	main(int argc, char **argv, char **envp)
 {
 	((void)argc, (void)argv);
-	// envp = charmatrix_dup(envp);
+	g_exit_status = 0;
 	reader_loop(envp);
 	return (g_exit_status);
 }

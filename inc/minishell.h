@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/07 17:17:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 14:29:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define CONTINUE 1000
 # define EXIT 1001
 # define OK 1002
-
+# define CODE_ALLOC 1
 /*	char const	*/
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''

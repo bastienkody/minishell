@@ -6,21 +6,23 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/05 16:56:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 14:34:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	read_command(char **line)
-{
-	*line = readline("minishell prompt % ");
-	if (*line == NULL)
-		return (ft_fprintf(2, "exit\n"), EOF);
-	if (is_str_blank(*line))
-		return (LINE_EMPTY);
-	return (0);
-}
+// char *read_command(void)
+// {
+// 	char	*line;
+
+// 	line = readline("minishell prompt % ");
+// 	if (line == NULL)
+// 		return (NULL);
+// 	if (is_str_blank(line))
+// 		return (LINE_EMPTY);
+// 	return (0);
+// }
 
 int	check_error(t_llist *token_list)
 {
@@ -78,12 +80,10 @@ void	reader_loop(char **envp)
 
 	__attribute__((cleanup(data_cleanup))) char *line;
 	set_prompt_signals();
-	g_exit_status = 0;
-	line = NULL;
-	return_code = read_command(&line);
-	if (return_code == EOF)
+	line = readline("minishell prompt % ");
+	if (line == NULL)
 		return ;
-	if (return_code == LINE_EMPTY)
+	else if (is_str_blank(line))
 		return (reader_loop(envp));
 	add_history(line);
 	return_code = interpret_command(line, envp);
