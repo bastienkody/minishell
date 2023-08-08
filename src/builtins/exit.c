@@ -35,8 +35,9 @@ int	check_exit(char **args)
 			- code 2
 			- err : "bash: exit: too many arguments"
 
-2 trucs chelous :
-	- dans bash : ls | exit does not output "exit" on stdout. it exits the fork (ok)
+
+2 trucs chelous : 
+	- dans bash : ls | exit does not output "exit" on stderr. it exits the fork (ok)
 	- pas de pb dans minishell pour le return (vs un exit) quand exit avec poly numeric args.
 */
 
