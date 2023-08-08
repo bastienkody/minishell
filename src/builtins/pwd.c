@@ -26,7 +26,7 @@ int	pwd(void)
 	str = NULL;
 	str = getcwd(str, 0);
 	if (!str)
-		return (-1);
+		return (BUILTIN_ERR_CODE);
 	ft_fprintf(1, "%s\n", str);
 	free(str);
 	return (0);
