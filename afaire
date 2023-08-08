@@ -5,3 +5,4 @@
 - corriger signal sigquit avec minishell recursif
 - gerer le code retour en cas d'erreur d'allocation
 - corriger le builtin exit (par rapport aux free)
+- expension "$"
