@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 14:34:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:58:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	check_error(t_llist *token_list)
 
 int	set_ast(t_ntree **ast, const char *line, char **envp)
 {
-	int		return_code;
-
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
 	token_list = tokenization(line);
 	if (token_list == NULL)
@@ -44,11 +42,9 @@ int	set_ast(t_ntree **ast, const char *line, char **envp)
 	// ft_fprintf(1, "DEBUG : TOKEN_LIST\n");
 	// llstiter(token_list, (void *)token_print);
 	// ft_fprintf(1, "\n");
-	return_code = expand_token_list(&token_list, envp);
-	if (return_code == ALLOC_FAIL)
+	token_list = expand_token_list(token_list, envp);
+	if (token_list == NULL)
 		return (EXIT); // malloc error
-	if (return_code == EAMBREDIR)
-		return (CONTINUE); // Ambigous redirect
 	if (check_error(token_list) != 0)
 		return (CONTINUE); // Token/syntax error
 	*ast = parser(token_list);

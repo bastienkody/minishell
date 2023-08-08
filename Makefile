@@ -38,11 +38,11 @@ XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
 				dollar_expander.c\
 				quote_removal.c\
-				wildcard.c\
+				llst_expand_wildcard.c\
+				llst_expand_wildcard_utils.c\
 				wildcard_match.c\
-				wildcard_utils.c\
-				manage_dollar_expansion.c\
-				manage_quote_remove.c\
+				llst_expand_dollar.c\
+				llst_remove_quote.c\
 				expand_token_list.c\
 
 REDIR_NAME	=	redirector.c\

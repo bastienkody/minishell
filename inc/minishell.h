@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/08 14:29:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 17:08:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef enum e_type
 	dless,
 	compound,
 	word,
+	ambigous_word,
 	error,
 	COMPLETE_COMMAND,
 	COMPOUND_COMMAND,
@@ -280,7 +281,10 @@ void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_ntree *ast, char **envp);
 int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
-int		manage_quote_remove(t_llist *leaf_list);
+t_llist *get_ambigous_node(t_llist *node);
+t_llist	*llst_remove_quote(t_llist *token_list);
+t_llist	*llst_expand_dollar(t_llist *token_list, char **envp);
+t_llist *llst_expand_wildcard(t_llist *token_list, char **envp);
 t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
@@ -344,11 +348,11 @@ char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ntree	*parser(t_llist	*token_list);
 int		is_prev_here_operator(t_llist *leaf_list);
-int		wildcard_list(t_llist **token_list_ptr, char **envp);
+t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
-int		expand_token_list(t_llist **token_list, char **envp);
+t_llist	*expand_token_list(t_llist *token_list, char **envp);
 
 /*	cleanup	*/
 void	data_cleanup(char **data);

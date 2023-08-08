@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/05 10:11:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 17:10:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ int	execute(char *cmd_name, char **cmd_args, t_info *info)
 		return (0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args, cmd_name))
 	{
-		ft_fprintf(1, "%s is_a builtin\n", cmd_name);
+		// ft_fprintf(1, "%s is_a builtin\n", cmd_name);
 		return (exec_builtin(cmd_name, cmd_args, &(info->envp)));
 	}
 	else
-		ft_fprintf(1, "%s is not a builtin\n", cmd_name);
+		// ft_fprintf(1, "%s is not a builtin\n", cmd_name);
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(cmd_name, '/'))
