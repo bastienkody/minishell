@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard.c                                         :+:      :+:    :+:   */
+/*   llst_expand_wildcard.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 17:08:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 18:59:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_llist	*get_wildcard_nodes(char *pattern, char **envp)
 	info = readdir(dir);
 	while (info != NULL)
 	{
-		if (match(pattern, info->d_name))
+		if ((info->d_name[0] != '.') && match(pattern, info->d_name))
 		{
 			if (add_filename(&wildcard_list, info->d_name) != 0)
 				return (llstclear(&wildcard_list, token_free), NULL);

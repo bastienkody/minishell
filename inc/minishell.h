@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/08 17:08:23 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:07:31 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_info
 	t_cmd			*cmds;
 	t_cmd			*cmd_start;
 	pid_t			last_pid;
+	t_ntree			*root_ast;
 	char			**envp;
 	int				exit_code;
 }	t_info;
@@ -280,13 +281,13 @@ int		execute(char *cmd_name, char **cmd_args, t_info *info);
 int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
-int		manage_pipeline(t_ntree *ast, char **envp);
+int		manage_pipeline(t_ntree *ast, t_ntree *root, char **envp);
 int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
 t_llist *get_ambigous_node(t_llist *node);
 t_llist	*llst_remove_quote(t_llist *token_list);
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp);
 t_llist *llst_expand_wildcard(t_llist *token_list, char **envp);
-t_info	*get_pipex_info(t_ntree *pipeline_node, char **envp);
+t_info	*get_pipex_info(t_ntree *pipeline_node, t_ntree *root, char **envp);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
 int		pipex(t_info *info);

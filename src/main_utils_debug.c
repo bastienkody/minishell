@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 16:58:37 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:16:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	set_ast(t_ntree **ast, const char *line, char **envp)
 	// ast_print(*ast);
 	manage_here_doc(*ast, envp);
 	manage_redir(*ast, envp);
-	if (manage_pipeline(*ast, envp) == 0)
+	if (manage_pipeline(*ast, *ast, envp) == 0)
 		return (EXIT);
 	return (OK);
 }
@@ -66,8 +66,8 @@ int	interpret_command(const char *line, char **envp)
 	ast = NULL;
 	return_code = set_ast(&ast, line, envp);
 	if (return_code != OK)
-		return (return_code);
-	return (execute_ast(ast));
+		return (free_char_matrix(envp), return_code);
+	return (free_char_matrix(envp), execute_ast(ast));
 }
 
 void	reader_loop(char **envp)
