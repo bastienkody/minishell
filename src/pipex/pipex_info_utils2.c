@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:52:55 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 10:18:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:40:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	get_fd_in(t_ntree *simple_command_node)
 {
 	t_llist	*current;
 	t_token	*current_token;
-	t_type	redirection_type;
+	int		fd;
 
 	current = llstlast(simple_command_node->children);
 	while (current != NULL)
@@ -24,13 +24,16 @@ int	get_fd_in(t_ntree *simple_command_node)
 		current_token = get_token(current->content);
 		if (current_token->type == REDIRECTION)
 		{
-			redirection_type = get_redirection_type(current->content);
-			if (redirection_type == less)
-				return ((intptr_t)(current_token->data));
+			if (get_redirection_type(current->content) == less)
+			{
+				fd = (intptr_t)(current_token->data);
+				return (current_token->data = (void *)-2, fd);
+			}
 		}
 		else if (current_token->type == HERE_DOC)
 		{
-			return ((intptr_t)(current_token->data));
+			fd = (intptr_t)(current_token->data);
+			return (current_token->data = (void *)-2, fd);
 		}
 		current = current->prev;
 	}
@@ -40,16 +43,23 @@ int	get_fd_in(t_ntree *simple_command_node)
 int	get_fd_out(t_ntree *simple_command_node)
 {
 	t_llist	*current;
+	t_token	*current_token;
 	t_type	redirection_type;
+	int		fd;
 
 	current = llstlast(simple_command_node->children);
 	while (current != NULL)
 	{
+		current_token = get_token(current->content);
 		if (get_token(current->content)->type == REDIRECTION)
 		{
 			redirection_type = get_redirection_type(current->content);
 			if (redirection_type == great || redirection_type == dgreat)
-				return ((intptr_t)(get_token(current->content)->data));
+			{
+				fd = (intptr_t)(current_token->data);
+				current_token->data = (void *)-2;
+				return (fd);
+			}
 		}
 		current = current->prev;
 	}
