@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 15:42:03 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/09 19:00:09 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/09 19:17:52 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/09 19:17:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	data_cleanup(char **data)
+void	free_and_exit(t_info *info, int status)
 {
-	free(*data);
-}
-
-void	token_list_cleanup(t_llist **token_list)
-{
-	llstclear(token_list, token_free);
-}
-
-void	ast_cleanup(t_ntree **ast)
-{
-	ast_free(*ast);
+	free_char_matrix(info->envp);
+	ast_free(info->root_ast);
+	exit(status);
 }

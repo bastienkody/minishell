@@ -104,6 +104,7 @@ UTILS_NAME	=	ft_realloc.c\
 				create_command_utils.c\
 				charmatrix_dup.c\
 				cleanup.c\
+				free_and_exit.c\
 
 OTHER_NAME =	main_utils_debug.c\
 
