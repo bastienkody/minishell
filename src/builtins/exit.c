@@ -59,7 +59,8 @@ int	check_first_arg(char *arg)
 
 int	exit_blt(char **args, t_info *info)
 {
-	const char	*exit_msg = "exit\n";
+	const char		*exit_msg = "exit\n";
+	long long int	code;
 
 	write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
 	if (!args[1])
@@ -72,10 +73,17 @@ int	exit_blt(char **args, t_info *info)
 		g_exit_status = 2;
 		exit(2);
 	}
-	if (args[1 + 1]) // poly args numeric
-		return (err_msg(args[0], ERR_TMA), 1); // pb si appele dans dans un pipe/fork?
-	g_exit_status = (unsigned int) ft_atoi(args[1]);
+	if (args[1 + 1]) // poly args (first arg numeric)
+		return (err_msg(args[0], ERR_TMA), 1);
+	code = 0;
+	if (ft_atoi_ll_novf(args[1], &code) == FALSE)
+	{
+		err_builtin(args[0], args[1], ERR_NMR);
+		g_exit_status = 2;
+	}
+	else
+		g_exit_status = (unsigned char) code;
 	free_char_matrix(info->envp);
-	ast_free(info->root_ast); // solo arg numeric
+	ast_free(info->root_ast);
 	exit(g_exit_status);
 }

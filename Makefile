@@ -32,7 +32,7 @@ PIPEX_NAME	=	execution_basics.c\
 				pipex_info_utils1.c\
 				pipex_info_utils2.c\
 				pipex_cmd.c\
-				pipe_execution.c\
+				pipe_execution.c
 
 XPAND_NAME	=	utils_expansion.c\
 				basics_expansion.c\
@@ -43,7 +43,7 @@ XPAND_NAME	=	utils_expansion.c\
 				wildcard_match.c\
 				llst_expand_dollar.c\
 				llst_remove_quote.c\
-				expand_token_list.c\
+				expand_token_list.c
 
 REDIR_NAME	=	redirector.c\
 				redirector_utils.c\
@@ -57,7 +57,7 @@ LEXER_NAME	=	lexer.c\
 				check_syntax.c
 
 PARSER_NAME	=	parser.c\
-				token_to_leaf.c\
+				token_to_leaf.c
 
 AST_NAME	=	ast_new.c\
 				ast_dup.c\
@@ -78,7 +78,7 @@ AST_NAME	=	ast_new.c\
 				create_classic_redirection.c\
 				create_here_doc.c\
 				create_child.c\
-				utils.c\
+				utils.c
 
 TOKEN_NAME	=	token_free.c\
 				token_new.c\
@@ -86,10 +86,10 @@ TOKEN_NAME	=	token_free.c\
 				token_print.c\
 				token_predicate1.c\
 				token_predicate2.c\
-				utils.c\
+				utils.c
 
 SIGNAL_NAME	=	signal_handlers.c\
-				signal_setters.c\
+				signal_setters.c
 
 UTILS_NAME	=	ft_realloc.c\
 				strjoin.c\
@@ -104,8 +104,9 @@ UTILS_NAME	=	ft_realloc.c\
 				create_command_utils.c\
 				charmatrix_dup.c\
 				cleanup.c\
+				ft_atoi_ll_nvof.c
 
-OTHER_NAME =	main_utils_debug.c\
+OTHER_NAME =	main_utils_debug.c
 
 MAIN_NAME	=	main_debug.c
 

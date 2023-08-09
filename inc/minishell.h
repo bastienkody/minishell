@@ -43,11 +43,13 @@
 # define OK 1002
 # define CODE_ALLOC 1
 # define BUILTIN_ERR_CODE 2
+
 /*	char const	*/
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
 # define PREFIX_EXPORT "declare -x "
+# define LLINTMIN_CHAR "-9223372036854775808"
 
 /*	here_doc	*/
 # define HD_PROMPT "here_doc > "
@@ -237,6 +239,7 @@ char	**charmatrix_dup(char **src_matrix);
 char	**charmatrix_add_one(char **src_matrix, char *entry);
 char	**charmatrix_del_one(char **src_matrix, char *key);
 char	**charmatrix_buble_sort(char **src_matrix);
+int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
