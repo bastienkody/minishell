@@ -277,7 +277,7 @@ int		execute_complete_command(t_ntree *ast);
 int		execute_logical_expression(t_ntree *ast);
 int		execute_compound_command(t_ntree *ast);
 int		execute_pipeline(t_ntree *ast);
-int		execute(char *cmd_name, char **cmd_args, t_info *info);
+int		execute(char **cmd_args, t_info *info);
 int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);

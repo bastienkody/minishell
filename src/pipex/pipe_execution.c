@@ -51,7 +51,7 @@ void	in_child(t_info *info, int pipefd[2], int *prevpipe)
 		close (info->cmds->fd_in);
 	if (info->cmds->fd_out > NO_REDIR)
 		close (info->cmds->fd_out);
-	execute(info->cmds->args[0], info->cmds->args, info);
+	execute(info->cmds->args, info);
 }
 
 void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
@@ -100,6 +100,7 @@ int	pipex(t_info *info)
 	{
 		if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
 			return (g_exit_status = 1, 1);
+
 		g_exit_status = exec_builtin(info->cmds->args[0], info->cmds->args,
 		&(info->envp), info);
 		return (g_exit_status);

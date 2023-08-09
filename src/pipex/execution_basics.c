@@ -92,25 +92,25 @@ void	wait_cmds(t_info *info)
 	}
 }
 
-int	execute(char *cmd_name, char **cmd_args, t_info *info)
+int	execute(char **cmd_args, t_info *info)
 {
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
 		exit(1);
 	if (!cmd_args)
 		exit(0); // cas redirection sans commande name ni args
-	if (is_a_builtin(cmd_args, cmd_name))
-		exit(exec_builtin(cmd_name, cmd_args, &(info->envp), info));
+	if (is_a_builtin(cmd_args, info->cmds->name))
+		exit(exec_builtin(info->cmds->name, cmd_args, &(info->envp), info));
 	if (access(info->cmds->fullname, F_OK))
 	{
-		if (!ft_strchr(cmd_name, '/'))
-			err_msg(cmd_name, ERR_CNF);
+		if (!ft_strchr(info->cmds->name, '/'))
+			err_msg(info->cmds->name, ERR_CNF);
 		else
-			err_msg(cmd_name, ERR_NSFD);
+			err_msg(info->cmds->name, ERR_NSFD);
 		exit(127);
 	}
 	if (access(info->cmds->fullname, X_OK))
 	{
-		err_msg(cmd_name, ERR_PERMDEN);
+		err_msg(info->cmds->name, ERR_PERMDEN);
 		exit(126);
 	}
 	execve(cmd_args[0], cmd_args, info->envp);
