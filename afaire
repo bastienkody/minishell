@@ -10,3 +10,5 @@
 - corriger signal sigquit avec minishell recursif
 - gerer le code retour en cas d'erreur d'allocation
 
+- erreur a gerer : is a directory
+- message erreur de syntax

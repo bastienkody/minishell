@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/03 11:05:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 17:00:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp)
 		return (str + 2);
 	}
 	word_end = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
-	if (*str == '$')
+	if (*str == '$' && (ft_isalnum(str[1]) || str[1] == '_'))
 		*ret = strjoin2(*ret, expand_wd(extract_wd(str, word_end), envp));
 	else
 		get_next_word_not_expanded(ret, str, word_end);
@@ -64,7 +64,6 @@ char	*expand_dollar(char *str, char **envp)
 			tmp = get_next_word_expanded(&ret, tmp, envp);
 		if (!tmp || !ret)
 			return (free(ret), NULL);
-		// double free possible on tmp (str) when freeing the tree?
 	}
 	return (ret);
 }
@@ -96,11 +95,11 @@ int	check_amb_redir(char *str, char **envp)
 
 	while (str && *str)
 	{
-		if (*str == D_QUOTE)
+		if (str && *str == D_QUOTE)
 			str = ft_strchr(str + 1, D_QUOTE) + 1;
-		if (*str == S_QUOTE)
+		if (str && *str == S_QUOTE)
 			str = ft_strchr(str + 1, S_QUOTE) + 1;
-		else if (*str == '$')
+		else if (str && *str == '$')
 		{
 			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
 				&is_c_blank_nl_dollar_s_d_quote)), envp);
@@ -111,8 +110,8 @@ int	check_amb_redir(char *str, char **envp)
 			free(word);
 			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 		}
-		else
-			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+		else if (str)
+			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote) + 1;
 	}
 	return (TRUE);
 }
