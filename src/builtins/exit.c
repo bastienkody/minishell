@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:19 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/08 19:15:48 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 14:34:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_exit(char **args)
 			- err : "bash: exit: too many arguments"
 
 
-2 trucs chelous : 
+2 trucs chelous :
 	- dans bash : ls | exit does not output "exit" on stderr. it exits the fork (ok)
 	- pas de pb dans minishell pour le return (vs un exit) quand exit avec poly numeric args.
 */
@@ -74,8 +74,8 @@ int	exit_blt(char **args, t_info *info)
 	}
 	if (args[1 + 1]) // poly args numeric
 		return (err_msg(args[0], ERR_TMA), BUILTIN_ERR_CODE); // pb si appele dans dans un pipe/fork?
+	g_exit_status = (unsigned int) ft_atoi(args[1]);
 	free_char_matrix(info->envp);
 	ast_free(info->root_ast); // solo arg numeric
-	g_exit_status = (unsigned int) ft_atoi(args[1]);
 	exit(g_exit_status);
 }
