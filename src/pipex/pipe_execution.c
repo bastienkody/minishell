@@ -96,7 +96,7 @@ int	pipex(t_info *info)
 {
 	int	prevpipe;
 
-	if (!info->cmds->next && is_a_builtin(info->cmds->args, info->cmds->args[0]))
+	if (!info->cmds->next && info->cmds->args && is_a_builtin(info->cmds->args, info->cmds->args[0]))
 	{
 		if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
 			return (g_exit_status = 1, 1);
