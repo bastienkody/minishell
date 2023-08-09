@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:42:56 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 16:35:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ int	cd(char *path, char **envp)
 	else
 		if (cd_error(path) == ALLOC_FAIL)
 			return (ALLOC_FAIL);
-	return (chdir_status);
+	return (chdir_status * -1);
 }

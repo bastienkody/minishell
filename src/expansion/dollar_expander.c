@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 15:12:09 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 17:00:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int	check_amb_redir(char *str, char **envp)
 
 	while (str && *str)
 	{
-		if (*str == D_QUOTE)
+		if (str && *str == D_QUOTE)
 			str = ft_strchr(str + 1, D_QUOTE) + 1;
-		if (*str == S_QUOTE)
+		if (str && *str == S_QUOTE)
 			str = ft_strchr(str + 1, S_QUOTE) + 1;
-		else if (*str == '$')
+		else if (str && *str == '$')
 		{
 			word = expand_wd(extract_wd(str, strfind_if(str + 1, \
 				&is_c_blank_nl_dollar_s_d_quote)), envp);
@@ -110,8 +110,8 @@ int	check_amb_redir(char *str, char **envp)
 			free(word);
 			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
 		}
-		else
-			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote);
+		else if (str)
+			str = strfind_if(str + 1, &is_c_blank_nl_dollar_s_d_quote) + 1;
 	}
 	return (TRUE);
 }
