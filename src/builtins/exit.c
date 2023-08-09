@@ -73,7 +73,7 @@ int	exit_blt(char **args, t_info *info)
 		exit(2);
 	}
 	if (args[1 + 1]) // poly args numeric
-		return (err_msg(args[0], ERR_TMA), BUILTIN_ERR_CODE); // pb si appele dans dans un pipe/fork?
+		return (err_msg(args[0], ERR_TMA), 1); // pb si appele dans dans un pipe/fork?
 	free_char_matrix(info->envp);
 	ast_free(info->root_ast); // solo arg numeric
 	g_exit_status = (unsigned int) ft_atoi(args[1]);
