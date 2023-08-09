@@ -1,19 +1,9 @@
-- close les fd de pipes[DONE] + fd des fichiers, dans enfant et parents
-- regarder readline
-- fonction qui appellent les bultin
-- += dans export
+- += dans export (refaire des tests avec envp malloc sur tous les builtins : g*)
 - unlink les tmpfiles de heredoc
-- gestion ouverture fichiers et fd
-- builtin ne sont pas exécutable
-- si ambigous redirect le programme quitte (a enlever) ✅
-- bug a corriger dans la fonction _word_len de lsttok (quote) ✅
-- extension avant ou après la vérification des tokens ? : avant ✅
-- corriger la création des noeuds compound command
-- gestion des signaux ✅
 - expansion dans les subshells
 - gestion des codes retours
-- fermetures des fichiers inutilises ✅
-- norme
-- vérification des fuites de mémoires
-- vérifier cascade des allocations / desallocations
-- faire des tests
+- corriger signal sigquit avec minishell recursif
+- gerer le code retour en cas d'erreur d'allocation
+- corriger le builtin exit (par rapport aux free)
+- expension "$"
+- cas ou une command n'est constitue que de redirections
