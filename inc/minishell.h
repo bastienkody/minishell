@@ -325,6 +325,8 @@ int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
 int		exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info);
+int		redir_solo_builtin(t_cmd *cmd);
+int		exec_solo_builtin(t_cmd *cmd, t_info *info);
 
 /*	builtins check	*/
 int		is_a_builtin(char **args, char *cmd_name);

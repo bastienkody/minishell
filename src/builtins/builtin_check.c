@@ -52,3 +52,39 @@ int	exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info)
 		return (exit_blt(args, info));
 	return (1);
 }
+
+int	redir_solo_builtin(t_cmd *cmd)
+{
+	if (cmd->fd_in > NO_REDIR && dup2(cmd->fd_in, STDIN) < 0)
+		return (perror(ERR_DUP_IN), BAD_FD);
+	close(cmd->fd_in);
+	if (cmd->fd_out > NO_REDIR && dup2(cmd->fd_out, STDOUT) < 0)
+		return (perror(ERR_DUP_OUT), BAD_FD);
+	close(cmd->fd_out);
+	return (1);
+}
+
+int	exec_solo_builtin(t_cmd *cmd, t_info *info)
+{
+	int	old_stdin;
+	int	old_stdout;
+
+	if (cmd->fd_in < 0 || cmd->fd_out < 0)
+		return (g_exit_status = 1, 1);
+	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
+	{
+		old_stdin = dup(STDIN_FILENO);
+		old_stdout = dup(STDOUT_FILENO);
+		if (redir_solo_builtin(cmd) < 0) // dup failed check
+			return (BAD_FD); // error must be pointing to syscal error
+	}
+	g_exit_status = exec_builtin(cmd->args[0], cmd->args, &(info->envp), info);
+	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
+	{
+		dup2(old_stdin, STDIN_FILENO);
+		dup2(old_stdout, STDOUT_FILENO);
+		close(old_stdin);
+		close(old_stdout);
+	}
+	return (g_exit_status);
+}
