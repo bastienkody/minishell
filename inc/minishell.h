@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 19:18:20 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 19:25:34 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ void	print_item(void *item);
 void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
-void	print_token_error(t_token token);
+void	print_token_error(t_token *token);
 void	err_builtin(const char *builtin, const char *arg, const char *err);
 void	err_msg(const char *str, const char *err);
 
