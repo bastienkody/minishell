@@ -4,7 +4,5 @@
 - gestion des codes retours
 - corriger signal sigquit avec minishell recursif
 - gerer le code retour en cas d'erreur d'allocation
-- corriger le builtin exit (par rapport aux free)
-- expension "$"
-- cas ou une command n'est constitue que de redirections
 - erreur a gerer : is a directory
+- message erreur de syntax
