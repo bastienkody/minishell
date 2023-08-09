@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/08 19:07:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 11:58:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 # define ERR_PARENTHESE "unexpected EOF while looking for matching `)'"
 # define ERR_PERMDEN "Permission denied"
 # define ERR_NSFD "No such file or directory"
-# define ERR_CNF "Command not found"
+# define ERR_CNF "command not found"
 # define ERR_AMB_REDIR "ambiguous redirect\n"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"

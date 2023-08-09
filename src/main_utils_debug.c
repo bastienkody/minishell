@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 19:16:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:31:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	interpret_command(const char *line, char **envp)
 	ast = NULL;
 	return_code = set_ast(&ast, line, envp);
 	if (return_code != OK)
-		return (free_char_matrix(envp), return_code);
-	return (free_char_matrix(envp), execute_ast(ast));
+		return (return_code);
+	return (execute_ast(ast));
 }
 
 void	reader_loop(char **envp)

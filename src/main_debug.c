@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 19:11:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/09 10:44:42 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int	main(int argc, char **argv, char **envp)
 	g_exit_status = 0;
 	envp = charmatrix_dup(envp);
 	reader_loop(envp);
+	free_char_matrix(envp);
 	return (g_exit_status);
 }
