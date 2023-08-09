@@ -1,6 +1,6 @@
 - += dans export (refaire des tests avec envp malloc sur tous les builtins : g*)
 - export ne doit pas commencer par un chiffre
-- atoi overflow long long exit
+- unset error
 - cmd avec / is a directory
 
 - unlink les tmpfiles de heredoc
@@ -9,5 +9,3 @@
 - corriger signal sigquit avec minishell recursif
 - gerer le code retour en cas d'erreur d'allocation
 - message erreur de syntax
-
-- erreur a gerer : is a directory
