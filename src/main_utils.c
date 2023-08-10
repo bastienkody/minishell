@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:57:29 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 11:07:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 14:48:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,18 @@ int	set_ast(t_ntree **ast, const char *line, char **envp)
 	return (OK);
 }
 
-int	interpret_command(const char *line, char **envp)
+int	interpret_command(const char *line, char ***envp)
 {
 	int		return_code;
 
 	__attribute__((cleanup(ast_cleanup))) t_ntree * ast;
 	ast = NULL;
-	return_code = set_ast(&ast, line, envp);
+	return_code = set_ast(&ast, line, *envp);
 	if (return_code != OK)
 		return (return_code);
-	return (execute_ast(ast));
+	return_code = execute_ast(ast);
+	*envp = NULL;
+	return (return_code);
 }
 
 void	reader_loop(char **envp)
@@ -81,7 +83,7 @@ void	reader_loop(char **envp)
 	if (return_code == LINE_EMPTY)
 		return (reader_loop(envp));
 	add_history(line);
-	return_code = interpret_command(line, envp);
+	return_code = interpret_command(line, &envp);
 	if (return_code == EXIT)
 		return ;
 	return (reader_loop(envp));

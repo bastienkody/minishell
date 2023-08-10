@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 13:49:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:19:08 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ typedef struct s_info
 	t_cmd			*cmd_start;
 	pid_t			last_pid;
 	t_ntree			*root_ast;
-	char			**envp;
 	int				exit_code;
 }	t_info;
 
@@ -372,6 +371,6 @@ void	token_list_cleanup(t_llist **token_list);
 void	ast_cleanup(t_ntree **ast);
 
 /*	main_utils	*/
-void	reader_loop(char **envp);
+void	reader_loop(char ***envp);
 
 #endif

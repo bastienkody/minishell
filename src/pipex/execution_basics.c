@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 19:17:19 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:04:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,14 @@ void	wait_cmds(t_info *info)
 
 int	execute(char **cmd_args, t_info *info)
 {
+	char ***envp_ptr = get_token(info->root_ast)->data;
+
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
 		free_and_exit(info, 1);
 	if (!cmd_args)
 		free_and_exit(info, 0); // cas redirection sans commande name ni args
 	if (is_a_builtin(cmd_args, info->cmds->name))
-		free_and_exit(info, exec_builtin(info->cmds->name, cmd_args, &(info->envp), info));
+		free_and_exit(info, exec_builtin(info->cmds->name, cmd_args, envp_ptr, info));
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(info->cmds->name, '/'))
@@ -113,7 +115,7 @@ int	execute(char **cmd_args, t_info *info)
 		err_msg(info->cmds->name, ERR_PERMDEN);
 		free_and_exit(info, 126);
 	}
-	execve(cmd_args[0], cmd_args, info->envp);
+	execve(cmd_args[0], cmd_args, *envp_ptr);
 	perror(ERR_EXECVE);
 	if (info->cmds->fd_in > NO_REDIR)
 		close(info->cmds->fd_in);

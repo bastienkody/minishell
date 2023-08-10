@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 14:00:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:18:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_error(t_llist *token_list)
 // 	return (CONTINUE);
 // }
 
-int	interpret_command(const char *line, char **envp)
+int	interpret_command(const char *line, char ***envp)
 {
 	__attribute__((cleanup(ast_cleanup))) t_ntree * ast;
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
@@ -84,24 +84,28 @@ int	interpret_command(const char *line, char **envp)
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	token_list = expand_token_list(token_list, envp);
+	token_list = expand_token_list(token_list, *envp);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
 	if (check_error(token_list) != 0)
 		return (g_exit_status = 2, CONTINUE); // Token/syntax error
 	ast = parser(token_list);
-	manage_here_doc(ast, envp);
-	manage_redir(ast, envp);
-	if (manage_pipeline(ast, ast, envp) != 0)
+	manage_here_doc(ast, *envp);
+	manage_redir(ast, *envp);
+	if (manage_pipeline(ast, ast, *envp) != 0)
 		return (EXIT);
-	return (execute_ast(ast));
+	get_token(ast)->data = envp;
+	int return_code = execute_ast(ast);
+	// *envp_ptr = get_token(ast)->data;
+	return (return_code);
 }
 
-void	reader_loop(char **envp)
+void	reader_loop(char ***envp)
 {
 	int	return_code;
 
 	__attribute__((cleanup(data_cleanup))) char *line;
+	line = NULL;
 	set_prompt_signals();
 	line = readline("minishell prompt % ");
 	if (line == NULL)

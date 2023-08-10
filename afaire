@@ -3,7 +3,9 @@
 - atoi overflow long long exit
 - cmd avec / is a directory
 
+
 - unlink les tmpfiles de heredoc
 - corriger signal sigquit avec minishell recursif
+- gerer certains erreurs de syntaxe avec les parentheses : ex : (ls) | (date)
 
 - erreur a gerer : is a directory
