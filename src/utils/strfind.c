@@ -32,4 +32,3 @@ char	*strfind_not(const char *str, int c)
 		str++;
 	return ((char *)str);
 }
-
