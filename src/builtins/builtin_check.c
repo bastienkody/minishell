@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 15:14:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 20:35:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info)
 	if (!ft_strcmp(cmd_name, "unset"))
 		return (unset(args, envp));
 	if (!ft_strcmp(cmd_name, "env"))
-		return (env(*envp, NULL));
+		return (env(*envp, NULL, 0));
 	if (!ft_strcmp(cmd_name, "exit"))
 		return (exit_blt(args, info));
 	return (1);
