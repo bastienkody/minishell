@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 11:57:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 15:14:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	exec_solo_builtin(t_cmd *cmd, t_info *info)
 		if (redir_solo_builtin(cmd) < 0) // dup failed check
 			return (BAD_FD); // error must be pointing to syscal error
 	}
-	g_exit_status = exec_builtin(cmd->args[0], cmd->args, &(info->envp), info);
+	g_exit_status = exec_builtin(cmd->args[0], cmd->args, get_token(info->root_ast)->data, info);
 	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
 	{
 		dup2(old_stdin, STDIN_FILENO);

@@ -6,15 +6,25 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:04:13 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/21 17:07:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 10:24:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_node_compound(t_ntree *node)
+// int	is_node_compound(t_ntree *node)
+// {
+// 	return (is_node_equal(node, compound));
+// }
+
+int	is_node_opening_parenthesis(t_ntree *node)
 {
-	return (is_node_equal(node, compound));
+	return (is_node_equal(node, opening_parenthesis));
+}
+
+int	is_node_closing_parenthesis(t_ntree *node)
+{
+	return (is_node_equal(node, closing_parenthesis));
 }
 
 int	is_node_logical_operator(t_ntree *node)
