@@ -4,9 +4,6 @@
 - cmd avec / is a directory
 
 - unlink les tmpfiles de heredoc
-- gestion des codes retours
 - corriger signal sigquit avec minishell recursif
-- gerer le code retour en cas d'erreur d'allocation
-- message erreur de syntax (fait mais peut mieux faire)
 
 - erreur a gerer : is a directory

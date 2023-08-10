@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 10:59:56 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 13:49:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	lstreduce(t_llist	**llst);
 // t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
-int		check_syntax(t_llist *token_list);
+int	check_syntax(t_llist *token_list, char **operator_err);
 t_llist	*leaf_node_dup(t_llist *leaf_node);
 
 /*	utils token	*/
@@ -305,7 +305,8 @@ void	print_item(void *item);
 void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
-void	print_token_error(t_token *token);
+void	print_syntax_error(const char *str);
+// void	print_token_error(t_token *token);
 void	err_builtin(const char *builtin, const char *arg, const char *err);
 void	err_msg(const char *str, const char *err);
 
