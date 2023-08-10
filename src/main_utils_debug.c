@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 12:46:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 12:50:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ int	check_error(t_llist *token_list)
 	if (llstfind_if(token_list, (t_predicate)is_token_error) != NULL)
 		return (-1);
 	if (!are_parenthesis_closed(token_list))
+	{
+		ft_putendl_fd("PARENTHESIS ERROR", 2);
 		return (-1);
+	}
 	if (check_syntax(token_list) != 0)
 	{
+		ft_putendl_fd("SYNTAX ERROR", 2);
 		g_exit_status = 2;
 		return (-1);
 	}
