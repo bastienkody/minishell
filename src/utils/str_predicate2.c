@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:54:39 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 13:54:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 13:55:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,35 @@ int	is_str_compound(const char *str)
 	return (0);
 }
 
+// int	is_str_word(const char *str)
+// {
+// 	int		is_inside_quote;
+// 	char	quote;
+
+// 	is_inside_quote = 0;
+// 	quote = '\0';
+// 	while (*str != '\0')
+// 	{
+// 		if (ft_strchr("\'\"", *str))
+// 		{
+// 			if (is_inside_quote && *str == quote)
+// 			{
+// 				is_inside_quote = 0;
+// 				quote = '\0';
+// 			}
+// 			else if (!is_inside_quote)
+// 			{
+// 				is_inside_quote = 1;
+// 				quote = *str;
+// 			}
+// 		}
+// 		str++;
+// 	}
+// 	return (!is_inside_quote);
+// }
+
 int	is_str_word(const char *str)
 {
-	int		is_inside_quote;
-	char	quote;
-
-	is_inside_quote = 0;
-	quote = '\0';
-	while (*str != '\0')
-	{
-		if (ft_strchr("\'\"", *str))
-		{
-			if (is_inside_quote && *str == quote)
-			{
-				is_inside_quote = 0;
-				quote = '\0';
-			}
-			else if (!is_inside_quote)
-			{
-				is_inside_quote = 1;
-				quote = *str;
-			}
-		}
-		str++;
-	}
-	return (!is_inside_quote);
+	(void)str;
+	return (1);
 }

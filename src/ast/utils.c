@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:01:54 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/05 16:50:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 10:02:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ static const char	*g_type_str[]
 	"less",
 	"dgreat",
 	"dless",
-	"compound",
+	"opening_parenthesis",
+	"closing_parenthesis",
 	"word",
 	"error",
+	"amibougs_word",
 	"COMPLETE_COMMAND",
 	"COMPOUND_COMMAND",
 	"LOGICAL_EXPRESSION",

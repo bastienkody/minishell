@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:10:02 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:21:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 13:46:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ void	print_llist(t_llist *start)
 	ft_fprintf(1, "------------------\n");
 }
 
-void	print_token_error(t_token token)
+void	print_syntax_error(const char *str)
 {
-	ft_fprintf(1, "syntax error near unexpected token : %s\n", token.data);
+	ft_fprintf(2, "%s`%s\'\n", ERR_SYNTAX, str);
 }
+
+// void	print_token_error(t_token *token)
+// {
+// 	ft_fprintf(1, "syntax error near unexpected token : %s\n", token->data);
+// }

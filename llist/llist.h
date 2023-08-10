@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 17:44:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 10:57:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ size_t	llstsize(t_llist *llst);
 size_t	llstsize_range(t_llist *begin, t_llist *end);
 t_llist	*llstfirst(t_llist *llst);
 t_llist	*llstlast(const t_llist *llst);
+t_llist	*llstlast_range(const t_llist *begin, const t_llist *end);
 int		llstempty(t_llist *llst);
 void	llstadd_back(t_llist **llst, t_llist *new);
 void	llstadd_front(t_llist **llst, t_llist *new);

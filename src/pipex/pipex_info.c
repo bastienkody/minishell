@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:23 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 19:08:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 14:50:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_info	*get_pipex_info(t_ntree *pipeline_node, t_ntree *root, char **envp)
 
 	if (pipex_info == NULL)
 		return (NULL);
-	pipex_info->envp = envp;
 	pipex_info->exit_code = 0;
 	pipex_info->last_pid = 0;
 	pipex_info->root_ast = root;

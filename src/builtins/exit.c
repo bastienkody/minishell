@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:19 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 19:20:19 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 14:25:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,5 @@ int	exit_blt(char **args, t_info *info)
 	}
 	else
 		g_exit_status = (unsigned char) code;
-	free_char_matrix(info->envp);
-	ast_free(info->root_ast);
-	exit(g_exit_status);
+	return (free_and_exit(info, g_exit_status), g_exit_status);
 }
