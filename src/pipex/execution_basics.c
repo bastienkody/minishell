@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <dirent.h>
 
 // /* returns null on malloc err ; ["", NULL] if no path or no envp	*/
 char	**get_path(char **envp)
@@ -92,16 +93,12 @@ void	wait_cmds(t_info *info)
 	}
 }
 
-int	execute(char **cmd_args, t_info *info)
+void	check_cmd_access(t_info *info)
 {
-	char ***envp_ptr = get_token(info->root_ast)->data;
+	void	*tmp_dir_ptr;
 
-	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
-		free_and_exit(info, 1);
-	if (!cmd_args)
-		free_and_exit(info, 0); // cas redirection sans commande name ni args
-	if (is_a_builtin(cmd_args, info->cmds->name))
-		free_and_exit(info, exec_builtin(info->cmds->name, cmd_args, envp_ptr, info));
+	if (!*(info->cmds->name))
+		free_and_exit(info, 0);
 	if (access(info->cmds->fullname, F_OK))
 	{
 		if (!ft_strchr(info->cmds->name, '/'))
@@ -110,11 +107,36 @@ int	execute(char **cmd_args, t_info *info)
 			err_msg(info->cmds->name, ERR_NSFD);
 		free_and_exit(info, 127);
 	}
+	tmp_dir_ptr = opendir(info->cmds->fullname);
+	if (tmp_dir_ptr)
+	{
+		closedir(tmp_dir_ptr);
+		//free(tmp_dir_ptr);
+		err_msg(info->cmds->name, ERR_IAD);
+		free_and_exit(info, 126);
+	}
 	if (access(info->cmds->fullname, X_OK))
 	{
 		err_msg(info->cmds->name, ERR_PERMDEN);
 		free_and_exit(info, 126);
 	}
+}
+
+int	execute(char **cmd_args, t_info *info)
+{
+	char	***envp_ptr = get_token(info->root_ast)->data;
+	int		i;
+
+	i = -1;
+	while(cmd_args[++i])
+		ft_fprintf(1, "args[%i]=%s\n", i, cmd_args[i]);
+	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
+		free_and_exit(info, 1);
+	if (!cmd_args)
+		free_and_exit(info, 0); // cas redirection sans commande name ni args
+	if (is_a_builtin(cmd_args, info->cmds->name))
+		free_and_exit(info, exec_builtin(info->cmds->name, cmd_args, envp_ptr, info));
+	check_cmd_access(info);
 	execve(cmd_args[0], cmd_args, *envp_ptr);
 	perror(ERR_EXECVE);
 	if (info->cmds->fd_in > NO_REDIR)

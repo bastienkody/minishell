@@ -63,6 +63,7 @@
 # define ERR_PERMDEN "Permission denied"
 # define ERR_NSFD "No such file or directory"
 # define ERR_CNF "command not found"
+# define ERR_IAD "Is a directory"
 # define ERR_AMB_REDIR "ambiguous redirect\n"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
