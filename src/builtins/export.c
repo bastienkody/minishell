@@ -47,7 +47,7 @@ int	is_key_valid(char *key, char *line)
 {
 	const char	*bad_char = ",.:!?~*^%$#@[]{}+-/\\";
 
-	if (ft_strlen(key) == 0)
+	if (ft_strlen(key) == 0 || (*key != 95 && !ft_isalpha(*key)))
 		return (err_builtin("export", line, ERR_ID_EXPORT), 0);
 	while (*key)
 	{

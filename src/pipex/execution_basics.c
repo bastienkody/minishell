@@ -125,11 +125,11 @@ void	check_cmd_access(t_info *info)
 int	execute(char **cmd_args, t_info *info)
 {
 	char	***envp_ptr = get_token(info->root_ast)->data;
-	int		i;
+	//int		i;
 
-	i = -1;
-	while(cmd_args[++i])
-		ft_fprintf(1, "args[%i]=%s\n", i, cmd_args[i]);
+	//i = -1;
+	//while(cmd_args[++i])
+	//	ft_fprintf(1, "args[%i]=%s\n", i, cmd_args[i]);
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
 		free_and_exit(info, 1);
 	if (!cmd_args)
