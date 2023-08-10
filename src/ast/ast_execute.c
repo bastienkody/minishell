@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:08:53 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 15:08:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 12:43:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int	execute_pipeline(t_ntree *ast)
 	return (pipex(pipex_info));
 }
 
-int	execute_compound_command(t_ntree *ast)
-{
-	t_ntree *const			child = ast->children->content;
-	const t_execute_ast_fun	execute_function = get_execute_function(child);
+// int	execute_compound_command(t_ntree *ast)
+// {
+// 	t_ntree *const			child = ast->children->content;
+// 	const t_execute_ast_fun	execute_function = get_execute_function(child);
 
-	return (execute_function(child));
-}
+// 	return (execute_function(child));
+// }
 
 int	execute_logical_expression(t_ntree *ast)
 {

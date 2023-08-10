@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 13:49:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 10:01:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static const size_t g_nb_data_token = 11;
 
 static const t_type g_data_token[]
-	= {word, ppipe, or, compound, and, great, dgreat, less, dless, FILENAME, HERE_END};
+	= {word, ppipe, or, opening_parenthesis, closing_parenthesis, and, great, dgreat, less, dless, FILENAME, HERE_END};
 
 static void	free_pipex_info(t_info *pipex_info)
 {

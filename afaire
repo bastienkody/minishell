@@ -4,7 +4,6 @@
 - cmd avec / is a directory
 
 - unlink les tmpfiles de heredoc
-- expansion dans les subshells
 - gestion des codes retours
 - corriger signal sigquit avec minishell recursif
 - gerer le code retour en cas d'erreur d'allocation

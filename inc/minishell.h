@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 19:25:34 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 10:59:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ typedef enum e_type
 	less,
 	dgreat,
 	dless,
-	compound,
+	opening_parenthesis,
+	closing_parenthesis,
 	word,
-	ambigous_word,
 	error,
+	ambigous_word,
 	COMPLETE_COMMAND,
 	COMPOUND_COMMAND,
 	LOGICAL_EXPRESSION,
@@ -188,21 +189,24 @@ int		is_node_inside(t_ntree *node, t_type types[], size_t n);
 int		is_node_equal(t_ntree *node, t_type search_type);
 t_llist	*create_child_range(t_llist	*begin, t_llist *end, t_ntree *(*create)(t_llist *, t_llist *));
 t_llist	*create_child(t_llist *llist, t_ntree *(*create)(t_llist *));
-t_ntree	*create_complete_command(t_llist	*leaf_list);
-t_ntree	*create_compound_command(t_llist	*leaf);
-t_ntree	*create_pipeline(t_llist	*begin, t_llist *end);
+t_ntree	*create_complete_command(t_llist *leaf_list);
+t_ntree	*create_compound_command(t_llist *begin, t_llist *end);
+t_ntree	*create_pipeline(t_llist *begin, t_llist *end);
 t_ntree	*create_logical_expression(t_llist	*begin, t_llist *end);
 t_ntree	*create_command(t_llist	*begin, t_llist *end);
-t_llist	*create_suffixes(t_llist	*begin, t_llist *end);
-t_llist	*create_prefixes(t_llist	*begin, t_llist *end);
-t_ntree	*create_redirection(t_llist	*begin, t_llist *end);
+t_llist	*create_suffixes(t_llist *begin, t_llist *end);
+t_llist	*create_prefixes(t_llist *begin, t_llist *end);
+t_ntree	*create_redirection(t_llist *begin, t_llist *end);
 t_ntree	*create_classic_redirection(t_llist	*begin, t_llist *end);
-t_ntree	*create_here_doc(t_llist	*begin, t_llist *end);
-int		is_node_word(t_ntree	*node);
-int		is_node_logical_operator(t_ntree	*node);
-int		is_node_pipe(t_ntree	*node);
+t_ntree	*create_here_doc(t_llist *begin, t_llist *end);
+int		is_node_word(t_ntree *node);
+int		is_node_logical_operator(t_ntree *node);
+int		is_node_pipe(t_ntree *node);
 int		is_node_redirection(t_ntree	*node);
-int		is_node_compound(t_ntree	*node);
+int		is_node_opening_parenthesis(t_ntree *node);
+int		is_node_closing_parenthesis(t_ntree *node);
+int		is_range_compound(t_llist *begin, t_llist *end);
+// int		is_node_compound(t_ntree	*node);
 
 /* token */
 int		is_token_word(t_token *token);
