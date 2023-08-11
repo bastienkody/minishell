@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/11 15:41:12 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 16:38:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,6 @@ int	check_error(t_llist *token_list)
 // 	return (CONTINUE);
 // }
 
-int is_token_empty_word(t_token *token)
-{
-	return (token->type == word && is_str_blank(token->data));
-}
-
 int	interpret_command(const char *line, t_minishell *minishell)
 {
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
@@ -90,7 +85,6 @@ int	interpret_command(const char *line, t_minishell *minishell)
 	token_list = expand_token_list(token_list, minishell);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	llstremove_if(&token_list, (void *)is_token_empty_word, (void *)token_free);
 	if (llstsize(token_list) == 0)
 		return (minishell->status = 0, CONTINUE);
 	if (check_error(token_list) != 0)
