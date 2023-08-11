@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 19:46:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 15:02:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 // gerer sans erreur les cas ou envp est null (env -i ./minishell)
 
 /*	wd, wd_end and ret no need to be protected (cf. notion)	*/
-char	*get_next_word_expanded(char **ret, char *str, char **envp)
+char	*get_next_word_expanded(char **ret, char *str, char **envp, int status)
 {
 	char	*word_end;
 	char	*last_stratus;
 
 	if (*str == '$' && *(str + 1) == '?')
 	{
-		last_stratus = ft_itoa(g_exit_status);
+		last_stratus = ft_itoa(status);
 		*ret = strjoin2(*ret, last_stratus);
 		return (str + 2);
 	}
@@ -41,7 +41,7 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end)
 }
 
 /*	apply on all WORD except : here_doc lim + already expanded WORD	*/
-char	*expand_dollar(char *str, char **envp)
+char	*expand_dollar(char *str, char **envp, int status)
 {
 	char	*tmp;
 	char	*ret;
@@ -61,7 +61,7 @@ char	*expand_dollar(char *str, char **envp)
 		if (is_under_d_quote < 0 && *tmp == S_QUOTE && next_s_quote)
 			tmp = get_next_word_not_expanded(&ret, tmp, next_s_quote + 1);
 		else
-			tmp = get_next_word_expanded(&ret, tmp, envp);
+			tmp = get_next_word_expanded(&ret, tmp, envp, status);
 		if (!tmp || !ret)
 			return (free(ret), NULL);
 	}
@@ -69,7 +69,7 @@ char	*expand_dollar(char *str, char **envp)
 }
 
 /*	quoted stuff are expanded + str cant be null (cf. launch hd)	*/
-char	*expand_dollar_here_doc(char *str, char **envp)
+char	*expand_dollar_here_doc(char *str, char **envp, int status)
 {
 	char	*tmp;
 	char	*ret;
@@ -80,7 +80,7 @@ char	*expand_dollar_here_doc(char *str, char **envp)
 		return (free(str), free(ret), NULL);
 	while (*tmp)
 	{
-		tmp = get_next_word_expanded(&ret, tmp, envp);
+		tmp = get_next_word_expanded(&ret, tmp, envp, status);
 		if (!tmp || !ret)
 			return (free(str), free(ret), NULL);
 	}

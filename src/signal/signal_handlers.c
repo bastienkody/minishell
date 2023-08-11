@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 17:44:01 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/03 10:47:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 12:17:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_prompt_signals(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_exit_status = 130;
+		g_exit_status = signum;
 		ft_putendl_fd("", 1);
 		rl_on_new_line();
 		rl_replace_line("", 1);
@@ -36,7 +36,7 @@ void	handle_here_doc_signals(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_exit_status = 130;
+		g_exit_status = signum;
 		close(0);
 	}
 }

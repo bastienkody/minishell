@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:08:48 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 12:43:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 14:17:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	*get_execute_function(t_ntree *ast)
 		return (execute_pipeline);
 	else if (type == COMPLETE_COMMAND)
 		return (execute_complete_command);
-	// else if (type == COMPOUND_COMMAND)
-	// 	return (execute_compound_command);
 	else if (type == LOGICAL_EXPRESSION)
 		return (execute_logical_expression);
 	else

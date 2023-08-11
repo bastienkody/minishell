@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 19:57:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 15:41:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,37 +81,30 @@ int is_token_empty_word(t_token *token)
 	return (token->type == word && is_str_blank(token->data));
 }
 
-int	interpret_command(const char *line, char ***envp)
+int	interpret_command(const char *line, t_minishell *minishell)
 {
-	__attribute__((cleanup(ast_cleanup))) t_ntree * ast;
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
-	ast = NULL;
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	token_list = expand_token_list(token_list, *envp);
+	token_list = expand_token_list(token_list, minishell);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
 	llstremove_if(&token_list, (void *)is_token_empty_word, (void *)token_free);
 	if (llstsize(token_list) == 0)
-		return (g_exit_status = 0, CONTINUE);
-	// llstiter(token_list, (void *)token_print);
+		return (minishell->status = 0, CONTINUE);
 	if (check_error(token_list) != 0)
-		return (g_exit_status = 2, CONTINUE); // Token/syntax error
-	ast = parser(token_list);
-	// ast_print(ast);
-	// puts("");
-	manage_here_doc(ast, *envp);
-	manage_redir(ast, *envp);
-	if (manage_pipeline(ast, ast, *envp) != 0)
+		return (minishell->status = 2, CONTINUE); // Token/syntax error
+	minishell->ast = parser(token_list);
+	manage_here_doc(minishell->ast, minishell->envp, minishell->status);
+	manage_redir(minishell->ast, minishell->envp);
+	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
-	get_token(ast)->data = envp;
-	int return_code = execute_ast(ast);
-	// *envp_ptr = get_token(ast)->data;
-	return (return_code);
+	minishell->status = execute_ast(minishell);
+	return (CONTINUE);
 }
 
-void	reader_loop(char ***envp)
+void	reader_loop(t_minishell *minishell)
 {
 	int	return_code;
 
@@ -122,10 +115,10 @@ void	reader_loop(char ***envp)
 	if (line == NULL)
 		return ;
 	else if (is_str_blank(line))
-		return (reader_loop(envp));
+		return (reader_loop(minishell));
 	add_history(line);
-	return_code = interpret_command(line, envp);
+	return_code = interpret_command(line, minishell);
 	if (return_code == EXIT)
-		return ((void)(g_exit_status = 1));
-	return (reader_loop(envp));
+		return ((void)(minishell->status = 1));
+	return (reader_loop(minishell));
 }

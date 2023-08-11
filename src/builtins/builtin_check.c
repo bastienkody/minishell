@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 20:35:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 14:51:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ int	is_a_builtin(char **args, char *cmd_name)
 	return (0);
 }
 
-int	exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info)
+int	exec_builtin(char *cmd_name, char **args, t_minishell *minishell)
 {
 	if (!ft_strcmp(cmd_name, "echo"))
 		return (echo(args));
 	if (!ft_strcmp(cmd_name, "cd"))
-		return (cd(args, *envp));
+		return (cd(args[1], minishell->envp));
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd_name, "export"))
-		return (export(args, envp));
+		return (export(args, &minishell->envp));
 	if (!ft_strcmp(cmd_name, "unset"))
-		return (unset(args, envp));
+		return (unset(args, &minishell->envp));
 	if (!ft_strcmp(cmd_name, "env"))
-		return (env(*envp, NULL, 0));
+		return (env(minishell->envp, NULL, 0));
 	if (!ft_strcmp(cmd_name, "exit"))
-		return (exit_blt(args, info));
+		return (exit_blt(args, minishell));
 	return (1);
 }
 
@@ -64,13 +64,13 @@ int	redir_solo_builtin(t_cmd *cmd)
 	return (1);
 }
 
-int	exec_solo_builtin(t_cmd *cmd, t_info *info)
+int	exec_solo_builtin(t_cmd *cmd, t_minishell *minishell)
 {
 	int	old_stdin;
 	int	old_stdout;
 
 	if (cmd->fd_in < 0 || cmd->fd_out < 0)
-		return (g_exit_status = 1, 1);
+		return (minishell->status = 1, 1);
 	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
 	{
 		old_stdin = dup(STDIN_FILENO);
@@ -78,8 +78,7 @@ int	exec_solo_builtin(t_cmd *cmd, t_info *info)
 		if (redir_solo_builtin(cmd) < 0)
 			return (BAD_FD);
 	}
-	g_exit_status = exec_builtin(cmd->args[0], cmd->args, \
-	get_token(info->root_ast)->data, info);
+	minishell->status = exec_builtin(cmd->args[0], cmd->args, minishell);
 	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
 	{
 		dup2(old_stdin, STDIN_FILENO);
@@ -87,5 +86,5 @@ int	exec_solo_builtin(t_cmd *cmd, t_info *info)
 		close(old_stdin);
 		close(old_stdout);
 	}
-	return (g_exit_status);
+	return (minishell->status);
 }
