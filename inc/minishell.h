@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 15:30:19 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 18:10:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ t_token	*token_new(t_type type, void *data);
 t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
-int		is_type_inside(t_type type, const t_type types[], size_t n);
+int		is_type_inside(t_type type, const t_type types[]);
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
@@ -250,6 +250,14 @@ char	**charmatrix_add_one(char **src_matrix, char *entry);
 char	**charmatrix_del_one(char **src_matrix, char *key);
 char	**charmatrix_buble_sort(char **src_matrix);
 int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
+
+/* syntax check*/
+int	check_syntax(t_llist *token_list, char **operator_err);
+int	check_logical_operator(t_llist *node);
+int	check_pipe(t_llist *node);
+int	check_redirection(t_llist *node);
+int	check_opening_parenthesis(t_llist *node);
+int	check_closing_parenthesis(t_llist *node);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);

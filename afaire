@@ -1,6 +1,5 @@
 - += dans export
 
-
 - unlink les tmpfiles de heredoc
 - corriger signal sigquit avec minishell recursif
 - gerer certains erreurs de syntaxe avec les parentheses : ex : (ls) | (date)
