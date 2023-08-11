@@ -6,14 +6,14 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:29 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/01 17:38:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 20:34:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // pb with export a=g* (bad free)
-// export +=. 
+// export +=.
 
 
 /* builtin ret 1, execve ret 0	*/
@@ -86,7 +86,7 @@ int	export(char **args, char ***envp)
 		sorted = charmatrix_buble_sort(*envp);
 		if (!sorted)
 			return (ALLOC_FAIL);
-		return (env(sorted, PREFIX_EXPORT), free_char_matrix(sorted), 0);
+		return (env(sorted, PREFIX_EXPORT, 1), free_char_matrix(sorted), 0);
 	}
 	ret = 0;
 	key_value[0] = NULL;

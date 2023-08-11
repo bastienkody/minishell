@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 15:19:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/10 20:35:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ void	print_leaf(t_ntree *leaf);
 int		pwd(void);
 int		echo(char **argv);
 int		cd(char *path, char **envp);
-int		env(char **envp, char *prefix);
+int		env(char **envp, char *prefix, int quote);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
 int		exit_blt(char **args, t_info *info);
