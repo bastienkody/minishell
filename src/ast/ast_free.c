@@ -6,16 +6,14 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 10:01:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 18:23:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const size_t g_nb_data_token = 11;
-
 static const t_type g_data_token[]
-	= {word, ppipe, or, opening_parenthesis, closing_parenthesis, and, great, dgreat, less, dless, FILENAME, HERE_END};
+	= {word, ppipe, or, opening_parenthesis, closing_parenthesis, and, great, dgreat, less, dless, FILENAME, HERE_END, -1};
 
 static void	free_pipex_info(t_info *pipex_info)
 {
@@ -36,7 +34,7 @@ static void	free_node(t_token *token)
 		free_pipex_info(token->data);
 	if ((type == HERE_DOC || type == REDIRECTION) && (intptr_t)token->data != -2)
 		close((intptr_t)token->data);
-	else if (is_type_inside(type, g_data_token, g_nb_data_token))
+	else if (is_type_inside(type, g_data_token))
 		free(token->data);
 	free(token);
 }

@@ -2,5 +2,4 @@
 
 - unlink les tmpfiles de heredoc
 - corriger signal sigquit avec minishell recursif
-- gerer certains erreurs de syntaxe avec les parentheses : ex : (ls) | (date)
-- améliorer la fonction check syntax
+- gerer les signaux
