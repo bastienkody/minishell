@@ -1,5 +1,4 @@
-- += dans export (refaire des tests avec envp malloc sur tous les builtins : g*)
-- unset error
+- += dans export
 
 
 - unlink les tmpfiles de heredoc

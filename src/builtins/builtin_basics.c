@@ -26,7 +26,7 @@ char	*get_envalue(char *key, char **envp)
 		free(key_comp);
 		envp++;
 	}
-	return (ft_strdup("")); // not a malloc error ..
+	return (ft_strdup(""));
 }
 
 int	add_envar(char *key, char *value, char ***envp)

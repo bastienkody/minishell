@@ -39,7 +39,7 @@ int	exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info)
 	if (!ft_strcmp(cmd_name, "echo"))
 		return (echo(args));
 	if (!ft_strcmp(cmd_name, "cd"))
-		return (cd(args[1], *envp));
+		return (cd(args, *envp));
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd_name, "export"))
@@ -75,10 +75,11 @@ int	exec_solo_builtin(t_cmd *cmd, t_info *info)
 	{
 		old_stdin = dup(STDIN_FILENO);
 		old_stdout = dup(STDOUT_FILENO);
-		if (redir_solo_builtin(cmd) < 0) // dup failed check
-			return (BAD_FD); // error must be pointing to syscal error
+		if (redir_solo_builtin(cmd) < 0)
+			return (BAD_FD);
 	}
-	g_exit_status = exec_builtin(cmd->args[0], cmd->args, get_token(info->root_ast)->data, info);
+	g_exit_status = exec_builtin(cmd->args[0], cmd->args, \
+	get_token(info->root_ast)->data, info);
 	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
 	{
 		dup2(old_stdin, STDIN_FILENO);
