@@ -12,10 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// pb with export a=g* (bad free)
-// export +=.
-
-
 /* builtin ret 1, execve ret 0	*/
 int	check_export(char **args)
 {
@@ -52,34 +48,47 @@ int	is_key_valid(char *key, char *line)
 	while (*key)
 	{
 		if (ft_strchr(bad_char, *key))
-			return (err_builtin("export", line, ERR_ID_EXPORT), 0);
+			if (!(*key == '+' && *(key + 1) == '\0'))
+				return (err_builtin("export", line, ERR_ID_EXPORT), 0);
 		key++;
 	}
 	return (1);
 }
 
-int	export_each(char *key_value[2], char *entry, char ***envp)
+int	export_each(char *key_value[3], char *entry, char ***envp)
 {
-	if (is_var_set(key_value[0], *envp) == 1 && ft_strchr(entry, '='))
+	char	*key;
+
+	key = ft_strdup(key_value[0]);
+	if (!key)
+		return (ALLOC_FAIL);
+	if (ft_strchr(key, '+'))
+		key[ft_strlen(key) - 1] = '\0';
+	if (is_var_set(key, *envp) == 1 && ft_strchr(entry, '='))
 	{
-		if (mod_envar(key_value[0], key_value[1], *envp) == ALLOC_FAIL)
-			return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
+		if (ft_strchr(key_value[0], '+'))
+		{
+			if (concat_envar(key_value[0], key_value[1], *envp) == ALLOC_FAIL)
+				return (free_char_matrix(key_value), free(key), ALLOC_FAIL);
+		}
+		else if (mod_envar(key_value[0], key_value[1], *envp) == ALLOC_FAIL)
+			return (free_char_matrix(key_value), free(key), ALLOC_FAIL);
 	}
-	else if (is_var_set(key_value[0], *envp) == 0 && ft_strchr(entry, '='))
+	else if (is_var_set(key, *envp) == 0 && ft_strchr(entry, '='))
 	{
 		if (add_envar(key_value[0], key_value[1], envp) == ALLOC_FAIL)
-			return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
+			return (free_char_matrix(key_value), free(key), ALLOC_FAIL);
 	}
-	else if (is_var_set(key_value[0], *envp) == ALLOC_FAIL)
-		return (free(key_value[0]), free(key_value[1]), ALLOC_FAIL);
-	return (TRUE);
+	else if (is_var_set(key, *envp) == ALLOC_FAIL)
+		return (free_char_matrix(key_value), free(key), ALLOC_FAIL);
+	return (free(key), TRUE);
 }
 
 int	export(char **args, char ***envp)
 {
 	int		ret;
 	char	**sorted;
-	char	*key_value[2];
+	char	*key_value[3];
 
 	if (!args[1])
 	{
@@ -91,6 +100,7 @@ int	export(char **args, char ***envp)
 	ret = 0;
 	key_value[0] = NULL;
 	key_value[1] = NULL;
+	key_value[2] = NULL;
 	while (*(++args))
 	{
 		if (args_to_key_value(key_value, *args) == 0)

@@ -17,30 +17,6 @@ int	check_exit(char **args)
 	return ((void) args, 1);
 }
 
-/*
-	si pas d'arg : exit last status
-	si premier argument str :
-		- clean and exit
-		- print "exit" on stdout
-		- code 2
-		- stderr : "bash: exit: abc: numeric argument required" abc is the first arg
-	si premier arg est nb:
-		si seul arg :
-			- clean and exit
-			- print "exit" on stdout
-			- code = atoi_255(arg) (use unsigned byte)
-		si poly arg :
-			- do not clean and exit but still...
-			- print "exit" on stdout
-			- code 1
-			- err : "bash: exit: too many arguments"
-
-
-2 trucs chelous :
-	- dans bash : ls | exit does not output "exit" on stderr. it exits the fork (ok)
-	- pas de pb dans minishell pour le return (vs un exit) quand exit avec poly numeric args.
-*/
-
 /* 1 str ; 0 nb */
 int	check_first_arg(char *arg)
 {
@@ -70,7 +46,7 @@ int	exit_blt(char **args, t_minishell *minishell)
 		err_builtin(args[0], args[1], ERR_NMR);
 		(minishell->status = 2, free_and_exit(minishell));
 	}
-	if (args[1 + 1]) // poly args (first arg numeric)
+	if (args[1 + 1])
 		return (err_msg(args[0], ERR_TMA), 1);
 	code = 0;
 	if (ft_atoi_ll_novf(args[1], &code) == FALSE)

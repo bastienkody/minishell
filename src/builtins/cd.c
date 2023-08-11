@@ -16,24 +16,11 @@
 /* builtin (ret 1) or execve (ret 0)	*/
 int	check_cd(char **args)
 {
-	int	i;
-	int	argc;
-
-	argc = 0;
-	i = 0;
-	while (args && args[i])
-	{
-		argc++;
-		i++;
-	}
-	if (argc != 2)
-		return (0);
-	if (args[1][0] == '-')
-		return (0);
+	(void)args;
 	return (1);
 }
 
-int	cd_error(char *path)
+int	cd_error_display(char *path)
 {
 	char		*msg;
 	const char	*prefix = "minishell: cd: ";
@@ -46,29 +33,41 @@ int	cd_error(char *path)
 	return (0);
 }
 
-int	cd(char *path, char **envp)
+int	mod_pwd_oldpwd(char ***envp)
 {
-	int		chdir_status;
 	char	*export_args[3];
 
-	chdir_status = chdir(path);
+	export_args[0] = "export";
+	export_args[1] = strjoin3("OLDPWD", "=", get_envalue("PWD", *envp));
+	export_args[2] = NULL;
+	if (export(export_args, envp) == ALLOC_FAIL)
+		return (free(export_args[1]), ALLOC_FAIL);
+	free(export_args[1]);
+	export_args[0] = "export";
+	export_args[1] = strjoin3("PWD", "=", getcwd(NULL, 0));
+	export_args[2] = NULL;
+	if (export(export_args, envp) == ALLOC_FAIL)
+		return (free(export_args[1]), ALLOC_FAIL);
+	free(export_args[1]);
+	return (1);
+}
+
+int	cd(char **args, char **envp)
+{
+	int		chdir_status;
+
+	if (!args[1])
+		return (err_msg(args[0], "Please provide an argument"), 1);
+	if (args[2])
+		return (err_msg(args[0], ERR_TMA), 1);
+	chdir_status = chdir(args[1]);
 	if (!chdir_status)
 	{
-		export_args[0] = "export";
-		export_args[1] = strjoin3("OLDPWD", "=", get_envalue("PWD", envp));
-		export_args[2] = NULL;
-		if (export(export_args, &envp) == ALLOC_FAIL)
-			return (free(export_args[1]), ALLOC_FAIL);
-		free(export_args[1]);
-		export_args[0] = "export";
-		export_args[1] = strjoin3("PWD", "=", getcwd(NULL, 0));
-		export_args[2] = NULL;
-		if (export(export_args, &envp) == ALLOC_FAIL)
-			return (free(export_args[1]), ALLOC_FAIL);
-		free(export_args[1]);
+		if (mod_pwd_oldpwd(&envp) == ALLOC_FAIL)
+			return (ALLOC_FAIL);
 	}
 	else
-		if (cd_error(path) == ALLOC_FAIL)
+		if (cd_error_display(args[1]) == ALLOC_FAIL)
 			return (ALLOC_FAIL);
 	return (chdir_status * -1);
 }

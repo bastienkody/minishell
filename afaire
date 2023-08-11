@@ -1,7 +1,4 @@
-- += dans export (refaire des tests avec envp malloc sur tous les builtins : g*)
-- export ne doit pas commencer par un chiffre
-- unset error
-- cmd avec / is a directory
+- += dans export
 
 
 - unlink les tmpfiles de heredoc

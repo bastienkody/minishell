@@ -18,6 +18,7 @@ OTHER_DIR	=	./
 
 BUILT_NAME	=	builtin_basics.c\
 				builtin_check.c\
+				builtin_envar.c\
 				pwd.c\
 				export.c\
 				unset.c\

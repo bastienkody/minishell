@@ -39,7 +39,6 @@ int	print_variable(const char *str, const char *prefix, int quote)
 	if (write(1, "\n", 1) < 0)
 		return (-1);
 	return (0);
-
 }
 
 int	env(char **envp, char *prefix, int quote)

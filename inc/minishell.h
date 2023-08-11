@@ -327,7 +327,7 @@ void	print_leaf(t_ntree *leaf);
 /* builtins	*/
 int		pwd(void);
 int		echo(char **argv);
-int		cd(char *path, char **envp);
+int		cd(char **args, char **envp);
 int		env(char **envp, char *prefix, int quote);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
@@ -338,6 +338,7 @@ char	*get_envalue(char *key, char **envp);
 int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
+int		concat_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
 int		exec_builtin(char *cmd_name, char **args, t_minishell *minishell);
 int		redir_solo_builtin(t_cmd *cmd);

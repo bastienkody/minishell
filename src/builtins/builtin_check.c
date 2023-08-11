@@ -75,8 +75,8 @@ int	exec_solo_builtin(t_cmd *cmd, t_minishell *minishell)
 	{
 		old_stdin = dup(STDIN_FILENO);
 		old_stdout = dup(STDOUT_FILENO);
-		if (redir_solo_builtin(cmd) < 0) // dup failed check
-			return (BAD_FD); // error must be pointing to syscal error
+		if (redir_solo_builtin(cmd) < 0)
+			return (BAD_FD);
 	}
 	minishell->status = exec_builtin(cmd->args[0], cmd->args, minishell);
 	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
