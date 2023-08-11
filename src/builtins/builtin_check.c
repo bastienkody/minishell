@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:36:03 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 14:51:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 16:11:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exec_builtin(char *cmd_name, char **args, t_minishell *minishell)
 	if (!ft_strcmp(cmd_name, "echo"))
 		return (echo(args));
 	if (!ft_strcmp(cmd_name, "cd"))
-		return (cd(args[1], minishell->envp));
+		return (cd(args, minishell->envp));
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (pwd());
 	if (!ft_strcmp(cmd_name, "export"))
