@@ -1,6 +1,7 @@
 - rapatrier les erreurs de builtin au lieu de lancer a execve() pour celles 
-qui n'ont pas de binaires : env, unset, exit, export, cd
-vs : echo, pwd, 
+qui n'ont pas de binaires : env, unset, exit, export, cd (vs : echo et pwd) 
+- identificateurs not good for unset to implement
+
 - buitlin to be called with execve not found. modify cmd fullname, cmdname et cmd_args[0] to do
 
 - expansion / quote removal autour d'un argument : il ne faut pas supp les whitespaces
