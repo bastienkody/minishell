@@ -12,11 +12,14 @@
 
 #include "../../inc/minishell.h"
 
-int	is_c_blank_nl_dollar_s_d_quote(int c)
+int	is_c_end_envar(int c)
 {
-	const char	*envar_delim = " \t\n$\'\"";
+	//const char	*envar_delim = " %[]{}\t\n$\'\"";
 
-	return (ft_strchr(envar_delim, c) != NULL);
+	if (!ft_isalnum(c) && c != '_')
+		return (1);
+	return (0);
+	//return (ft_strchr(envar_delim, c) != NULL);
 }
 
 int	is_there_a_blank(char *str)
