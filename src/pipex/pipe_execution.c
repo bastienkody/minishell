@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/09 19:49:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 14:44:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 	return (close(old_fd), 0);
 }
 
-void	in_child(t_info *info, int pipefd[2], int *prevpipe)
+void	in_child(t_info *info, int pipefd[2], int *prevpipe, t_minishell *minishell)
 {
 	close(pipefd[0]);
 	if (!info->cmds->next)
@@ -51,7 +51,7 @@ void	in_child(t_info *info, int pipefd[2], int *prevpipe)
 		close (info->cmds->fd_in);
 	if (info->cmds->fd_out > NO_REDIR)
 		close (info->cmds->fd_out);
-	execute(info->cmds->args, info);
+	execute(info->cmds->args, info, minishell);
 }
 
 void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
@@ -70,7 +70,7 @@ void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
 		close (info->cmds->fd_out);
 }
 
-void	fork_pipe_dup(int *prevpipe, t_info *info)
+void	fork_pipe_dup(int *prevpipe, t_info *info, t_minishell *minishell)
 {
 	int	pipefd[2];
 	int	pid;
@@ -83,7 +83,7 @@ void	fork_pipe_dup(int *prevpipe, t_info *info)
 	if (pid == 0)
 	{
 		set_child_signals();
-		in_child(info, pipefd, prevpipe);
+		in_child(info, pipefd, prevpipe, minishell);
 	}
 	else if (pid > 0)
 	{
@@ -92,19 +92,18 @@ void	fork_pipe_dup(int *prevpipe, t_info *info)
 	}
 }
 
-int	pipex(t_info *info)
+int	pipex(t_minishell *minishell, t_info *info)
 {
 	int	prevpipe;
 
 	if (!info->cmds->next && info->cmds->args && is_a_builtin(info->cmds->args, info->cmds->args[0]))
-		return (exec_solo_builtin(info->cmds, info));
+		return (exec_solo_builtin(info->cmds, minishell));
 	prevpipe = dup(0);
 	while (info->cmds)
 	{
-		fork_pipe_dup(&prevpipe, info);
+		fork_pipe_dup(&prevpipe, info, minishell);
 		info->cmds = info->cmds->next;
 	}
-	wait_cmds(info);
-	g_exit_status = analyze_status(info);
-	return (g_exit_status);
+	wait_cmds(info);;
+	return (analyze_status(info));
 }

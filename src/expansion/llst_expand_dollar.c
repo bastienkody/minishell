@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 19:50:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 14:58:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	is_prev_redir_operator(t_llist *node)
 // 	return (0);
 // }
 
-static t_llist	*get_expand_node(t_llist *node, char **envp)
+static t_llist	*get_expand_node(t_llist *node, char **envp, int status)
 {
 	t_llist	*new_node;
 	char	*new_data;
@@ -69,7 +69,7 @@ static t_llist	*get_expand_node(t_llist *node, char **envp)
 	if (new_node == NULL)
 		return (NULL);
 	token = new_node->content;
-	new_data = expand_dollar(token->data, envp);
+	new_data = expand_dollar(token->data, envp, status);
 	if (new_data == NULL)
 		return (llstdelone(new_node, (void *)token_free), NULL);
 	free(token->data);
@@ -77,7 +77,7 @@ static t_llist	*get_expand_node(t_llist *node, char **envp)
 	return (new_node);
 }
 
-t_llist	*llst_expand_dollar(t_llist *token_list, char **envp)
+t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status)
 {
 	t_llist	*new_token_list;
 	t_llist	*new_node;
@@ -94,7 +94,7 @@ t_llist	*llst_expand_dollar(t_llist *token_list, char **envp)
 			if (is_prev_redir_operator(current) && !check_amb_redir(current_token->data, envp))
 				new_node = get_ambigous_node(current);
 			else
-				new_node = get_expand_node(current, envp);
+				new_node = get_expand_node(current, envp, status);
 		}
 		else
 			new_node = node_dup(current);

@@ -6,16 +6,15 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 19:17:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 15:03:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 14:29:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_and_exit(t_info *info, int status)
+void	free_and_exit(t_minishell *minishell)
 {
-	char ***envp_ptr = get_token(info->root_ast)->data;
-	free_char_matrix(*envp_ptr);
-	ast_free(info->root_ast);
-	exit(status);
+	free_char_matrix(minishell->envp);
+	ast_free(minishell->ast);
+	exit(minishell->status);
 }

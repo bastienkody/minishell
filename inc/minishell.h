@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 20:35:00 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 15:30:19 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,18 @@ typedef struct s_info
 	t_cmd			*cmds;
 	t_cmd			*cmd_start;
 	pid_t			last_pid;
-	t_ntree			*root_ast;
 	int				exit_code;
 }	t_info;
 
+typedef struct s_minishell
+{
+	t_ntree			*ast;
+	char			**envp;
+	unsigned char	status;
+}	t_minishell;
+
 typedef int	(*t_f)(char **);
-typedef int	(*t_execute_ast_fun)(t_ntree *ast);
+typedef int	(*t_execute_ast_fun)(t_minishell *minishell, t_ntree *ast);
 
 extern int	g_exit_status;
 
@@ -257,9 +263,9 @@ char	*get_key_2(char *line);
 char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
-char	*expand_dollar(char *str, char **envp);
-char	*expand_dollar_here_doc(char *str, char **envp);
-char	*expand_dollar_redir_file(char *str, char **envp);
+char	*expand_dollar(char *str, char **envp, int status);
+char	*expand_dollar_here_doc(char *str, char **envp, int status);
+char	*expand_dollar_redir_file(char *str, char **envp, int status);
 
 /*	general expansion	*/
 char	*rm_peer_quotes(char *str);
@@ -267,38 +273,38 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_in(const char *filename);
-int		open_here_doc(const char *lim, char **envp);
+int		open_here_doc(const char *lim, char **envp, int status);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
-void	manage_here_doc(t_ntree *ast, char **envp);
+void	manage_here_doc(t_ntree *ast, char **envp, int status);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
 char	*get_redirection_filename(t_ntree *redirection_node);
 char	*get_here_end(t_ntree *here_doc_node);
 int		open_redirections(t_type type, const char *filename);
-void	free_and_exit(t_info *info, int status);
+void	free_and_exit(t_minishell *minishell);
 
 /*	execution	*/
 void	*get_execute_function(t_ntree *ast);
-int		execute_ast(t_ntree *ast);
-int		execute_complete_command(t_ntree *ast);
-int		execute_logical_expression(t_ntree *ast);
-int		execute_compound_command(t_ntree *ast);
-int		execute_pipeline(t_ntree *ast);
-int		execute(char **cmd_args, t_info *info);
+int		execute_ast(t_minishell *minishell);
+int		execute_complete_command(t_minishell *minishell, t_ntree *ast);
+int		execute_logical_expression(t_minishell *minishell, t_ntree *ast);
+int		execute_compound_command(t_minishell *minishell, t_ntree *ast);
+int		execute_pipeline(t_minishell *minishell, t_ntree *ast);
+int		execute(char **cmd_args, t_info *info, t_minishell *minishell);
 int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
-int		manage_pipeline(t_ntree *ast, t_ntree *root, char **envp);
+int		manage_pipeline(t_minishell *minishell, t_ntree *ast);
 int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
 t_llist *get_ambigous_node(t_llist *node);
 t_llist	*llst_remove_quote(t_llist *token_list);
-t_llist	*llst_expand_dollar(t_llist *token_list, char **envp);
+t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
 t_llist *llst_expand_wildcard(t_llist *token_list, char **envp);
-t_info	*get_pipex_info(t_ntree *pipeline_node, t_ntree *root, char **envp);
+t_info	*get_pipex_info(t_minishell *minishell, t_ntree *pipeline_node);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
-int		pipex(t_info *info);
+int		pipex(t_minishell *minishell, t_info *info);
 
 /*	printers	*/
 void	print_item(void *item);
@@ -325,7 +331,7 @@ int		cd(char *path, char **envp);
 int		env(char **envp, char *prefix, int quote);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
-int		exit_blt(char **args, t_info *info);
+int		exit_blt(char **args, t_minishell *minishell);
 
 /*	builtins utils	*/
 char	*get_envalue(char *key, char **envp);
@@ -333,9 +339,9 @@ int		supp_envar(char *key, char ***envp);
 int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
-int		exec_builtin(char *cmd_name, char **args, char ***envp, t_info *info);
+int		exec_builtin(char *cmd_name, char **args, t_minishell *minishell);
 int		redir_solo_builtin(t_cmd *cmd);
-int		exec_solo_builtin(t_cmd *cmd, t_info *info);
+int		exec_solo_builtin(t_cmd *cmd, t_minishell *minishell);
 
 /*	builtins check	*/
 int		is_a_builtin(char **args, char *cmd_name);
@@ -364,7 +370,7 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
-t_llist	*expand_token_list(t_llist *token_list, char **envp);
+t_llist	*expand_token_list(t_llist *token_list, t_minishell *minishell);
 
 /*	cleanup	*/
 void	data_cleanup(char **data);
@@ -372,6 +378,6 @@ void	token_list_cleanup(t_llist **token_list);
 void	ast_cleanup(t_ntree **ast);
 
 /*	main_utils	*/
-void	reader_loop(char ***envp);
+void	reader_loop(t_minishell *minishell);
 
 #endif

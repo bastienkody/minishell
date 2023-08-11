@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:19 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/10 14:25:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/11 15:53:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,18 @@ int	check_first_arg(char *arg)
 	return (0);
 }
 
-int	exit_blt(char **args, t_info *info)
+int	exit_blt(char **args, t_minishell *minishell)
 {
 	const char		*exit_msg = "exit\n";
 	long long int	code;
 
 	write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
 	if (!args[1])
-		free_and_exit(info, g_exit_status);
+		free_and_exit(minishell);
 	if (check_first_arg(args[1])) // first arg str
 	{
 		err_builtin(args[0], args[1], ERR_NMR);
-		g_exit_status = 2;
-		free_and_exit(info, g_exit_status);
+		(minishell->status = 2, free_and_exit(minishell));
 	}
 	if (args[1 + 1]) // poly args (first arg numeric)
 		return (err_msg(args[0], ERR_TMA), 1);
@@ -77,9 +76,11 @@ int	exit_blt(char **args, t_info *info)
 	if (ft_atoi_ll_novf(args[1], &code) == FALSE)
 	{
 		err_builtin(args[0], args[1], ERR_NMR);
-		g_exit_status = 2;
+		minishell->status = 2;
 	}
 	else
-		g_exit_status = (unsigned char) code;
-	return (free_and_exit(info, g_exit_status), g_exit_status);
+	{
+		minishell->status = code;
+	}
+	return (free_and_exit(minishell), code);
 }
