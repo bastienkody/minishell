@@ -14,12 +14,9 @@
 
 int	is_c_end_envar(int c)
 {
-	//const char	*envar_delim = " %[]{}\t\n$\'\"";
-
 	if (!ft_isalnum(c) && c != '_')
 		return (1);
 	return (0);
-	//return (ft_strchr(envar_delim, c) != NULL);
 }
 
 int	is_there_a_blank(char *str)

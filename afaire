@@ -1,4 +1,7 @@
-- echo -n -n (toutes les options valides sont des options; cf tester echo 17)
+- rapatrier les erreurs de builtin au lieu de lancer a execve() pour celles 
+qui n'ont pas de binaires : env, unset, exit, export, cd
+vs : echo, pwd, 
+- buitlin to be called with execve not found. modify cmd fullname, cmdname et cmd_args[0] to do
 
 - expansion / quote removal autour d'un argument : il ne faut pas supp les whitespaces
   echo "    " -> doit output les whitespaces (cf. test echo 14)
@@ -8,5 +11,3 @@
 
 - unlink les tmpfiles de heredoc
 - corriger signal sigquit avec minishell recursif
-- gerer certains erreurs de syntaxe avec les parentheses : ex : (ls) | (date)
-- améliorer la fonction check syntax

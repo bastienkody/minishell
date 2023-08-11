@@ -99,7 +99,7 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 
 	if (!*(info->cmds->name))
 		(minishell->status = 0, free_and_exit(minishell));
-	if (access(info->cmds->fullname, F_OK))
+	if (access(info->cmds->fullname, F_OK) || !ft_strcmp(info->cmds->name, ".."))
 	{
 		if (!ft_strchr(info->cmds->name, '/'))
 			err_msg(info->cmds->name, ERR_CNF);
@@ -108,7 +108,7 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 		(minishell->status = 127, free_and_exit(minishell));
 	}
 	tmp_dir_ptr = opendir(info->cmds->fullname);
-	if (tmp_dir_ptr)
+	if (tmp_dir_ptr )
 	{
 		closedir(tmp_dir_ptr);
 		//free(tmp_dir_ptr);
