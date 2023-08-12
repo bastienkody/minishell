@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/11 16:48:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:50:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ static t_llist	*get_remove_quote_node(t_llist *node)
 	return (new_node);
 }
 
-int	is_word_empty_quote(const char *str)
-{
-	return (ft_strcmp(str, "\'\'") == 0 || ft_strcmp(str, "\"\"") == 0);
-}
-
 t_llist	*llst_remove_quote(t_llist *token_list)
 {
 	t_llist	*new_token_list;
@@ -78,7 +73,7 @@ t_llist	*llst_remove_quote(t_llist *token_list)
 	while (current != NULL)
 	{
 		current_token = current->content;
-		if (current_token->type == word && !is_prev_here_operator(current) && !is_word_empty_quote(current_token->data))
+		if (current_token->type == word && !is_prev_here_operator(current) && !is_str_empty_quote(current_token->data))
 			new_node = get_remove_quote_node(current);
 		else
 			new_node = node_dup(current);

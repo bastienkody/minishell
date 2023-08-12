@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/12 17:12:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:42:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ int	check_error(t_llist *token_list)
 
 int	interpret_command(const char *line, t_minishell *minishell)
 {
+	int return_code;
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	token_list = expand_token_list(token_list, minishell);
-	if (token_list == NULL)
-		return (EXIT); // malloc error
-	if (llstsize(token_list) == 0)
+	return_code = expand_token_list(&token_list, minishell);
+	if (return_code == EXIT)
+		return (EXIT);
+	if (return_code == CONTINUE)
 		return (minishell->status = 0, CONTINUE);
 	if (check_error(token_list) != 0)
 		return (minishell->status = 2, CONTINUE); // Token/syntax error

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/12 17:10:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:49:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@
 # define STDOUT 1
 # define STDERR 2
 # define EAMBREDIR 42
-# define CONTINUE 1000
-# define EXIT 1001
-# define OK 1002
+# define CONTINUE -2
+# define EXIT -1
+# define OK 0
 # define CODE_ALLOC 1
 # define BUILTIN_ERR_CODE 2
 
@@ -186,6 +186,7 @@ int		is_str_cl_p(const char *str);
 int		is_str_quote(const char *str);
 int		is_str_operator(const char *str);
 int		is_str_blank(const char *str);
+int		is_str_empty_quote(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
@@ -382,7 +383,7 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
-t_llist	*expand_token_list(t_llist *token_list, t_minishell *minishell);
+int		expand_token_list(t_llist **token_list, t_minishell *minishell);
 
 /*	cleanup	*/
 void	data_cleanup(char **data);
