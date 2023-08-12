@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/11 16:38:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:12:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ int	interpret_command(const char *line, t_minishell *minishell)
 	if (check_error(token_list) != 0)
 		return (minishell->status = 2, CONTINUE); // Token/syntax error
 	minishell->ast = parser(token_list);
-	manage_here_doc(minishell->ast, minishell->envp, minishell->status);
+	manage_here_doc(minishell->ast, minishell->envp, minishell->status, &minishell->here_doc_files);
 	manage_redir(minishell->ast, minishell->envp);
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
 	minishell->status = execute_ast(minishell);
-	return (CONTINUE);
+	return (free_loop(minishell), CONTINUE);
 }
 
 void	reader_loop(t_minishell *minishell)
