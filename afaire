@@ -9,4 +9,4 @@ vs : echo, pwd,
   -> $EMPTY : code retour 0
   -> "$EMPTY" : code 127 + cmd not found
 
-- corriger signal sigquit avec minishell recursif
+- here_doc -> mauvais code erreur + erreurs si CTRL-D ou CTRL-C

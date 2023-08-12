@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/12 17:49:14 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 20:18:08 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ typedef struct s_minishell
 typedef int	(*t_f)(char **);
 typedef int	(*t_execute_ast_fun)(t_minishell *minishell, t_ntree *ast);
 
-extern int	g_exit_status;
+extern int	g_last_signum;
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
