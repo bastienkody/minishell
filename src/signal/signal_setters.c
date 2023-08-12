@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 17:43:51 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/02 17:52:06 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 19:57:09 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	set_prompt_signals(void)
 
 void	set_parent_signals(void)
 {
-	signal(SIGINT, handle_parent_signals);
-	signal(SIGQUIT, handle_parent_signals);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	set_child_signals(void)
