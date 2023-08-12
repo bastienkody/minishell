@@ -48,11 +48,12 @@ int	is_only_n(char *str)
 int	check_echo(char **args)
 {
 	++args;
-	if (args && *args && **args == '-')
+	while (args && *args && **args == '-')
 	{
 		if (ft_strchr(*args, 'e') || ft_strchr(*args, 'E'))
 			if (is_only_e_e_n(*args))
 				return (0);
+		args++;
 	}
 	return (1);
 }
@@ -64,7 +65,7 @@ int	echo(char **args)
 
 	args++;
 	trailing_nl = 1;
-	if (args && *args && !ft_strncmp("-n", *args, 2) && is_only_n(*args))
+	while (args && *args && !ft_strncmp("-n", *args, 2) && is_only_n(*args))
 	{
 		trailing_nl = 0;
 		args++;

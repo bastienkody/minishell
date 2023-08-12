@@ -264,7 +264,7 @@ int		is_c_dollar(int c);
 int		is_c_quote(int c);
 int		is_there_a_blank(char *str);
 int		is_str_quote_enclosed(const char *str);
-int		is_c_blank_nl_dollar_s_d_quote(int c);
+int		is_c_end_envar(int c);
 int		check_amb_redir(char *str, char **envp);
 char	*get_key(char *line);
 char	*get_key_2(char *line);

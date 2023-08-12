@@ -343,14 +343,14 @@ int	g_exit_status;
 }*/
 
 //	QUOTE REMOVAL
-/*int	main(void)
+int	main(void)
 {
-	char	*str = ft_strdup("salut\"\'yo\"");
+	char	*str = ft_strdup("exit \'666\'\"666\"666");
 
 	str = rm_peer_quotes(str);
 	ft_fprintf(1, "%s\n", str);
 	free(str);
-}*/
+}
 
 // REDIR FILE EXPANSION
 /*int	main(int argc, char **argv, char **envp)

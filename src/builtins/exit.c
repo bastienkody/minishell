@@ -38,7 +38,8 @@ int	exit_blt(char **args, t_minishell *minishell)
 	const char		*exit_msg = "exit\n";
 	long long int	code;
 
-	write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
+	if (isatty(STDOUT_FILENO))
+		write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
 	if (!args[1])
 		free_and_exit(minishell);
 	if (check_first_arg(args[1])) // first arg str
