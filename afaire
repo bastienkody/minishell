@@ -1,13 +1,12 @@
-- rapatrier les erreurs de builtin au lieu de lancer a execve() pour celles 
+- rapatrier les erreurs de builtin au lieu de lancer a execve() pour celles
 qui n'ont pas de binaires : env, unset, exit, export, cd
-vs : echo, pwd, 
+vs : echo, pwd,
 - buitlin to be called with execve not found. modify cmd fullname, cmdname et cmd_args[0] to do
 
 - expansion / quote removal autour d'un argument : il ne faut pas supp les whitespaces
   echo "    " -> doit output les whitespaces (cf. test echo 14)
-- expansion de $EMPTY vs "$EMPTY" : 
+- expansion de $EMPTY vs "$EMPTY" :
   -> $EMPTY : code retour 0
   -> "$EMPTY" : code 127 + cmd not found
 
-- unlink les tmpfiles de heredoc
 - corriger signal sigquit avec minishell recursif

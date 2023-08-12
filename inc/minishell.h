@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 15:30:19 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:49:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@
 # define STDOUT 1
 # define STDERR 2
 # define EAMBREDIR 42
-# define CONTINUE 1000
-# define EXIT 1001
-# define OK 1002
+# define CONTINUE -2
+# define EXIT -1
+# define OK 0
 # define CODE_ALLOC 1
 # define BUILTIN_ERR_CODE 2
 
@@ -137,6 +137,7 @@ typedef struct s_info
 typedef struct s_minishell
 {
 	t_ntree			*ast;
+	t_llist			*here_doc_files;
 	char			**envp;
 	unsigned char	status;
 }	t_minishell;
@@ -185,6 +186,7 @@ int		is_str_cl_p(const char *str);
 int		is_str_quote(const char *str);
 int		is_str_operator(const char *str);
 int		is_str_blank(const char *str);
+int		is_str_empty_quote(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
@@ -226,7 +228,7 @@ t_token	*token_new(t_type type, void *data);
 t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
-int		is_type_inside(t_type type, const t_type types[], size_t n);
+int		is_type_inside(t_type type, const t_type types[]);
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
@@ -251,6 +253,14 @@ char	**charmatrix_del_one(char **src_matrix, char *key);
 char	**charmatrix_buble_sort(char **src_matrix);
 int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
 
+/* syntax check*/
+int	check_syntax(t_llist *token_list, char **operator_err);
+int	check_logical_operator(t_llist *node);
+int	check_pipe(t_llist *node);
+int	check_redirection(t_llist *node);
+int	check_opening_parenthesis(t_llist *node);
+int	check_closing_parenthesis(t_llist *node);
+
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
 int		is_c_quote(int c);
@@ -273,16 +283,18 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_in(const char *filename);
-int		open_here_doc(const char *lim, char **envp, int status);
+int		open_here_doc(const char *lim, char **envp, int status, t_llist **here_doc_list_ptr);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
-void	manage_here_doc(t_ntree *ast, char **envp, int status);
+void	manage_here_doc(t_ntree *ast, char **envp, int status, t_llist **here_doc_list_ptr);
+void	remove_heredoc_tmpfile(char *pathname);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
 char	*get_redirection_filename(t_ntree *redirection_node);
 char	*get_here_end(t_ntree *here_doc_node);
 int		open_redirections(t_type type, const char *filename);
 void	free_and_exit(t_minishell *minishell);
+void	free_loop(t_minishell *minishell);
 
 /*	execution	*/
 void	*get_execute_function(t_ntree *ast);
@@ -371,7 +383,7 @@ t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
-t_llist	*expand_token_list(t_llist *token_list, t_minishell *minishell);
+int		expand_token_list(t_llist **token_list, t_minishell *minishell);
 
 /*	cleanup	*/
 void	data_cleanup(char **data);

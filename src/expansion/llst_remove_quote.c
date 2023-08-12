@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_quote_remove.c                              :+:      :+:    :+:   */
+/*   llst_remove_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/08 17:13:00 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:50:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_llist	*llst_remove_quote(t_llist *token_list)
 	while (current != NULL)
 	{
 		current_token = current->content;
-		if (current_token->type == word && !is_prev_here_operator(current))
+		if (current_token->type == word && !is_prev_here_operator(current) && !is_str_empty_quote(current_token->data))
 			new_node = get_remove_quote_node(current);
 		else
 			new_node = node_dup(current);

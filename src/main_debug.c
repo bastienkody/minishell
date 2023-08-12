@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:51:36 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/11 12:26:17 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:16:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,7 @@ int	main(int argc, char **argv, char **envp)
 
 	((void)argc, (void)argv);
 	minishell = (t_minishell){};
-	// g_exit_status = 0;
 	minishell.envp = charmatrix_dup(envp);
 	reader_loop(&minishell);
-	free_char_matrix(minishell.envp);
-	return (minishell.status);
+	free_and_exit(&minishell);
 }

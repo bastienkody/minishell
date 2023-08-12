@@ -6,17 +6,17 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 15:40:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 16:50:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	open_node_here_doc(t_ntree *node, char **envp, int status)
+int	open_node_here_doc(t_ntree *node, char **envp, int status, t_llist **here_doc_list_ptr)
 {
 	char * const here_end = get_here_end(node);
 
-	return (open_here_doc(here_end, envp, status));
+	return (open_here_doc(here_end, envp, status, here_doc_list_ptr));
 
 }
 
@@ -77,7 +77,7 @@ void	manage_redir(t_ntree *ast, char **envp)
 	}
 }
 
-void	manage_here_doc(t_ntree *ast, char **envp, int status)
+void	manage_here_doc(t_ntree *ast, char **envp, int status, t_llist **here_doc_list_ptr)
 {
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;
@@ -87,7 +87,7 @@ void	manage_here_doc(t_ntree *ast, char **envp, int status)
 		return ;
 	if (type == HERE_DOC)
 	{
-		fd = open_node_here_doc(ast, envp, status);
+		fd = open_node_here_doc(ast, envp, status, here_doc_list_ptr);
 		if (fd < 0)
 			return ;
 		get_token(ast)->data = (void *)(intptr_t)fd;
@@ -97,7 +97,7 @@ void	manage_here_doc(t_ntree *ast, char **envp, int status)
 		current = ast->children;
 		while (current != NULL)
 		{
-			manage_here_doc(current->content, envp, status);
+			manage_here_doc(current->content, envp, status, here_doc_list_ptr);
 			current = current->next;
 		}
 	}
