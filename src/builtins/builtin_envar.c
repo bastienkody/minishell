@@ -68,7 +68,6 @@ int	concat_envar(char *key, char *new_value, char **envp)
 	char	*key_comp;
 
 	key[ft_strlen(key) - 1] = '\0';
-	ft_fprintf(1, "concat key:%s\n", key);
 	while (envp && *envp)
 	{
 		key_comp = get_key_2(*envp);

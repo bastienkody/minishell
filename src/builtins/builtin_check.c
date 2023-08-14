@@ -47,7 +47,7 @@ int	exec_builtin(char *cmd_name, char **args, t_minishell *minishell)
 	if (!ft_strcmp(cmd_name, "unset"))
 		return (unset(args, &minishell->envp));
 	if (!ft_strcmp(cmd_name, "env"))
-		return (env(minishell->envp, NULL, 0));
+		return (env(args, minishell->envp, NULL, 0));
 	if (!ft_strcmp(cmd_name, "exit"))
 		return (exit_blt(args, minishell));
 	return (1);

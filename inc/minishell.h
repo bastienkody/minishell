@@ -48,7 +48,7 @@
 # define DELIM " \t<>&|()"
 # define S_QUOTE '\''
 # define D_QUOTE '\"'
-# define PREFIX_EXPORT "declare -x "
+# define PFX_EXPORT "declare -x "
 # define LLINTMIN_CHAR "-9223372036854775808"
 
 /*	here_doc	*/
@@ -76,6 +76,8 @@
 # define ERR_FORK "minishell: fork"
 # define ERR_ALLOC "Cannot allocate memory"
 # define PWD_USAGE "pwd: usage: pwd [-LP]\n"
+# define ENV_USAGE "env: usage (minishell): env [--]\n"
+# define EXPORT_USAGE "export: usage (minishell): export [name[=value] ...]\n"
 
 typedef enum e_type
 {
@@ -254,6 +256,7 @@ char	**charmatrix_add_one(char **src_matrix, char *entry);
 char	**charmatrix_del_one(char **src_matrix, char *key);
 char	**charmatrix_buble_sort(char **src_matrix);
 int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
+void	ft_bzero_matrix(char **matrix, size_t n);
 
 /* syntax check*/
 int	check_syntax(t_llist *token_list, char **operator_err);
@@ -342,7 +345,7 @@ void	print_leaf(t_ntree *leaf);
 int		pwd(char **args);
 int		echo(char **argv);
 int		cd(char **args, char **envp);
-int		env(char **envp, char *prefix, int quote);
+int		env(char **args, char **envp, char *prefix, int quote);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
 int		exit_blt(char **args, t_minishell *minishell);
@@ -354,6 +357,7 @@ int		add_envar(char *key, char *value, char ***envp);
 int		mod_envar(char *key, char *new_value, char **envp);
 int		concat_envar(char *key, char *new_value, char **envp);
 int		is_var_set(char *key, char **envp);
+int		is_key_valid(char *key, char *line);
 int		exec_builtin(char *cmd_name, char **args, t_minishell *minishell);
 int		redir_solo_builtin(t_cmd *cmd);
 int		exec_solo_builtin(t_cmd *cmd, t_minishell *minishell);

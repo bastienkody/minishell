@@ -14,8 +14,7 @@
 
 int	check_env(char **args)
 {
-	if (args[1])
-		return (0);
+	(void)args;
 	return (1);
 }
 
@@ -41,10 +40,16 @@ int	print_variable(const char *str, const char *prefix, int quote)
 	return (0);
 }
 
-int	env(char **envp, char *prefix, int quote)
+int	env(char **args, char **envp, char *prefix, int quote)
 {
 	int		i;
 
+	if (args && args[1] && ft_strcmp(args[1], "--"))
+	{
+		err_builtin("env", args[1], "unexpected argument/option");
+		write(2, ENV_USAGE, ft_strlen(ENV_USAGE));
+		return (BUILTIN_ERR_CODE);
+	}
 	i = -1;
 	while (envp && envp[++i])
 		if (print_variable(envp[i], prefix, quote) < 0)

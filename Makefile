@@ -106,6 +106,7 @@ UTILS_NAME	=	ft_realloc.c\
 				charmatrix_dup.c\
 				cleanup.c\
 				free_and_exit.c\
+				ft_bzero_matrix.c\
 				ft_atoi_ll_nvof.c
 
 OTHER_NAME =	main_utils_debug.c
