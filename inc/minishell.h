@@ -64,6 +64,7 @@
 # define ERR_NSFD "No such file or directory"
 # define ERR_CNF "command not found"
 # define ERR_IAD "Is a directory"
+# define ERR_INVOPT "invalid option"
 # define ERR_AMB_REDIR "ambiguous redirect\n"
 # define ERR_ID_EXPORT "not a valid identifier"
 # define ERR_TMA "too many arguments"
@@ -74,6 +75,7 @@
 # define ERR_PIPE "minishell: pipe"
 # define ERR_FORK "minishell: fork"
 # define ERR_ALLOC "Cannot allocate memory"
+# define PWD_USAGE "pwd: usage: pwd [-LP]\n"
 
 typedef enum e_type
 {
@@ -337,7 +339,7 @@ void	ast_print(t_ntree *ast);
 void	print_leaf(t_ntree *leaf);
 
 /* builtins	*/
-int		pwd(void);
+int		pwd(char **args);
 int		echo(char **argv);
 int		cd(char **args, char **envp);
 int		env(char **envp, char *prefix, int quote);
