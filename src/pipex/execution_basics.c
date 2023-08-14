@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 14:44:35 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 19:55:57 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,19 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	return (free_char_matrix(path), ft_strdup(""));
 }
 
+void	print_signal(int signum)
+{
+	if (signum == SIGINT)
+		ft_putendl_fd("", 2);
+	else if (signum == SIGQUIT)
+		ft_putendl_fd("Quit (core dumped)", 2);
+}
+
 int	analyze_status(t_info *info)
 {
-	int		status;
-	t_cmd	*last_cmd;
+	int				status;
+	t_cmd			*last_cmd;
+	unsigned char	signum;
 
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
@@ -75,7 +84,11 @@ int	analyze_status(t_info *info)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
-		return (WTERMSIG(status) + 128);
+	{
+		signum = WTERMSIG(status);
+		print_signal(signum);
+		return (signum + 128);
+	}
 	return (status);
 }
 

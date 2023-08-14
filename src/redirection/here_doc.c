@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 15:14:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 16:49:00 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,31 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int status)
 }
 
 /*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
-int	open_here_doc(const char *lim, char **envp, int status)
+int	open_here_doc(const char *lim, char **envp, int status, t_llist **here_doc_list_ptr)
 {
 	int			fd;
 	static int	nb = 0;
 	char		*pathname;
+	t_llist		*new_node;
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb), HD_END);
 	if (!pathname)
 		return (ALLOC_FAIL);
+	new_node = llstnew(pathname);
+	if (new_node == NULL)
+		return (free(pathname), ALLOC_FAIL);
+	llstadd_back(here_doc_list_ptr, new_node);
 	nb++;
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
-		return (free(pathname), perror("open here_doc in w"), BAD_FD);
+		return (perror("open here_doc in w"), BAD_FD);
 	if (!launch_here_doc(fd, lim, envp, status))
-		return (free(pathname), close (fd), ALLOC_FAIL);
+		return (close (fd), ALLOC_FAIL);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)
-		return (free(pathname), perror("open here_doc in rd"), BAD_FD);
-	return (free(pathname), fd);
+		return (perror("open here_doc in rd"), BAD_FD);
+	return (fd);
 }
 
 void	remove_heredoc_tmpfile(char *pathname)

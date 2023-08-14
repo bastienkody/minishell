@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/11 15:41:12 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 20:18:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,44 +76,42 @@ int	check_error(t_llist *token_list)
 // 	return (CONTINUE);
 // }
 
-int is_token_empty_word(t_token *token)
-{
-	return (token->type == word && is_str_blank(token->data));
-}
-
 int	interpret_command(const char *line, t_minishell *minishell)
 {
+	int return_code;
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT); // malloc error
-	token_list = expand_token_list(token_list, minishell);
-	if (token_list == NULL)
-		return (EXIT); // malloc error
-	llstremove_if(&token_list, (void *)is_token_empty_word, (void *)token_free);
-	if (llstsize(token_list) == 0)
+	return_code = expand_token_list(&token_list, minishell);
+	if (return_code == EXIT)
+		return (EXIT);
+	if (return_code == CONTINUE)
 		return (minishell->status = 0, CONTINUE);
 	if (check_error(token_list) != 0)
 		return (minishell->status = 2, CONTINUE); // Token/syntax error
 	minishell->ast = parser(token_list);
-	manage_here_doc(minishell->ast, minishell->envp, minishell->status);
+	manage_here_doc(minishell->ast, minishell->envp, minishell->status, &minishell->here_doc_files);
 	manage_redir(minishell->ast, minishell->envp);
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
 	minishell->status = execute_ast(minishell);
-	return (CONTINUE);
+	return (free_loop(minishell), CONTINUE);
 }
 
 void	reader_loop(t_minishell *minishell)
 {
 	int	return_code;
 
+	g_last_signum = 0;
 	__attribute__((cleanup(data_cleanup))) char *line;
 	line = NULL;
 	set_prompt_signals();
 	line = readline("minishell prompt % ");
+	if (g_last_signum != 0)
+		minishell->status = g_last_signum + 128;
 	if (line == NULL)
-		return ;
+		return (ft_putendl_fd("exit", 2));
 	else if (is_str_blank(line))
 		return (reader_loop(minishell));
 	add_history(line);

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:54:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/04 10:50:57 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 17:48:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,9 @@ int	is_str_builtin(const char *str)
 		i++;
 	}
 	return (0);
+}
+
+int	is_str_empty_quote(const char *str)
+{
+	return (ft_strcmp(str, "\'\'") == 0 || ft_strcmp(str, "\"\"") == 0);
 }

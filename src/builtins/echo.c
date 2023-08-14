@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:43:12 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:43:14 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:50:08 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	echo(char **args)
 	}
 	while (args && *args)
 	{
-		if (write(1, *args, ft_strlen(*args)) < 0)
+		if (!is_str_empty_quote(*args))
+			if (write(1, *args, ft_strlen(*args)) < 0)
 			return (BUILTIN_ERR_CODE);
 		if (*(args + 1) && write(1, &sep[1], 1) < 0)
 			return (BUILTIN_ERR_CODE);

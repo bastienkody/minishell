@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/11 14:44:49 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/12 19:02:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int	pipex(t_minishell *minishell, t_info *info)
 		fork_pipe_dup(&prevpipe, info, minishell);
 		info->cmds = info->cmds->next;
 	}
-	wait_cmds(info);;
+	wait_cmds(info);
 	return (analyze_status(info));
 }

@@ -6,9 +6,8 @@ qui n'ont pas de binaires : env, unset, exit, export, cd (vs : echo et pwd)
 
 - expansion / quote removal autour d'un argument : il ne faut pas supp les whitespaces
   echo "    " -> doit output les whitespaces (cf. test echo 14)
-- expansion de $EMPTY vs "$EMPTY" : 
+- expansion de $EMPTY vs "$EMPTY" :
   -> $EMPTY : code retour 0
   -> "$EMPTY" : code 127 + cmd not found
 
-- unlink les tmpfiles de heredoc
-- corriger signal sigquit avec minishell recursif
+- here_doc -> mauvais code erreur + erreurs si CTRL-D ou CTRL-C
