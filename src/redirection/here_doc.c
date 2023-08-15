@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 10:18:56 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 14:42:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int status)
 	{
 		line = readline(HD_PROMPT);
 		if (!line)
-			return (free(data), FALSE);
+			break ;
 		if (*line == 0 || !ft_strncmp(line, lim, ft_strlen(lim)))
 			if (*line == 0 || ft_strlen(line) == ft_strlen(lim))
 				break ;
