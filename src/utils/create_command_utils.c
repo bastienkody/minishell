@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:45:03 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 16:55:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 14:17:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ t_llist	*find_cmd_name(t_llist	*begin, t_llist *end)
 {
 	t_llist	*current;
 
-	current = begin;
-	while (current != NULL || current != end)
+	if (is_node_word(begin->content))
+		return (begin);
+	current = begin->next;
+	while (current != NULL && current != end)
 	{
-		if (is_node_word(current->content))
+		if (is_node_word(current->content) && !is_node_redirection(current->prev->content))
 			return (current);
-		current = llstnext(current, 2);
+		current = current->next;
 	}
-	return (NULL);
+	return (end);
 }
