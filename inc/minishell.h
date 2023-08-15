@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 15:19:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 16:04:38 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ int		open_here_doc(const char *lim, char **envp, int status, \
 	t_llist **here_doc_list_ptr);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
-void	manage_here_doc(t_ntree *ast, char **envp, int status, \
+t_state	manage_here_doc(t_ntree *ast, char **envp, int status, \
 	t_llist **here_doc_list_ptr);
 void	remove_heredoc_tmpfile(char *pathname);
 /*	utils	*/

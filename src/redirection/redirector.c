@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 15:56:05 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 16:05:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	manage_redir(t_ntree *ast, char **envp)
 	}
 }
 
-void	manage_here_doc(t_ntree *ast, char **envp, int status, \
+t_state	manage_here_doc(t_ntree *ast, char **envp, int status, \
 t_llist **here_doc_list_ptr)
 {
 	t_llist			*current;
