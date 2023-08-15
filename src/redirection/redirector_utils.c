@@ -49,6 +49,9 @@ int	open_redirections(t_type type, const char *filename)
 	else
 		return (-1);
 	if (fd < 0)
-		perror("open outfile");
+	{
+		write(2, "minishell: ", 11);
+		perror(filename);
+	}
 	return (fd);
 }
