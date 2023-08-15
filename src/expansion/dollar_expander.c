@@ -110,7 +110,7 @@ int	check_amb_redir(char *str, char **envp)
 			free(word);
 			str = strfind_if(str + 1, &is_c_end_envar);
 		}
-		else if (str)
+		else if (str && *str)
 			str = strfind_if(str + 1, &is_c_end_envar) + 1;
 	}
 	return (TRUE);
