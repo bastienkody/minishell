@@ -34,7 +34,10 @@ void	print_syntax_error(const char *str)
 	ft_fprintf(2, "%s`%s\'\n", ERR_SYNTAX, str);
 }
 
-// void	print_token_error(t_token *token)
-// {
-// 	ft_fprintf(1, "syntax error near unexpected token : %s\n", token->data);
-// }
+void	print_signal(int signum)
+{
+	if (signum == SIGINT)
+		ft_putendl_fd("", 2);
+	else if (signum == SIGQUIT)
+		ft_putendl_fd("Quit (core dumped)", 2);
+}

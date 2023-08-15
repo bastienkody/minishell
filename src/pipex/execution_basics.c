@@ -59,14 +59,6 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	return (free_char_matrix(path), ft_strdup(""));
 }
 
-void	print_signal(int signum)
-{
-	if (signum == SIGINT)
-		ft_putendl_fd("", 2);
-	else if (signum == SIGQUIT)
-		ft_putendl_fd("Quit (core dumped)", 2);
-}
-
 int	analyze_status(t_info *info)
 {
 	int				status;
@@ -121,10 +113,9 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 		(minishell->status = 127, free_and_exit(minishell));
 	}
 	tmp_dir_ptr = opendir(info->cmds->fullname);
-	if (tmp_dir_ptr )
+	if (tmp_dir_ptr)
 	{
 		closedir(tmp_dir_ptr);
-		//free(tmp_dir_ptr);
 		err_msg(info->cmds->name, ERR_IAD);
 		(minishell->status = 126, free_and_exit(minishell));
 	}

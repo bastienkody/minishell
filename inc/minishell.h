@@ -43,8 +43,8 @@
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
-# define S_QUOTE '\''
-# define D_QUOTE '\"'
+# define D_QUOTE 34
+# define S_QUOTE 39
 # define PFX_EXPORT "declare -x "
 # define LLINTMIN_CHAR "-9223372036854775808"
 
@@ -162,7 +162,7 @@ void	lstreduce(t_llist	**llst);
 // t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
-int	check_syntax(t_llist *token_list, char **operator_err);
+int		check_syntax(t_llist *token_list, char **operator_err);
 t_llist	*leaf_node_dup(t_llist *leaf_node);
 
 /*	utils token	*/
@@ -204,7 +204,8 @@ void	ast_free(t_ntree *ast);
 void	ast_print(t_ntree *ast);
 bool	is_node_inside(t_ntree *node, t_type types[], size_t n);
 bool	is_node_equal(t_ntree *node, t_type search_type);
-t_llist	*create_child_range(t_llist	*begin, t_llist *end, t_ntree *(*create)(t_llist *, t_llist *));
+t_llist	*create_child_range(t_llist	*begin, t_llist *end, \
+	t_ntree *(*create)(t_llist *, t_llist *));
 t_llist	*create_child(t_llist *llist, t_ntree *(*create)(t_llist *));
 t_ntree	*create_complete_command(t_llist *leaf_list);
 t_ntree	*create_compound_command(t_llist *begin, t_llist *end);
@@ -265,12 +266,12 @@ int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
 void	ft_bzero_matrix(char **matrix, size_t n);
 
 /* syntax check*/
-int	check_syntax(t_llist *token_list, char **operator_err);
-int	check_logical_operator(t_llist *node);
-int	check_pipe(t_llist *node);
-int	check_redirection(t_llist *node);
-int	check_opening_parenthesis(t_llist *node);
-int	check_closing_parenthesis(t_llist *node);
+int		check_syntax(t_llist *token_list, char **operator_err);
+int		check_logical_operator(t_llist *node);
+int		check_pipe(t_llist *node);
+int		check_redirection(t_llist *node);
+int		check_opening_parenthesis(t_llist *node);
+int		check_closing_parenthesis(t_llist *node);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
@@ -294,10 +295,12 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_in(const char *filename);
-int		open_here_doc(const char *lim, char **envp, int status, t_llist **here_doc_list_ptr);
+int		open_here_doc(const char *lim, char **envp, int status, \
+	t_llist **here_doc_list_ptr);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
-void	manage_here_doc(t_ntree *ast, char **envp, int status, t_llist **here_doc_list_ptr);
+void	manage_here_doc(t_ntree *ast, char **envp, int status, \
+	t_llist **here_doc_list_ptr);
 void	remove_heredoc_tmpfile(char *pathname);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
@@ -320,10 +323,10 @@ void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_minishell *minishell, t_ntree *ast);
 int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
-t_llist *get_ambigous_node(t_llist *node);
+t_llist	*get_ambigous_node(t_llist *node);
 t_llist	*llst_remove_quote(t_llist *token_list);
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
-t_llist *llst_expand_wildcard(t_llist *token_list, char **envp);
+t_llist	*llst_expand_wildcard(t_llist *token_list, char **envp);
 t_info	*get_pipex_info(t_minishell *minishell, t_ntree *pipeline_node);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
@@ -335,10 +338,10 @@ void	print_env(char **envp, char *prefix);
 void	print_envar_bad(char *var, char **envp);
 void	print_llist(t_llist *start);
 void	print_syntax_error(const char *str);
-// void	print_token_error(t_token *token);
 void	err_builtin(const char *builtin, const char *arg, const char *err);
 void	err_msg(const char *str, const char *err);
 void	print_err_ambiguous(const char *str);
+void	print_signal(int signum);
 
 /* ntree functions */
 char	*type_to_string(t_type type);
