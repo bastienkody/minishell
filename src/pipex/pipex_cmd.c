@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:48:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 15:57:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 16:21:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*cmd_new(t_ntree *simple_command_node, int index, char **envp)
 		cmd->fullname = get_full_cmd_name(cmd->name, envp);
 		if (cmd->fullname == NULL)
 			return (free(cmd->name), free(cmd), NULL);
-		cmd->args = get_command_args(simple_command_node, cmd->fullname);
+		cmd->args = get_command_args(simple_command_node, cmd->name);
 		if (cmd->name == NULL)
 			return (free(cmd->name), free(cmd->fullname), free(cmd), NULL);
 	}
