@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:57:56 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 17:08:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 14:19:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_ntree	*create_command(t_llist	*begin, t_llist *end)
 
 	children = NULL;
 	ok = 1;
-	if (cmd_name_pos == NULL || cmd_name_pos != begin)
+	if (cmd_name_pos == end || cmd_name_pos != begin)
 		ok *= add_prefixes_children(&children, begin, cmd_name_pos);
-	if (cmd_name_pos != NULL)
+	if (cmd_name_pos != end)
 		ok *= add_cmd_name_child(&children, cmd_name_pos);
-	if (cmd_name_pos && cmd_name_pos->next != end)
+	if (cmd_name_pos != end && cmd_name_pos->next != end)
 		ok *= add_suffixes_children(&children, cmd_name_pos->next, end);
 	if (ok == 0)
 		return (llstclear(&children, ast_free), NULL);

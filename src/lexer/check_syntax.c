@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:28:44 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 10:56:54 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 11:31:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int (*const g_checkers[])(t_llist *)
 	= {
+		NULL,
 		check_logical_operator,
 		check_logical_operator,
 		check_pipe,

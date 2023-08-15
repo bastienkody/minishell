@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 13:51:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 10:28:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 13:50:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_state	expand_token_list(t_llist **token_list, t_minishell *minishell)
 	llstremove_if(token_list, (void *)is_token_empty_word, (void *)token_free);
 	if (llstsize(*token_list) == 0)
 		return (CONTINUE);
-	if (!llstreplace(token_list, llst_expand_wildcard(*token_list, envp), token_free))
+	if (!llstreplace(token_list, llst_expand_wildcard(*token_list), token_free))
 		return (EXIT);
 	if (!llstreplace(token_list, llst_remove_quote(*token_list), token_free))
 		return (EXIT);
