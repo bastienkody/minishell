@@ -113,7 +113,7 @@ UTILS_NAME	=	ft_realloc.c\
 
 OTHER_NAME =	main_utils_debug.c
 
-MAIN_NAME	=	main_debug.c
+MAIN_NAME	=	main_test.c
 
 BUILT_SRC	=	$(addprefix ${BUILT_DIR}, ${BUILT_NAME})
 PIPEX_SRC	=	$(addprefix ${PIPEX_DIR}, ${PIPEX_NAME})

@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-int	g_exit_status;
+int	g_last_signum;
 /*int	is_token_error(t_llist *llst)
 {
 	t_token	token = *(t_token *)llst;
@@ -342,15 +342,33 @@ int	g_exit_status;
 	free_char_matrix(envp);
 }*/
 
+// check_amb_redir solo
+int	main(int argc, char **argv, char **envp)
+{
+	char *str = ft_strdup("file");
+	char *str_expanded;
+
+	(void)argc;
+	(void)argv;
+	envp = charmatrix_dup(envp);
+	ft_fprintf(1, "ptr:%p, end:%p\n", str, str + 5);
+	ft_fprintf(1, "%i\n", check_amb_redir(str, envp));
+	str_expanded = expand_dollar(str, envp, 0);
+	ft_fprintf(1, "%s\n", str_expanded);
+	free_char_matrix(envp);
+	free(str_expanded);
+	free(str);
+}
+
 //	QUOTE REMOVAL
-int	main(void)
+/*int	main(void)
 {
 	char	*str = ft_strdup("exit \'666\'\"666\"666");
 
 	str = rm_peer_quotes(str);
 	ft_fprintf(1, "%s\n", str);
 	free(str);
-}
+}*/
 
 // REDIR FILE EXPANSION
 /*int	main(int argc, char **argv, char **envp)

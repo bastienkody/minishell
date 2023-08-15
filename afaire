@@ -1,13 +1,19 @@
 - export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
-	is this linked to the correction of echo "" truc ?
-- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
-- export cmd="ls -la". cmd -> cmd not found "ls -la". expansion to several words must be splitted into several word?
-- after un "unset PATH", un "cat Makefile" -> No such file or dir (vs cmd not found). code 127 ok.
+	is this linked to the correction of echo "" truc ? 
+- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised. 
 
 - pb heredoc sans commande derriere : unlink: no such file or directory
 
-- here_doc -> mauvais code erreur + ou CTRL-C
+- here_doc -> refactor
 
-- invalid read strfindif de check_amb_redir pour : ls > "$a" (apres un export a="a b")
-	no problem with ls > $a (0)
+- invalid read de check_amb_redir pour redir avec cmd (infile or outfile) : echo > file ; pwd < Makefile
+	no leak
+	if redir file is in quotes, no problem : echo > "file" ; pwd < "Makefile"
 
+- leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
+	no leak if cmd : ls > file
+	still leaking is redir file in quotes : > "files" ; < "Makefile"
+
+- error de syntax pour quote en nombre impair
+
+- error de syntax pour les &&
