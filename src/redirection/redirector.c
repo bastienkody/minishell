@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/12 16:50:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 15:56:05 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,16 @@ t_llist **here_doc_list_ptr)
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;
 	int				fd;
+	int				return_code;
 
 	if (ast == NULL)
-		return ;
+		return (OK);
 	if (type == HERE_DOC)
 	{
 		fd = open_node_here_doc(ast, envp, status, here_doc_list_ptr);
-		if (fd < 0)
-			return ;
+			return (CONTINUE);
+		if (fd == -2)
+			return (EXIT);
 		get_token(ast)->data = (void *)(intptr_t)fd;
 	}
 	else
@@ -98,8 +100,11 @@ t_llist **here_doc_list_ptr)
 		current = ast->children;
 		while (current != NULL)
 		{
-			manage_here_doc(current->content, envp, status, here_doc_list_ptr);
+			return_code = manage_here_doc(current->content, envp, status, here_doc_list_ptr);
+			if (return_code <= -2)
+				return (return_code);
 			current = current->next;
 		}
 	}
+	return (OK);
 }

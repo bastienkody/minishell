@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 13:57:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 15:56:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,15 @@ t_state interpret_command(const char *line, t_minishell *minishell)
 		return (EXIT);
 	if (return_code == CONTINUE)
 		return (minishell->status = 0, CONTINUE);
-	llstiter(token_list, (void *)token_print); puts("");
+	// llstiter(token_list, (void *)token_print); puts("");
 	if (check_error(token_list) != 0)
 		return (minishell->status = 2, CONTINUE); // Token/syntax error
 	minishell->ast = parser(token_list);
-	manage_here_doc(minishell->ast, minishell->envp, minishell->status, &minishell->here_doc_files);
+	return_code = manage_here_doc(minishell->ast, minishell->envp, minishell->status, &minishell->here_doc_files);
+	if (return_code == EXIT)
+		return (EXIT);
+	if (return_code == CONTINUE)
+		return (minishell->status = 130, CONTINUE);
 	manage_redir(minishell->ast, minishell->envp);
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
