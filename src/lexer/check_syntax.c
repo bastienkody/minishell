@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:28:44 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/12 13:12:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:56:54 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	check_opening_parenthesis(t_llist *node)
 	if (node->prev != NULL)
 	{
 		prev_token = node->prev->content;
-		if (!is_type_inside(prev_token->type, (t_type[]){or, and, opening_parenthesis, -1}))
+		if (!is_type_inside(prev_token->type, (t_type[]){or, and, opening_parenthesis, 0}))
 			return (-1);
 	}
 	if (node->next == NULL)
 		return (-1);
 	next_token = node->next->content;
-	if (!is_type_inside(next_token->type, (t_type[]){less, dless, great, dgreat, word, opening_parenthesis, -1}))
+	if (!is_type_inside(next_token->type, (t_type[]){less, dless, great, dgreat, word, opening_parenthesis, 0}))
 		return (-1);
 	return (0);
 }
@@ -70,12 +70,12 @@ int	check_closing_parenthesis(t_llist *node)
 	if (node->prev == NULL)
 		return (-1);
 	prev_token = node->prev->content;
-	if (!is_type_inside(prev_token->type, (t_type[]){word, closing_parenthesis, -1}))
+	if (!is_type_inside(prev_token->type, (t_type[]){word, closing_parenthesis, 0}))
 		return (-1);
 	if (node->next != NULL)
 	{
 		next_token = node->next->content;
-		if (!is_type_inside(next_token->type, (t_type[]){and, or, closing_parenthesis, -1}))
+		if (!is_type_inside(next_token->type, (t_type[]){and, or, closing_parenthesis, 0}))
 			return (-1);
 	}
 	return (0);
@@ -89,10 +89,10 @@ int	check_logical_operator(t_llist *node)
 	if (node->prev == NULL || node->next == NULL)
 		return (-1);
 	prev_token = node->prev->content;
-	if (!is_type_inside(prev_token->type, (t_type[]){word, closing_parenthesis, -1}))
+	if (!is_type_inside(prev_token->type, (t_type[]){word, closing_parenthesis, 0}))
 		return (-1);
 	next_token = node->next->content;
-	if (!is_type_inside(next_token->type, (t_type[]){word, opening_parenthesis, -1}))
+	if (!is_type_inside(next_token->type, (t_type[]){word, opening_parenthesis, 0}))
 		return (-1);
 	return (0);
 }
@@ -108,7 +108,7 @@ int	check_pipe(t_llist *node)
 	if (prev_token->type != word)
 		return (-1);
 	next_token = node->next->content;
-	if (!is_type_inside(next_token->type, (t_type[]){less, dless, great, dgreat, word, -1}))
+	if (!is_type_inside(next_token->type, (t_type[]){less, dless, great, dgreat, word, 0}))
 		return (-1);
 	return (0);
 }
@@ -121,7 +121,7 @@ int	check_redirection(t_llist *node)
 	if (node->prev != NULL)
 	{
 		prev_token = node->prev->content;
-		if (!is_type_inside(prev_token->type, (t_type[]){or, and, ppipe, word, closing_parenthesis, -1}))
+		if (!is_type_inside(prev_token->type, (t_type[]){or, and, ppipe, word, closing_parenthesis, 0}))
 			return (-1);
 	}
 	if (node->next == NULL)

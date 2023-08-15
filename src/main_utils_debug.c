@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/12 20:18:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:44:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,19 @@ int	check_parenthesis_closed(t_llist *token_list, char **operator_err)
 	return (n);
 }
 
+t_token *llst_get_token(t_llist *node)
+{
+	return ((t_token *)node->content);
+}
+
 int	check_error(t_llist *token_list)
 {
 	char *operator_err;
+	t_llist	*ambiguous_node;
 
+	ambiguous_node = llstfind_if(token_list, (t_predicate)is_token_ambiguous_word);
+	if (ambiguous_node != NULL)
+		return (print_err_ambiguous(llst_get_token(ambiguous_node)->data), -1);
 	if (llstfind_if(token_list, (t_predicate)is_token_error) != NULL)
 		return (ft_fprintf(2, "minishell : token error\n"), -1);
 	if (check_parenthesis_closed(token_list, &operator_err) != 0)
@@ -76,7 +85,7 @@ int	check_error(t_llist *token_list)
 // 	return (CONTINUE);
 // }
 
-int	interpret_command(const char *line, t_minishell *minishell)
+t_state interpret_command(const char *line, t_minishell *minishell)
 {
 	int return_code;
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
@@ -96,13 +105,11 @@ int	interpret_command(const char *line, t_minishell *minishell)
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
 	minishell->status = execute_ast(minishell);
-	return (free_loop(minishell), CONTINUE);
+	return (free_loop(minishell), OK);
 }
 
 void	reader_loop(t_minishell *minishell)
 {
-	int	return_code;
-
 	g_last_signum = 0;
 	__attribute__((cleanup(data_cleanup))) char *line;
 	line = NULL;
@@ -115,8 +122,7 @@ void	reader_loop(t_minishell *minishell)
 	else if (is_str_blank(line))
 		return (reader_loop(minishell));
 	add_history(line);
-	return_code = interpret_command(line, minishell);
-	if (return_code == EXIT)
+	if (interpret_command(line, minishell) == EXIT)
 		return ((void)(minishell->status = 1));
 	return (reader_loop(minishell));
 }

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 13:51:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/12 17:38:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:28:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int is_token_empty_word(t_token *token)
 	return (token->type == word && is_str_blank(token->data));
 }
 
-int expand_token_list(t_llist **token_list, t_minishell *minishell)
+t_state	expand_token_list(t_llist **token_list, t_minishell *minishell)
 {
 	char **const	envp = minishell->envp;
 	const int		last_status = minishell->status;
