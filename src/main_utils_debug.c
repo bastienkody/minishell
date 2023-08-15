@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 16:23:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 17:55:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	reader_loop(t_minishell *minishell)
 	line = NULL;
 	set_prompt_signals();
 	line = readline("minishell prompt % ");
+	ft_fprintf(2, "%s\n", line);
 	if (g_last_signum != 0)
 		minishell->status = g_last_signum + 128;
 	if (line == NULL)
