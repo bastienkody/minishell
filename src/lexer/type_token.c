@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 10:45:25 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 11:11:41 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static bool (*const	g_type_predicate[])(const char *str)
 	= {
+	NULL,
 	is_str_or,
 	is_str_and,
 	is_str_pipe,
@@ -31,7 +32,7 @@ static t_type	get_type(const char *text)
 {
 	t_type	type;
 
-	type = 0;
+	type = 1;
 	while (g_type_predicate[type])
 	{
 		if (g_type_predicate[type](text))
