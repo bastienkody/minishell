@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 10:42:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:58:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@
 
 typedef enum e_type
 {
-	or,
+	or = 1,
 	and,
 	ppipe,
 	great,
@@ -233,7 +233,7 @@ t_token	*token_new(t_type type, void *data);
 t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
-int		is_type_inside(t_type type, const t_type types[]);
+bool	is_type_inside(t_type type, const t_type types[]);
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
