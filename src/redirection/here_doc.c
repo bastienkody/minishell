@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 15:25:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 16:10:34 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ t_llist **here_doc_list_ptr)
 	if (!launch_here_doc(fd, lim, envp, status))
 	{
 		if (g_last_signum == SIGINT)
-		{
-			puts("\nTEST");
 			return (-3);
-		}
 		return (close (fd), ALLOC_FAIL);
 	}
 	close(fd);

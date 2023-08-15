@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/12 19:55:57 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 16:22:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	execute(char **cmd_args, t_info *info, t_minishell *minishell)
 		return (minishell->status = exec_builtin(info->cmds->name, cmd_args, \
 			minishell), free_and_exit(minishell));
 	check_cmd_access(info, minishell);
-	execve(cmd_args[0], cmd_args, minishell->envp);
+	execve(info->cmds->fullname, cmd_args, minishell->envp);
 	perror(ERR_EXECVE);
 	if (info->cmds->fd_in > NO_REDIR)
 		close(info->cmds->fd_in);

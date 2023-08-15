@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 16:05:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 16:10:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_llist **here_doc_list_ptr)
 	if (type == HERE_DOC)
 	{
 		fd = open_node_here_doc(ast, envp, status, here_doc_list_ptr);
+		if (fd == -3)
 			return (CONTINUE);
 		if (fd == -2)
 			return (EXIT);
@@ -101,10 +102,19 @@ t_llist **here_doc_list_ptr)
 		while (current != NULL)
 		{
 			return_code = manage_here_doc(current->content, envp, status, here_doc_list_ptr);
-			if (return_code <= -2)
+			// ft_fprintf(2, "%d\n", return_code);
+			if (return_code != 0)
 				return (return_code);
 			current = current->next;
 		}
 	}
 	return (OK);
 }
+
+// COMPLETE_COMMAND
+
+// PIPELINE
+
+// SIMPLE_COMMAND
+
+// HERE_DOC CMD_NAME
