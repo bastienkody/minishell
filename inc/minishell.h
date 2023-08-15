@@ -73,8 +73,9 @@
 # define ERR_FORK "minishell: fork"
 # define ERR_ALLOC "Cannot allocate memory"
 # define PWD_USAGE "pwd: usage: pwd [-LP]\n"
-# define ENV_USAGE "env: usage (minishell): env [--]\n"
+# define ENV_USAGE "env: usage (minishell): env\n"
 # define EXPORT_USAGE "export: usage (minishell): export [name[=value] ...]\n"
+# define UNSET_USAGE "unset: usage (minishell): unset [name ...]\n"
 
 typedef enum e_type
 {
