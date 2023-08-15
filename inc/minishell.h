@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/12 20:18:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:42:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <dirent.h>
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -37,10 +38,6 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-# define EAMBREDIR 42
-# define CONTINUE -2
-# define EXIT -1
-# define OK 0
 # define CODE_ALLOC 1
 # define BUILTIN_ERR_CODE 2
 
@@ -107,6 +104,13 @@ typedef enum e_type
 	HERE_END,
 }	t_type;
 
+typedef enum e_state
+{
+	OK = 0,
+	CONTINUE = -1,
+	EXIT = -2,
+}	t_state;
+
 typedef struct s_token
 {
 	t_type	type;
@@ -170,31 +174,31 @@ t_ntree	*create_cmd_name(t_llist *leaf);
 t_llist	*find_cmd_name(t_llist *begin, t_llist *end);
 
 /*	string_predicate	*/
-int		is_str_or(const char *str);
-int		is_str_and(const char *str);
-int		is_str_pipe(const char *str);
-int		is_str_great(const char *str);
-int		is_str_less(const char *str);
-int		is_str_dgreat(const char *str);
-int		is_str_dless(const char *str);
-int		is_str_compound(const char *str);
-int		is_str_word(const char *str);
-int		is_str_redirection(const char *str);
-int		is_str_builtin(const char *str);
-int		is_str_op_p(const char *str);
-int		is_str_cl_p(const char *str);
-int		is_str_quote(const char *str);
-int		is_str_operator(const char *str);
-int		is_str_blank(const char *str);
-int		is_str_empty_quote(const char *str);
+bool	is_str_or(const char *str);
+bool	is_str_and(const char *str);
+bool	is_str_pipe(const char *str);
+bool	is_str_great(const char *str);
+bool	is_str_less(const char *str);
+bool	is_str_dgreat(const char *str);
+bool	is_str_dless(const char *str);
+bool	is_str_compound(const char *str);
+bool	is_str_word(const char *str);
+bool	is_str_redirection(const char *str);
+bool	is_str_builtin(const char *str);
+bool	is_str_op_p(const char *str);
+bool	is_str_cl_p(const char *str);
+bool	is_str_quote(const char *str);
+bool	is_str_operator(const char *str);
+bool	is_str_blank(const char *str);
+bool	is_str_empty_quote(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
 t_ntree	*ast_dup(t_ntree *ast);
 void	ast_free(t_ntree *ast);
 void	ast_print(t_ntree *ast);
-int		is_node_inside(t_ntree *node, t_type types[], size_t n);
-int		is_node_equal(t_ntree *node, t_type search_type);
+bool	is_node_inside(t_ntree *node, t_type types[], size_t n);
+bool	is_node_equal(t_ntree *node, t_type search_type);
 t_llist	*create_child_range(t_llist	*begin, t_llist *end, t_ntree *(*create)(t_llist *, t_llist *));
 t_llist	*create_child(t_llist *llist, t_ntree *(*create)(t_llist *));
 t_ntree	*create_complete_command(t_llist *leaf_list);
@@ -207,23 +211,24 @@ t_llist	*create_prefixes(t_llist *begin, t_llist *end);
 t_ntree	*create_redirection(t_llist *begin, t_llist *end);
 t_ntree	*create_classic_redirection(t_llist	*begin, t_llist *end);
 t_ntree	*create_here_doc(t_llist *begin, t_llist *end);
-int		is_node_word(t_ntree *node);
-int		is_node_logical_operator(t_ntree *node);
-int		is_node_pipe(t_ntree *node);
-int		is_node_redirection(t_ntree	*node);
-int		is_node_opening_parenthesis(t_ntree *node);
-int		is_node_closing_parenthesis(t_ntree *node);
-int		is_range_compound(t_llist *begin, t_llist *end);
+bool	is_node_word(t_ntree *node);
+bool	is_node_logical_operator(t_ntree *node);
+bool	is_node_pipe(t_ntree *node);
+bool	is_node_opening_parenthesis(t_ntree *node);
+bool	is_node_redirection(t_ntree	*node);
+bool	is_node_closing_parenthesis(t_ntree *node);
+bool	is_range_compound(t_llist *begin, t_llist *end);
 // int		is_node_compound(t_ntree	*node);
 
 /* token */
-int		is_token_word(t_token *token);
-int		is_token_pipe(t_token *token);
-int		is_token_logical_operator(t_token *token);
-int		is_token_operator(t_token *token);
-int		is_token_redirection(t_token *token);
-int		is_token_here_doc(t_token *token);
-int		is_token_error(t_token *token);
+bool	is_token_word(t_token *token);
+bool	is_token_pipe(t_token *token);
+bool	is_token_logical_operator(t_token *token);
+bool	is_token_operator(t_token *token);
+bool	is_token_redirection(t_token *token);
+bool	is_token_here_doc(t_token *token);
+bool	is_token_error(t_token *token);
+bool	is_token_ambiguous_word(t_token *token);
 t_token	*token_new(t_type type, void *data);
 t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
@@ -327,6 +332,7 @@ void	print_syntax_error(const char *str);
 // void	print_token_error(t_token *token);
 void	err_builtin(const char *builtin, const char *arg, const char *err);
 void	err_msg(const char *str, const char *err);
+void	print_err_ambiguous(const char *str);
 
 /* ntree functions */
 char	*type_to_string(t_type type);
@@ -378,12 +384,12 @@ void	handle_here_doc_signals(int signum);
 char	*type_to_string(t_type type);
 t_llist	*lexer(const char *line);
 t_ntree	*parser(t_llist	*token_list);
-int		is_prev_here_operator(t_llist *leaf_list);
+bool	is_prev_here_operator(t_llist *leaf_list);
 t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
-int		expand_token_list(t_llist **token_list, t_minishell *minishell);
+t_state	expand_token_list(t_llist **token_list, t_minishell *minishell);
 
 /*	cleanup	*/
 void	data_cleanup(char **data);

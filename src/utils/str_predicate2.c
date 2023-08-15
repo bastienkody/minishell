@@ -6,23 +6,23 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:54:39 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 13:55:23 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:44:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_str_dgreat(const char *str)
+bool	is_str_dgreat(const char *str)
 {
 	return (ft_strcmp(str, ">>") == 0);
 }
 
-int	is_str_dless(const char *str)
+bool	is_str_dless(const char *str)
 {
 	return (ft_strcmp(str, "<<") == 0);
 }
 
-static int	check_parenthesis(const char *text)
+static bool	check_parenthesis(const char *text)
 {
 	int	n;
 
@@ -38,7 +38,7 @@ static int	check_parenthesis(const char *text)
 	return (n == 0);
 }
 
-int	is_str_compound(const char *str)
+bool	is_str_compound(const char *str)
 {
 	const size_t	len = ft_strlen(str);
 
@@ -47,9 +47,9 @@ int	is_str_compound(const char *str)
 	return (0);
 }
 
-// int	is_str_word(const char *str)
+// bool	is_str_word(const char *str)
 // {
-// 	int		is_inside_quote;
+// 	bool		is_inside_quote;
 // 	char	quote;
 
 // 	is_inside_quote = 0;
@@ -74,7 +74,7 @@ int	is_str_compound(const char *str)
 // 	return (!is_inside_quote);
 // }
 
-int	is_str_word(const char *str)
+bool	is_str_word(const char *str)
 {
 	(void)str;
 	return (1);

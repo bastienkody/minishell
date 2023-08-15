@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 16:21:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 11:55:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:46:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_llist	*get_corresponding_parenthesis(t_llist *pos, t_llist *end)
 	return (NULL);
 }
 
-int	is_range_compound(t_llist *begin, t_llist *end)
+bool	is_range_compound(t_llist *begin, t_llist *end)
 {
 	t_llist *const	last = llstlast_range(begin, end);
 

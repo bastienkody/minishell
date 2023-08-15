@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:54:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/12 17:48:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:44:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static const char	*g_builtins[] = {"echo", "cd", "pwd", "export", "unset",
 	"env", "exit", NULL};
 
-int	is_str_redirection(const char *str)
+bool	is_str_redirection(const char *str)
 {
 	return (is_str_great(str) || is_str_dgreat(str) || is_str_less(str));
 }
 
-int	is_str_builtin(const char *str)
+bool	is_str_builtin(const char *str)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ int	is_str_builtin(const char *str)
 	return (0);
 }
 
-int	is_str_empty_quote(const char *str)
+bool	is_str_empty_quote(const char *str)
 {
 	return (ft_strcmp(str, "\'\'") == 0 || ft_strcmp(str, "\"\"") == 0);
 }

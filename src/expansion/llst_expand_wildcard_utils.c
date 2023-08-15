@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard_utils.c                                   :+:      :+:    :+:   */
+/*   llst_expand_wildcard_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:48:22 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/01 15:16:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:43:20 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_pwd(char **envp)
 	return (NULL);
 }
 
-int	is_prev_here_operator(t_llist *token_list)
+bool	is_prev_here_operator(t_llist *token_list)
 {
 	t_token	*prev_token;
 
