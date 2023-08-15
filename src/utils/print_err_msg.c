@@ -24,5 +24,5 @@ void	err_builtin(const char *builtin, const char *arg, const char *err)
 
 void	print_err_ambiguous(const char *str)
 {
-	ft_fprintf(2, "minishell : %s: ambiguous redirect\n", str);
+	ft_fprintf(2, "minishell: %s: ambiguous redirect\n", str);
 }

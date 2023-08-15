@@ -8,3 +8,6 @@
 
 - here_doc -> mauvais code erreur + ou CTRL-C
 
+- invalid read strfindif pour : ls > "$a" (apres un export a="a b")
+	no problem with ls > $a (without quotes)
+
