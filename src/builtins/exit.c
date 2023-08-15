@@ -42,10 +42,10 @@ int	exit_blt(char **args, t_minishell *minishell)
 		write(STDERR_FILENO, exit_msg, ft_strlen(exit_msg));
 	if (!args[1])
 		free_and_exit(minishell);
-	if (check_first_arg(args[1])) // first arg str
+	if (check_first_arg(args[1]))
 	{
 		err_builtin(args[0], args[1], ERR_NMR);
-		(minishell->status = 2, free_and_exit(minishell));
+		return (minishell->status = 2, free_and_exit(minishell), 2);
 	}
 	if (args[1 + 1])
 		return (err_msg(args[0], ERR_TMA), 1);

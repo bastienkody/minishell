@@ -18,7 +18,8 @@ t_llist	*create_lhs(t_llist *begin, t_llist *end)
 
 	if (is_range_compound(begin, end))
 		new = create_child_range(begin, end, create_compound_command);
-	else if (llstfind_if_range(begin, end, (t_predicate)is_node_logical_operator) != NULL)
+	else if (llstfind_if_range(begin, end, \
+		(t_predicate)is_node_logical_operator) != NULL)
 		new = create_child_range(begin, end, create_logical_expression);
 	else
 		new = create_child_range(begin, end, create_pipeline);
@@ -50,7 +51,7 @@ t_llist	*get_operator_pos(t_llist *rbegin, t_llist *rend)
 {
 	t_llist	*current;
 	t_token	*current_token;
-	int	parenthesis_lvl;
+	int		parenthesis_lvl;
 
 	parenthesis_lvl = 0;
 	current = rbegin;
@@ -70,12 +71,13 @@ t_llist	*get_operator_pos(t_llist *rbegin, t_llist *rend)
 
 t_ntree	*create_logical_expression(t_llist *begin, t_llist *end)
 {
-	t_llist *const	operator_pos = get_operator_pos(llstlast_range(begin, end), begin->prev);
+	t_llist *const	operator_pos = get_operator_pos(llstlast_range(begin, end), \
+		begin->prev);
 	t_llist			*children;
 	t_llist			*new_child;
 	const t_type	type
 		= get_logical_expression_type(get_token(operator_pos->content)->data);
-	t_ntree	*ast;
+	t_ntree			*ast;
 
 	children = NULL;
 	new_child = create_rhs(operator_pos->next, end);

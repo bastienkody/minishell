@@ -12,7 +12,8 @@
 
 #include "../../inc/minishell.h"
 
-t_llist	*create_child_range(t_llist	*begin, t_llist	*end, t_ntree *(*create)(t_llist *, t_llist *))
+t_llist	*create_child_range(t_llist	*begin, t_llist	*end, \
+t_ntree *(*create)(t_llist *, t_llist *))
 {
 	t_ntree *const	subtree = create(begin, end);
 

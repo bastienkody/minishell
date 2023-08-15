@@ -74,7 +74,7 @@ int	echo(char **args)
 	{
 		if (!is_str_empty_quote(*args))
 			if (write(1, *args, ft_strlen(*args)) < 0)
-			return (BUILTIN_ERR_CODE);
+				return (BUILTIN_ERR_CODE);
 		if (*(args + 1) && write(1, &sep[1], 1) < 0)
 			return (BUILTIN_ERR_CODE);
 		args++;

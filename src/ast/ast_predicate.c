@@ -12,11 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// bool	is_node_compound(t_ntree *node)
-// {
-// 	return (is_node_equal(node, compound));
-// }
-
 bool	is_node_opening_parenthesis(t_ntree *node)
 {
 	return (is_node_equal(node, opening_parenthesis));
@@ -40,9 +35,4 @@ bool	is_node_pipe(t_ntree *node)
 bool	is_node_word(t_ntree *node)
 {
 	return (is_node_equal(node, word));
-}
-
-bool	is_node_redirection(t_ntree *node)
-{
-	return (is_node_inside(node, (t_type[]){less, dless, great, dgreat}, 4));
 }

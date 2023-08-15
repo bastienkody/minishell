@@ -12,11 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-/*	quotes in heredoc data : aucun effet! tout depend de LIM
-	trouver une commande qui lit sur stdin du glob pour check no * expansion
-*/
-
-/*	stops at lim or eof (modified gnl) - returns 0 if malloc failed	*/
 int	launch_here_doc(int fd, const char *lim, char **envp, int status)
 {
 	char	*line;
@@ -49,7 +44,8 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int status)
 }
 
 /*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
-int	open_here_doc(const char *lim, char **envp, int status, t_llist **here_doc_list_ptr)
+int	open_here_doc(const char *lim, char **envp, int status, \
+t_llist **here_doc_list_ptr)
 {
 	int			fd;
 	static int	nb = 0;

@@ -15,14 +15,31 @@
 /* builtin ret 1, execve ret 0 */
 int	check_unset(char **args)
 {
-	if (args && args[1] && args[1][0] == '-' && ft_strlen(args[1]) > 1)
-		return (0);
+	(void)args;
+	return (1);
+}
+
+static int	check_args(char **args)
+{
+	if (args[1] && args[1][0] == '-')
+	{
+		if (ft_strlen(args[1]) > 1 && ft_strcmp(args[1], "--"))
+		{
+			err_builtin("unset", args[1], ERR_INVOPT);
+			write(2, UNSET_USAGE, ft_strlen(UNSET_USAGE));
+			return (0);
+		}
+	}
 	return (1);
 }
 
 int	unset(char **args, char ***envp)
 {
+	if (!check_args(args))
+		return (BUILTIN_ERR_CODE);
 	args++;
+	if (!ft_strcmp(*args, "--"))
+		args++;
 	while (*args)
 	{
 		if (is_var_set(*args, *envp))

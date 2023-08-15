@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+/*	erreur de dup : que faire? seulement exit child? stop minishell?	*/
 int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
 	int	old_fd;
@@ -24,7 +25,7 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 		old_fd = info->cmds->fd_in;
 	}
 	if (info->cmds->fd_in >= NO_REDIR && dup2(old_fd, STDIN) < 0)
-		return (perror(ERR_DUP_IN), BAD_FD); // maybe exit_failure? we must end the program if syscall error
+		return (perror(ERR_DUP_IN), BAD_FD);
 	close(old_fd);
 	if (!info->cmds->next && info->cmds->fd_out == NO_REDIR)
 		return (0);
@@ -40,13 +41,15 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 	return (close(old_fd), 0);
 }
 
-void	in_child(t_info *info, int pipefd[2], int *prevpipe, t_minishell *minishell)
+/*	dupper on error : que faire? seulement exit child? stop minishell? */
+void	in_child(t_info *info, int pipefd[2], int *prevpipe, \
+t_minishell *minishell)
 {
 	close(pipefd[0]);
 	if (!info->cmds->next)
 		close(pipefd[1]);
 	if (dupper(info, *prevpipe, pipefd) == BAD_FD)
-		exit(EXIT_FAILURE); // on exit l'enfant ? quitter le prog parent aussi?
+		exit(EXIT_FAILURE);
 	if (info->cmds->fd_in > NO_REDIR)
 		close (info->cmds->fd_in);
 	if (info->cmds->fd_out > NO_REDIR)
@@ -70,6 +73,7 @@ void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
 		close (info->cmds->fd_out);
 }
 
+/* erreur de pipe et de fork -> que faire? exit child? stop minishell?	*/
 void	fork_pipe_dup(int *prevpipe, t_info *info, t_minishell *minishell)
 {
 	int	pipefd[2];
@@ -79,7 +83,7 @@ void	fork_pipe_dup(int *prevpipe, t_info *info, t_minishell *minishell)
 		perror(ERR_PIPE);
 	pid = fork();
 	if (pid == -1)
-		perror(ERR_FORK); // + close n free ?
+		perror(ERR_FORK);
 	if (pid == 0)
 	{
 		set_child_signals();
@@ -96,7 +100,8 @@ int	pipex(t_minishell *minishell, t_info *info)
 {
 	int	prevpipe;
 
-	if (!info->cmds->next && info->cmds->args && is_a_builtin(info->cmds->args, info->cmds->args[0]))
+	if (!info->cmds->next && info->cmds->args && \
+		is_a_builtin(info->cmds->args, info->cmds->args[0]))
 		return (exec_solo_builtin(info->cmds, minishell));
 	prevpipe = dup(0);
 	while (info->cmds)

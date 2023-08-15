@@ -31,7 +31,8 @@ t_llist	*find_cmd_name(t_llist	*begin, t_llist *end)
 	current = begin->next;
 	while (current != NULL && current != end)
 	{
-		if (is_node_word(current->content) && !is_node_redirection(current->prev->content))
+		if (is_node_word(current->content) && \
+			!is_node_redirection(current->prev->content))
 			return (current);
 		current = current->next;
 	}

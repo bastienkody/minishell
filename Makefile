@@ -32,6 +32,7 @@ PIPEX_NAME	=	execution_basics.c\
 				pipex_info.c\
 				pipex_info_utils1.c\
 				pipex_info_utils2.c\
+				pipex_get_cmd_path.c\
 				pipex_cmd.c\
 				pipe_execution.c
 
@@ -65,6 +66,7 @@ AST_NAME	=	ast_new.c\
 				ast_print.c\
 				ast_free.c\
 				ast_predicate.c\
+				ast_predicate_2.c\
 				ast_predicate_utils.c\
 				ast_execute.c\
 				ast_execute_utils.c\
@@ -161,7 +163,7 @@ $(BUILD_DIR)/%.o: %.c
 	@echo "\033[0m\c"
 
 
-${NAME}:	${OBJS} ${LIBFT} ${LLST} ${NTREE}
+${NAME}:	${HEADER} ${OBJS} ${LIBFT} ${LLST} ${NTREE}
 			@echo "\033[32m\c"
 			${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
 			@echo "Link complete for exec --> \033[4;36;1m${NAME}\033[0m"

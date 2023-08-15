@@ -16,7 +16,6 @@ t_llist	*create_prefixes(t_llist *begin, t_llist *end)
 {
 	t_llist	*prefixes;
 	t_llist	*new_child;
-	// t_llist	*extract;
 	t_llist	*next;
 	t_llist	*current;
 
@@ -27,7 +26,6 @@ t_llist	*create_prefixes(t_llist *begin, t_llist *end)
 	while (current != end)
 	{
 		next = llstnext(begin, 2);
-		// extract = llstextract_range(&leaf_list, leaf_list, next);
 		new_child = create_child_range(current, next, create_redirection);
 		if (new_child == NULL)
 			return (llstclear(&prefixes, ast_free), NULL);

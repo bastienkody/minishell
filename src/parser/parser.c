@@ -20,7 +20,6 @@ t_ntree	*parser(t_llist	*token_list)
 	leaf_list = token_to_leaf(token_list);
 	if (leaf_list == NULL)
 		return (NULL);
-	// llstiter(leaf_list, (void *)ast_print); puts("");
 	ast = create_complete_command(leaf_list);
 	llstclear(&leaf_list, ast_free);
 	return (ast);

@@ -12,10 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-static int	add_prefixes_children(t_llist **children, t_llist *begin, t_llist *end)
+static int	add_prefixes_children(t_llist **children, t_llist *begin, \
+t_llist *end)
 {
-	// t_llist *const	prefixes_leafs
-	// 	= llstextract_range(leaf_list, *leaf_list, cmd_name_pos);
 	t_llist *const	new_children = create_prefixes(begin, end);
 
 	if (new_children == NULL)
@@ -26,7 +25,6 @@ static int	add_prefixes_children(t_llist **children, t_llist *begin, t_llist *en
 
 static int	add_cmd_name_child(t_llist **children, t_llist *leaf)
 {
-	// t_llist *const	extract = llstextractone(leaf_list, cmd_name_pos);
 	t_llist *const	new_child = create_child(leaf, create_cmd_name);
 
 	if (new_child == NULL)
@@ -35,9 +33,9 @@ static int	add_cmd_name_child(t_llist **children, t_llist *leaf)
 	return (1);
 }
 
-static int	add_suffixes_children(t_llist **children, t_llist *begin, t_llist *end)
+static int	add_suffixes_children(t_llist **children, t_llist *begin, \
+t_llist *end)
 {
-	// t_llist *const	extract = llstextract_range(leaf_list, *leaf_list, NULL);
 	t_llist *const	new_children = create_suffixes(begin, end);
 
 	if (new_children == NULL)
