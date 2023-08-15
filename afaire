@@ -1,6 +1,6 @@
 - export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
-	is this linked to the correction of echo "" truc ? 
-- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised. 
+	is this linked to the correction of echo "" truc ?
+- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 - export cmd="ls -la". cmd -> cmd not found "ls -la". expansion to several words must be splitted into several word?
 - after un "unset PATH", un "cat Makefile" -> No such file or dir (vs cmd not found). code 127 ok.
 
