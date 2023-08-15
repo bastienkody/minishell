@@ -111,11 +111,7 @@ int	check_amb_redir(char *str, char **envp)
 			str = strfind_if(str + 1, &is_c_end_envar);
 		}
 		else if (str)
-		{
-			ft_fprintf(1, "str before strfindif: %s(%p)\n", str, str);
 			str = strfind_if(str + 1, &is_c_end_envar) + 1;
-			ft_fprintf(1, "str after strfindif: %s(%p)\n", str, str);
-		}
 	}
 	return (TRUE);
 }
