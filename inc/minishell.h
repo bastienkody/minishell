@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 10:58:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/15 12:59:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
 t_llist *get_ambigous_node(t_llist *node);
 t_llist	*llst_remove_quote(t_llist *token_list);
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
-t_llist *llst_expand_wildcard(t_llist *token_list, char **envp);
+t_llist *llst_expand_wildcard(t_llist *token_list);
 t_info	*get_pipex_info(t_minishell *minishell, t_ntree *pipeline_node);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
