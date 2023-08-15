@@ -12,12 +12,12 @@
 
 #include "../../inc/minishell.h"
 
-int	open_node_here_doc(t_ntree *node, char **envp, int status, t_llist **here_doc_list_ptr)
+int	open_node_here_doc(t_ntree *node, char **envp, int status, \
+t_llist **here_doc_list_ptr)
 {
-	char * const here_end = get_here_end(node);
+	char *const	here_end = get_here_end(node);
 
 	return (open_here_doc(here_end, envp, status, here_doc_list_ptr));
-
 }
 
 int	open_node_redir(t_ntree *node)
@@ -77,7 +77,8 @@ void	manage_redir(t_ntree *ast, char **envp)
 	}
 }
 
-void	manage_here_doc(t_ntree *ast, char **envp, int status, t_llist **here_doc_list_ptr)
+void	manage_here_doc(t_ntree *ast, char **envp, int status, \
+t_llist **here_doc_list_ptr)
 {
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;

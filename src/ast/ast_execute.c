@@ -14,7 +14,8 @@
 
 int	execute_ast(t_minishell *minishell)
 {
-	const t_execute_ast_fun	execute_function = get_execute_function(minishell->ast);
+	const t_execute_ast_fun	execute_function = \
+		get_execute_function(minishell->ast);
 
 	return (execute_function(minishell, minishell->ast));
 }
@@ -33,14 +34,6 @@ int	execute_pipeline(t_minishell *minishell, t_ntree *ast)
 
 	return (pipex(minishell, pipex_info));
 }
-
-// int	execute_compound_command(t_ntree *ast)
-// {
-// 	t_ntree *const			child = ast->children->content;
-// 	const t_execute_ast_fun	execute_function = get_execute_function(child);
-
-// 	return (execute_function(child));
-// }
 
 int	execute_logical_expression(t_minishell *minishell, t_ntree *ast)
 {

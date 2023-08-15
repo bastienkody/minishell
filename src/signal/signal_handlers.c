@@ -24,21 +24,6 @@ void	handle_prompt_signals(int signum)
 	}
 }
 
-// void	handle_parent_signals(int signum)
-// {
-// 	if (signum == SIGCHLD)
-// 	{
-// 		if (g_exit_status == SIGINT)
-// 			ft_putendl_fd("", 2);
-// 		else if (g_exit_status == SIGQUIT)
-// 			ft_putendl_fd("Quit (core dumped)", 2);
-// 	}
-// 	// if (signum == SIGINT)
-// 	// 	ft_putendl_fd("", 1);
-// 	// else if (signum == SIGQUIT)
-// 	// 	ft_putendl_fd("Quit (core dumped)", 1);
-// }
-
 void	handle_here_doc_signals(int signum)
 {
 	if (signum == SIGINT)
@@ -47,4 +32,3 @@ void	handle_here_doc_signals(int signum)
 		close(0);
 	}
 }
-

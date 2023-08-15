@@ -12,8 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-static const t_type g_data_token[]
-	= {word, ppipe, or, opening_parenthesis, closing_parenthesis, and, great, dgreat, less, dless, FILENAME, HERE_END, -1};
+static const t_type	g_data_token[]
+	= {word, ppipe, or, opening_parenthesis, closing_parenthesis, and, great, \
+		dgreat, less, dless, FILENAME, HERE_END, -1};
 
 static void	free_pipex_info(t_info *pipex_info)
 {
@@ -32,7 +33,8 @@ static void	free_node(t_token *token)
 	type = token->type;
 	if (type == PIPELINE)
 		free_pipex_info(token->data);
-	if ((type == HERE_DOC || type == REDIRECTION) && (intptr_t)token->data != -2)
+	if ((type == HERE_DOC || type == REDIRECTION) && \
+		(intptr_t)token->data != -2)
 		close((intptr_t)token->data);
 	else if (is_type_inside(type, g_data_token))
 		free(token->data);

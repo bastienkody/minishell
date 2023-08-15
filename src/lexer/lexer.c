@@ -19,10 +19,6 @@ t_llist	*tokenization(const char *line)
 	token_list = lsttok(line);
 	if (token_list == NULL)
 		return (NULL);
-	// llstiter(token_list, (void *)puts);
-	// if (!llstreplace(&token_list, new_llst_with_compound(token_list), free))
-	// 	return (llstclear(&token_list, free), NULL);
-	// llstiter(token_list, (void *)puts);
 	llstremove_if(&token_list, (int (*)(void *))is_str_blank, free);
 	if (!llstreplace(&token_list, type_token(token_list), free))
 		return (llstclear(&token_list, free), NULL);

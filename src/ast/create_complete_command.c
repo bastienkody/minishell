@@ -14,9 +14,9 @@
 
 t_llist	*get_corresponding_parenthesis(t_llist *pos, t_llist *end)
 {
-	t_llist *current;
+	t_llist	*current;
 	t_token	*current_token;
-	int	parenthesis_lvl;
+	int		parenthesis_lvl;
 
 	parenthesis_lvl = 0;
 	current = pos;
@@ -38,15 +38,14 @@ bool	is_range_compound(t_llist *begin, t_llist *end)
 {
 	t_llist *const	last = llstlast_range(begin, end);
 
-	return (is_node_opening_parenthesis(begin->content) && last == get_corresponding_parenthesis(begin, end));
+	return (is_node_opening_parenthesis(begin->content) && last == \
+		get_corresponding_parenthesis(begin, end));
 }
 
 t_ntree	*create_complete_command(t_llist *leaf_list)
 {
 	t_llist	*child;
 
-	// if (is_node_compound(leaf_list->content) && llstsize(leaf_list) == 1)
-	// 	child = create_child(leaf_list, create_compound_command);
 	if (is_range_compound(leaf_list, NULL))
 		child = create_child_range(leaf_list, NULL, create_compound_command);
 	else if (llstfind_if(leaf_list, (t_predicate)is_node_logical_operator))

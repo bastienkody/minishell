@@ -47,33 +47,6 @@ bool	is_str_compound(const char *str)
 	return (0);
 }
 
-// bool	is_str_word(const char *str)
-// {
-// 	bool		is_inside_quote;
-// 	char	quote;
-
-// 	is_inside_quote = 0;
-// 	quote = '\0';
-// 	while (*str != '\0')
-// 	{
-// 		if (ft_strchr("\'\"", *str))
-// 		{
-// 			if (is_inside_quote && *str == quote)
-// 			{
-// 				is_inside_quote = 0;
-// 				quote = '\0';
-// 			}
-// 			else if (!is_inside_quote)
-// 			{
-// 				is_inside_quote = 1;
-// 				quote = *str;
-// 			}
-// 		}
-// 		str++;
-// 	}
-// 	return (!is_inside_quote);
-// }
-
 bool	is_str_word(const char *str)
 {
 	(void)str;

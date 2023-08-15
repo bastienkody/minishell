@@ -26,7 +26,6 @@ t_llist	*create_suffixes(t_llist *begin, t_llist *end)
 {
 	t_llist	*suffixes;
 	t_llist	*new_child;
-	// t_llist	*extract;
 	t_llist	*current;
 	t_llist	*next;
 
@@ -37,14 +36,11 @@ t_llist	*create_suffixes(t_llist *begin, t_llist *end)
 		if (is_node_redirection(current->content))
 		{
 			next = llstnext(current, 2);
-			// extract = llstextract_range(&leaf_list, leaf_list,
-			// 		llstnext(leaf_list, 2));
 			new_child = create_child_range(current, next, create_redirection);
 		}
 		else if (is_node_word(current->content))
 		{
 			next = current->next;
-			// extract = llstextractone(&leaf_list, leaf_list);
 			new_child = create_child(current, create_cmd_arg);
 		}
 		else

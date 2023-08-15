@@ -12,8 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// quid des free_char_matrix(src_matrix) soit envp, en cas de malloc fail ? a ajouter
-
 static char	**get_new_matrix_malloced(char **src_matrix, int offset)
 {
 	int		i;
