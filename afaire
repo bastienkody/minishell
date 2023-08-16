@@ -6,3 +6,7 @@ leaks si on arrive a execute et quon appelle pas execve(). 3 cas possibles :
 - 1 : leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
 - 2 : pipe contenant au moins 1 bultin (on exec exec_builtin depuis execute et non exec_solo_builtin depuis pipex)
 - 3 : pb de file de redir
+
+- erreur de syntaxe parenthese suivie de operateur redirection : 
+	(>file cat)
+
