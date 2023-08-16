@@ -2,10 +2,7 @@
 	is this linked to the correction of echo "" truc ?
 - exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
-- here_doc -> leaks
-
 leaks si on arrive a execute et quon appelle pas execve(). 3 cas possibles : 
 - 1 : leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
 - 2 : pipe contenant au moins 1 bultin (on exec exec_builtin depuis execute et non exec_solo_builtin depuis pipex)
 - 3 : pb de file de redir
-A priori on ne free pas assez. 

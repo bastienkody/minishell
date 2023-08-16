@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 13:04:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 16:14:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ void	execute(char **cmd_args, t_info *info, t_minishell *minishell)
 	if (info->cmds->fd_in > NO_REDIR)
 		close(info->cmds->fd_in);
 	if (info->cmds->fd_out > NO_REDIR)
-		close(info->cmds->fd_in);
+		close(info->cmds->fd_out);
 	return (minishell->status = 1, free_and_exit(minishell));
 }
