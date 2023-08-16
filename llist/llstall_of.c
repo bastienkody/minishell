@@ -6,15 +6,15 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:56:52 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/23 16:56:49 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:34:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-int	llstall_of(t_llist *llst, int (*p)(void *))
+bool	llstall_of(t_llist *llst, bool (*p)(void *))
 {
 	if (llst == NULL)
 		return (1);
-	return (p(llst) && llstall_of(llst->next, p));
+	return (p(llst->content) && llstall_of(llst->next, p));
 }

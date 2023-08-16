@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:30:08 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 15:12:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:44:34 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_c_end_envar(int c)
 {
-	ft_fprintf(1, "char in int :%i\n", c);
+	// ft_fprintf(1, "char in int :%i\n", c);
 	if (!ft_isalnum(c) && c != '_')
 		return (1);
 	return (0);

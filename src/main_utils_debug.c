@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 17:55:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:45:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,39 @@ int	check_error(t_llist *token_list)
 	return (0);
 }
 
-// int	set_ast(t_ntree **ast, const char *line, char **envp)
-// {
-// 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
-// 	token_list = tokenization(line);
-// 	if (token_list == NULL)
-// 		return (EXIT); // malloc error
-// 	token_list = expand_token_list(token_list, envp);
-// 	if (token_list == NULL)
-// 		return (EXIT); // malloc error
-// 	ft_fprintf(1, "DEBUG : TOKEN_LIST\n");
-// 	llstiter(token_list, (void *)token_print);
-// 	ft_fprintf(1, "\n");
-// 	if (check_error(token_list) != 0)
-// 		return (CONTINUE); // Token/syntax error
-// 	*ast = parser(token_list);
-// 	if (*ast == NULL)
-// 		return (EXIT); // malloc error
-// 	ast_print(*ast);
-// 	// manage_here_doc(*ast, envp);
-// 	// manage_redir(*ast, envp);
-// 	// if (manage_pipeline(*ast, *ast, envp) == 0)
-// 	// 	return (EXIT);
-// 	return (CONTINUE);
-// }
+bool	is_word_quotes_closed(const char *str)
+{
+	bool		is_inside_quote;
+	char	quote;
+
+	is_inside_quote = false;
+	quote = '\0';
+	while (*str != '\0')
+	{
+		if (ft_strchr("\'\"", *str))
+		{
+			if (is_inside_quote && *str == quote)
+			{
+				is_inside_quote = false;
+				quote = '\0';
+			}
+			else if (!is_inside_quote)
+			{
+				is_inside_quote = true;
+				quote = *str;
+			}
+		}
+		str++;
+	}
+	return (!is_inside_quote);
+}
+
+bool	is_token_good(t_token *token)
+{
+	if (token->type == word && !is_word_quotes_closed(token->data))
+		return (false);
+	return (true);
+}
 
 t_state interpret_command(const char *line, t_minishell *minishell)
 {
@@ -91,18 +100,18 @@ t_state interpret_command(const char *line, t_minishell *minishell)
 	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
 	token_list = tokenization(line);
 	if (token_list == NULL)
-		return (EXIT); // malloc error
+		return (EXIT);
+	if (!llstall_of(token_list, (void *)is_token_good))
+		return (minishell->status = 2, print_err_quotes(), CONTINUE);
 	return_code = expand_token_list(&token_list, minishell);
 	if (return_code == EXIT)
 		return (EXIT);
 	if (return_code == CONTINUE)
 		return (minishell->status = 0, CONTINUE);
-	// llstiter(token_list, (void *)token_print); puts("");
 	if (check_error(token_list) != 0)
-		return (minishell->status = 2, CONTINUE); // Token/syntax error
+		return (minishell->status = 2, CONTINUE);
 	minishell->ast = parser(token_list);
 	return_code = manage_here_doc(minishell->ast, minishell->envp, minishell->status, &minishell->here_doc_files);
-	// ft_fprintf(2, "%d\n", return_code);
 	if (return_code == EXIT)
 		return (EXIT);
 	if (return_code == CONTINUE)
@@ -123,7 +132,6 @@ void	reader_loop(t_minishell *minishell)
 	line = NULL;
 	set_prompt_signals();
 	line = readline("minishell prompt % ");
-	ft_fprintf(2, "%s\n", line);
 	if (g_last_signum != 0)
 		minishell->status = g_last_signum + 128;
 	if (line == NULL)

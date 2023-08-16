@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 16:04:38 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:42:25 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ void	print_syntax_error(const char *str);
 void	err_builtin(const char *builtin, const char *arg, const char *err);
 void	err_msg(const char *str, const char *err);
 void	print_err_ambiguous(const char *str);
+void	print_err_quotes(void);
 void	print_signal(int signum);
 
 /* ntree functions */
