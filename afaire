@@ -2,11 +2,7 @@
 	is this linked to the correction of echo "" truc ?
 - exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
-- invalid read de check_amb_redir pour redir avec cmd (infile or outfile) : echo > file ; pwd < Makefile
-	no leak
-	if redir file is in quotes, no problem : echo > "file" ; pwd < "Makefile"
-
-- leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
-	no leak if cmd : ls > file
-	still leaking is redir file in quotes : > "files" ; < "Makefile"
-
+leaks si on arrive a execute et quon appelle pas execve(). 3 cas possibles : 
+- 1 : leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
+- 2 : pipe contenant au moins 1 bultin (on exec exec_builtin depuis execute et non exec_solo_builtin depuis pipex)
+- 3 : pb de file de redir

@@ -38,7 +38,7 @@ int	unset(char **args, char ***envp)
 	if (!check_args(args))
 		return (BUILTIN_ERR_CODE);
 	args++;
-	if (!ft_strcmp(*args, "--"))
+	if (args && *args && !ft_strcmp(*args, "--"))
 		args++;
 	while (*args)
 	{
