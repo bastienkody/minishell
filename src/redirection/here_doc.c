@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 18:41:53 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:34:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ t_llist **here_doc_list_ptr)
 
 void	remove_heredoc_tmpfile(char *pathname)
 {
-	if (unlink(pathname))
+	if (access(pathname, X_OK) == 0 && unlink(pathname) != 0)
 		perror("unlink heredoc");
 }

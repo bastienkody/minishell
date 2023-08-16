@@ -1,8 +1,6 @@
 - export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
-	is this linked to the correction of echo "" truc ? 
-- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised. 
-
-- pb heredoc sans commande derriere : unlink: no such file or directory
+	is this linked to the correction of echo "" truc ?
+- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
 - here_doc -> refactor
 
@@ -13,7 +11,3 @@
 - leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
 	no leak if cmd : ls > file
 	still leaking is redir file in quotes : > "files" ; < "Makefile"
-
-- error de syntax pour quote en nombre impair
-
-- error de syntax pour les &&

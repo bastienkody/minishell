@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:32:40 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 10:14:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:42:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,9 @@ void	err_builtin(const char *builtin, const char *arg, const char *err)
 void	print_err_ambiguous(const char *str)
 {
 	ft_fprintf(2, "minishell: %s: ambiguous redirect\n", str);
+}
+
+void	print_err_quotes(void)
+{
+	ft_fprintf(2, "minishell: quotes unclosed\n");
 }

@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:59:24 by aguyon            #+#    #+#             */
-/*   Updated: 2023/06/14 14:33:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:43:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
 
-int	llstnone_of(t_llist *llst, int (*p)(void *))
+bool	llstnone_of(t_llist *llst, bool (*p)(void *))
 {
 	return (!llstall_of(llst, p));
 }
