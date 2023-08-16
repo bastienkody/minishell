@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:59:37 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 16:44:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 13:14:48 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_llist	*create_prefixes(t_llist *begin, t_llist *end)
 	current = begin;
 	while (current != end)
 	{
-		next = llstnext(begin, 2);
+		next = llstnext(current, 2);
 		new_child = create_child_range(current, next, create_redirection);
 		if (new_child == NULL)
 			return (llstclear(&prefixes, ast_free), NULL);

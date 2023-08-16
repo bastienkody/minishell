@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 11:42:25 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 12:15:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,13 +295,10 @@ char	*get_next_word_not_expanded(char **ret, char *str, char *word_end);
 
 /*	redirections	*/
 int		open_in(const char *filename);
-int		open_here_doc(const char *lim, char **envp, int status, \
-	t_llist **here_doc_list_ptr);
+int		open_here_doc(const char *lim, t_minishell *minishell);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
-t_state	manage_here_doc(t_ntree *ast, char **envp, int status, \
-	t_llist **here_doc_list_ptr);
-void	remove_heredoc_tmpfile(char *pathname);
+t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
 char	*get_redirection_filename(t_ntree *redirection_node);

@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 11:34:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 13:10:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	launch_here_doc(int fd, const char *lim, char **envp, int status)
+int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 {
 	char	*line;
 	char	*data;
@@ -34,61 +34,79 @@ int	launch_here_doc(int fd, const char *lim, char **envp, int status)
 			return (FALSE);
 	}
 	if (!is_str_quote_enclosed(lim))
-		data = expand_dollar_here_doc(data, envp, status);
+		data = expand_dollar_here_doc(data, minishell->envp, minishell->status);
 	if (!data)
 		return (FALSE);
 	write(fd, data, ft_strlen(data));
 	return (free(line), free(data), TRUE);
 }
 
-/*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
-int	open_here_doc(const char *lim, char **envp, int status, \
-t_llist **here_doc_list_ptr)
+int create_tmp_file(char *pathname,  t_minishell *minishell)
 {
-	int			fd;
-	static int	nb = 0;
-	char		*pathname;
-	t_llist		*new_node;
-	int			sstatus;
+	t_llist	*new_node;
+	int		fd;
 
-	pathname = ft_strjoin3(HD_START, ft_itoa(nb++), HD_END);
-	if (!pathname)
-		return (ALLOC_FAIL);
-	new_node = llstnew(pathname);
-	if (new_node == NULL)
-		return (free(pathname), ALLOC_FAIL);
-	llstadd_back(here_doc_list_ptr, new_node);
 	fd = open(pathname, O_TRUNC | O_WRONLY | O_CREAT, 00644);
 	if (fd < 0)
 		return (perror("open here_doc in w"), BAD_FD);
-	pid_t pid = fork();
-	if (pid == 0)
-	{
-		set_here_doc_signals();
-		if (!launch_here_doc(fd, lim, envp, status))
-		{
-			close(fd);
-			exit(1);
-		}
-		close(fd);
-		exit(0);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &sstatus, 0);
-		if (WIFSIGNALED(sstatus))
-			return (-3);
-		close(fd);
-		fd = open(pathname, O_RDONLY, 00644);
-		if (fd < 0)
-			return (perror("open here_doc in rd"), BAD_FD);
-	}
+	new_node = llstnew(pathname);
+	if (new_node == NULL)
+		return (free(pathname), ALLOC_FAIL);
+	llstadd_back(&minishell->here_doc_files, new_node);
 	return (fd);
 }
 
-void	remove_heredoc_tmpfile(char *pathname)
+void	open_here_doc_child(const char *lim, int fd, t_minishell *minishell)
 {
-	if (access(pathname, X_OK) == 0 && unlink(pathname) != 0)
-		perror("unlink heredoc");
+	set_here_doc_signals();
+	if (!launch_here_doc(fd, lim, minishell))
+	{
+		if (g_last_signum == SIGINT)
+			minishell->status = SIGINT;
+		else
+			minishell->status = 1;
+		ft_fprintf(2, "fils\n");
+	}
+	(close(fd), free_and_exit(minishell));
+}
+
+int	open_here_doc_parent(int fd, char *pathname)
+{
+	int	status;
+
+	status = 0;
+	signal(SIGINT, SIG_IGN);
+	wait(&status);
+	ft_fprintf(2, "pere\n");
+	ft_fprintf(2, "%d\n", status);
+	if (WIFSIGNALED(status))
+	{
+		puts("ICI");
+		return (-3);
+	}
+	close(fd);
+	fd = open(pathname, O_RDONLY, 00644);
+	if (fd < 0)
+		return (perror("open here_doc in rd"), BAD_FD);
+	return (fd);
+}
+
+/*	create+open tmpfile in w, launch_hd to it. close n reopen in r	*/
+int	open_here_doc(const char *lim, t_minishell *minishell)
+{
+	static int	nb = 0;
+	char *pathname;
+	int fd;
+
+	pathname = ft_strjoin3(HD_START, ft_itoa(nb++), HD_END);
+	if (pathname == NULL)
+		return (ALLOC_FAIL);
+	fd = create_tmp_file(pathname, minishell);
+	if (fd < -1)
+		return (fd);
+	if (fork() == 0)
+		open_here_doc_child(lim, fd, minishell);
+	else
+		fd = open_here_doc_parent(fd, pathname);
+	return (fd);
 }

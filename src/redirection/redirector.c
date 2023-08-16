@@ -6,18 +6,17 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 16:10:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 11:49:04 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	open_node_here_doc(t_ntree *node, char **envp, int status, \
-t_llist **here_doc_list_ptr)
+int	open_node_here_doc(t_ntree *node, t_minishell *minishell)
 {
 	char *const	here_end = get_here_end(node);
 
-	return (open_here_doc(here_end, envp, status, here_doc_list_ptr));
+	return (open_here_doc(here_end, minishell));
 }
 
 int	open_node_redir(t_ntree *node)
@@ -77,8 +76,7 @@ void	manage_redir(t_ntree *ast, char **envp)
 	}
 }
 
-t_state	manage_here_doc(t_ntree *ast, char **envp, int status, \
-t_llist **here_doc_list_ptr)
+t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell)
 {
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;
@@ -89,7 +87,7 @@ t_llist **here_doc_list_ptr)
 		return (OK);
 	if (type == HERE_DOC)
 	{
-		fd = open_node_here_doc(ast, envp, status, here_doc_list_ptr);
+		fd = open_node_here_doc(ast, minishell);
 		if (fd == -3)
 			return (CONTINUE);
 		if (fd == -2)
@@ -101,8 +99,7 @@ t_llist **here_doc_list_ptr)
 		current = ast->children;
 		while (current != NULL)
 		{
-			return_code = manage_here_doc(current->content, envp, status, here_doc_list_ptr);
-			// ft_fprintf(2, "%d\n", return_code);
+			return_code = manage_here_doc(current->content, minishell);
 			if (return_code != 0)
 				return (return_code);
 			current = current->next;
