@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 13:01:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 16:36:22 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_llist	*get_wildcard_nodes(char *pattern)
 	struct dirent	*info;
 	t_llist			*wildcard_list;
 
+	if (dir == NULL)
+		return (NULL);
 	wildcard_list = NULL;
 	info = readdir(dir);
 	while (info != NULL)
@@ -107,7 +109,7 @@ t_llist *get_ambigous_node(t_llist *node)
 	return (new_node);
 }
 
-t_llist *llst_expand_wildcard(t_llist *token_list)
+t_llist	*llst_expand_wildcard(t_llist *token_list)
 {
 	t_llist	*current;
 	t_token	*token;

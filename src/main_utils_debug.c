@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 15:26:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ t_state interpret_command(const char *line, t_minishell *minishell)
 		return (llstclear(&token_list, token_free), minishell->status = 2, CONTINUE);
 	minishell->ast = parser(token_list);
 	llstclear(&token_list, token_free);
+	if (minishell->ast == NULL)
+		return (EXIT);
 	return_code = manage_here_doc(minishell->ast, minishell);
 	if (return_code == EXIT)
 		return (EXIT);

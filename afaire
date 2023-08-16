@@ -10,9 +10,3 @@
 	no leak if cmd : ls > file
 	still leaking is redir file in quotes : > "files" ; < "Makefile"
 
-- error de syntax pour quote en nombre impair
-
-- error de syntax pour les &&
-
-Minishell plante : 
-	- < file > file 

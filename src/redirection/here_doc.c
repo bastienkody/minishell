@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 15:45:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 15:47:26 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	open_here_doc_parent(int fd, char *pathname)
 	wait(&status);
 	if (WIFEXITED(status))
 	{
-		ft_fprintf(2, "%d\n", WEXITSTATUS(status));
+		// ft_fprintf(2, "%d\n", WEXITSTATUS(status));
 		return (-3);
 	}
 	close(fd);
