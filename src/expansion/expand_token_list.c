@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 13:51:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 13:50:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:09:05 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int is_token_empty_word(t_token *token)
+int	is_token_empty_word(t_token *token)
 {
 	return (token->type == word && is_str_blank(token->data));
 }
@@ -22,7 +22,8 @@ t_state	expand_token_list(t_llist **token_list, t_minishell *minishell)
 	char **const	envp = minishell->envp;
 	const int		last_status = minishell->status;
 
-	if (!llstreplace(token_list, llst_expand_dollar(*token_list, envp, last_status), token_free))
+	if (!llstreplace(token_list,
+			llst_expand_dollar(*token_list, envp, last_status), token_free))
 		return (EXIT);
 	llstremove_if(token_list, (void *)is_token_empty_word, (void *)token_free);
 	if (llstsize(*token_list) == 0)

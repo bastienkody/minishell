@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 15:47:26 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:12:51 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 	return (free(line), free(data), TRUE);
 }
 
-int create_tmp_file(char *pathname,  t_minishell *minishell)
+int	create_tmp_file(char *pathname, t_minishell *minishell)
 {
 	t_llist	*new_node;
 	int		fd;
@@ -105,5 +105,6 @@ int	open_here_doc(const char *lim, t_minishell *minishell)
 		open_here_doc_child(lim, fd, minishell);
 	else
 		fd = open_here_doc_parent(fd, pathname);
+	ft_fprintf(2, "%d\n", fd);
 	return (fd);
 }

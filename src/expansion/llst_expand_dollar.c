@@ -6,27 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/11 14:58:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:02:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// static int	expand_dollar_word(t_llist *node, char **envp)
-// {
-// 	char	*word;
-// 	char	*expanded_word;
-// 	t_token	*token;
-
-// 	token = node->content;
-// 	word = token->data;
-// 	expanded_word = expand_dollar(word, envp);
-// 	if (expanded_word == NULL)
-// 		return (0);
-// 	free(word);
-// 	token->data = expanded_word;
-// 	return (1);
-// }
 
 int	is_prev_redir_operator(t_llist *node)
 {
@@ -37,27 +21,6 @@ int	is_prev_redir_operator(t_llist *node)
 	prev_token = node->prev->content;
 	return (is_str_redirection(prev_token->data) == 1);
 }
-
-// int	manage_dollar_expansion(t_llist *token_list, char **envp)
-// {
-// 	t_llist	*current;
-// 	t_token	*current_token;
-
-// 	current = token_list;
-// 	while (current != NULL)
-// 	{
-// 		current_token = current->content;
-// 		if (current_token->type == word && !is_prev_here_operator(current))
-// 		{
-// 			if (is_prev_redir_operator(current) && !check_amb_redir(current_token->data, envp))
-// 				current_token->type = ambigous_word;
-// 			if (!expand_dollar_word(current, envp))
-// 				return (1);
-// 		}
-// 		current = current->next;
-// 	}
-// 	return (0);
-// }
 
 static t_llist	*get_expand_node(t_llist *node, char **envp, int status)
 {
@@ -77,6 +40,12 @@ static t_llist	*get_expand_node(t_llist *node, char **envp, int status)
 	return (new_node);
 }
 
+static int	is_word_ambigous(t_llist *node, t_token *token, char **envp)
+{
+	return (is_prev_redir_operator(node)
+		&& !check_amb_redir(token->data, envp));
+}
+
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status)
 {
 	t_llist	*new_token_list;
@@ -91,7 +60,7 @@ t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status)
 		current_token = current->content;
 		if (current_token->type == word && !is_prev_here_operator(current))
 		{
-			if (is_prev_redir_operator(current) && !check_amb_redir(current_token->data, envp))
+			if (is_word_ambigous(current, current_token, envp))
 				new_node = get_ambigous_node(current);
 			else
 				new_node = get_expand_node(current, envp, status);

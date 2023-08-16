@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:14:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 11:36:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:17:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdbool.h>
 
 typedef void	*(*t_funptr)();
-typedef bool		(*t_predicate)(void *);
+typedef bool	(*t_predicate)(void *);
 typedef void	(*t_unary_fun)(void *);
 typedef void	*(*t_unary_op)(void *);
 typedef void	*(*t_binary_op)(void *, void *);
@@ -51,7 +51,8 @@ t_llist	*llstfind_if(t_llist *llst, bool (*p)(void *));
 t_llist	*llstfind_if_range(t_llist *begin, t_llist *end, bool (*p)(void *));
 t_llist	*llstfind_if_not(t_llist *llst, bool (*p)(void *));
 t_llist	*llstfind_if_reverse(const t_llist *llst, bool (*p)(void *));
-t_llist	*llstfind_if_reverse_range(const t_llist *rbegin, const t_llist *rend, bool (*p)(void *));
+t_llist	*llstfind_if_reverse_range(const t_llist *rbegin, const t_llist *rend,
+			bool (*p)(void *));
 t_llist	*llstnext(t_llist *llst, size_t n);
 t_llist	*llstprev(t_llist *llst, size_t n);
 t_llist	*llstmap_range(t_llist *begin, t_llist *end, void *(*f)(void *),

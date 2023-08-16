@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 11:43:19 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:16:38 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_llist	*llstfind_if_reverse(const t_llist *llst, bool (*p)(void *))
 	return (NULL);
 }
 
-t_llist	*llstfind_if_reverse_range(const t_llist *rbegin, const t_llist *rend, bool (*p)(void *))
+t_llist	*llstfind_if_reverse_range(const t_llist *rbegin, const t_llist *rend,
+	bool (*p)(void *))
 {
 	const t_llist	*current;
 

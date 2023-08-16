@@ -6,22 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:25:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 11:43:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:17:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "llist.h"
-
-// t_llist	*llstfind_if(t_llist *llst, int (*p)(void *))
-// {
-// 	while (llst != NULL)
-// 	{
-// 		if (p(llst->content))
-// 			return (llst);
-// 		llst = llst->next;
-// 	}
-// 	return (NULL);
-// }
 
 t_llist	*llstfind_if(t_llist *llst, bool (*p)(void *))
 {

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:00:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 17:13:34 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 16:58:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ t_llist	*create_suffixes(t_llist *begin, t_llist *end)
 			next = llstnext(current, 2);
 			new_child = create_child_range(current, next, create_redirection);
 		}
-		else if (is_node_word(current->content))
+		else
 		{
 			next = current->next;
 			new_child = create_child(current, create_cmd_arg);
 		}
-		else
-			new_child = NULL;
 		if (new_child == NULL)
 			return (llstclear(&suffixes, ast_free), NULL);
 		llstadd_back(&suffixes, new_child);

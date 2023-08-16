@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 16:36:22 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:04:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	add_filename(t_llist **wildcard_list, char *filename)
 
 t_llist	*get_wildcard_nodes(char *pattern)
 {
-	DIR *const	dir = opendir(".");
+	DIR *const		dir = opendir(".");
 	struct dirent	*info;
 	t_llist			*wildcard_list;
 
@@ -55,9 +55,9 @@ t_llist	*get_wildcard_nodes(char *pattern)
 	return (wildcard_list);
 }
 
-bool check_ambigous_redirect(t_llist *node, int nb_matched_files)
+bool	check_ambigous_redirect(t_llist *node, int nb_matched_files)
 {
-	t_token *prev_token;
+	t_token	*prev_token;
 
 	if (node->prev == NULL)
 		return (true);
@@ -67,8 +67,8 @@ bool check_ambigous_redirect(t_llist *node, int nb_matched_files)
 
 int	get_nb_matched_files(char *pattern)
 {
-	DIR *const	dir = opendir(".");
-	int	nb_matched_files;
+	DIR *const		dir = opendir(".");
+	int				nb_matched_files;
 	struct dirent	*info;
 
 	if (dir == NULL)
@@ -86,17 +86,7 @@ int	get_nb_matched_files(char *pattern)
 	return (nb_matched_files);
 }
 
-// int	check_ambigous_redirect(t_llist *new_nodes, t_llist *prev_node)
-// {
-// 	const t_token	*prev_token;
-
-// 	if (prev_node == NULL)
-// 		return (0);
-// 	prev_token = prev_node->content;
-// 	return (llstsize(new_nodes) >= 2 && is_str_redirection(prev_token->data));
-// }
-
-t_llist *get_ambigous_node(t_llist *node)
+t_llist	*get_ambigous_node(t_llist *node)
 {
 	t_llist	*new_node;
 	t_token	*token;
@@ -143,20 +133,3 @@ t_llist	*llst_expand_wildcard(t_llist *token_list)
 	}
 	return (new_token_list);
 }
-
-// int	main(int argc, char ** argv, char **envp)
-// {
-// 	t_llist	*leaf_list = NULL;
-
-// 	((void)argc, (void)argv);
-
-// 	llstadd_back(&leaf_list, llstnew(token_new(word, ft_strdup("g****.*"))));
-// 	llstadd_back(&leaf_list, llstnew(token_new(word, ft_strdup("outfile"))));
-// 	llstadd_back(&leaf_list, llstnew(token_new(word, ft_strdup("l*"))));
-// 	llstiter(leaf_list, (t_unary_fun)print_token), puts("");
-// 	if (!llstreplace(&leaf_list, wildcard_list(leaf_list, envp), token_free)))
-// 		return (llstclear(&leaf_list, (t_del_fun)token_free)), 1);
-// 	llstiter(leaf_list, (t_unary_fun)print_token), puts("");
-// 	llstclear(&leaf_list, (t_del_fun)token_free));
-// 	return (0);
-// }

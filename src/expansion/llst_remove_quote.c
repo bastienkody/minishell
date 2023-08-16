@@ -6,42 +6,11 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/12 17:50:20 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:08:28 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// static int	remove_quote_word(t_token **token)
-// {
-// 	char	*word;
-// 	char	*word_without_quote;
-
-// 	word = (*token)->data;
-// 	word_without_quote = rm_peer_quotes(word);
-// 	if (word_without_quote == NULL)
-// 		return (1);
-// 	free(word);
-// 	(*token)->data = word_without_quote;
-// 	return (0);
-// }
-
-// int	manage_quote_remove(t_llist *token_list)
-// {
-// 	t_llist	*current;
-// 	t_token	*current_token;
-
-// 	current = token_list;
-// 	while (current != NULL)
-// 	{
-// 		current_token = current->content;
-// 		if (current_token->type == word && !is_prev_here_operator(current))
-// 			if (remove_quote_word((t_token **)&(current->content)) != 0)
-// 				return (1);
-// 		current = current->next;
-// 	}
-// 	return (0);
-// }
 
 static t_llist	*get_remove_quote_node(t_llist *node)
 {
@@ -61,19 +30,25 @@ static t_llist	*get_remove_quote_node(t_llist *node)
 	return (new_node);
 }
 
+static bool	is_word_remove_quote(t_llist *node)
+{
+	t_token *const	token = node->content;
+
+	return (token->type == word
+		&& !is_prev_here_operator(node) && !is_str_empty_quote(token->data));
+}
+
 t_llist	*llst_remove_quote(t_llist *token_list)
 {
 	t_llist	*new_token_list;
 	t_llist	*new_node;
 	t_llist	*current;
-	t_token	*current_token;
 
 	new_token_list = NULL;
 	current = token_list;
 	while (current != NULL)
 	{
-		current_token = current->content;
-		if (current_token->type == word && !is_prev_here_operator(current) && !is_str_empty_quote(current_token->data))
+		if (is_word_remove_quote(current))
 			new_node = get_remove_quote_node(current);
 		else
 			new_node = node_dup(current);

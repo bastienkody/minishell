@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 14:36:08 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/05 16:35:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:15:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	free_new_children(t_llist **children, void (*del)(void *))
 	*children = NULL;
 }
 
-static t_llist *children_dup(t_llist *children, void *(*dup)(void *), void (*del)(void *))
+static t_llist	*children_dup(t_llist *children, void *(*dup)(void *),
+	void (*del)(void *))
 {
 	t_llist	*new_children;
 	t_ntree	*new_ntree;
@@ -46,7 +47,8 @@ static t_llist *children_dup(t_llist *children, void *(*dup)(void *), void (*del
 			return (free_new_children(&new_children, del), NULL);
 		new_node = llstnew(new_ntree);
 		if (new_node == NULL)
-			return (free_new_children(&new_children, del), ntree_free(&new_ntree, del) , NULL);
+			return (free_new_children(&new_children, del),
+				ntree_free(&new_ntree, del), NULL);
 		llstadd_back(&new_children, new_node);
 		current = current->next;
 	}
@@ -67,29 +69,7 @@ t_ntree	*ntree_dup(t_ntree *ntree, void *(*dup)(void *), void (*del)(void *))
 	{
 		new_children = children_dup(ntree->children, dup, del);
 		if (new_children == NULL)
-		return (del(new_data), NULL);
+			return (del(new_data), NULL);
 	}
 	return (ntree_new(new_data, new_children));
 }
-
-
-// #include <string.h>
-// #include <stdio.h>
-// int main(void)
-// {
-// 	t_ntree *three = ntree_new(strdup("three"), NULL);
-// 	t_ntree *two = ntree_new(strdup("two"), NULL);
-// 	t_llist *three_node = llstnew(three);
-// 	t_llist *two_node = llstnew(two);
-// 	t_ntree *one = ntree_new(strdup("one"), NULL);
-// 	llstadd_back(&(one->children), two_node);
-// 	llstadd_back(&(one->children), three_node);
-
-// 	t_ntree *dup = ntree_dup(one, (void *(*)(void *))strdup, free);
-
-// 	ntree_print(dup, (void (*)(void *))puts);
-
-// 	ntree_free(&dup, free);
-// 	ntree_free(&one, free);
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 17:23:54 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 10:36:13 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:18:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_llist	*llstlast(const t_llist *llst)
 t_llist	*llstlast_range(const t_llist *begin, const t_llist *end)
 {
 	if (begin == NULL)
-		return ((t_llist *)NULL);
+		return ((t_llist *) NULL);
 	if (end == NULL)
 		return (llstlast(begin));
 	else

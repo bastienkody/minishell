@@ -56,7 +56,8 @@ LEXER_NAME	=	lexer.c\
 				lsttok.c\
 				lsttok_utils.c\
 				compound_cmd.c\
-				check_syntax.c
+				check_syntax.c\
+				check_syntax_utils.c\
 
 PARSER_NAME	=	parser.c\
 				token_to_leaf.c
