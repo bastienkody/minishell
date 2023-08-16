@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 16:54:57 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 16:55:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 20:55:32 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ int	check_redirection(t_llist *node)
 	if (node->prev != NULL)
 	{
 		prev_token = node->prev->content;
-		if (!is_type_inside(prev_token->type, (t_type[]){or, and, \
-			ppipe, word, closing_parenthesis, 0}))
+		if (!is_type_inside(prev_token->type, (t_type[]){or, and, ppipe, word, opening_parenthesis, 0}))
 			return (-1);
 	}
 	if (node->next == NULL)

@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:48:07 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 16:21:46 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 20:56:24 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_node_cmd_name(t_ntree *node)
+bool	is_node_cmd_name(t_ntree *node)
 {
 	const t_type	type = get_token(node)->type;
 
