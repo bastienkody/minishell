@@ -2,8 +2,6 @@
 	is this linked to the correction of echo "" truc ?
 - exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
-- here_doc -> refactor
-
 - invalid read de check_amb_redir pour redir avec cmd (infile or outfile) : echo > file ; pwd < Makefile
 	no leak
 	if redir file is in quotes, no problem : echo > "file" ; pwd < "Makefile"
