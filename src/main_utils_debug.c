@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 12:26:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 15:26:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ bool	is_token_good(t_token *token)
 t_state interpret_command(const char *line, t_minishell *minishell)
 {
 	int return_code;
-	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
+	t_llist *token_list;
+
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT);
@@ -105,12 +106,13 @@ t_state interpret_command(const char *line, t_minishell *minishell)
 		return (minishell->status = 2, print_err_quotes(), CONTINUE);
 	return_code = expand_token_list(&token_list, minishell);
 	if (return_code == EXIT)
-		return (EXIT);
+		return (llstclear(&token_list, token_free), EXIT);
 	if (return_code == CONTINUE)
-		return (minishell->status = 0, CONTINUE);
+		return (llstclear(&token_list, token_free), minishell->status = 0, CONTINUE);
 	if (check_error(token_list) != 0)
-		return (minishell->status = 2, CONTINUE);
+		return (llstclear(&token_list, token_free), minishell->status = 2, CONTINUE);
 	minishell->ast = parser(token_list);
+	llstclear(&token_list, token_free);
 	return_code = manage_here_doc(minishell->ast, minishell);
 	if (return_code == EXIT)
 		return (EXIT);
@@ -125,9 +127,9 @@ t_state interpret_command(const char *line, t_minishell *minishell)
 
 void	reader_loop(t_minishell *minishell)
 {
+	char *line;
+
 	g_last_signum = 0;
-	__attribute__((cleanup(data_cleanup))) char *line;
-	line = NULL;
 	set_prompt_signals();
 	line = readline("minishell prompt % ");
 	if (g_last_signum != 0)
@@ -135,9 +137,9 @@ void	reader_loop(t_minishell *minishell)
 	if (line == NULL)
 		return (ft_putendl_fd("exit", 2));
 	else if (is_str_blank(line))
-		return (reader_loop(minishell));
+		return (free(line), reader_loop(minishell));
 	add_history(line);
 	if (interpret_command(line, minishell) == EXIT)
-		return ((void)(minishell->status = 1));
-	return (reader_loop(minishell));
+		return (free(line), (void)(minishell->status = 1));
+	return (free(line), reader_loop(minishell));
 }
