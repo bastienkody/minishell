@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 11:49:04 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 13:22:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	manage_redir(t_ntree *ast, char **envp)
 	}
 }
 
-t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell)
+t_state		manage_here_doc(t_ntree *ast, t_minishell *minishell)
 {
 	t_llist			*current;
 	const t_type	type = get_token(ast)->type;
@@ -107,11 +107,3 @@ t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell)
 	}
 	return (OK);
 }
-
-// COMPLETE_COMMAND
-
-// PIPELINE
-
-// SIMPLE_COMMAND
-
-// HERE_DOC CMD_NAME
