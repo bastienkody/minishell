@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 12:15:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:30:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,15 +158,10 @@ extern int	g_last_signum;
 
 /*	parsing - lexing */
 t_llist	*lsttok(const char *str);
-void	lstreduce(t_llist	**llst);
-// t_llist	*tokenization(t_llist *llst);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list, char **operator_err);
 t_llist	*leaf_node_dup(t_llist *leaf_node);
-
-/*	utils token	*/
-t_llist	*new_llst_with_compound(t_llist *start);
 
 /*	lsttok_utils	*/
 int		isdelim(int c);
@@ -224,15 +219,13 @@ bool	is_node_opening_parenthesis(t_ntree *node);
 bool	is_node_redirection(t_ntree	*node);
 bool	is_node_closing_parenthesis(t_ntree *node);
 bool	is_range_compound(t_llist *begin, t_llist *end);
-// int		is_node_compound(t_ntree	*node);
 
 /* token */
-bool	is_token_word(t_token *token);
-bool	is_token_pipe(t_token *token);
-bool	is_token_logical_operator(t_token *token);
-bool	is_token_operator(t_token *token);
-bool	is_token_redirection(t_token *token);
-bool	is_token_here_doc(t_token *token);
+// bool	is_token_pipe(t_token *token);
+// bool	is_token_logical_operator(t_token *token);
+// bool	is_token_operator(t_token *token);
+// bool	is_token_redirection(t_token *token);
+// bool	is_token_here_doc(t_token *token);
 bool	is_token_error(t_token *token);
 bool	is_token_ambiguous_word(t_token *token);
 t_token	*token_new(t_type type, void *data);
@@ -312,7 +305,6 @@ void	*get_execute_function(t_ntree *ast);
 int		execute_ast(t_minishell *minishell);
 int		execute_complete_command(t_minishell *minishell, t_ntree *ast);
 int		execute_logical_expression(t_minishell *minishell, t_ntree *ast);
-int		execute_compound_command(t_minishell *minishell, t_ntree *ast);
 int		execute_pipeline(t_minishell *minishell, t_ntree *ast);
 void	execute(char **cmd_args, t_info *info, t_minishell *minishell);
 int		analyze_status(t_info *info);
@@ -398,11 +390,6 @@ char	*get_pwd(char **envp);
 int		match(char *pattern, char *text);
 t_llist	*node_dup(t_llist *node);
 t_state	expand_token_list(t_llist **token_list, t_minishell *minishell);
-
-/*	cleanup	*/
-void	data_cleanup(char **data);
-void	token_list_cleanup(t_llist **token_list);
-void	ast_cleanup(t_ntree **ast);
 
 /*	main_utils	*/
 void	reader_loop(t_minishell *minishell);

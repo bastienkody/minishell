@@ -55,7 +55,6 @@ LEXER_NAME	=	lexer.c\
 				type_token.c\
 				lsttok.c\
 				lsttok_utils.c\
-				compound_cmd.c\
 				check_syntax.c\
 				check_syntax_utils.c\
 
@@ -89,7 +88,6 @@ TOKEN_NAME	=	token_free.c\
 				token_dup.c\
 				token_print.c\
 				token_predicate1.c\
-				token_predicate2.c\
 				utils.c
 
 SIGNAL_NAME	=	signal_handlers.c\
@@ -107,7 +105,6 @@ UTILS_NAME	=	ft_realloc.c\
 				strfind.c\
 				create_command_utils.c\
 				charmatrix_dup.c\
-				cleanup.c\
 				free_and_exit.c\
 				ft_bzero_matrix.c\
 				ft_atoi_ll_nvof.c
