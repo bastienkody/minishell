@@ -97,7 +97,7 @@ int	check_amb_redir(char *str, char **envp)
 	{
 		if (str && *str == D_QUOTE)
 			str = ft_strchr(str + 1, D_QUOTE) + 1;
-		if (str && *str == S_QUOTE)
+		else if (str && *str == S_QUOTE)
 			str = ft_strchr(str + 1, S_QUOTE) + 1;
 		else if (str && *str == '$')
 		{

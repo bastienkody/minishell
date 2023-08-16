@@ -354,7 +354,7 @@ int	g_last_signum;
 }*/
 
 //check execve() with redirected in and out to the same file
-int main(int argc, char ** argv, char **envp)
+/*int main(int argc, char ** argv, char **envp)
 {
 	pid_t	pid;
 	int		status;
@@ -378,12 +378,12 @@ int main(int argc, char ** argv, char **envp)
 	}
 	else
 		waitpid(pid, &status, 0);
-}
+}*/
 
 // check_amb_redir solo
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	char *str = ft_strdup("file");
+	char *str = ft_strdup("\"1\"\"2\"\"3\"\"4\"\"5\"");
 	char *str_expanded;
 
 	(void)argc;
@@ -396,7 +396,7 @@ int main(int argc, char ** argv, char **envp)
 	free_char_matrix(envp);
 	free(str_expanded);
 	free(str);
-}*/
+}
 
 //	QUOTE REMOVAL
 /*int	main(void)

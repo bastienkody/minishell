@@ -9,9 +9,3 @@ leaks si on arrive a execute et quon appelle pas execve(). 3 cas possibles :
 - 2 : pipe contenant au moins 1 bultin (on exec exec_builtin depuis execute et non exec_solo_builtin depuis pipex)
 - 3 : pb de file de redir
 A priori on ne free pas assez. 
-
-- error de syntax pour quote en nombre impair
-
-- error de syntax pour les &&
-
-
