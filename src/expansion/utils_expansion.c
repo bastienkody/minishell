@@ -14,7 +14,6 @@
 
 int	is_c_end_envar(int c)
 {
-	ft_fprintf(1, "char in int :%i\n", c);
 	if (!ft_isalnum(c) && c != '_')
 		return (1);
 	return (0);

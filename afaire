@@ -17,3 +17,6 @@
 - error de syntax pour quote en nombre impair
 
 - error de syntax pour les &&
+
+Minishell plante : 
+	- < file > file 
