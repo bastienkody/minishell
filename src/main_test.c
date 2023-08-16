@@ -353,8 +353,35 @@ int	g_last_signum;
 	perror(NULL);
 }*/
 
+//check execve() with redirected in and out to the same file
+int main(int argc, char ** argv, char **envp)
+{
+	pid_t	pid;
+	int		status;
+	int		fd_in = open("file", O_RDONLY);
+	int		fd_out = open("file", O_TRUNC | O_WRONLY | O_CREAT, 00644);
+	char	*args[3];
+
+	(void)argc;
+	(void)argv;
+	args[0] = "cat";
+	args[1] = "-e";
+	args[2] = NULL;
+	pid = fork();
+	if (pid < 0)
+		return (ft_fprintf(1, "fork failed\n"));
+	else if (pid == 0)
+	{
+		dup2(fd_in, STDIN_FILENO);
+		dup2(fd_out, STDOUT_FILENO);
+		execve("/usr/bin/cat", args, envp);
+	}
+	else
+		waitpid(pid, &status, 0);
+}
+
 // check_amb_redir solo
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char *str = ft_strdup("file");
 	char *str_expanded;
@@ -369,7 +396,7 @@ int	main(int argc, char **argv, char **envp)
 	free_char_matrix(envp);
 	free(str_expanded);
 	free(str);
-}
+}*/
 
 //	QUOTE REMOVAL
 /*int	main(void)
