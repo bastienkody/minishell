@@ -342,6 +342,17 @@ int	g_last_signum;
 	free_char_matrix(envp);
 }*/
 
+// check open close on /dev/null
+/*int	main(void)
+{
+	int	fd = open("/dev/null", O_TRUNC | O_WRONLY | O_CREAT, 00644);
+	if (fd < 0)
+		perror(NULL);
+	ft_fprintf(1, "open : %i\n", fd);
+	ft_fprintf(1, "close :%i\n", close(fd));
+	perror(NULL);
+}*/
+
 // check_amb_redir solo
 int	main(int argc, char **argv, char **envp)
 {
@@ -351,7 +362,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	envp = charmatrix_dup(envp);
-	ft_fprintf(1, "ptr:%p, end:%p\n", str, str + 5);
+	ft_fprintf(1, "ptr:%p, end:%p\n", str, str + ft_strlen(str));
 	ft_fprintf(1, "%i\n", check_amb_redir(str, envp));
 	str_expanded = expand_dollar(str, envp, 0);
 	ft_fprintf(1, "%s\n", str_expanded);
