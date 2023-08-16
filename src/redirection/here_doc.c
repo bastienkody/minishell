@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 13:10:52 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 15:45:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	open_here_doc_child(const char *lim, int fd, t_minishell *minishell)
 			minishell->status = SIGINT;
 		else
 			minishell->status = 1;
-		ft_fprintf(2, "fils\n");
 	}
 	(close(fd), free_and_exit(minishell));
 }
@@ -77,11 +76,9 @@ int	open_here_doc_parent(int fd, char *pathname)
 	status = 0;
 	signal(SIGINT, SIG_IGN);
 	wait(&status);
-	ft_fprintf(2, "pere\n");
-	ft_fprintf(2, "%d\n", status);
-	if (WIFSIGNALED(status))
+	if (WIFEXITED(status))
 	{
-		puts("ICI");
+		ft_fprintf(2, "%d\n", WEXITSTATUS(status));
 		return (-3);
 	}
 	close(fd);

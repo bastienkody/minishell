@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 13:04:11 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/16 15:35:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	analyze_status(t_info *info)
 
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
+	ft_fprintf(2, "status:%d\n", status);
 	if (last_cmd->exist)
 		return (ft_fprintf(1, "RET 127\n"), 127);
 	if (last_cmd->is_exec)
