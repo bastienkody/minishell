@@ -33,9 +33,13 @@ Attention aux cas :
 bash : echo $"$SHELL" -> /bin/zsh
 minishell : echo $"$SHELL" -> $/bin/zsh
 
-- export a="      a    b    " -> echo $a -> a b. 
- --> strtrim des whitespaces dans export value
- --> suppression des whitespaces consecutifs entre words (ou juste faire ca, sans strtrim)
+- export a="      a    b    " 
+bash:	echo $a -> "a b". 
+		echo "$a" -> "      a    b    "
+		env 	-> a="      a    b    "
+		here_doc -> "      a    b    "
+--> ni a gerer au moment d'export, ni au moment d'expand dollar. 
+--> je crains qu'il faille apres le dollar expansion et apres le quote removal, supprimer les whitespaces ..? 
 
 - export s="s -la" && l$s. Toujours lie au probleme de l'expansion avec des espaces expandus qui devraient generer plusieurs words. 
 bash : launch ls -la
