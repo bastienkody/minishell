@@ -85,3 +85,32 @@ int	concat_envar(char *key, char *new_value, char **envp)
 	}
 	return (0);
 }
+
+/*	ft_strdup with strtrim(whitespace) + no consecutives wspaces in middle
+ *	does not free src ; ret null on alloc_err ; not protected against src	*/
+/*char	*strdup_single_whitespace(char *src)
+{
+	int		n;
+	int		i;
+	char	*new;
+	
+	n = 0;
+	i = 0;
+	while (src[++i])
+	{
+		if (!(is_whitespace(src[i]) && is_whitespace(src[i - 1])))
+			n++;
+	}
+	new = malloc((n + 1) * sizeof(char));
+	if (!new)
+		return (NULL);
+	n = -1;
+	i = 0;
+	while (src[++i - 1])
+	{
+		if (!(is_whitespace(src[i]) && is_whitespace(src[i - 1])))
+			new[++n] = src[i - 1];
+	}
+	new[n] = '\0';
+	return (ft_strtrim(new, WHITESPACE));
+}*/

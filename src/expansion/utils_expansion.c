@@ -50,3 +50,11 @@ int	is_str_quote_enclosed(const char *str)
 		return (2);
 	return (0);
 }
+
+int	is_whitespace(int c)
+{
+
+	if (ft_strchr(WHITESPACE, c))
+		return (1);
+	return (0);
+}
