@@ -9,12 +9,6 @@ Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
 	< erwire pwd  -> ok
 	ls | < erwire pwd  -> ko
 
-- commande ou argument "." et ".." :
-	- pas de message d'erreur
-	- quitte le minishell immediatemment
-	- code retour 1
-	- idem pour un : cd .. | echo bonjour -> pas de echo, minishell quitte.
-
 - expansion : $"a" ko. exemple :
 bash : echo $"a" -> a
 minishell : echo $"a" > $a
