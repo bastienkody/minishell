@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 17:30:56 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/19 16:36:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define NO_REDIR 0
 # define REDIR_PB -3
 # define ALLOC_FAIL -2
-# define LINE_EMPTY -4
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
@@ -135,6 +134,15 @@ typedef struct s_cmd
 	int				is_exec;
 	struct s_cmd	*next;
 }					t_cmd;
+
+typedef enum e_error
+{
+	SUCCESS = 0,
+	ERRFD = -1,
+	ERRALLOC = -2,
+	ERRSIGINT = -3,
+	ERRBUILTIN = -4,
+} t_error;
 
 typedef struct s_info
 {

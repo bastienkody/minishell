@@ -2,34 +2,23 @@
 	is this linked to the correction of echo "" truc ?
 - exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
-leaks si on arrive a execute et quon appelle pas execve(). 3 cas possibles : 
-- 1 : leak if redir (infile or outfile) without cmd, ie : > file ; < Makefile
-- 2 : pipe contenant au moins 1 bultin (on exec exec_builtin depuis execute et non exec_solo_builtin depuis pipex)
-- 3 : pb de file de redir
-
-- erreur de syntaxe parenthese suivie de operateur redirections. Exemples: 
-	(>file cat)
-	(ls && pwd) > hola
-- meme erreur avec les && et || : 
-	ls && < file 
-
-- probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande. 
-Pas d'erreur si cmd est solo_builtin (sans fork). Exemples : 
+- probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
+Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
 	< dsfjkglfdlg  -> ko
 	ls < dsgfhdjkdfk -> ko
 	< erwire pwd  -> ok
 	ls | < erwire pwd  -> ko
-	
-- commande ou argument "." et ".." : 
+
+- commande ou argument "." et ".." :
 	- pas de message d'erreur
 	- quitte le minishell immediatemment
 	- code retour 1
 	- idem pour un : cd .. | echo bonjour -> pas de echo, minishell quitte.
 
-- expansion : $"a" ko. exemple : 
+- expansion : $"a" ko. exemple :
 bash : echo $"a" -> a
 minishell : echo $"a" > $a
-Attention aux cas : 
+Attention aux cas :
 bash : echo $"$SHELL" -> /bin/zsh
 minishell : echo $"$SHELL" -> $/bin/zsh
 
@@ -41,7 +30,7 @@ bash:	echo $a -> "a b".
 --> ni a gerer au moment d'export, ni au moment d'expand dollar. 
 --> je crains qu'il faille apres le dollar expansion et apres le quote removal, supprimer les whitespaces ..? 
 
-- export s="s -la" && l$s. Toujours lie au probleme de l'expansion avec des espaces expandus qui devraient generer plusieurs words. 
+- export s="s -la" && l$s. Toujours lie au probleme de l'expansion avec des espaces expandus qui devraient generer plusieurs words.
 bash : launch ls -la
 minishell : minishell: ls -la: command not found
 
@@ -49,5 +38,5 @@ minishell : minishell: ls -la: command not found
 bash : echo $9HOME -> HOME
 minishell: echo $9HOME -> "" (empty)
 
-- le delegue fait un test contraire aux ambigous redirect (redir 89) vraiment je sais pas ce qui lui arrive parfois ... 
-on est ko sur le test mais a raison ... 
+- le delegue fait un test contraire aux ambigous redirect (redir 89) vraiment je sais pas ce qui lui arrive parfois ...
+on est ko sur le test mais a raison ...

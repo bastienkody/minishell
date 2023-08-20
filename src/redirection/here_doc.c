@@ -6,11 +6,19 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 17:12:51 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/19 16:40:13 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+/*
+SUCCESS
+PAS D'ERREUR fd correct-> normal
+SIGINT -> quit command
+FAIL_ALLOC -> quit minishell
+BAD_FD -> normal
+*/
 
 int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 {
@@ -19,26 +27,26 @@ int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 
 	data = ft_strdup("");
 	if (!data)
-		return (FALSE);
+		return (ERRALLOC);
 	while (1)
 	{
 		line = readline(HD_PROMPT);
 		if (g_last_signum == SIGINT)
-			return (free(data), FALSE);
+			return (free(data), ERRSIGINT);
 		if (!line)
 			break ;
 		if (!ft_strcmp(line, lim))
 			break ;
 		data = strj(data, strj(line, ft_strdup("\n")));
 		if (!data)
-			return (FALSE);
+			return (ERRALLOC);
 	}
 	if (!is_str_quote_enclosed(lim))
 		data = expand_dollar_here_doc(data, minishell->envp, minishell->status);
 	if (!data)
-		return (FALSE);
+		return (ERRALLOC);
 	write(fd, data, ft_strlen(data));
-	return (free(line), free(data), TRUE);
+	return (free(line), free(data), SUCCESS);
 }
 
 int	create_tmp_file(char *pathname, t_minishell *minishell)
@@ -59,13 +67,7 @@ int	create_tmp_file(char *pathname, t_minishell *minishell)
 void	open_here_doc_child(const char *lim, int fd, t_minishell *minishell)
 {
 	set_here_doc_signals();
-	if (!launch_here_doc(fd, lim, minishell))
-	{
-		if (g_last_signum == SIGINT)
-			minishell->status = SIGINT;
-		else
-			minishell->status = 1;
-	}
+	minishell->status = launch_here_doc(fd, lim, minishell);
 	(close(fd), free_and_exit(minishell));
 }
 
@@ -76,15 +78,13 @@ int	open_here_doc_parent(int fd, char *pathname)
 	status = 0;
 	signal(SIGINT, SIG_IGN);
 	wait(&status);
-	if (WIFEXITED(status))
-	{
-		// ft_fprintf(2, "%d\n", WEXITSTATUS(status));
-		return (-3);
-	}
+	status = WEXITSTATUS(status) - 256;
+	if (status != 0)
+		return (status);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)
-		return (perror("open here_doc in rd"), BAD_FD);
+		return (perror("open here_doc in rd"), ERRFD);
 	return (fd);
 }
 
@@ -97,7 +97,7 @@ int	open_here_doc(const char *lim, t_minishell *minishell)
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb++), HD_END);
 	if (pathname == NULL)
-		return (ALLOC_FAIL);
+		return (ERRALLOC);
 	fd = create_tmp_file(pathname, minishell);
 	if (fd < -1)
 		return (fd);
@@ -105,6 +105,5 @@ int	open_here_doc(const char *lim, t_minishell *minishell)
 		open_here_doc_child(lim, fd, minishell);
 	else
 		fd = open_here_doc_parent(fd, pathname);
-	ft_fprintf(2, "%d\n", fd);
 	return (fd);
 }
