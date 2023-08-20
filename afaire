@@ -15,13 +15,6 @@ Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
 	- code retour 1
 	- idem pour un : cd .. | echo bonjour -> pas de echo, minishell quitte.
 
-- expansion : $"a" ko. exemple :
-bash : echo $"a" -> a
-minishell : echo $"a" > $a
-Attention aux cas :
-bash : echo $"$SHELL" -> /bin/zsh
-minishell : echo $"$SHELL" -> $/bin/zsh
-
 - export a="      a    b    " 
 bash:	echo $a -> "a b". 
 		echo "$a" -> "      a    b    "
@@ -34,9 +27,7 @@ bash:	echo $a -> "a b".
 bash : launch ls -la
 minishell : minishell: ls -la: command not found
 
-- expansion : $9HOME
-bash : echo $9HOME -> HOME
-minishell: echo $9HOME -> "" (empty)
+- expansion : $9HOME => pas a gerer, il s'agit des arguments positionnels de bash ($@=argv, $#=argc, $0...$9=argv[0...9])
 
-- le delegue fait un test contraire aux ambigous redirect (redir 89) vraiment je sais pas ce qui lui arrive parfois ...
-on est ko sur le test mais a raison ...
+- erreur d'appels systeme (pid, dup, fork) : 
+	que faire de plus que perror?
