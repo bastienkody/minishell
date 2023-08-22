@@ -141,17 +141,18 @@ NTREE		=	./ntree/libntree.a
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror -I /usr/local/Cellar/readline/8.2.1/include/
-CFLAGSDEV	=	-Wall -Wextra -Werror -g3 -I /usr/local/Cellar/readline/8.2.1/include/
+CFLAGS		=	-Wall -Wextra -Werror 
+CFLAGSDEV	=	-Wall -Wextra -Werror -g3
 
 LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -lreadline
 
 ifeq ($(shell uname), Darwin)
-        CFLAGS				+= -I /usr/local/Cellar/readline/8.2.1/include/
+        CFLAGS			+= -I /usr/local/Cellar/readline/8.2.1/include/
         CCFLAGSDEV		+= -I /usr/local/Cellar/readline/8.2.1/include/
-				LDFLAGS				=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -L/usr/local/Cellar/readline/8.2.1/lib -lreadline
+		LDFLAGS			=	-L./libft -lft -L./llist -lllst -L./ntree -lntree\
+							-L/usr/local/Cellar/readline/8.2.1/lib -lreadline
 
-    endif
+ endif
 
 
 ###		RULES		###
