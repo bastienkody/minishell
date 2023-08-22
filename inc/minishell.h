@@ -354,7 +354,7 @@ void	print_leaf(t_ntree *leaf);
 /* builtins	*/
 int		pwd(char **args);
 int		echo(char **argv);
-int		cd(char **args, char **envp);
+int		cd(char **args, char ***envp);
 int		env(char **args, char **envp, char *prefix, int quote);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
