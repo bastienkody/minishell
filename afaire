@@ -1,19 +1,21 @@
 - export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
 	is this linked to the correction of echo "" truc ?
-- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
 - probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
-Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
+Pas d'erreur si cmd est solo_builtin (sans fork) ou si le fichier existe. Exemples :
 	< dsfjkglfdlg  -> ko
 	ls < dsgfhdjkdfk -> ko
 	< erwire pwd  -> ok
 	ls | < erwire pwd  -> ko
+--> CORRIGE (prevpipe was not closed). a priori pas de downgrade ailleurs. 
+	retester pleins de cas de redir
 
 - commande ou argument "." et ".." :
 	- pas de message d'erreur
 	- quitte le minishell immediatemment
 	- code retour 1
 	- idem pour un : cd .. | echo bonjour -> pas de echo, minishell quitte.
+--> je trouve rien dans l'execution. pendant la wildcard expansion maybe ?
 
 - export a="      a    b    " 
 bash:	echo $a -> "a b". 
@@ -31,3 +33,11 @@ minishell : minishell: ls -la: command not found
 
 - erreur d'appels systeme (pid, dup, fork) : 
 	que faire de plus que perror?
+
+- command is a file, not an real exec : (not to handle ?)
+	echo salut > file ; chmod u+x file
+	minishell : ./file -> execve exec format error
+	bash 	  : ./file -> "line 1 : blabla, command not found"
+	--> bash tries to interpret file as a .sh while minishell sends it to execve
+
+- tests concluants : sudo, custom exec, env-i with cd/export/unset/pwd, unset PWD OLDPWD + cd/unset/export

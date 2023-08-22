@@ -17,9 +17,8 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
 	int	old_fd;
 
-	if (info->cmds->fd_in == NO_REDIR)
-		old_fd = prevpipe;
-	else if (info->cmds->fd_in > NO_REDIR)
+	old_fd = prevpipe;
+	if (info->cmds->fd_in > NO_REDIR)
 	{
 		close(prevpipe);
 		old_fd = info->cmds->fd_in;
