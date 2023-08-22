@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_print.c                                      :+:      :+:    :+:   */
+/*   llst_token_get.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 17:16:57 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/21 17:12:49 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/21 15:28:13 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/21 15:28:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const char	*g_type[]
-	= {
-	"dummy",
-	"or",
-	"and",
-	"pipe",
-	"great",
-	"less",
-	"dgreat",
-	"dless",
-	"opening_parenthesis",
-	"closing_parenthesis",
-	"quoted_word",
-	"word",
-	"error"
-};
-
-void	token_print(t_token *token)
+t_token	*llst_token_get(t_llist *node)
 {
-	ft_fprintf(1, "text : %s, type : %s\n", token->data, g_type[token->type]);
+	return (node->content);
 }

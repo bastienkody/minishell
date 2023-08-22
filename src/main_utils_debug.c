@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/19 16:34:31 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/21 19:42:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,13 @@ t_state interpret_command(const char *line, t_minishell *minishell)
 		return (EXIT);
 	if (!llstall_of(token_list, (void *)is_token_good))
 		return (minishell->status = 2, print_err_quotes(), CONTINUE);
+	// llstiter(token_list, (void *)token_print);
 	return_code = expand_token_list(&token_list, minishell);
 	if (return_code == EXIT)
 		return (llstclear(&token_list, token_free), EXIT);
 	if (return_code == CONTINUE)
 		return (llstclear(&token_list, token_free), minishell->status = 0, CONTINUE);
+	// llstiter(token_list, (void *)token_print);
 	if (check_error(token_list) != 0)
 		return (llstclear(&token_list, token_free), minishell->status = 2, CONTINUE);
 	minishell->ast = parser(token_list);

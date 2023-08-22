@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:35:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 17:04:13 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/19 21:27:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	get_nb_matched_files(char *pattern)
 	info = readdir(dir);
 	while (info != NULL)
 	{
-		if (match(pattern, info->d_name))
+		if ((info->d_name[0] != '.') && match(pattern, info->d_name))
 			nb_matched_files++;
 		info = readdir(dir);
 	}

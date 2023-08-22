@@ -9,12 +9,12 @@ Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
 	< erwire pwd  -> ok
 	ls | < erwire pwd  -> ko
 
-- expansion : $"a" ko. exemple :
-bash : echo $"a" -> a
-minishell : echo $"a" > $a
-Attention aux cas :
-bash : echo $"$SHELL" -> /bin/zsh
-minishell : echo $"$SHELL" -> $/bin/zsh
+-- - expansion : $"a" ko. exemple :
+-- bash : echo $"a" -> a
+-- minishell : echo $"a" > $a
+-- Attention aux cas :
+-- bash : echo $"$SHELL" -> /bin/zsh
+-- minishell : echo $"$SHELL" -> $/bin/zsh
 
 - export a="      a    b    " -> echo $a -> a b.
  --> strtrim des whitespaces dans export value

@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_print.c                                      :+:      :+:    :+:   */
+/*   llst_token_new.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 17:16:57 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/21 17:12:49 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/21 15:22:46 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/21 15:53:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static const char	*g_type[]
-	= {
-	"dummy",
-	"or",
-	"and",
-	"pipe",
-	"great",
-	"less",
-	"dgreat",
-	"dless",
-	"opening_parenthesis",
-	"closing_parenthesis",
-	"quoted_word",
-	"word",
-	"error"
-};
-
-void	token_print(t_token *token)
+t_llist	*llst_token_new(t_type type, char *data)
 {
-	ft_fprintf(1, "text : %s, type : %s\n", token->data, g_type[token->type]);
+	t_llist	*new_node;
+	t_token	*new_token;
+
+	new_token = token_new(type, data);
+	if (new_token == NULL)
+		return (NULL);
+	new_node = llstnew(new_token);
+	if (new_node == NULL)
+		return (token_free(new_token), NULL);
+	return (new_node);
 }

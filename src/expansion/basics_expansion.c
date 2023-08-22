@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basics_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:06:40 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/24 14:06:42 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/08/20 21:37:34 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ char	*expand_wd(char *word, char **envp)
 	{
 		key_comp = get_key_2(*envp);
 		if (!key_comp)
-			return (free(word), NULL);
-		if (!ft_strcmp(word + sizeof(char), key_comp))
-			return (free(word), free(key_comp), ft_strdup(get_value(*envp)));
+			return (NULL);
+		if (!ft_strcmp(word, key_comp))
+			return (free(key_comp), ft_strdup(get_value(*envp)));
 		envp++;
 		free(key_comp);
 	}
-	return (free(word), ft_strdup(""));
+	return (ft_strdup(""));
 }
