@@ -11,14 +11,14 @@ int	g_last_signum;
 /////////////////////////////////////////////
 
 
-int main(void)
+/*int main(void)
 {
 	char	*str = "$";
 	if (*str == '$' && ft_strchr("_\'\"", str[1]))
 		printf("ok:%c\n", str[1]);
 	else
 		printf("not ok\n");
-}
+}*/
 
 // test exit pour code normalize a 255
 /*int	main(void)
@@ -440,24 +440,19 @@ int main(void)
 }*/
 
 //	DOLLAR EXPANSION
-/*int	main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*str = ft_strdup("salut \"\'$USER\'\" \'$USER\'");
+	char	*str = ft_strdup("$\"\"");
 
 	envp = charmatrix_dup(envp);
 	(void)argc;
 	(void)argv;
 	ft_fprintf(1, "pre_exp:%s\n", str);
-	str = expand_dollar(str, envp);
-	ft_fprintf(1, "pst_exp:%s\n", str);
-	free(str);
-	str = ft_strdup("$USER $PWD");
-	ft_fprintf(1, "pre_exp:%s\n", str);
-	str = expand_dollar(str, envp);
+	str = expand_dollar(str, envp, 0);
 	ft_fprintf(1, "pst_exp:%s\n", str);
 	free(str);
 	free_char_matrix(envp);
-}*/
+}
 
 //	HEREDOC N EXPANSION
 /*int	main(int argc, char **argv, char **envp)
