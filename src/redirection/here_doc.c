@@ -6,19 +6,22 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/23 13:34:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 14:39:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-SUCCESS
-PAS D'ERREUR fd correct-> normal
-SIGINT -> quit command
-FAIL_ALLOC -> quit minishell
-BAD_FD -> normal
-*/
+char	*expand_dollar_here_doc(char *data, char **envp, int status)
+{
+	char	*res;
+
+	res = expand_dollar_here_doc(data, envp, status);
+	free(data);
+	if (res == NULL)
+		return (NULL);
+	return (res);
+}
 
 int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 {
@@ -42,6 +45,7 @@ int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 		if (!data)
 			return (ERRALLOC);
 	}
+	data = expand_dollar(data, minishell->envp, minishell->status);
 	// if (!is_str_quote_enclosed(lim))
 	// 	data = expand_dollar_here_doc(data, minishell->envp, minishell->status);
 	if (!data)
