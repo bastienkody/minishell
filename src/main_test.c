@@ -10,6 +10,16 @@ int	g_last_signum;
 
 /////////////////////////////////////////////
 
+
+int main(void)
+{
+	char	*str = "$";
+	if (*str == '$' && ft_strchr("_\'\"", str[1]))
+		printf("ok:%c\n", str[1]);
+	else
+		printf("not ok\n");
+}
+
 // test exit pour code normalize a 255
 /*int	main(void)
 {
@@ -381,7 +391,7 @@ int	g_last_signum;
 }*/
 
 // check_amb_redir solo
-int	main(int argc, char **argv, char **envp)
+/*int	main(int argc, char **argv, char **envp)
 {
 	char *str = ft_strdup("\"1\"\"2\"\"3\"\"4\"\"5\"");
 	char *str_expanded;
@@ -396,7 +406,7 @@ int	main(int argc, char **argv, char **envp)
 	free_char_matrix(envp);
 	free(str_expanded);
 	free(str);
-}
+}*/
 
 //	QUOTE REMOVAL
 /*int	main(void)

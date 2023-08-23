@@ -27,7 +27,7 @@ char	*get_next_word_expanded(char **ret, char *str, char **envp, int status)
 		return (str + 2);
 	}
 	word_end = strfind_if(str + 1, &is_c_end_envar);
-	if (*str == '$' && (ft_isalnum(str[1]) || ft_strchr("_\'\"", str[1])))
+	if (*str == '$' && str[1] && (ft_isalnum(str[1]) || ft_strchr("_\'\"", str[1])))
 		*ret = strjoin2(*ret, expand_wd(extract_wd(str, word_end), envp));
 	else
 		get_next_word_not_expanded(ret, str, word_end);

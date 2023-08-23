@@ -20,6 +20,8 @@ bash:	echo $a -> "a b".
 bash : launch ls -la
 minishell : minishell: ls -la: command not found
 
+- expansion : echo "$" ko
+
 - expansion : $9HOME => pas a gerer, il s'agit des arguments positionnels de bash ($@=argv, $#=argc, $0...$9=argv[0...9])
 
 - erreur d'appels systeme (pid, dup, fork) : 
