@@ -6,37 +6,58 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 17:08:28 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 13:54:30 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static char	*remove_quote(char *str)
+{
+	char	*new_str;
+	size_t	i;
+	bool	is_inside_simple_quote;
+	bool	is_inside_double_quote;
+
+	new_str = malloc(ft_strlen(str) + 1);
+	if (new_str == NULL)
+		return (NULL);
+	is_inside_simple_quote = false;
+	is_inside_double_quote = false;
+	i = 0;
+	while (*str)
+	{
+		if (*str == '\'' && !is_inside_double_quote)
+			is_inside_simple_quote = !is_inside_simple_quote;
+		else if (*str == '\"' && !is_inside_simple_quote)
+			is_inside_double_quote = !is_inside_double_quote;
+		if (!(*str == '\'' && !is_inside_double_quote) && !(*str == '\"' && !is_inside_simple_quote))
+			new_str[i++] = *str;
+		str++;
+	}
+	new_str[i] = '\0';
+	return (new_str);
+}
+
 static t_llist	*get_remove_quote_node(t_llist *node)
 {
-	t_llist	*new_node;
 	char	*new_data;
 	t_token	*token;
 
-	new_node = node_dup(node);
-	if (new_node == NULL)
-		return (NULL);
-	token = new_node->content;
-	new_data = rm_peer_quotes(token->data);
+	token = node->content;
+	new_data = remove_quote(token->data);
 	if (new_data == NULL)
-		return (llstdelone(new_node, (void *)token_free), NULL);
-	free(token->data);
-	token->data = new_data;
-	return (new_node);
+		return (NULL);
+	return (llst_token_new(word, new_data));
 }
 
-static bool	is_word_remove_quote(t_llist *node)
-{
-	t_token *const	token = node->content;
+// static bool	is_word_remove_quote(t_llist *node)
+// {
+// 	t_token *const	token = node->content;
 
-	return (token->type == word
-		&& !is_prev_here_operator(node) && !is_str_empty_quote(token->data));
-}
+// 	return (token->type == word
+// 		&& !is_prev_here_operator(node) && !is_str_empty_quote(token->data));
+// }
 
 t_llist	*llst_remove_quote(t_llist *token_list)
 {
@@ -48,7 +69,7 @@ t_llist	*llst_remove_quote(t_llist *token_list)
 	current = token_list;
 	while (current != NULL)
 	{
-		if (is_word_remove_quote(current))
+		if (llst_token_get_type(current) == word)
 			new_node = get_remove_quote_node(current);
 		else
 			new_node = node_dup(current);
@@ -59,3 +80,4 @@ t_llist	*llst_remove_quote(t_llist *token_list)
 	}
 	return (new_token_list);
 }
+

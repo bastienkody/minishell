@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/21 17:08:54 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 00:27:27 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static bool (*const	g_type_predicate[])(const char *str)
 	is_str_dless,
 	is_str_op_p,
 	is_str_cl_p,
-	is_str_quoted_word,
 	is_str_word,
 	NULL,
 };

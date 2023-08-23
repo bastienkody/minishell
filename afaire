@@ -1,5 +1,5 @@
-- export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
-	is this linked to the correction of echo "" truc ?
+-- - export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
+-- 	is this linked to the correction of echo "" truc ?
 - exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
 - probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.

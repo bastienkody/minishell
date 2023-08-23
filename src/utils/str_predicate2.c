@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:54:39 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/21 17:10:28 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 00:27:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	is_str_word(const char *str)
 	return (1);
 }
 
-bool	is_str_quoted_word(const char *str)
-{
-	return (ft_strchr("\'\"", str[0]) && str[0] == str[ft_strlen(str) - 1]);
-}
+// bool	is_str_quoted_word(const char *str)
+// {
+// 	return (ft_strchr("\'\"", str[0]) && str[0] == str[ft_strlen(str) - 1]);
+// }

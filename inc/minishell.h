@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/21 19:30:06 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 13:20:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef enum e_type
 	dless,
 	opening_parenthesis,
 	closing_parenthesis,
-	quoted_word,
 	word,
 	error,
 	ambigous_word,
@@ -192,7 +191,7 @@ bool	is_str_less(const char *str);
 bool	is_str_dgreat(const char *str);
 bool	is_str_dless(const char *str);
 bool	is_str_compound(const char *str);
-bool	is_str_quoted_word(const char *str);
+// bool	is_str_quoted_word(const char *str);
 bool	is_str_word(const char *str);
 bool	is_str_redirection(const char *str);
 bool	is_str_builtin(const char *str);

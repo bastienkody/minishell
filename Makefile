@@ -45,6 +45,7 @@ XPAND_NAME	=		utils_expansion.c\
 					llst_expand_wildcard_utils.c\
 					wildcard_match.c\
 					llst_expand_dollar.c\
+					llst_rearange_dollar.c\
 					llst_remove_quote.c\
 					expand_token_list.c
 
