@@ -59,7 +59,7 @@ int	create_tmp_file(char *pathname, t_minishell *minishell)
 		return (perror("open here_doc in w"), BAD_FD);
 	new_node = llstnew(pathname);
 	if (new_node == NULL)
-		return (free(pathname), ALLOC_FAIL);
+		return (close(fd), free(pathname), ALLOC_FAIL);
 	llstadd_back(&minishell->here_doc_files, new_node);
 	return (fd);
 }
@@ -68,7 +68,8 @@ void	open_here_doc_child(const char *lim, int fd, t_minishell *minishell)
 {
 	set_here_doc_signals();
 	minishell->status = launch_here_doc(fd, lim, minishell);
-	(close(fd), free_and_exit(minishell));
+	close(fd);
+	free_and_exit(minishell);
 }
 
 int	open_here_doc_parent(int fd, char *pathname)
@@ -78,7 +79,7 @@ int	open_here_doc_parent(int fd, char *pathname)
 	status = 0;
 	signal(SIGINT, SIG_IGN);
 	wait(&status);
-	status = WEXITSTATUS(status) - 256;
+	status = WEXITSTATUS(status);
 	if (status != 0)
 		return (status);
 	close(fd);
