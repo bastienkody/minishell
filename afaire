@@ -1,5 +1,3 @@
--- - export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
--- 	is this linked to the correction of echo "" truc ?
 - exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
 
 - probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
@@ -9,23 +7,8 @@ Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
 	< erwire pwd  -> ok
 	ls | < erwire pwd  -> ko
 
-- export a="      a    b    " -> echo $a -> a b.
- --> strtrim des whitespaces dans export value
- --> suppression des whitespaces consecutifs entre words (ou juste faire ca, sans strtrim)
-- export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
-	is this linked to the correction of echo "" truc ?
 
-- export a="      a    b    " 
-bash:	echo $a -> "a b". 
-		echo "$a" -> "      a    b    "
-		env 	-> a="      a    b    "
-		here_doc -> "      a    b    "
---> ni a gerer au moment d'export, ni au moment d'expand dollar. 
---> je crains qu'il faille apres le dollar expansion et apres le quote removal, supprimer les whitespaces ..? 
-
-- expansion : $9HOME => pas a gerer, il s'agit des arguments positionnels de bash ($@=argv, $#=argc, $0...$9=argv[0...9])
-
-- erreur d'appels systeme (pid, dup, fork) : 
+- erreur d'appels systeme (pid, dup, fork) :
 	que faire de plus que perror?
 
 - command is a file, not an real exec : (not to handle ?)
