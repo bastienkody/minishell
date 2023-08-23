@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 16:14:40 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/21 20:36:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 {
 	void	*tmp_dir_ptr;
 
-	if (!*(info->cmds->name))
-		return (minishell->status = 0, free_and_exit(minishell));
+	// if (!*(info->cmds->name))
+	// 	return (minishell->status = 0, free_and_exit(minishell));
 	if (access(info->cmds->fullname, F_OK) || \
 		!ft_strcmp(info->cmds->name, ".."))
 	{

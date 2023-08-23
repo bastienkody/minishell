@@ -6,45 +6,64 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 17:02:59 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 13:19:49 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_prev_redir_operator(t_llist *node)
-{
-	t_token	*prev_token;
+// static t_llist	*get_expand_nodes(t_llist *node)
+// {
+// 	t_llist			*new_nodes;
+// 	char			*next;
+// 	t_llist			*new_node;
+// 	char			*new_str;
+// 	char			*str;
 
-	if (node->prev == NULL)
-		return (0);
-	prev_token = node->prev->content;
-	return (is_str_redirection(prev_token->data) == 1);
-}
+// 	str = llst_token_get_data(node);
+// 	if (is_str_blank(str))
+// 		return (llst_token_new(word, ft_strdup(str)));
+// 	new_nodes = NULL;
+// 	while (*str)
+// 	{
+// 		while (*str && ft_strchr(" 	", *str))
+// 			str++;
+// 		if (*str != '\0')
+// 		{
+// 			next = strfind_if(str, isblank);
+// 			if (next == NULL)
+// 				next = ft_strchr(str, 0);
+// 			new_str = ft_substr(str, 0, next - str);
+// 			if (new_str == NULL)
+// 				return (llstclear(&new_nodes, token_free), NULL);
+// 			new_node = llst_token_new(word, new_str);
+// 			if (new_node == NULL)
+// 				return (NULL);
+// 			llstadd_back(&new_nodes, new_node);
+// 			str = next;
+// 		}
+// 	}
+// 	return (new_nodes);
+// }
 
 static t_llist	*get_expand_node(t_llist *node, char **envp, int status)
 {
-	t_llist	*new_node;
-	char	*new_data;
-	t_token	*token;
+	char	*expanded_str;
 
-	new_node = node_dup(node);
-	if (new_node == NULL)
+	expanded_str = expand_dollar(llst_token_get_data(node), envp, status);
+	if (expanded_str == NULL)
 		return (NULL);
-	token = new_node->content;
-	new_data = expand_dollar(token->data, envp, status);
-	if (new_data == NULL)
-		return (llstdelone(new_node, (void *)token_free), NULL);
-	free(token->data);
-	token->data = new_data;
-	return (new_node);
+	return (llst_token_new(word, expanded_str));
 }
 
-static int	is_word_ambigous(t_llist *node, t_token *token, char **envp)
-{
-	return (is_prev_redir_operator(node)
-		&& !check_amb_redir(token->data, envp));
-}
+// bool	str_contain_blank(const char *str)
+// {
+// 	if (*str == '\0')
+// 		return (0);
+// 	if (isblank(*str))
+// 		return (1);
+// 	return (0 || str_contain_blank(str + 1));
+// }
 
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status)
 {
@@ -59,12 +78,7 @@ t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status)
 	{
 		current_token = current->content;
 		if (current_token->type == word && !is_prev_here_operator(current))
-		{
-			if (is_word_ambigous(current, current_token, envp))
-				new_node = get_ambigous_node(current);
-			else
-				new_node = get_expand_node(current, envp, status);
-		}
+			new_node = get_expand_node(current, envp, status);
 		else
 			new_node = node_dup(current);
 		if (new_node == NULL)

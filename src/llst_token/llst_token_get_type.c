@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   llst_token_get_type.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 11:40:09 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/23 00:58:44 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/21 15:29:32 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/21 15:30:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+t_type	llst_token_get_type(t_llist	*node)
 {
-	unsigned char	*dest_tmp;
-	unsigned char	*src_tmp;
-	size_t			i;
-
-	if (!dest || !src)
-		return (NULL);
-	dest_tmp = (unsigned char *) dest;
-	src_tmp = (unsigned char *) src;
-	i = 0;
-	while (i < n)
-	{
-		dest_tmp[i] = src_tmp[i];
-		i++;
-	}
-	return (dest);
+	return (llst_token_get(node)->type);
 }

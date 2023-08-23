@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/19 16:36:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/23 13:20:07 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <dirent.h>
 # include <stdbool.h>
 # include <readline/readline.h>
+# include <assert.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include "../llist/llist.h"
@@ -191,6 +192,7 @@ bool	is_str_less(const char *str);
 bool	is_str_dgreat(const char *str);
 bool	is_str_dless(const char *str);
 bool	is_str_compound(const char *str);
+// bool	is_str_quoted_word(const char *str);
 bool	is_str_word(const char *str);
 bool	is_str_redirection(const char *str);
 bool	is_str_builtin(const char *str);
@@ -242,6 +244,12 @@ t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
 bool	is_type_inside(t_type type, const t_type types[]);
+
+/*	llst_token	*/
+t_llist	*llst_token_new(t_type type, char *data);
+t_token	*llst_token_get(t_llist *node);
+char	*llst_token_get_data(t_llist *node);
+t_type	llst_token_get_type(t_llist *node);
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
@@ -325,6 +333,7 @@ int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
 t_llist	*get_ambigous_node(t_llist *node);
 t_llist	*llst_remove_quote(t_llist *token_list);
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
+t_llist	*llst_rearange_dollar(t_llist *token_list);
 t_llist	*llst_expand_wildcard(t_llist *token_list);
 t_info	*get_pipex_info(t_minishell *minishell, t_ntree *pipeline_node);
 char	*get_full_cmd_name(char *cmd_name, char **envp);

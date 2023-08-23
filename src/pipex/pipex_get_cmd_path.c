@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_get_cmd_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bguillau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 14:43:42 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/15 14:43:44 by bguillau         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:48:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*get_full_cmd_name(char *cmd_name, char **envp)
 	char	**path;
 	char	*tmp_name;
 
+	if (*cmd_name == '\0')
+		return (ft_strdup(""));
 	if (ft_strchr(cmd_name, '/'))
 		return (ft_strdup(cmd_name));
 	path = get_path(envp);

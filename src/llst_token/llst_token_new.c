@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   llst_token_new.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 11:40:09 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/23 00:58:44 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/21 15:22:46 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/21 15:53:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+t_llist	*llst_token_new(t_type type, char *data)
 {
-	unsigned char	*dest_tmp;
-	unsigned char	*src_tmp;
-	size_t			i;
+	t_llist	*new_node;
+	t_token	*new_token;
 
-	if (!dest || !src)
+	new_token = token_new(type, data);
+	if (new_token == NULL)
 		return (NULL);
-	dest_tmp = (unsigned char *) dest;
-	src_tmp = (unsigned char *) src;
-	i = 0;
-	while (i < n)
-	{
-		dest_tmp[i] = src_tmp[i];
-		i++;
-	}
-	return (dest);
+	new_node = llstnew(new_token);
+	if (new_node == NULL)
+		return (token_free(new_token), NULL);
+	return (new_node);
 }
