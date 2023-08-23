@@ -133,7 +133,7 @@
 size_t	get_identifier_len(const char *str)
 {
 	const char *begin = str;
-
+  
 	while (*str != '\0' && (ft_isalnum(*str) || *str == '_'))
 		str++;
 	return (str - begin);

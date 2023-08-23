@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 #include <stdio.h>
+#include <unistd.h>
 
 /* builtin (ret 1) or execve (ret 0)	*/
 int	check_cd(char **args)
@@ -33,12 +34,12 @@ int	cd_error_display(char *path)
 	return (0);
 }
 
-int	mod_pwd_oldpwd(char ***envp)
+int	mod_pwd_oldpwd(char ***envp, char *oldpwd)
 {
 	char	*export_args[3];
 
 	export_args[0] = "export";
-	export_args[1] = strjoin3("OLDPWD", "=", get_envalue("PWD", *envp));
+	export_args[1] = strjoin3("OLDPWD", "=", oldpwd);
 	export_args[2] = NULL;
 	if (export(export_args, envp) == ALLOC_FAIL)
 		return (free(export_args[1]), ALLOC_FAIL);
@@ -52,22 +53,30 @@ int	mod_pwd_oldpwd(char ***envp)
 	return (1);
 }
 
-int	cd(char **args, char **envp)
+int	cd(char **args, char ***envp)
 {
 	int		chdir_status;
+	char	*oldpwd;
 
 	if (!args[1])
 		return (err_msg(args[0], "Please provide an argument"), 1);
 	if (args[2])
 		return (err_msg(args[0], ERR_TMA), 1);
+	oldpwd = NULL;
+	oldpwd = getcwd(oldpwd, 0);
+	if (!oldpwd)
+		return (ALLOC_FAIL);
 	chdir_status = chdir(args[1]);
 	if (!chdir_status)
 	{
-		if (mod_pwd_oldpwd(&envp) == ALLOC_FAIL)
+		if (mod_pwd_oldpwd(envp, oldpwd) == ALLOC_FAIL)
 			return (ALLOC_FAIL);
 	}
 	else
+	{
+		free(oldpwd);
 		if (cd_error_display(args[1]) == ALLOC_FAIL)
 			return (ALLOC_FAIL);
+	}
 	return (chdir_status * -1);
 }

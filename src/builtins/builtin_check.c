@@ -39,7 +39,7 @@ int	exec_builtin(char *cmd_name, char **args, t_minishell *minishell)
 	if (!ft_strcmp(cmd_name, "echo"))
 		return (echo(args));
 	if (!ft_strcmp(cmd_name, "cd"))
-		return (cd(args, minishell->envp));
+		return (cd(args, &minishell->envp));
 	if (!ft_strcmp(cmd_name, "pwd"))
 		return (pwd(args));
 	if (!ft_strcmp(cmd_name, "export"))

@@ -43,6 +43,7 @@
 
 /*	char const	*/
 # define DELIM " \t<>&|()"
+# define WHITESPACE " \t\n\r\v\f"
 # define D_QUOTE 34
 # define S_QUOTE 39
 # define PFX_EXPORT "declare -x "
@@ -288,6 +289,7 @@ int		is_c_quote(int c);
 int		is_there_a_blank(char *str);
 int		is_str_quote_enclosed(const char *str);
 int		is_c_end_envar(int c);
+int		is_whitespace(int c);
 int		check_amb_redir(char *str, char **envp);
 char	*get_key(char *line);
 char	*get_key_2(char *line);
@@ -361,7 +363,7 @@ void	print_leaf(t_ntree *leaf);
 /* builtins	*/
 int		pwd(char **args);
 int		echo(char **argv);
-int		cd(char **args, char **envp);
+int		cd(char **args, char ***envp);
 int		env(char **args, char **envp, char *prefix, int quote);
 int		unset(char **args, char ***envp);
 int		export(char **args, char ***envp);
