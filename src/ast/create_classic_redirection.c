@@ -6,35 +6,44 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:10:21 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 16:48:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 15:46:55 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static t_ntree	*create_operator(t_llist *leaf)
+static t_ntree	*create_operator(t_llist *leaf_node)
 {
-	t_llist	*new_leaf_node;
+	const t_token	*token = leaf_node->content;
+	t_ntree			*new_leaf_content;
+	t_llist			*new_leaf;
 
-	new_leaf_node = leaf_node_dup(leaf);
-	if (new_leaf_node == NULL)
+	new_leaf_content = leaf_new(token);
+	if (new_leaf_content == NULL)
 		return (NULL);
-	return (ast_new(OPERATOR, NULL, new_leaf_node));
+	new_leaf = llstnew(new_leaf_content);
+	if (new_leaf == NULL)
+		return (ast_free(new_leaf_content), NULL);
+	return (ast_new(OPERATOR, NULL, new_leaf));
 }
 
-static t_ntree	*create_filename(t_llist *leaf)
+static t_ntree	*create_filename(t_llist *leaf_node)
 {
-	t_token *const	token = get_token(leaf->content);
+	const t_token	*token = leaf_node->content;
+	t_ntree			*new_leaf_content;
+	t_llist			*new_leaf;
 	char			*filename;
-	t_llist			*new_leaf_node;
 
+	new_leaf_content = leaf_new(token);
+	if (new_leaf_content == NULL)
+		return (NULL);
+	new_leaf = llstnew(new_leaf_content);
+	if (new_leaf == NULL)
+		return (ast_free(new_leaf_content), NULL);
 	filename = ft_strdup(token->data);
 	if (filename == NULL)
-		return (NULL);
-	new_leaf_node = leaf_node_dup(leaf);
-	if (new_leaf_node == NULL)
-		return (free(filename), NULL);
-	return (ast_new(FILENAME, filename, new_leaf_node));
+		return (llstclear(&new_leaf, ast_free), NULL);
+	return (ast_new(FILENAME, filename, new_leaf));
 }
 
 t_ntree	*create_classic_redirection(t_llist *begin, t_llist *end)

@@ -7,7 +7,6 @@ PIPEX_DIR		=	pipex/
 XPAND_DIR		=	expansion/
 REDIR_DIR		=	redirection/
 LEXER_DIR		=	lexer/
-PARSER_DIR		=	parser/
 AST_DIR			=	ast/
 TOKEN_DIR		=	token/
 LLST_TOKEN_DIR	=	llst_token/
@@ -59,9 +58,6 @@ LEXER_NAME	=		lexer.c\
 					check_syntax.c\
 					check_syntax_utils.c\
 
-PARSER_NAME	=		parser.c\
-					token_to_leaf.c
-
 AST_NAME	=		ast_new.c\
 					ast_dup.c\
 					ast_print.c\
@@ -76,6 +72,7 @@ AST_NAME	=		ast_new.c\
 					create_logical_expression.c\
 					create_pipeline.c\
 					create_command.c\
+					create_command_utils.c\
 					create_prefixes.c\
 					create_suffixes.c\
 					create_redirection.c\
@@ -89,6 +86,7 @@ TOKEN_NAME		=	token_free.c\
 					token_dup.c\
 					token_print.c\
 					token_predicate1.c\
+					token_predicate2.c\
 					utils.c
 
 LLST_TOKEN_NAME	=	llst_token_get_data.c\
@@ -109,7 +107,6 @@ UTILS_NAME		=	ft_realloc.c\
 					str_predicate3.c\
 					str_predicate4.c\
 					strfind.c\
-					create_command_utils.c\
 					charmatrix_dup.c\
 					free_and_exit.c\
 					ft_bzero_matrix.c\
@@ -124,7 +121,6 @@ PIPEX_SRC		=	$(addprefix ${PIPEX_DIR}, ${PIPEX_NAME})
 XPAND_SRC		=	$(addprefix ${XPAND_DIR}, ${XPAND_NAME})
 REDIR_SRC		=	$(addprefix ${REDIR_DIR}, ${REDIR_NAME})
 LEXER_SRC		=	$(addprefix ${LEXER_DIR}, ${LEXER_NAME})
-PARSER_SRC		=	$(addprefix ${PARSER_DIR}, ${PARSER_NAME})
 AST_SRC			=	$(addprefix ${AST_DIR}, ${AST_NAME})
 LLST_TOKEN_SRC	=	$(addprefix ${LLST_TOKEN_DIR}, ${LLST_TOKEN_NAME})
 TOKEN_SRC		=	$(addprefix ${TOKEN_DIR}, ${TOKEN_NAME})
@@ -133,7 +129,7 @@ UTILS_SRC		=	$(addprefix ${UTILS_DIR}, ${UTILS_NAME})
 MAIN_SRC		=	$(addprefix ${MAIN_DIR}, ${MAIN_NAME})
 OTHER_SRC		=	$(addprefix ${OTHER_DIR}, ${OTHER_NAME})
 
-SRCS_NAME		=	${BUILT_SRC} ${PIPEX_SRC} ${XPAND_SRC} ${REDIR_SRC} ${LEXER_SRC} ${PARSER_SRC}\
+SRCS_NAME		=	${BUILT_SRC} ${PIPEX_SRC} ${XPAND_SRC} ${REDIR_SRC} ${LEXER_SRC} \
 				${AST_SRC} ${LLST_TOKEN_SRC} ${TOKEN_SRC} ${SIGNAL_SRC} ${UTILS_SRC} ${MAIN_SRC} ${OTHER_SRC}
 
 SRCS		=	$(addprefix ${SRC_DIR}, ${SRCS_NAME})

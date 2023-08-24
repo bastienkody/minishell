@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:00:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 14:23:24 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 14:34:25 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 t_ntree	*create_redirection(t_llist	*begin, t_llist *end)
 {
-	t_ntree *const	operator_leaf = begin->content;
-	char *const		operator_str = get_token(operator_leaf)->data;
+	const char	*operator_str = llst_token_get_data(begin);
 
 	if (ft_strcmp(operator_str, "<<") == 0)
 		return (create_here_doc(begin, end));
