@@ -6,20 +6,25 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 15:00:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 16:58:49 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 15:47:08 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static t_ntree	*create_cmd_arg(t_llist	*leaf_node)
+static t_ntree	*create_cmd_arg(t_llist *leaf_node)
 {
-	t_llist	*new_leaf_node;
+	const t_token	*token = leaf_node->content;
+	t_ntree			*new_leaf_content;
+	t_llist			*new_leaf;
 
-	new_leaf_node = leaf_node_dup(leaf_node);
-	if (new_leaf_node == NULL)
+	new_leaf_content = leaf_new(token);
+	if (new_leaf_content == NULL)
 		return (NULL);
-	return (ast_new(CMD_ARG, NULL, new_leaf_node));
+	new_leaf = llstnew(new_leaf_content);
+	if (new_leaf == NULL)
+		return (ast_free(new_leaf_content), NULL);
+	return (ast_new(CMD_ARG, NULL, new_leaf));
 }
 
 t_llist	*create_suffixes(t_llist *begin, t_llist *end)
@@ -33,7 +38,7 @@ t_llist	*create_suffixes(t_llist *begin, t_llist *end)
 	current = begin;
 	while (current != NULL && current != end)
 	{
-		if (is_node_redirection(current->content))
+		if (is_token_redirection(current->content))
 		{
 			next = llstnext(current, 2);
 			new_child = create_child_range(current, next, create_redirection);

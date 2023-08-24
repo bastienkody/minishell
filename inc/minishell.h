@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 13:31:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 15:14:16 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
 int		check_syntax(t_llist *token_list, char **operator_err);
 t_llist	*leaf_node_dup(t_llist *leaf_node);
+t_ntree	*leaf_new(const t_token *token);
 
 /*	lsttok_utils	*/
 int		isdelim(int c);
@@ -208,8 +209,8 @@ t_ntree	*ast_new(t_type type, void *data, t_llist *children);
 t_ntree	*ast_dup(t_ntree *ast);
 void	ast_free(t_ntree *ast);
 void	ast_print(t_ntree *ast);
-bool	is_node_inside(t_ntree *node, t_type types[], size_t n);
-bool	is_node_equal(t_ntree *node, t_type search_type);
+bool	is_node_inside(t_token *token, t_type types[], size_t n);
+bool	is_node_equal(t_token *token, t_type search_type);
 t_llist	*create_child_range(t_llist	*begin, t_llist *end, \
 	t_ntree *(*create)(t_llist *, t_llist *));
 t_llist	*create_child(t_llist *llist, t_ntree *(*create)(t_llist *));
@@ -223,20 +224,21 @@ t_llist	*create_prefixes(t_llist *begin, t_llist *end);
 t_ntree	*create_redirection(t_llist *begin, t_llist *end);
 t_ntree	*create_classic_redirection(t_llist	*begin, t_llist *end);
 t_ntree	*create_here_doc(t_llist *begin, t_llist *end);
-bool	is_node_word(t_ntree *node);
-bool	is_node_logical_operator(t_ntree *node);
-bool	is_node_pipe(t_ntree *node);
-bool	is_node_opening_parenthesis(t_ntree *node);
-bool	is_node_redirection(t_ntree	*node);
-bool	is_node_closing_parenthesis(t_ntree *node);
+bool	is_node_word(t_token *token);
+bool	is_node_logical_operator(t_token *token);
+bool	is_node_pipe(t_token *token);
+bool	is_node_opening_parenthesis(t_token *token);
+bool	is_node_redirection(t_token *token);
+bool	is_node_closing_parenthesis(t_token *token);
 bool	is_range_compound(t_llist *begin, t_llist *end);
 
 /* token */
-// bool	is_token_pipe(t_token *token);
-// bool	is_token_logical_operator(t_token *token);
-// bool	is_token_operator(t_token *token);
-// bool	is_token_redirection(t_token *token);
-// bool	is_token_here_doc(t_token *token);
+bool	is_token_opening_parenthesis(t_token *token);
+bool	is_token_closing_parenthesis(t_token *token);
+bool	is_token_logical_operator(t_token *token);
+bool	is_token_pipe(t_token *token);
+bool	is_token_word(t_token *token);
+bool	is_token_redirection(t_token *token);
 bool	is_token_error(t_token *token);
 bool	is_token_ambiguous_word(t_token *token);
 t_token	*token_new(t_type type, void *data);
@@ -415,6 +417,7 @@ char	*get_pwd(char **envp);
 int		match(const char *pattern, const char *text);
 t_llist	*node_dup(t_llist *node);
 t_state	expand_token_list(t_llist **token_list, t_minishell *minishell);
+t_ntree	*new_leaf(t_token *token);
 
 /*	main_utils	*/
 void	reader_loop(t_minishell *minishell);

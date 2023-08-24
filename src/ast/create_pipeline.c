@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:52:05 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/07 17:51:49 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 15:13:23 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // static t_llist	*get_next_command(t_llist	*llist)
 // {
 // 	t_llist *const	pipe_pos
-// 		= llstfind_if(*leaf_list, (t_predicate)is_node_pipe);
+// 		= llstfind_if(*leaf_list, (t_predicate)is_token_pipe);
 // 	t_llist *const	extract
 // 		= llstextract_range(leaf_list, *leaf_list, pipe_pos);
 // 	t_llist *const	command = create_child(extract, create_command);
@@ -27,7 +27,7 @@
 // {
 // 	t_llist	*pipe_pos;
 
-// 	pipe_pos = llstfind_if(llst, (t_predicate)is_node_pipe);
+// 	pipe_pos = llstfind_if(llst, (t_predicate)is_token_pipe);
 // 	if (pipe_pos == NULL)
 // 		return (NULL);
 // 	return (pipe_pos->next);
@@ -44,7 +44,7 @@ t_ntree	*create_pipeline(t_llist *begin, t_llist *end)
 	current = begin;
 	while (current != NULL && current != end)
 	{
-		pipe_pos = llstfind_if_range(current, end, (t_predicate)is_node_pipe);
+		pipe_pos = llstfind_if_range(current, end, (t_predicate)is_token_pipe);
 		if (pipe_pos == NULL)
 			child = create_child_range(current, end, create_command);
 		else

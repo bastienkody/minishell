@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   token_predicate2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 14:23:09 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 14:32:48 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/24 15:45:20 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/24 15:45:34 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ntree	*parser(t_llist	*token_list)
+bool	is_token_pipe(t_token *token)
 {
-	t_llist	*leaf_list;
-	t_ntree	*ast;
+	return (token->type == ppipe);
+}
 
-	leaf_list = token_to_leaf(token_list);
-	if (leaf_list == NULL)
-		return (NULL);
-	ast = create_complete_command(leaf_list);
-	llstclear(&leaf_list, ast_free);
-	return (ast);
+bool	is_token_word(t_token *token)
+{
+	return (token->type == word);
+}
+
+bool	is_token_redirection(t_token *token)
+{
+	const t_type	type = token->type;
+
+	return (type == less || type == dless || type == great || type == dgreat);
 }
