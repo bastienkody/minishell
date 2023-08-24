@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/23 13:20:07 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 13:31:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,7 @@ char	*get_redirection_filename(t_ntree *redirection_node);
 char	*get_here_end(t_ntree *here_doc_node);
 int		open_redirections(t_type type, const char *filename);
 void	free_and_exit(t_minishell *minishell);
+void	free_and_exit_child(t_minishell *minishell);
 void	free_loop(t_minishell *minishell);
 
 /*	execution	*/
@@ -330,15 +331,20 @@ void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_minishell *minishell, t_ntree *ast);
 int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
-t_llist	*get_ambigous_node(t_llist *node);
-t_llist	*llst_remove_quote(t_llist *token_list);
-t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
-t_llist	*llst_rearange_dollar(t_llist *token_list);
-t_llist	*llst_expand_wildcard(t_llist *token_list);
 t_info	*get_pipex_info(t_minishell *minishell, t_ntree *pipeline_node);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
 int		pipex(t_minishell *minishell, t_info *info);
+
+/*	expansion	*/
+t_llist	*llst_remove_quote(t_llist *token_list);
+t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
+t_llist	*llst_word_splitting(t_llist *token_list);
+int		is_prev_redir_operator(t_llist *node);
+t_llist	*new_field_node(char *str, size_t start, size_t len);
+t_llist	*llst_expand_wildcard(t_llist *token_list);
+t_llist	*ambigous_node_new(t_llist *node);
+bool	check_ambigous_redirect(t_llist *node, int nb_matched_files);
 
 /*	printers	*/
 void	print_item(void *item);
@@ -406,7 +412,7 @@ t_ntree	*parser(t_llist	*token_list);
 bool	is_prev_here_operator(t_llist *leaf_list);
 t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
-int		match(char *pattern, char *text);
+int		match(const char *pattern, const char *text);
 t_llist	*node_dup(t_llist *node);
 t_state	expand_token_list(t_llist **token_list, t_minishell *minishell);
 

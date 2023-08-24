@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/23 13:54:30 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 12:01:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static char	*remove_quote(char *str)
 			is_inside_simple_quote = !is_inside_simple_quote;
 		else if (*str == '\"' && !is_inside_simple_quote)
 			is_inside_double_quote = !is_inside_double_quote;
-		if (!(*str == '\'' && !is_inside_double_quote) && !(*str == '\"' && !is_inside_simple_quote))
+		if (!(*str == '\'' && !is_inside_double_quote) \
+			&& !(*str == '\"' && !is_inside_simple_quote))
 			new_str[i++] = *str;
 		str++;
 	}
@@ -50,14 +51,6 @@ static t_llist	*get_remove_quote_node(t_llist *node)
 		return (NULL);
 	return (llst_token_new(word, new_data));
 }
-
-// static bool	is_word_remove_quote(t_llist *node)
-// {
-// 	t_token *const	token = node->content;
-
-// 	return (token->type == word
-// 		&& !is_prev_here_operator(node) && !is_str_empty_quote(token->data));
-// }
 
 t_llist	*llst_remove_quote(t_llist *token_list)
 {
@@ -80,4 +73,3 @@ t_llist	*llst_remove_quote(t_llist *token_list)
 	}
 	return (new_token_list);
 }
-

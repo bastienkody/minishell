@@ -37,15 +37,14 @@ PIPEX_NAME	=		execution_basics.c\
 					pipex_cmd.c\
 					pipe_execution.c
 
-XPAND_NAME	=		utils_expansion.c\
-					basics_expansion.c\
+XPAND_NAME	=		basics_expansion.c\
 					dollar_expander.c\
-					quote_removal.c\
 					llst_expand_wildcard.c\
 					llst_expand_wildcard_utils.c\
 					wildcard_match.c\
 					llst_expand_dollar.c\
-					llst_rearange_dollar.c\
+					llst_word_splitting.c\
+					llst_word_splitting_utils.c\
 					llst_remove_quote.c\
 					expand_token_list.c
 
@@ -149,7 +148,7 @@ NTREE		=	./ntree/libntree.a
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror 
+CFLAGS		=	-Wall -Wextra -Werror
 CFLAGSDEV	=	-Wall -Wextra -Werror -g3
 
 LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -lreadline

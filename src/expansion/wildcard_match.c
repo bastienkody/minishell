@@ -6,15 +6,15 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:47:50 by aguyon            #+#    #+#             */
-/*   Updated: 2023/07/31 15:52:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 12:48:18 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	matchstar(char *pattern, char *text);
+static int	matchstar(const char *pattern, const char *text);
 
-int	match(char *pattern, char *text)
+int	match(const char *pattern, const char *text)
 {
 	if (pattern[0] == '\0')
 		return (*text == '\0');
@@ -25,7 +25,7 @@ int	match(char *pattern, char *text)
 	return (0);
 }
 
-static int	matchstar(char *pattern, char *text)
+static int	matchstar(const char *pattern, const char *text)
 {
 	if (match(pattern, text))
 		return (1);
