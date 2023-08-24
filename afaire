@@ -1,4 +1,4 @@
-- exportHOLA=bonjour -> assignation, pas a géré 
+- exportHOLA=bonjour -> assignation, pas a gérer
 
 - probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
 Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
