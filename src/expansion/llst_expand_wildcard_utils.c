@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:48:22 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 12:56:25 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 16:41:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_llist	*ambigous_node_new(t_llist *node)
 
 	if (new_str == NULL)
 		return (NULL);
-	return (llst_token_new(ambigous_word, new_str));
+	return (llst_token_new(ambiguous_word, new_str));
 }
 
 bool	check_ambigous_redirect(t_llist *node, int nb_matched_files)

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 09:58:42 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 15:45:08 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 16:41:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_token_ambiguous_word(t_token *token)
 {
-	return (token->type == ambigous_word);
+	return (token->type == ambiguous_word);
 }
 
 bool	is_token_error(t_token *token)

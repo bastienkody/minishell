@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 15:14:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 16:55:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef enum e_type
 	closing_parenthesis,
 	word,
 	error,
-	ambigous_word,
+	ambiguous_word,
 	COMPLETE_COMMAND,
 	COMPOUND_COMMAND,
 	LOGICAL_EXPRESSION,
@@ -143,7 +143,7 @@ typedef enum e_error
 	ERRALLOC = -2,
 	ERRSIGINT = -3,
 	ERRBUILTIN = -4,
-} t_error;
+}	t_error;
 
 typedef struct s_info
 {
@@ -170,7 +170,7 @@ extern int	g_last_signum;
 t_llist	*lsttok(const char *str);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
-int		check_syntax(t_llist *token_list, char **operator_err);
+int		check_syntax(t_llist *token_list);
 t_llist	*leaf_node_dup(t_llist *leaf_node);
 t_ntree	*leaf_new(const t_token *token);
 
@@ -278,7 +278,6 @@ int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
 void	ft_bzero_matrix(char **matrix, size_t n);
 
 /* syntax check*/
-int		check_syntax(t_llist *token_list, char **operator_err);
 int		check_logical_operator(t_llist *node);
 int		check_pipe(t_llist *node);
 int		check_redirection(t_llist *node);
@@ -418,6 +417,9 @@ int		match(const char *pattern, const char *text);
 t_llist	*node_dup(t_llist *node);
 t_state	expand_token_list(t_llist **token_list, t_minishell *minishell);
 t_ntree	*new_leaf(t_token *token);
+char	*get_next_split_word_node(char *str, bool *is_inside_simple_quote,
+			bool *is_inside_double_quote);
+bool	check_quotes(t_llist *token_list);
 
 /*	main_utils	*/
 void	reader_loop(t_minishell *minishell);
