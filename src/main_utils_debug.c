@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 15:28:42 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 16:29:56 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,7 @@ int	check_parenthesis_closed(t_llist *token_list, char **operator_err)
 int	check_error(t_llist *token_list)
 {
 	char	*operator_err;
-	t_llist	*ambiguous_node;
 
-	ambiguous_node = llstfind_if(token_list, \
-		(t_predicate)is_token_ambiguous_word);
-	if (ambiguous_node != NULL)
-		return (print_err_ambiguous(llst_token_get_data(ambiguous_node)), -1);
-	if (llstfind_if(token_list, (t_predicate)is_token_error) != NULL)
-		return (ft_fprintf(2, "minishell : token error\n"), -1);
-	if (check_parenthesis_closed(token_list, &operator_err) != 0)
-		return (print_syntax_error(operator_err), -1);
 	if (check_syntax(token_list, &operator_err) != 0)
 		return (print_syntax_error(operator_err), -1);
 	return (0);
@@ -90,6 +81,19 @@ bool	is_token_good(t_token *token)
 	return (true);
 }
 
+t_state	manage_redirection(t_minishell *minishell)
+{
+	int	return_code;
+
+	return_code = manage_here_doc(minishell->ast, minishell);
+	if (return_code == EXIT)
+		return (minishell->status = 1, EXIT);
+	if (return_code == CONTINUE)
+		return (minishell->status = 130, CONTINUE);
+	manage_redir(minishell->ast, minishell->envp);
+	return (OK);
+}
+
 t_state	interpret_command(const char *line, t_minishell *minishell)
 {
 	int		return_code;
@@ -101,23 +105,18 @@ t_state	interpret_command(const char *line, t_minishell *minishell)
 	if (!llstall_of(token_list, (void *)is_token_good))
 		return (minishell->status = 2, print_err_quotes(), CONTINUE);
 	return_code = expand_token_list(&token_list, minishell);
-	if (return_code == EXIT)
-		return (llstclear(&token_list, token_free), EXIT);
-	if (return_code == CONTINUE)
-		return (llstclear(&token_list, token_free), minishell->status = 0, CONTINUE);
+	if (return_code != OK)
+		return (llstclear(&token_list, token_free), return_code);
 	if (check_error(token_list) != 0)
-		return (llstclear(&token_list, token_free), minishell->status = 2, CONTINUE);
+		return (llstclear(&token_list, token_free), \
+			minishell->status = 2, CONTINUE);
 	minishell->ast = create_complete_command(token_list);
 	llstclear(&token_list, token_free);
 	if (minishell->ast == NULL)
 		return (EXIT);
-	// ast_print(minishell->ast);
-	return_code = manage_here_doc(minishell->ast, minishell);
-	if (return_code == EXIT)
-		return (minishell->status = 1, EXIT);
-	if (return_code == CONTINUE)
-		return (minishell->status = 130, CONTINUE);
-	manage_redir(minishell->ast, minishell->envp);
+	return_code = manage_redirection(minishell);
+	if (return_code != OK)
+		return (return_code);
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
 	minishell->status = execute_ast(minishell);
