@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 11:37:59 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 11:42:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 			return (ERRALLOC);
 	}
 	data = expand_dollar(data, minishell->envp, minishell->status);
-	// if (!is_str_quote_enclosed(lim))
-	// 	data = expand_dollar_here_doc(data, minishell->envp, minishell->status);
 	if (!data)
 		return (ERRALLOC);
 	write(fd, data, ft_strlen(data));
