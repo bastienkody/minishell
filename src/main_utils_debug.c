@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 16:29:56 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 16:53:44 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,6 @@ int	check_parenthesis_closed(t_llist *token_list, char **operator_err)
 	return (n);
 }
 
-int	check_error(t_llist *token_list)
-{
-	char	*operator_err;
-
-	if (check_syntax(token_list, &operator_err) != 0)
-		return (print_syntax_error(operator_err), -1);
-	return (0);
-}
-
-bool	is_word_quotes_closed(const char *str)
-{
-	bool	is_inside_quote;
-	char	quote;
-
-	is_inside_quote = false;
-	quote = '\0';
-	while (*str != '\0')
-	{
-		if (ft_strchr("\'\"", *str))
-		{
-			if (is_inside_quote && *str == quote)
-			{
-				is_inside_quote = false;
-				quote = '\0';
-			}
-			else if (!is_inside_quote)
-			{
-				is_inside_quote = true;
-				quote = *str;
-			}
-		}
-		str++;
-	}
-	return (!is_inside_quote);
-}
-
-bool	is_token_good(t_token *token)
-{
-	if (token->type == word && !is_word_quotes_closed(token->data))
-		return (false);
-	return (true);
-}
-
 t_state	manage_redirection(t_minishell *minishell)
 {
 	int	return_code;
@@ -102,12 +59,12 @@ t_state	interpret_command(const char *line, t_minishell *minishell)
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT);
-	if (!llstall_of(token_list, (void *)is_token_good))
+	if (!check_quotes(token_list))
 		return (minishell->status = 2, print_err_quotes(), CONTINUE);
 	return_code = expand_token_list(&token_list, minishell);
 	if (return_code != OK)
 		return (llstclear(&token_list, token_free), return_code);
-	if (check_error(token_list) != 0)
+	if (check_syntax(token_list) != 0)
 		return (llstclear(&token_list, token_free), \
 			minishell->status = 2, CONTINUE);
 	minishell->ast = create_complete_command(token_list);

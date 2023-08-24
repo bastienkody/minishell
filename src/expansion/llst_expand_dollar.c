@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 13:36:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 16:40:49 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 16:44:40 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	get_nb_fields(char *str)
 	nb_word = 0;
 	while (*str)
 	{
-		next = get_next_split_word_node(str, &is_inside_simple_quote, &is_inside_double_quote);
+		next = get_next_split_word_node(str, &is_inside_simple_quote, \
+			&is_inside_double_quote);
 		if (*str != ' ')
 			nb_word++;
 		str = next;
@@ -45,8 +46,8 @@ int	is_prev_redir_operator(t_llist *node)
 static t_llist	*get_expand_node(t_llist *node, char **envp, int status)
 {
 	char *const	str = llst_token_get_data(node);
-	char	*new_str;
-	t_llist	*new_node;
+	char		*new_str;
+	t_llist		*new_node;
 
 	new_str = expand_dollar(str, envp, status);
 	if (new_str == NULL)
