@@ -1,4 +1,4 @@
-- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
+- exportHOLA=bonjour -> assignation, pas a géré 
 
 - probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
 Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
