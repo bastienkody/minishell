@@ -6,48 +6,48 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 11:42:39 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 13:31:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*expand_dollar_here_doc(char *data, char **envp, int status)
-{
-	char	*res;
+// char	*expand_dollar_here_doc(char *data, char **envp, int status)
+// {
+// 	char	*res;
 
-	res = expand_dollar(data, envp, status);
-	free(data);
-	if (res == NULL)
-		return (NULL);
-	return (res);
-}
+// 	res = expand_dollar(data, envp, status);
+// 	free(data);
+// 	if (res == NULL)
+// 		return (NULL);
+// 	return (res);
+// }
 
 int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 {
 	char	*line;
 	char	*data;
+	char	*temp;
 
-	(void)minishell;
 	data = ft_strdup("");
-	if (!data)
+	if (data == NULL)
 		return (ERRALLOC);
 	while (1)
 	{
 		line = readline(HD_PROMPT);
 		if (g_last_signum == SIGINT)
 			return (free(data), ERRSIGINT);
-		if (!line)
-			break ;
-		if (!ft_strcmp(line, lim))
+		if (!line || !ft_strcmp(line, lim))
 			break ;
 		data = strj(data, strj(line, ft_strdup("\n")));
-		if (!data)
+		if (data == NULL)
 			return (ERRALLOC);
 	}
-	data = expand_dollar(data, minishell->envp, minishell->status);
-	if (!data)
+	temp = expand_dollar(data, minishell->envp, minishell->status);
+	free(data);
+	if (temp == NULL)
 		return (ERRALLOC);
+	data = temp;
 	write(fd, data, ft_strlen(data));
 	return (free(line), free(data), SUCCESS);
 }
@@ -72,7 +72,7 @@ void	open_here_doc_child(const char *lim, int fd, t_minishell *minishell)
 	set_here_doc_signals();
 	minishell->status = launch_here_doc(fd, lim, minishell);
 	close(fd);
-	free_and_exit(minishell);
+	free_and_exit_child(minishell);
 }
 
 int	open_here_doc_parent(int fd, char *pathname)
@@ -96,8 +96,8 @@ int	open_here_doc_parent(int fd, char *pathname)
 int	open_here_doc(const char *lim, t_minishell *minishell)
 {
 	static int	nb = 0;
-	char *pathname;
-	int fd;
+	char		*pathname;
+	int			fd;
 
 	pathname = ft_strjoin3(HD_START, ft_itoa(nb++), HD_END);
 	if (pathname == NULL)

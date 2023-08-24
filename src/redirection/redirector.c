@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/17 15:34:41 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 13:10:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,19 @@ void	manage_redir(t_ntree *ast, char **envp)
 t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell)
 {
 	t_llist			*current;
-	const t_type	type = get_token(ast)->type;
 	int				fd;
 	int				return_code;
 
-	if (ast == NULL)
-		return (OK);
-	if (type == HERE_DOC)
+	if (ast != NULL && get_token(ast)->type == HERE_DOC)
 	{
 		fd = open_node_here_doc(ast, minishell);
 		if (fd == ERRSIGINT)
 			return (CONTINUE);
-		if (fd == ERRALLOC)
+		else if (fd == ERRALLOC)
 			return (EXIT);
 		get_token(ast)->data = (void *)(intptr_t)fd;
 	}
-	else
+	else if (ast != NULL)
 	{
 		current = ast->children;
 		while (current != NULL)
