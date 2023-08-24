@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/23 14:47:15 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 11:37:59 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*expand_dollar_here_doc(char *data, char **envp, int status)
 {
 	char	*res;
 
-	res = expand_dollar_here_doc(data, envp, status);
+	res = expand_dollar(data, envp, status);
 	free(data);
 	if (res == NULL)
 		return (NULL);
