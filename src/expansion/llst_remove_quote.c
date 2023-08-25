@@ -6,13 +6,13 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:59 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 12:01:02 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:42:36 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*remove_quote(char *str)
+char	*remove_quote(char *str)
 {
 	char	*new_str;
 	size_t	i;
@@ -62,7 +62,8 @@ t_llist	*llst_remove_quote(t_llist *token_list)
 	current = token_list;
 	while (current != NULL)
 	{
-		if (llst_token_get_type(current) == word)
+		if (llst_token_get_type(current) == word \
+			&& !is_prev_here_operator(current))
 			new_node = get_remove_quote_node(current);
 		else
 			new_node = node_dup(current);

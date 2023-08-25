@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/25 13:04:35 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:40:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,7 @@ int		open_here_doc(const char *lim, t_minishell *minishell);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
 t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell);
+int		create_tmp_file(char *pathname, t_minishell *minishell);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
 char	*get_redirection_filename(t_ntree *redirection_node);
@@ -341,6 +342,7 @@ int		pipex(t_minishell *minishell, t_info *info);
 
 /*	expansion	*/
 t_llist	*llst_remove_quote(t_llist *token_list);
+char	*remove_quote(char *str);
 t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
 t_llist	*llst_word_splitting(t_llist *token_list);
 int		is_prev_redir_operator(t_llist *node);

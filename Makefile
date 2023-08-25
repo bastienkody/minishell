@@ -49,7 +49,8 @@ XPAND_NAME	=		basics_expansion.c\
 
 REDIR_NAME	=		redirector.c\
 					redirector_utils.c\
-					here_doc.c
+					here_doc.c\
+					here_doc_utils.c
 
 LEXER_NAME	=		lexer.c\
 					type_token.c\
