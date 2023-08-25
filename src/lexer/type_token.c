@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:42:20 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/23 00:27:27 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:12:38 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static bool (*const	g_type_predicate[])(const char *str)
 	is_str_dless,
 	is_str_op_p,
 	is_str_cl_p,
+	NULL,
 	is_str_word,
 	NULL,
 };
@@ -33,9 +34,9 @@ static t_type	get_type(const char *text)
 	t_type	type;
 
 	type = 1;
-	while (g_type_predicate[type])
+	while (g_type_predicate[type] || type == newline)
 	{
-		if (g_type_predicate[type](text))
+		if (g_type_predicate[type] && g_type_predicate[type](text))
 			break ;
 		type++;
 	}

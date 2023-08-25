@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 16:55:59 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:04:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef enum e_type
 	dless,
 	opening_parenthesis,
 	closing_parenthesis,
+	newline,
 	word,
 	error,
 	ambiguous_word,
@@ -193,7 +194,6 @@ bool	is_str_less(const char *str);
 bool	is_str_dgreat(const char *str);
 bool	is_str_dless(const char *str);
 bool	is_str_compound(const char *str);
-// bool	is_str_quoted_word(const char *str);
 bool	is_str_word(const char *str);
 bool	is_str_redirection(const char *str);
 bool	is_str_builtin(const char *str);
@@ -203,6 +203,7 @@ bool	is_str_quote(const char *str);
 bool	is_str_operator(const char *str);
 bool	is_str_blank(const char *str);
 bool	is_str_empty_quote(const char *str);
+bool	is_str_enclosed_quote(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
@@ -283,6 +284,7 @@ int		check_pipe(t_llist *node);
 int		check_redirection(t_llist *node);
 int		check_opening_parenthesis(t_llist *node);
 int		check_closing_parenthesis(t_llist *node);
+int		check_newline(t_llist *node);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 13:31:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 11:23:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 		if (data == NULL)
 			return (ERRALLOC);
 	}
-	temp = expand_dollar(data, minishell->envp, minishell->status);
-	free(data);
-	if (temp == NULL)
-		return (ERRALLOC);
-	data = temp;
+	if (is_str_enclosed_quote(lim))
+	{
+		temp = expand_dollar(data, minishell->envp, minishell->status);
+		free(data);
+		if (temp == NULL)
+			return (ERRALLOC);
+		data = temp;
+	}
 	write(fd, data, ft_strlen(data));
 	return (free(line), free(data), SUCCESS);
 }
