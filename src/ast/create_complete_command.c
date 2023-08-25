@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 16:21:12 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/25 12:53:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:54:50 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,15 @@ bool	is_range_compound(t_llist *begin, t_llist *end)
 t_ntree	*create_complete_command(t_llist *leaf_list)
 {
 	t_llist	*child;
+	t_llist	*last;
 
-	if (is_range_compound(leaf_list, NULL))
-		child = create_child_range(leaf_list, llstlast(leaf_list), create_compound_command);
+	last = llstlast(leaf_list);
+	if (is_range_compound(leaf_list, last))
+		child = create_child_range(leaf_list, last, create_compound_command);
 	else if (llstfind_if(leaf_list, (t_predicate)is_token_logical_operator))
-		child = create_child_range(leaf_list, llstlast(leaf_list), create_logical_expression);
+		child = create_child_range(leaf_list, last, create_logical_expression);
 	else
-		child = create_child_range(leaf_list, llstlast(leaf_list), create_pipeline);
+		child = create_child_range(leaf_list, last, create_pipeline);
 	if (child == NULL)
 		return (NULL);
 	return (ast_new(COMPLETE_COMMAND, NULL, child));

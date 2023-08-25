@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:28:44 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/25 13:00:58 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:56:52 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int (*const	g_checkers[])(t_llist *)
 	check_newline,
 };
 
-
 int	check_newline(t_llist *node)
 {
 	t_token	*prev_token;
@@ -35,7 +34,8 @@ int	check_newline(t_llist *node)
 	if (node->prev == NULL)
 		return (0);
 	prev_token = node->prev->content;
-	if (!is_type_inside(prev_token->type, (t_type[]){word, closing_parenthesis}))
+	if (!is_type_inside(prev_token->type, (t_type[]){word, \
+		closing_parenthesis}))
 		return (-1);
 	return (0);
 }
