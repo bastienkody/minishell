@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/25 14:40:50 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:57:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,8 +300,9 @@ char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
 char	*expand_dollar(char *str, char **envp, int status);
+size_t	get_identifier_len(const char *str);
+char	*my_expand(char *str, char **envp, int status);
 char	*expand_dollar_here_doc(char *str, char **envp, int status);
-char	*expand_dollar_redir_file(char *str, char **envp, int status);
 
 /*	general expansion	*/
 char	*rm_peer_quotes(char *str);

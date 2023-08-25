@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 12:00:09 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:48:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ size_t	get_identifier_len(const char *str)
 	return (str - begin);
 }
 
-// static char	*my_strjoin(char *s1, char *s2)
-// {
-// 	char *const	temp = s1;
-// 	char *const	res = ft_strjoin(s1, s2);
-
-// 	return (free(temp), res);
-// }
 
 bool	is_solo_dollar(char *str)
 {
