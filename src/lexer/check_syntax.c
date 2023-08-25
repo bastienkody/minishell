@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:28:44 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 16:51:00 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:00:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,21 @@ static int (*const	g_checkers[])(t_llist *)
 	check_redirection,
 	check_opening_parenthesis,
 	check_closing_parenthesis,
+	check_newline,
 };
+
+
+int	check_newline(t_llist *node)
+{
+	t_token	*prev_token;
+
+	if (node->prev == NULL)
+		return (0);
+	prev_token = node->prev->content;
+	if (!is_type_inside(prev_token->type, (t_type[]){word, closing_parenthesis}))
+		return (-1);
+	return (0);
+}
 
 static int	check_syntax_err(t_llist *token_list, char **operator_err)
 {

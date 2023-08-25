@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 16:57:10 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:18:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	reader_loop(t_minishell *minishell)
 	if (g_last_signum != 0)
 		minishell->status = g_last_signum + 128;
 	if (line == NULL)
-		return (ft_putendl_fd("exit", 2));
+		return (ft_putendl_fd("exit", 1));
 	else if (is_str_blank(line))
 		return (free(line), reader_loop(minishell));
 	add_history(line);
