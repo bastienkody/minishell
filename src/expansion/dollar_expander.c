@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:04:37 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/25 14:48:45 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 15:05:02 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ size_t	get_identifier_len(const char *str)
 		str++;
 	return (str - begin);
 }
-
 
 bool	is_solo_dollar(char *str)
 {
