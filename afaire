@@ -1,4 +1,4 @@
-- exportHOLA=bonjour -> does not cmd not found. code 0 but var is not set to env. tested with other builtin, cmd not found is raised.
+- exportHOLA=bonjour -> assignation, pas a gérer
 
 - probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
 Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
@@ -24,5 +24,7 @@ Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
 	--> CORRIGE j'ai enleve le -256 dans status = wifexit - 256 : ok pour ctrl-D et limiter
 
 - fihiers de redir intermediares (inf, outf, here_doc) ne sont fermes qu'a cmd + 1 ; je pense que c un probleme
+
+- Pas exactement les mêmes erreurs de syntaxe 
 
 - tests concluants : sudo, custom exec, env-i with cd/export/unset/pwd, unset PWD OLDPWD + cd/unset/export
