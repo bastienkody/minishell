@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 19:00:08 by bguillau          #+#    #+#             */
-/*   Updated: 2023/07/21 15:51:16 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 12:06:15 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
+size_t	ft_strspn(const char *s, const char *accept);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	ft_putchar_fd(char c, int fd);

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/19 16:36:36 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:57:01 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <dirent.h>
 # include <stdbool.h>
 # include <readline/readline.h>
+# include <assert.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
 # include "../llist/llist.h"
@@ -88,9 +89,10 @@ typedef enum e_type
 	dless,
 	opening_parenthesis,
 	closing_parenthesis,
+	newline,
 	word,
 	error,
-	ambigous_word,
+	ambiguous_word,
 	COMPLETE_COMMAND,
 	COMPOUND_COMMAND,
 	LOGICAL_EXPRESSION,
@@ -142,7 +144,7 @@ typedef enum e_error
 	ERRALLOC = -2,
 	ERRSIGINT = -3,
 	ERRBUILTIN = -4,
-} t_error;
+}	t_error;
 
 typedef struct s_info
 {
@@ -169,8 +171,9 @@ extern int	g_last_signum;
 t_llist	*lsttok(const char *str);
 t_llist	*type_token(t_llist	*token_list);
 t_llist	*token_to_leaf(t_llist	*token_list);
-int		check_syntax(t_llist *token_list, char **operator_err);
+int		check_syntax(t_llist *token_list);
 t_llist	*leaf_node_dup(t_llist *leaf_node);
+t_ntree	*leaf_new(const t_token *token);
 
 /*	lsttok_utils	*/
 int		isdelim(int c);
@@ -200,14 +203,15 @@ bool	is_str_quote(const char *str);
 bool	is_str_operator(const char *str);
 bool	is_str_blank(const char *str);
 bool	is_str_empty_quote(const char *str);
+bool	is_str_enclosed_quote(const char *str);
 
 /*	ast */
 t_ntree	*ast_new(t_type type, void *data, t_llist *children);
 t_ntree	*ast_dup(t_ntree *ast);
 void	ast_free(t_ntree *ast);
 void	ast_print(t_ntree *ast);
-bool	is_node_inside(t_ntree *node, t_type types[], size_t n);
-bool	is_node_equal(t_ntree *node, t_type search_type);
+bool	is_node_inside(t_token *token, t_type types[], size_t n);
+bool	is_node_equal(t_token *token, t_type search_type);
 t_llist	*create_child_range(t_llist	*begin, t_llist *end, \
 	t_ntree *(*create)(t_llist *, t_llist *));
 t_llist	*create_child(t_llist *llist, t_ntree *(*create)(t_llist *));
@@ -221,20 +225,21 @@ t_llist	*create_prefixes(t_llist *begin, t_llist *end);
 t_ntree	*create_redirection(t_llist *begin, t_llist *end);
 t_ntree	*create_classic_redirection(t_llist	*begin, t_llist *end);
 t_ntree	*create_here_doc(t_llist *begin, t_llist *end);
-bool	is_node_word(t_ntree *node);
-bool	is_node_logical_operator(t_ntree *node);
-bool	is_node_pipe(t_ntree *node);
-bool	is_node_opening_parenthesis(t_ntree *node);
-bool	is_node_redirection(t_ntree	*node);
-bool	is_node_closing_parenthesis(t_ntree *node);
+bool	is_node_word(t_token *token);
+bool	is_node_logical_operator(t_token *token);
+bool	is_node_pipe(t_token *token);
+bool	is_node_opening_parenthesis(t_token *token);
+bool	is_node_redirection(t_token *token);
+bool	is_node_closing_parenthesis(t_token *token);
 bool	is_range_compound(t_llist *begin, t_llist *end);
 
 /* token */
-// bool	is_token_pipe(t_token *token);
-// bool	is_token_logical_operator(t_token *token);
-// bool	is_token_operator(t_token *token);
-// bool	is_token_redirection(t_token *token);
-// bool	is_token_here_doc(t_token *token);
+bool	is_token_opening_parenthesis(t_token *token);
+bool	is_token_closing_parenthesis(t_token *token);
+bool	is_token_logical_operator(t_token *token);
+bool	is_token_pipe(t_token *token);
+bool	is_token_word(t_token *token);
+bool	is_token_redirection(t_token *token);
 bool	is_token_error(t_token *token);
 bool	is_token_ambiguous_word(t_token *token);
 t_token	*token_new(t_type type, void *data);
@@ -242,6 +247,12 @@ t_token	*token_dup(t_token *token);
 void	token_free(t_token *token);
 void	token_print(t_token *token);
 bool	is_type_inside(t_type type, const t_type types[]);
+
+/*	llst_token	*/
+t_llist	*llst_token_new(t_type type, char *data);
+t_token	*llst_token_get(t_llist *node);
+char	*llst_token_get_data(t_llist *node);
+t_type	llst_token_get_type(t_llist *node);
 
 /* t_cmd	*/
 int		get_fd_in(t_ntree *simple_command_node);
@@ -268,12 +279,12 @@ int		ft_atoi_ll_novf(const char *nptr, long long int *nb);
 void	ft_bzero_matrix(char **matrix, size_t n);
 
 /* syntax check*/
-int		check_syntax(t_llist *token_list, char **operator_err);
 int		check_logical_operator(t_llist *node);
 int		check_pipe(t_llist *node);
 int		check_redirection(t_llist *node);
 int		check_opening_parenthesis(t_llist *node);
 int		check_closing_parenthesis(t_llist *node);
+int		check_newline(t_llist *node);
 
 /*	dollar expansion	*/
 int		is_c_dollar(int c);
@@ -289,8 +300,9 @@ char	*get_value(char *line);
 char	*expand_wd(char *word, char **envp);
 char	*extract_wd(char *start, char *end);
 char	*expand_dollar(char *str, char **envp, int status);
+size_t	get_identifier_len(const char *str);
+char	*my_expand(char *str, char **envp, int status);
 char	*expand_dollar_here_doc(char *str, char **envp, int status);
-char	*expand_dollar_redir_file(char *str, char **envp, int status);
 
 /*	general expansion	*/
 char	*rm_peer_quotes(char *str);
@@ -302,12 +314,14 @@ int		open_here_doc(const char *lim, t_minishell *minishell);
 int		open_out(t_type type, const char *filename);
 void	manage_redir(t_ntree *ast, char **envp);
 t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell);
+int		create_tmp_file(char *pathname, t_minishell *minishell);
 /*	utils	*/
 t_type	get_redirection_type(t_ntree *redirection_node);
 char	*get_redirection_filename(t_ntree *redirection_node);
 char	*get_here_end(t_ntree *here_doc_node);
 int		open_redirections(t_type type, const char *filename);
 void	free_and_exit(t_minishell *minishell);
+void	free_and_exit_child(t_minishell *minishell);
 void	free_loop(t_minishell *minishell);
 
 /*	execution	*/
@@ -322,14 +336,21 @@ void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);
 int		manage_pipeline(t_minishell *minishell, t_ntree *ast);
 int		manage_dollar_expansion(t_llist *leaf_list, char **envp);
-t_llist	*get_ambigous_node(t_llist *node);
-t_llist	*llst_remove_quote(t_llist *token_list);
-t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
-t_llist	*llst_expand_wildcard(t_llist *token_list);
 t_info	*get_pipex_info(t_minishell *minishell, t_ntree *pipeline_node);
 char	*get_full_cmd_name(char *cmd_name, char **envp);
 char	**get_path(char **envp);
 int		pipex(t_minishell *minishell, t_info *info);
+
+/*	expansion	*/
+t_llist	*llst_remove_quote(t_llist *token_list);
+char	*remove_quote(char *str);
+t_llist	*llst_expand_dollar(t_llist *token_list, char **envp, int status);
+t_llist	*llst_word_splitting(t_llist *token_list);
+int		is_prev_redir_operator(t_llist *node);
+t_llist	*new_field_node(char *str, size_t start, size_t len);
+t_llist	*llst_expand_wildcard(t_llist *token_list);
+t_llist	*ambigous_node_new(t_llist *node);
+bool	check_ambigous_redirect(t_llist *node, int nb_matched_files);
 
 /*	printers	*/
 void	print_item(void *item);
@@ -397,9 +418,13 @@ t_ntree	*parser(t_llist	*token_list);
 bool	is_prev_here_operator(t_llist *leaf_list);
 t_llist	*wildcard_list(t_llist *token_list, char **envp);
 char	*get_pwd(char **envp);
-int		match(char *pattern, char *text);
+int		match(const char *pattern, const char *text);
 t_llist	*node_dup(t_llist *node);
 t_state	expand_token_list(t_llist **token_list, t_minishell *minishell);
+t_ntree	*new_leaf(t_token *token);
+char	*get_next_split_word_node(char *str, bool *is_inside_simple_quote,
+			bool *is_inside_double_quote);
+bool	check_quotes(t_llist *token_list);
 
 /*	main_utils	*/
 void	reader_loop(t_minishell *minishell);

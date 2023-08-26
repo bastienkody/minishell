@@ -5,86 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 15:57:29 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 10:30:11 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/25 13:18:43 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	read_command(char **line)
+int	check_parenthesis_closed(t_llist *token_list, char **operator_err)
 {
-	*line = readline("minishell prompt % ");
-	if (*line == NULL)
-		return (EOF);
-	if (is_str_blank(*line))
-		return (LINE_EMPTY);
-	return (0);
+	t_llist	*current;
+	t_token	*current_token;
+	int		n;
+
+	n = 0;
+	current = token_list;
+	while (current != NULL && n >= 0)
+	{
+		current_token = current->content;
+		if (current_token->type == opening_parenthesis)
+			n += 1;
+		else if (current_token->type == closing_parenthesis)
+			n -= 1;
+		current = current->next;
+	}
+	if (n > 0)
+		*operator_err = "(";
+	else if (n < 0)
+		*operator_err = ")";
+	else
+		*operator_err = "";
+	return (n);
 }
 
-int	check_error(t_llist *token_list)
-{
-	if (llstfind_if(token_list, (t_predicate)is_token_error) != NULL)
-		return (-1);
-	if (!check_syntax(token_list))
-		return (-1);
-	return (0);
-}
-
-int	set_ast(t_ntree **ast, const char *line, char **envp)
-{
-	int		return_code;
-
-	__attribute__((cleanup(token_list_cleanup))) t_llist * token_list;
-	token_list = tokenization(line);
-	if (token_list == NULL)
-		return (EXIT); // malloc error
-	return_code = expand_token_list(&token_list, envp);
-	if (return_code == 0)
-		return (EXIT); // malloc error
-	if (return_code == 42)
-		return (CONTINUE); // Ambigous redirect
-	if (check_error(token_list) != 0)
-		return (CONTINUE); // Token/syntax error
-	*ast = parser(token_list);
-	if (*ast == NULL)
-		return (EXIT); // malloc error
-	manage_here_doc(*ast, envp);
-	manage_redir(*ast, envp);
-	if (manage_pipeline(*ast, envp) == 0)
-		return (EXIT);
-	return (OK);
-}
-
-int	interpret_command(const char *line, char ***envp)
-{
-	int		return_code;
-
-	__attribute__((cleanup(ast_cleanup))) t_ntree * ast;
-	ast = NULL;
-	return_code = set_ast(&ast, line, *envp);
-	if (return_code != OK)
-		return (return_code);
-	return_code = execute_ast(ast);
-	*envp = NULL;
-	return (return_code);
-}
-
-void	reader_loop(char **envp)
+t_state	manage_redirection(t_minishell *minishell)
 {
 	int	return_code;
 
-	__attribute__((cleanup(data_cleanup))) char *line;
-	set_prompt_signals();
-	line = NULL;
-	return_code = read_command(&line);
-	if (return_code == EOF)
-		return ;
-	if (return_code == LINE_EMPTY)
-		return (reader_loop(envp));
-	add_history(line);
-	return_code = interpret_command(line, &envp);
+	return_code = manage_here_doc(minishell->ast, minishell);
 	if (return_code == EXIT)
-		return ;
-	return (reader_loop(envp));
+		return (minishell->status = 1, EXIT);
+	if (return_code == CONTINUE)
+		return (minishell->status = 130, CONTINUE);
+	manage_redir(minishell->ast, minishell->envp);
+	return (OK);
+}
+
+t_state	interpret_command(const char *line, t_minishell *minishell)
+{
+	int		return_code;
+	t_llist	*token_list;
+
+	token_list = tokenization(line);
+	if (token_list == NULL)
+		return (EXIT);
+	if (!check_quotes(token_list))
+		return (minishell->status = 2, print_err_quotes(), CONTINUE);
+	return_code = expand_token_list(&token_list, minishell);
+	if (return_code != OK)
+		return (llstclear(&token_list, token_free), return_code);
+	if (check_syntax(token_list) != 0)
+		return (llstclear(&token_list, token_free), \
+			minishell->status = 2, CONTINUE);
+	minishell->ast = create_complete_command(token_list);
+	llstclear(&token_list, token_free);
+	if (minishell->ast == NULL)
+		return (EXIT);
+	return_code = manage_redirection(minishell);
+	if (return_code != OK)
+		return (return_code);
+	if (manage_pipeline(minishell, minishell->ast) != 0)
+		return (EXIT);
+	minishell->status = execute_ast(minishell);
+	return (free_loop(minishell), OK);
+}
+
+void	reader_loop(t_minishell *minishell)
+{
+	char	*line;
+
+	g_last_signum = 0;
+	set_prompt_signals();
+	line = readline("minishell prompt % ");
+	if (g_last_signum != 0)
+		minishell->status = g_last_signum + 128;
+	if (line == NULL)
+		return (ft_putendl_fd("exit", 1));
+	else if (is_str_blank(line))
+		return (free(line), reader_loop(minishell));
+	add_history(line);
+	if (interpret_command(line, minishell) == EXIT)
+		return (free(line), (void)(minishell->status = 1));
+	return (free(line), reader_loop(minishell));
 }

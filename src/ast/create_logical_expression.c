@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:56:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/10 11:53:29 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/24 15:13:11 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_llist	*create_lhs(t_llist *begin, t_llist *end)
 	if (is_range_compound(begin, end))
 		new = create_child_range(begin, end, create_compound_command);
 	else if (llstfind_if_range(begin, end, \
-		(t_predicate)is_node_logical_operator) != NULL)
+		(t_predicate)is_token_logical_operator) != NULL)
 		new = create_child_range(begin, end, create_logical_expression);
 	else
 		new = create_child_range(begin, end, create_pipeline);
@@ -50,19 +50,19 @@ t_type	get_logical_expression_type(const char *data)
 t_llist	*get_operator_pos(t_llist *rbegin, t_llist *rend)
 {
 	t_llist	*current;
-	t_token	*current_token;
+	t_type	current_type;
 	int		parenthesis_lvl;
 
 	parenthesis_lvl = 0;
 	current = rbegin;
 	while (current != NULL && current != rend)
 	{
-		current_token = get_token(current->content);
-		if (current_token->type == closing_parenthesis)
+		current_type = llst_token_get_type(current);
+		if (current_type == closing_parenthesis)
 			parenthesis_lvl += 1;
-		else if (current_token->type == opening_parenthesis)
+		else if (current_type == opening_parenthesis)
 			parenthesis_lvl -= 1;
-		if (parenthesis_lvl == 0 && is_node_logical_operator(current->content))
+		if (parenthesis_lvl == 0 && is_token_logical_operator(current->content))
 			return (current);
 		current = current->prev;
 	}
@@ -76,7 +76,7 @@ t_ntree	*create_logical_expression(t_llist *begin, t_llist *end)
 	t_llist			*children;
 	t_llist			*new_child;
 	const t_type	type
-		= get_logical_expression_type(get_token(operator_pos->content)->data);
+		= get_logical_expression_type(llst_token_get_data(operator_pos));
 	t_ntree			*ast;
 
 	children = NULL;

@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:01:54 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 13:59:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:01:35 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static const char	*g_type_str[]
 	"dless",
 	"opening_parenthesis",
 	"closing_parenthesis",
+	"newline",
 	"word",
 	"error",
 	"amibougs_word",
@@ -55,16 +56,11 @@ t_token	*get_token(t_ntree *ast)
 	return (((t_token *)(ast->data)));
 }
 
-t_llist	*leaf_node_dup(t_llist *leaf_node)
+t_ntree	*leaf_new(const t_token *token)
 {
-	t_llist	*new_node;
-	t_ntree	*new_leaf;
+	char *const	new_data = ft_strdup(token->data);
 
-	new_leaf = ast_dup(leaf_node->content);
-	if (new_leaf == NULL)
+	if (new_data == NULL)
 		return (NULL);
-	new_node = llstnew(new_leaf);
-	if (new_node == NULL)
-		return (ast_free(new_leaf), NULL);
-	return (new_node);
+	return (ast_new(token->type, new_data, NULL));
 }

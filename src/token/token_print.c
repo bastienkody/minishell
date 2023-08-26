@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:16:57 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/15 11:36:32 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 13:01:45 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static const char	*g_type[]
 	"dless",
 	"opening_parenthesis",
 	"closing_parenthesis",
+	"newline",
 	"word",
 	"error"
 };

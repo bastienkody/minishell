@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:46:45 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/16 16:14:40 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 11:59:37 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 {
 	void	*tmp_dir_ptr;
 
-	if (!*(info->cmds->name))
-		return (minishell->status = 0, free_and_exit(minishell));
 	if (access(info->cmds->fullname, F_OK) || \
 		!ft_strcmp(info->cmds->name, ".."))
 	{
@@ -65,31 +63,31 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 			err_msg(info->cmds->name, ERR_CNF);
 		else
 			err_msg(info->cmds->name, ERR_NSFD);
-		return (minishell->status = 127, free_and_exit(minishell));
+		return (minishell->status = 127, free_and_exit_child(minishell));
 	}
 	tmp_dir_ptr = opendir(info->cmds->fullname);
 	if (tmp_dir_ptr)
 	{
 		closedir(tmp_dir_ptr);
 		err_msg(info->cmds->name, ERR_IAD);
-		return (minishell->status = 126, free_and_exit(minishell));
+		return (minishell->status = 126, free_and_exit_child(minishell));
 	}
 	if (access(info->cmds->fullname, X_OK))
 	{
 		err_msg(info->cmds->name, ERR_PERMDEN);
-		return (minishell->status = 126, free_and_exit(minishell));
+		return (minishell->status = 126, free_and_exit_child(minishell));
 	}
 }
 
 void	execute(char **cmd_args, t_info *info, t_minishell *minishell)
 {
 	if (info->cmds->fd_in < 0 || info->cmds->fd_out < 0)
-		return (minishell->status = 1, free_and_exit(minishell));
+		return (minishell->status = 1, free_and_exit_child(minishell));
 	if (!cmd_args)
-		return (minishell->status = 0, free_and_exit(minishell));
+		return (minishell->status = 0, free_and_exit_child(minishell));
 	if (is_a_builtin(cmd_args, info->cmds->name))
 		return (minishell->status = exec_builtin(info->cmds->name, cmd_args, \
-			minishell), free_and_exit(minishell));
+			minishell), free_and_exit_child(minishell));
 	check_cmd_access(info, minishell);
 	execve(info->cmds->fullname, cmd_args, minishell->envp);
 	perror(ERR_EXECVE);
@@ -97,5 +95,5 @@ void	execute(char **cmd_args, t_info *info, t_minishell *minishell)
 		close(info->cmds->fd_in);
 	if (info->cmds->fd_out > NO_REDIR)
 		close(info->cmds->fd_out);
-	return (minishell->status = 1, free_and_exit(minishell));
+	return (minishell->status = 1, free_and_exit_child(minishell));
 }

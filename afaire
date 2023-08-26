@@ -1,30 +1,14 @@
-- export "" -> minishell err is '""' : not a valid id. but why is there still "", quote removal must lead to an empty stuff ??
-	is this linked to the correction of echo "" truc ?
+- exportHOLA=bonjour -> assignation, pas a gérer
 
-- commande ou argument "." et ".." :
-	- pas de message d'erreur
-	- quitte le minishell immediatemment
-	- code retour 1
-	- idem pour un : cd .. | echo bonjour -> pas de echo, minishell quitte.
---> je trouve rien dans l'execution. pendant la wildcard expansion maybe ?
+- probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
+Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
+	< dsfjkglfdlg  -> ko
+	ls < dsgfhdjkdfk -> ko
+	< erwire pwd  -> ok
+	ls | < erwire pwd  -> ko
 
-- export a="      a    b    " 
-bash:	echo $a -> "a b". 
-		echo "$a" -> "      a    b    "
-		env 	-> a="      a    b    "
-		here_doc -> "      a    b    "
---> ni a gerer au moment d'export, ni au moment d'expand dollar. 
---> je crains qu'il faille apres le dollar expansion et apres le quote removal, supprimer les whitespaces ..? 
 
-- export s="s -la" && l$s. Toujours lie au probleme de l'expansion avec des espaces qui devraient generer plusieurs words.
-bash : launch ls -la
-minishell : minishell: ls -la: command not found
-
-- expansion : echo "$" ko
-
-- expansion : $9HOME => pas a gerer, il s'agit des arguments positionnels de bash ($@=argv, $#=argc, $0...$9=argv[0...9])
-
-- erreur d'appels systeme (pid, dup, fork) : 
+- erreur d'appels systeme (pid, dup, fork) :
 	que faire de plus que perror?
 
 - command is a file, not an real exec : (not to handle ?)
@@ -43,4 +27,8 @@ minishell : minishell: ls -la: command not found
 
 - fihiers de redir intermediares (inf, outf, here_doc) ne sont fermes qu'a cmd + 1 ; je pense que c un probleme
 
+- Pas exactement les mêmes erreurs de syntaxe
+
 - tests concluants : sudo, custom exec, env-i with cd/export/unset/pwd, unset PWD OLDPWD + cd/unset/export
+
+- tests bonus concluants

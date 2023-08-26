@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_predicate_2.c                                  :+:      :+:    :+:   */
+/*   ft_strspn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 17:04:13 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 14:57:00 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/24 12:03:35 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/24 15:43:46 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "libft.h"
 
-bool	is_node_redirection(t_token *node)
+size_t	ft_strspn(const char *s, const char *accept)
 {
-	return (is_node_inside(node, (t_type[]){less, dless, great, dgreat}, 4));
+	size_t	i;
+
+	i = 0;
+	while (s[i] && ft_strchr(accept, s[i]))
+		i++;
+	return (i);
 }

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_compound_command.c                          :+:      :+:    :+:   */
+/*   llst_token_new.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/20 14:54:51 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/24 15:13:00 by aguyon           ###   ########.fr       */
+/*   Created: 2023/08/21 15:22:46 by aguyon            #+#    #+#             */
+/*   Updated: 2023/08/21 15:53:29 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_ntree	*create_compound_command(t_llist *begin, t_llist *end)
+t_llist	*llst_token_new(t_type type, char *data)
 {
-	t_llist *const	last = llstlast_range(begin, end);
+	t_llist	*new_node;
+	t_token	*new_token;
 
-	if (is_range_compound(begin->next, last))
-		return (create_compound_command(begin->next, last));
-	if (llstfind_if_range(begin, last, (t_predicate)is_token_logical_operator))
-		return (create_logical_expression(begin->next, last));
-	else
-		return (create_pipeline(begin->next, last));
+	new_token = token_new(type, data);
+	if (new_token == NULL)
+		return (NULL);
+	new_node = llstnew(new_token);
+	if (new_node == NULL)
+		return (token_free(new_token), NULL);
+	return (new_node);
 }

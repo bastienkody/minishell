@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 11:28:44 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/16 16:55:47 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:01:21 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,23 @@ static int (*const	g_checkers[])(t_llist *)
 	check_redirection,
 	check_opening_parenthesis,
 	check_closing_parenthesis,
+	check_newline,
 };
 
-int	check_syntax(t_llist *token_list, char **operator_err)
+int	check_newline(t_llist *node)
+{
+	t_token	*prev_token;
+
+	if (node->prev == NULL)
+		return (0);
+	prev_token = node->prev->content;
+	if (!is_type_inside(prev_token->type, (t_type[]){word, \
+		closing_parenthesis}))
+		return (-1);
+	return (0);
+}
+
+static int	check_syntax_err(t_llist *token_list, char **operator_err)
 {
 	t_llist	*current;
 	t_token	*current_token;
@@ -41,4 +55,13 @@ int	check_syntax(t_llist *token_list, char **operator_err)
 		current = current->next;
 	}
 	return (*operator_err = NULL, 0);
+}
+
+int	check_syntax(t_llist *token_list)
+{
+	char	*operator_err;
+
+	if (check_syntax_err(token_list, &operator_err) != 0)
+		return (print_syntax_error(operator_err), -1);
+	return (0);
 }
