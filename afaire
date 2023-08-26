@@ -19,8 +19,16 @@ FD PROBLEMS :
 2 - fihiers de redir intermediares (inf, outf, here_doc) ne sont fermes qu'a cmd + 1
 	cat < Makefile < src/main.c | cat -e --> makefile opened at cat -e
 3 - extra opened fd (de pipefd) si un fichier de redir n'est pas accessible. ex : 
-	ls > outfile_no_w		--> Corrige!
-4 - here_doc ctrl c : fd_in envoye a pipex == 256 --> error de dup infile. il faut envoyer -1
+	ls > outfile_no_w		--> Corrige dans pipex!
+4 - here_doc ctrl c : fd_in envoye a pipex vaut 256 => error de dup infile. il faut envoyer -1
 
 HERER_DOC PB :
 1 - Ctrlc : le .tmp n'est pas ferme, ni supprime. fd_in de pipex = 256 (il faut -1)
+
+-----------------
+: AVANT DE PUSH : 
+-----------------
+	- clear tous les files unused : grammar, minishell.supp, afaire, maintest et testsignal, etc
+	- clear Makefile : cflagsdev, macos rule
+	- clear comments (pipex notmmanet), checker tous fichiers
+	- renorminette
