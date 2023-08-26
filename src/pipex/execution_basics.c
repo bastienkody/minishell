@@ -22,7 +22,7 @@ int	analyze_status(t_info *info)
 	last_cmd = cmd_last(info->cmd_start);
 	status = info->exit_code;
 	if (last_cmd->exist)
-		return (ft_fprintf(1, "RET 127\n"), 127);
+		return (127);
 	if (last_cmd->is_exec)
 		return (126);
 	if (last_cmd->fd_in == REDIR_PB || last_cmd->fd_out == REDIR_PB)
@@ -77,6 +77,14 @@ void	check_cmd_access(t_info *info, t_minishell *minishell)
 		err_msg(info->cmds->name, ERR_PERMDEN);
 		return (minishell->status = 126, free_and_exit_child(minishell));
 	}
+}
+
+void	close_cmd_redirfiles(t_cmd *cmd)
+{
+	if (cmd->fd_in > 2)
+		close(cmd->fd_in);
+	if (cmd->fd_out > 2)
+		close(cmd->fd_out);
 }
 
 void	execute(char **cmd_args, t_info *info, t_minishell *minishell)

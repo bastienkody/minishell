@@ -331,6 +331,7 @@ int		execute_complete_command(t_minishell *minishell, t_ntree *ast);
 int		execute_logical_expression(t_minishell *minishell, t_ntree *ast);
 int		execute_pipeline(t_minishell *minishell, t_ntree *ast);
 void	execute(char **cmd_args, t_info *info, t_minishell *minishell);
+void	close_cmd_redirfiles(t_cmd *cmd);
 int		analyze_status(t_info *info);
 void	wait_cmds(t_info *info);
 t_type	get_redirection_type(t_ntree *redirection_node);

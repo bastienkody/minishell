@@ -1,34 +1,26 @@
-- exportHOLA=bonjour -> assignation, pas a gérer
-
-- probleme de fd (un close qui rate pour uninitialized value + un fd non ferme) pour redirection infile uniquement, avec ou sans commande.
-Pas d'erreur si cmd est solo_builtin (sans fork). Exemples :
-	< dsfjkglfdlg  -> ko
-	ls < dsgfhdjkdfk -> ko
-	< erwire pwd  -> ok
-	ls | < erwire pwd  -> ko
-
+ - exportHOLA=bonjour -> assignation/, pas a gérer
+ - $[:digit:] -> arg positionnels, pas a gerer
 
 - erreur d'appels systeme (pid, dup, fork) :
-	que faire de plus que perror?
+	que faire de plus que perror? Il faut trancher maintenant.
 
-- command is a file, not an real exec : (not to handle ?)
-	echo salut > file ; chmod u+x file
-	minishell : ./file -> execve exec format error
-	bash 	  : ./file -> "line 1 : blabla, command not found"
-	--> bash tries to interpret file as a .sh while minishell sends it to execve
-
-- here_doc ne marchent pas : pas de message d'erreur ni d'output de la commande
-	- les fichiers ne sont pas close
-	- plusieurs heredoc une seule commande : warning valgrind "-256 in syscall close()"
-	--> open_here_doc parent returns -256 as fd (nsp pq aucun msg err dans execute ...)
-	--> CORRIGE j'ai enleve le -256 dans status = wifexit - 256 : ok pour ctrl-D et limiter
-
-- heredoc file non supprimes
-
-- fihiers de redir intermediares (inf, outf, here_doc) ne sont fermes qu'a cmd + 1 ; je pense que c un probleme
-
-- Pas exactement les mêmes erreurs de syntaxe
+- Pas exactement les mêmes erreurs de syntaxe --> acceptable
 
 - tests concluants : sudo, custom exec, env-i with cd/export/unset/pwd, unset PWD OLDPWD + cd/unset/export
 
 - tests bonus concluants
+
+FD PROBLEMS : 
+1 - "Warning: invalid file descriptor -1 in syscall close()". Pas dans pipex. Se produit pour tous les redir suivants du meme type des qu'un outfile_no_w est rencontre. ex:
+	ls > outfile_no_w > outf > outf1 --> 2 warnings.
+	ls > outf > outfile_no_w > outfw --> 1 wrning.
+	ls > outf > outfw > outfile_no_w --> 0 warning.
+	ls < infile_no_r < Makefile		 --> 1 warnings.
+2 - fihiers de redir intermediares (inf, outf, here_doc) ne sont fermes qu'a cmd + 1
+	cat < Makefile < src/main.c | cat -e --> makefile opened at cat -e
+3 - extra opened fd (de pipefd) si un fichier de redir n'est pas accessible. ex : 
+	ls > outfile_no_w		--> Corrige!
+4 - here_doc ctrl c : fd_in envoye a pipex == 256 --> error de dup infile. il faut envoyer -1
+
+HERER_DOC PB :
+1 - Ctrlc : le .tmp n'est pas ferme, ni supprime. fd_in de pipex = 256 (il faut -1)

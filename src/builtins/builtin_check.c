@@ -70,7 +70,7 @@ int	exec_solo_builtin(t_cmd *cmd, t_minishell *minishell)
 	int	old_stdout;
 
 	if (cmd->fd_in < 0 || cmd->fd_out < 0)
-		return (minishell->status = 1, 1);
+		return (close_cmd_redirfiles(cmd), minishell->status = 1, 1);
 	if (cmd->fd_in > NO_REDIR || cmd->fd_out > NO_REDIR)
 	{
 		old_stdin = dup(STDIN_FILENO);

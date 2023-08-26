@@ -27,17 +27,17 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 		return (perror(ERR_DUP_IN), BAD_FD);
 	close(old_fd);
 	if (!info->cmds->next && info->cmds->fd_out == NO_REDIR)
-		return (0);
-	if (info->cmds->fd_out == NO_REDIR)
-		old_fd = pipefd[1];
-	else if (info->cmds->fd_out > NO_REDIR)
+		return (close(pipefd[1]), 0);
+	old_fd = pipefd[1];
+	if (info->cmds->fd_out > NO_REDIR)
 	{
 		close(pipefd[1]);
 		old_fd = info->cmds->fd_out;
 	}
 	if (info->cmds->fd_out >= NO_REDIR && dup2(old_fd, STDOUT) < 0)
 		return (perror(ERR_DUP_OUT), BAD_FD);
-	return (close(old_fd), 0);
+	close(old_fd);
+	return (0);
 }
 
 /*	dupper on error : que faire? seulement exit child? stop minishell? */
@@ -45,14 +45,9 @@ void	in_child(t_info *info, int pipefd[2], int *prevpipe, \
 t_minishell *minishell)
 {
 	close(pipefd[0]);
-	if (!info->cmds->next)
-		close(pipefd[1]);
 	if (dupper(info, *prevpipe, pipefd) == BAD_FD)
 		exit(EXIT_FAILURE);
-	if (info->cmds->fd_in > NO_REDIR)
-		close (info->cmds->fd_in);
-	if (info->cmds->fd_out > NO_REDIR)
-		close (info->cmds->fd_out);
+	close_cmd_redirfiles(info->cmds);
 	execute(info->cmds->args, info, minishell);
 }
 
@@ -66,10 +61,7 @@ void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
 	close(pipefd[1]);
 	close(*prevpipe);
 	*prevpipe = pipefd[0];
-	if (info->cmds->fd_in > NO_REDIR)
-		close (info->cmds->fd_in);
-	if (info->cmds->fd_out > NO_REDIR)
-		close (info->cmds->fd_out);
+	close_cmd_redirfiles(info->cmds);
 }
 
 /* erreur de pipe et de fork -> que faire? exit child? stop minishell?	*/
