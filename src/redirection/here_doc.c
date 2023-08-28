@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/25 14:56:44 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/28 15:17:54 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	launch_here_doc(int fd, const char *lim, t_minishell *minishell)
 	int		return_code;
 
 	return_code = read_here_doc(&data, lim);
-	if (return_code != 0)
+	if (return_code != SUCCESS)
 		return (return_code);
 	if (!is_str_enclosed_quote(lim))
 	{
@@ -75,7 +75,7 @@ int	open_here_doc_parent(int fd, char *pathname)
 	wait(&status);
 	status = WEXITSTATUS(status);
 	if (status != 0)
-		return (status);
+		return (status - 256);
 	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)

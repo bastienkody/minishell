@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/25 13:18:43 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/28 15:18:39 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_state	interpret_command(const char *line, t_minishell *minishell)
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
 	minishell->status = execute_ast(minishell);
-	return (free_loop(minishell), OK);
+	return (OK);
 }
 
 void	reader_loop(t_minishell *minishell)
@@ -90,11 +90,11 @@ void	reader_loop(t_minishell *minishell)
 	if (g_last_signum != 0)
 		minishell->status = g_last_signum + 128;
 	if (line == NULL)
-		return (ft_putendl_fd("exit", 1));
+		return (ft_putendl_fd("exit", 2));
 	else if (is_str_blank(line))
 		return (free(line), reader_loop(minishell));
 	add_history(line);
 	if (interpret_command(line, minishell) == EXIT)
-		return (free(line), (void)(minishell->status = 1));
-	return (free(line), reader_loop(minishell));
+		return (minishell->status = 1, free(line), free_loop(minishell));
+	return (free(line), free_loop(minishell), reader_loop(minishell));
 }
