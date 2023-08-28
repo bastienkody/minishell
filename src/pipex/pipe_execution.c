@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:44:48 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/12 19:02:35 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/28 15:48:10 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 		close(prevpipe);
 		old_fd = info->cmds->fd_in;
 	}
-	if (info->cmds->fd_in >= NO_REDIR && dup2(old_fd, STDIN) < 0)
+	if (info->cmds->fd_in > NO_REDIR && dup2(old_fd, STDIN) < 0)
 		return (perror(ERR_DUP_IN), BAD_FD);
 	close(old_fd);
 	if (!info->cmds->next && info->cmds->fd_out == NO_REDIR)
