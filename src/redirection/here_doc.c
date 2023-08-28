@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/28 15:17:54 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/28 19:15:33 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	open_here_doc_parent(int fd, char *pathname)
 	signal(SIGINT, SIG_IGN);
 	wait(&status);
 	status = WEXITSTATUS(status);
+	close(fd);
 	if (status != 0)
 		return (status - 256);
-	close(fd);
 	fd = open(pathname, O_RDONLY, 00644);
 	if (fd < 0)
 		return (perror("open here_doc in rd"), ERRFD);
