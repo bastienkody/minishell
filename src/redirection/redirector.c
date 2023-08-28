@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:50:44 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/24 13:10:03 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/28 19:38:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ t_state	manage_here_doc(t_ntree *ast, t_minishell *minishell)
 	if (ast != NULL && get_token(ast)->type == HERE_DOC)
 	{
 		fd = open_node_here_doc(ast, minishell);
+		get_token(ast)->data = (void *)(intptr_t)fd;
 		if (fd == ERRSIGINT)
 			return (CONTINUE);
 		else if (fd == ERRALLOC)
 			return (EXIT);
-		get_token(ast)->data = (void *)(intptr_t)fd;
 	}
 	else if (ast != NULL)
 	{
