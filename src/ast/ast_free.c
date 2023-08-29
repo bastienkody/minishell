@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:16:38 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/28 19:48:33 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/29 12:31:12 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static void	free_node(t_token *token)
 	type = token->type;
 	if (type == PIPELINE)
 		free_pipex_info(token->data);
-	if ((type == REDIRECTION || type == HERE_DOC) && (intptr_t)token->data > 0)
-		close((intptr_t)token->data);
 	else if (is_type_inside(type, g_data_token))
 		free(token->data);
 	free(token);

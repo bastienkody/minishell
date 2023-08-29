@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 17:58:59 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/25 14:57:01 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/29 12:22:14 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,8 @@ int		open_redirections(t_type type, const char *filename);
 void	free_and_exit(t_minishell *minishell);
 void	free_and_exit_child(t_minishell *minishell);
 void	free_loop(t_minishell *minishell);
+void	ast_close_unused_fds(t_ntree *ast);
+void	ast_close_fd(t_ntree *ast);
 
 /*	execution	*/
 void	*get_execute_function(t_ntree *ast);

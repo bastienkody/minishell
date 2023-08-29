@@ -61,6 +61,7 @@ LEXER_NAME	=		lexer.c\
 
 AST_NAME	=		ast_new.c\
 					ast_dup.c\
+					ast_close_fds.c\
 					ast_print.c\
 					ast_free.c\
 					ast_predicate.c\
