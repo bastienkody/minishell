@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:19:49 by aguyon            #+#    #+#             */
-/*   Updated: 2023/08/28 15:56:55 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/29 12:48:58 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,16 @@ t_state	manage_redirection(t_minishell *minishell)
 	return (OK);
 }
 
+void	token_list_cleanup(t_llist **token_list)
+{
+	llstclear(token_list, token_free);
+}
+
 t_state	interpret_command(const char *line, t_minishell *minishell)
 {
 	int		return_code;
-	t_llist	*token_list;
 
+	__attribute((cleanup(token_list_cleanup))) t_llist * token_list;
 	token_list = tokenization(line);
 	if (token_list == NULL)
 		return (EXIT);
@@ -63,10 +68,9 @@ t_state	interpret_command(const char *line, t_minishell *minishell)
 		return (minishell->status = 2, print_err_quotes(), CONTINUE);
 	return_code = expand_token_list(&token_list, minishell);
 	if (return_code != OK)
-		return (llstclear(&token_list, token_free), return_code);
+		return (return_code);
 	if (check_syntax(token_list) != 0)
-		return (llstclear(&token_list, token_free), \
-			minishell->status = 2, CONTINUE);
+		return (minishell->status = 2, CONTINUE);
 	minishell->ast = create_complete_command(token_list);
 	llstclear(&token_list, token_free);
 	if (minishell->ast == NULL)
@@ -76,6 +80,7 @@ t_state	interpret_command(const char *line, t_minishell *minishell)
 		return (return_code);
 	if (manage_pipeline(minishell, minishell->ast) != 0)
 		return (EXIT);
+	ast_close_unused_fds(minishell->ast);
 	minishell->status = execute_ast(minishell);
 	return (OK);
 }
