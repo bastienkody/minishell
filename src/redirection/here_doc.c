@@ -6,7 +6,7 @@
 /*   By: aguyon <aguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 14:19:21 by bguillau          #+#    #+#             */
-/*   Updated: 2023/08/29 11:19:21 by aguyon           ###   ########.fr       */
+/*   Updated: 2023/08/29 13:01:03 by aguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	open_here_doc_parent(int fd, char *pathname)
 	if (status != 0)
 		return (status - 256);
 	fd = open(pathname, O_RDONLY, 00644);
-	printf("open:%d\n", fd);
 	if (fd < 0)
 		return (perror("open here_doc in rd"), ERRFD);
 	return (fd);
