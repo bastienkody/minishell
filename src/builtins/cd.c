@@ -11,10 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
-/* builtin (ret 1) or execve (ret 0)	*/
 int	check_cd(char **args)
 {
 	(void)args;

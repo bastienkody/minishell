@@ -66,10 +66,6 @@ char	*strjoin3(char const *s1, char const *s2, char const *s3)
 	return (free((void *)tmp), ret);
 }
 
-/*	append a signle char to the end of str
-	str==NULL -> returns "c"
-	str is malloced -> init str is freed
-	str is stacked -> error	*/
 char	*str_one_char_join(char *str, char c)
 {
 	int	str_len;
@@ -92,15 +88,3 @@ char	*str_one_char_join(char *str, char c)
 	str[str_len] = c;
 	return (str);
 }
-
-/*int	main(void)
-{
-	//char	*ret = ft_strdup("salut");
-	char	*ret = NULL;
-	char	c = 'y';
-
-	ft_fprintf(1, "%s\n", ret);
-	ret = str_one_char_join(ret, c);
-	ft_fprintf(1, "%s\n", ret);
-	free(ret);
-}*/

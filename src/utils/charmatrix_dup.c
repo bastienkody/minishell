@@ -26,7 +26,6 @@ static char	**get_new_matrix_malloced(char **src_matrix, int offset)
 	return (new_matrix);
 }
 
-/* strdup on src_matrix (not freed)	*/
 char	**charmatrix_dup(char **src_matrix)
 {
 	int		i;
@@ -46,7 +45,6 @@ char	**charmatrix_dup(char **src_matrix)
 	return (new_matrix);
 }
 
-/*	dup src_matrix + 1 entry at end, free the src_matrix	*/
 char	**charmatrix_add_one(char **src_matrix, char *entry)
 {
 	int		i;
@@ -68,7 +66,6 @@ char	**charmatrix_add_one(char **src_matrix, char *entry)
 	return (new_matrix);
 }
 
-/*	dup src_matrix - 1 entry (key specific), free the src_matrix	*/
 char	**charmatrix_del_one(char **src_matrix, char *key)
 {
 	int		i;
@@ -98,7 +95,6 @@ char	**charmatrix_del_one(char **src_matrix, char *key)
 	return (free(key_comp), free_char_matrix(src_matrix), new_matrix);
 }
 
-/* dup src_matrix sorted, does not free	*/
 char	**charmatrix_buble_sort(char **src_matrix)
 {
 	char	**new_matrix;

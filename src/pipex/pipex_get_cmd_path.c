@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// /* returns null on malloc err ; ["", NULL] if no path or no envp	*/
 char	**get_path(char **envp)
 {
 	char	**no_path;

@@ -26,21 +26,3 @@ void	*ft_realloc(void *ptr, size_t size)
 	free(ptr);
 	return (new);
 }
-
-/*int	main(void)
-{
-	char	*str;
-	char	*new_str;
-
-	str = ft_strdup("salut");
-	ft_fprintf(1, "%s\n", str);
-	new_str = ft_realloc(str, 10 * sizeof(char));
-	new_str[5] = ' ';
-	new_str[6] = 't';
-	new_str[7] = 'o';
-	new_str[8] = 'i';
-	new_str[9] = '\0';
-	ft_fprintf(1, "%s\n", new_str);
-	//free(str);
-	free(new_str);
-}*/

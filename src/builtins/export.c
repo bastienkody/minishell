@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-/* builtin ret 1, execve ret 0	*/
 int	check_export(char **args)
 {
 	(void)args;

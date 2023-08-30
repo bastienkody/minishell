@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-/*	erreur de dup : que faire? seulement exit child? stop minishell?	*/
 int	dupper(t_info *info, int prevpipe, int pipefd[2])
 {
 	int	old_fd;
@@ -40,7 +39,6 @@ int	dupper(t_info *info, int prevpipe, int pipefd[2])
 	return (0);
 }
 
-/*	dupper on error : que faire? seulement exit child? stop minishell? */
 void	in_child(t_info *info, int pipefd[2], int *prevpipe, \
 t_minishell *minishell)
 {
@@ -64,7 +62,6 @@ void	in_parent(t_info *info, int pipefd[2], int *prevpipe, int pid)
 	close_cmd_redirfiles(info->cmds);
 }
 
-/* erreur de pipe et de fork -> que faire? exit child? stop minishell?	*/
 void	fork_pipe_dup(int *prevpipe, t_info *info, t_minishell *minishell)
 {
 	int	pipefd[2];

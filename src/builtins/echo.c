@@ -44,7 +44,6 @@ int	is_only_n(char *str)
 	return (1);
 }
 
-/* Use of builtin (1) or execve (0)	*/
 int	check_echo(char **args)
 {
 	++args;

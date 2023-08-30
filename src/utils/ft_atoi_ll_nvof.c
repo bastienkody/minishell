@@ -12,7 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-/* atoi nptr to long long nb passed by reference. returns 0 if ovlf ; 1 if ok*/
 int	ft_atoi_ll_novf(const char *nptr, long long int *nb)
 {
 	int				sign;

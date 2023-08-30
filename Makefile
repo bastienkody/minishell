@@ -146,20 +146,8 @@ LLST		=	./llist/libllst.a
 NTREE		=	./ntree/libntree.a
 
 CC			=	cc
-
 CFLAGS		=	-Wall -Wextra -Werror
-CFLAGSDEV	=	-Wall -Wextra -Werror -g3
-
 LDFLAGS		=	-L./libft -lft -L./llist -lllst -L./ntree -lntree -lreadline
-
-ifeq ($(shell uname), Darwin)
-        CFLAGS			+= -I /usr/local/Cellar/readline/8.2.1/include/
-        CCFLAGSDEV		+= -I /usr/local/Cellar/readline/8.2.1/include/
-		LDFLAGS			=	-L./libft -lft -L./llist -lllst -L./ntree -lntree\
-							-L/usr/local/Cellar/readline/8.2.1/lib -lreadline
-
- endif
-
 
 ###		RULES		###
 all:		${NAME}
@@ -167,7 +155,7 @@ all:		${NAME}
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@echo "\033[32m\c"
-	${CC} ${CFLAGSDEV} -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 	@echo "\033[0m\c"
 
 
